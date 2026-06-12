@@ -616,26 +616,6 @@ function RealisationsStep() {
   );
 }
 
-/* ── E. Avis ────────────────────────────────────────────────────────────── */
-
-function AvisStep() {
-  const { register } = useFormContext<LeadValues>();
-  return (
-    <Field
-      label="Avis de vos clients"
-      hint="Copiez-collez quelques avis (Google, Facebook, ou rapportés). Ex. : « Souad est ponctuelle et minutieuse, je recommande ! — Marie, Lyon »"
-      htmlFor="reviews"
-      optional
-    >
-      <TextArea
-        id="reviews"
-        placeholder="Les retours de vos clients rassurent énormément les nouveaux visiteurs…"
-        {...register("reviews")}
-      />
-    </Field>
-  );
-}
-
 /* ── F. Langues & ambiance ──────────────────────────────────────────────── */
 
 const LANGS = [
@@ -793,13 +773,6 @@ const ALL_STEPS: StepDef[] = [
     fields: [],
     when: wantsServices,
     Component: RealisationsStep,
-  },
-  {
-    id: "avis",
-    title: "Avis clients",
-    subtitle: "La preuve sociale qui transforme les visiteurs en clients.",
-    fields: [],
-    Component: AvisStep,
   },
   {
     id: "langues",
