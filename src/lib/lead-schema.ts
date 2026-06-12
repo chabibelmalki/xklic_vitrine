@@ -1,0 +1,142 @@
+import { z } from "zod";
+
+const required = (msg: string) => z.string().trim().min(1, msg);
+
+export const ACTIVITY_TYPES = ["services", "produits", "les-deux"] as const;
+export type ActivityType = (typeof ACTIVITY_TYPES)[number];
+
+export const wantsServices = (t?: ActivityType) =>
+  t === "services" || t === "les-deux";
+export const wantsProducts = (t?: ActivityType) =>
+  t === "produits" || t === "les-deux";
+
+// Un fichier uploadé. `url` (objectURL pour l'aperçu) et `file` (le File brut)
+// ne servent qu'au rendu client : ils sont retirés avant l'envoi au webhook.
+export const uploadItemSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  size: z.number(),
+  type: z.string().default(""),
+  url: z.string().optional(),
+  file: z.any().optional(),
+});
+export type UploadItem = z.infer<typeof uploadItemSchema>;
+
+const uploads = () => z.array(uploadItemSchema).default([]);
+
+export const productSchema = z.object({
+  id: z.string(),
+  title: required("Donnez un nom à ce produit."),
+  description: z.string().trim().optional(),
+  price: z.string().trim().optional(),
+  category: z.string().trim().optional(),
+  photos: uploads(),
+});
+export type ProductValues = z.input<typeof productSchema>;
+
+export const leadSchema = z
+  .object({
+    // 0. Branchement
+    activityType: z.enum(ACTIVITY_TYPES, {
+      message: "Faites un choix pour continuer.",
+    }),
+
+    // A. Activité
+    companyName: required("Indiquez le nom de votre entreprise."),
+    trade: required("Indiquez votre métier."),
+    city: required("Indiquez votre ville."),
+    serviceArea: required("Indiquez votre zone de déplacement."),
+
+    // S1. Prestations & prix (services / les-deux) — requis conditionnellement
+    services: z.string().trim().optional(),
+    taxCredit: z.enum(["oui", "non", "je-ne-sais-pas"]).optional(),
+
+    // P1. Marchandise (produits / les-deux)
+    products: z.array(productSchema).default([]),
+
+    // B. Coordonnées
+    phone: required("Un numéro pour vous joindre est nécessaire."),
+    whatsapp: z.string().trim().optional(),
+    email: z
+      .string()
+      .trim()
+      .min(1, "Votre email est nécessaire.")
+      .email("Cet email ne semble pas valide."),
+    address: z.string().trim().optional(),
+    availability: z.string().trim().optional(),
+
+    // C. Entreprise
+    siret: z.string().trim().optional(),
+    noSiret: z.boolean().default(false),
+
+    // D. Identité visuelle (tout optionnel)
+    logo: uploads(),
+    venuePhotos: uploads(),
+    ambiancePhotos: uploads(),
+
+    // S2. Photos de services / réalisations (services / les-deux, optionnel)
+    servicePhotos: uploads(),
+
+    // E. Avis clients
+    reviews: z.string().trim().optional(),
+
+    // F. Langues & ambiance
+    languages: z
+      .array(z.string())
+      .min(1, "Gardez au moins une langue.")
+      .default(["fr"]),
+    languageOther: z.string().trim().optional(),
+    ambiance: z.string().trim().optional(),
+  })
+  .superRefine((data, ctx) => {
+    // SIRET (sauf si pas encore immatriculé)
+    if (!data.noSiret) {
+      const digits = (data.siret ?? "").replace(/\s/g, "");
+      if (!digits) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["siret"],
+          message: "Renseignez votre SIRET, ou cochez « Pas encore de SIRET ».",
+        });
+      } else if (!/^\d{14}$/.test(digits)) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["siret"],
+          message: "Le SIRET comporte 14 chiffres.",
+        });
+      }
+    }
+
+    // Prestations requises pour les activités de service
+    if (wantsServices(data.activityType)) {
+      const s = (data.services ?? "").trim();
+      if (s.length < 10) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["services"],
+          message: s
+            ? "Quelques mots de plus nous aident à bien vous présenter."
+            : "Décrivez vos prestations, même en vrac.",
+        });
+      }
+      if (!data.taxCredit) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["taxCredit"],
+          message: "Faites un choix.",
+        });
+      }
+    }
+
+    // Au moins un produit pour les activités qui vendent de la marchandise
+    if (wantsProducts(data.activityType) && (data.products?.length ?? 0) === 0) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["products"],
+        message: "Ajoutez au moins un produit pour continuer.",
+      });
+    }
+  });
+
+export type LeadValues = z.input<typeof leadSchema>;
+export type LeadData = z.output<typeof leadSchema>;

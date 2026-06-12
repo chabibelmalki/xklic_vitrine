@@ -1,26 +1,107 @@
 @import "tailwindcss";
 
+@theme {
+  /* Surfaces — dark editorial chaud */
+  --color-ink: #0a0a0b;
+  --color-ink-soft: #0f0f12;
+  --color-ink-panel: #141417;
+  --color-cream: #faf7f2;
+  --color-cream-muted: #b7b2aa;
+  --color-cream-faint: #75726c;
+
+  /* Accent chaud — ember (terracotta/ambre) */
+  --color-ember: #ff6a3d;
+  --color-ember-soft: #ff8a5c;
+  --color-ember-deep: #d8502a;
+  --color-amber: #f0a85a;
+
+  /* Hairlines */
+  --color-line: rgba(250, 247, 242, 0.08);
+  --color-line-strong: rgba(250, 247, 242, 0.14);
+
+  /* Fonts */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+
+  /* Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--color-ink);
+  --foreground: var(--color-cream);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Display serif fine-tuning */
+.font-display {
+  font-optical-sizing: auto;
+  letter-spacing: -0.01em;
+}
+
+/* Subtle film grain over the whole page */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Warm radial glow utility */
+.glow-ember {
+  background: radial-gradient(
+    60% 60% at 50% 0%,
+    rgba(255, 106, 61, 0.18) 0%,
+    rgba(255, 106, 61, 0.06) 35%,
+    transparent 70%
+  );
+}
+
+/* Gradient text */
+.text-gradient-warm {
+  background: linear-gradient(
+    120deg,
+    var(--color-cream) 0%,
+    var(--color-amber) 55%,
+    var(--color-ember) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hairline divider */
+.hairline {
+  border-color: var(--color-line);
+}
+
+/* Focus ring — accessible, warm */
+*:focus-visible {
+  outline: 2px solid var(--color-ember);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Custom scrollbar (subtle) */
+::selection {
+  background: rgba(255, 106, 61, 0.3);
 }

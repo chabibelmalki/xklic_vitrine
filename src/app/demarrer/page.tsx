@@ -1,0 +1,40 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { Logo } from "@/components/site/logo";
+import { LeadForm } from "@/components/form/lead-form";
+
+export const metadata: Metadata = {
+  title: "Créer mon site",
+  description:
+    "Décrivez votre activité en quelques minutes. On crée votre site pro et il est en ligne en 48h.",
+};
+
+export default function DemarrerPage() {
+  return (
+    <div className="grain relative flex min-h-full flex-col">
+      {/* Warm glow */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-[500px] glow-ember"
+        aria-hidden
+      />
+
+      <header className="relative z-10">
+        <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5 sm:px-8 lg:h-18">
+          <Logo />
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1.5 text-sm text-cream-muted transition-colors hover:text-cream"
+          >
+            <ArrowLeft size={16} />
+            Retour
+          </Link>
+        </div>
+      </header>
+
+      <main className="relative z-10 flex-1 px-5 py-12 sm:py-16 lg:py-20">
+        <LeadForm />
+      </main>
+    </div>
+  );
+}
