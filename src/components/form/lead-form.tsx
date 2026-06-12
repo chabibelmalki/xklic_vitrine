@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useForm, useWatch, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { upload } from "@vercel/blob/client";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Loader2, PartyPopper } from "lucide-react";
 import Link from "next/link";
@@ -11,24 +12,52 @@ import { Button } from "@/components/ui/button";
 import { buildSteps } from "./steps";
 import { cn, EASE_OUT } from "@/lib/utils";
 
-// Retire les objets non sérialisables (File + objectURL d'aperçu) avant l'envoi
-// au webhook : on ne transmet que les métadonnées des fichiers.
+// Forme souple d'un fichier dans l'état du formulaire. `file` est le File brut
+// (présent dès qu'un fichier a été sélectionné), `url` un objectURL d'aperçu.
 type UploadInput = {
-  id: string;
+  id?: string;
   name: string;
-  size: number;
+  size?: number;
   type?: string;
+  url?: string;
+  file?: unknown;
 };
-function stripUploads(items?: UploadInput[]) {
-  return (items ?? []).map(({ id, name, size, type }) => ({
-    id,
-    name,
-    size,
-    type: type ?? "",
-  }));
+
+// Téléverse chaque fichier vers Vercel Blob (browser -> Blob, accès public) et
+// renvoie, pour chacun, { name, url } où `url` est l'URL publique Blob. Les
+// objets non sérialisables (File, objectURL d'aperçu) ne partent donc jamais
+// au webhook — seules les URLs publiques le font.
+async function uploadFiles(items?: UploadInput[]) {
+  return Promise.all(
+    (items ?? []).map(async (item) => {
+      // Pas de File brut (cas de bord) : on conserve au moins le nom.
+      if (!(item.file instanceof File)) {
+        return { name: item.name, url: item.url ?? "" };
+      }
+      const blob = await upload(`leads/${item.file.name}`, item.file, {
+        access: "public",
+        handleUploadUrl: "/api/blob/upload",
+      });
+      return { name: item.name, url: blob.url };
+    }),
+  );
 }
 
-type Status = "form" | "submitting" | "done" | "error";
+// Nombre total de fichiers à téléverser (pour n'afficher l'indicateur de
+// téléversement que lorsqu'il y a réellement des images).
+function countFiles(values: LeadValues) {
+  const has = (items?: { file?: unknown }[]) =>
+    (items ?? []).filter((i) => i.file instanceof File).length;
+  return (
+    has(values.logo) +
+    has(values.venuePhotos) +
+    has(values.ambiancePhotos) +
+    has(values.servicePhotos) +
+    (values.products ?? []).reduce((n, p) => n + has(p.photos), 0)
+  );
+}
+
+type Status = "form" | "uploading" | "submitting" | "done" | "error";
 
 export function LeadForm() {
   const reduce = useReducedMotion();
@@ -44,6 +73,7 @@ export function LeadForm() {
       companyName: "",
       trade: "",
       city: "",
+      mobile: false,
       serviceArea: "",
       services: "",
       taxCredit: undefined,
@@ -62,6 +92,7 @@ export function LeadForm() {
       reviews: "",
       languages: ["fr"],
       ambiance: "",
+      extra: "",
     },
   });
 
@@ -96,19 +127,38 @@ export function LeadForm() {
   };
 
   const submit = methods.handleSubmit(async (values) => {
-    setStatus("submitting");
-    const payload = {
-      ...values,
-      logo: stripUploads(values.logo),
-      venuePhotos: stripUploads(values.venuePhotos),
-      ambiancePhotos: stripUploads(values.ambiancePhotos),
-      servicePhotos: stripUploads(values.servicePhotos),
-      products: (values.products ?? []).map((p) => ({
-        ...p,
-        photos: stripUploads(p.photos),
-      })),
-    };
     try {
+      // 1. On téléverse d'abord toutes les images vers Vercel Blob, en
+      //    parallèle. Le webhook n'est appelé qu'une fois TOUS les uploads
+      //    terminés (le Promise.all sert de barrière).
+      setStatus(countFiles(values) > 0 ? "uploading" : "submitting");
+      const [logo, venuePhotos, ambiancePhotos, servicePhotos] =
+        await Promise.all([
+          uploadFiles(values.logo),
+          uploadFiles(values.venuePhotos),
+          uploadFiles(values.ambiancePhotos),
+          uploadFiles(values.servicePhotos),
+        ]);
+      const products = await Promise.all(
+        (values.products ?? []).map(async (p) => ({
+          ...p,
+          photos: await uploadFiles(p.photos),
+        })),
+      );
+
+      // 2. Payload : chaque objet fichier est remplacé par { name, url }
+      //    (URL publique Blob). Le reste de la structure est inchangé.
+      const payload = {
+        ...values,
+        logo,
+        venuePhotos,
+        ambiancePhotos,
+        servicePhotos,
+        products,
+      };
+
+      // 3. Envoi au webhook (via /api/lead).
+      setStatus("submitting");
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -203,10 +253,15 @@ export function LeadForm() {
               <Button
                 type="submit"
                 size="lg"
-                disabled={status === "submitting"}
+                disabled={status === "submitting" || status === "uploading"}
                 className="min-w-44"
               >
-                {status === "submitting" ? (
+                {status === "uploading" ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" />
+                    Téléversement des images…
+                  </>
+                ) : status === "submitting" ? (
                   <>
                     <Loader2 size={18} className="animate-spin" />
                     Envoi…

@@ -10,13 +10,17 @@ export const wantsServices = (t?: ActivityType) =>
 export const wantsProducts = (t?: ActivityType) =>
   t === "produits" || t === "les-deux";
 
-// Un fichier uploadé. `url` (objectURL pour l'aperçu) et `file` (le File brut)
-// ne servent qu'au rendu client : ils sont retirés avant l'envoi au webhook.
+// Un fichier uploadé. Deux formes transitent par ce schéma :
+//   • côté client (état du formulaire) : { id, name, size, type, url, file }
+//     où `url` est un objectURL d'aperçu et `file` le File brut ;
+//   • côté payload envoyé au webhook (après upload Blob) : { name, url }
+//     où `url` est l'URL publique Vercel Blob.
+// Seul `name` est donc requis ; le reste est optionnel pour valider les deux.
 export const uploadItemSchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   name: z.string(),
-  size: z.number(),
-  type: z.string().default(""),
+  size: z.number().optional(),
+  type: z.string().optional(),
   url: z.string().optional(),
   file: z.any().optional(),
 });
@@ -45,7 +49,8 @@ export const leadSchema = z
     companyName: required("Indiquez le nom de votre entreprise."),
     trade: required("Indiquez votre métier."),
     city: required("Indiquez votre ville."),
-    serviceArea: required("Indiquez votre zone de déplacement."),
+    mobile: z.boolean().default(false),
+    serviceArea: z.string().trim().optional(),
 
     // S1. Prestations & prix (services / les-deux) — requis conditionnellement
     services: z.string().trim().optional(),
@@ -87,8 +92,20 @@ export const leadSchema = z
       .default(["fr"]),
     languageOther: z.string().trim().optional(),
     ambiance: z.string().trim().optional(),
+
+    // G. Mot de la fin (champ libre, facultatif)
+    extra: z.string().trim().optional(),
   })
   .superRefine((data, ctx) => {
+    // Zone de déplacement requise seulement si l'artisan se déplace
+    if (data.mobile && !(data.serviceArea ?? "").trim()) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["serviceArea"],
+        message: "Indiquez votre zone de déplacement.",
+      });
+    }
+
     // SIRET (sauf si pas encore immatriculé)
     if (!data.noSiret) {
       const digits = (data.siret ?? "").replace(/\s/g, "");

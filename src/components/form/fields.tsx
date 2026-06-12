@@ -8,9 +8,9 @@ import { cn } from "@/lib/utils";
 // Forme souple d'un fichier uploadé (correspond au type d'entrée du schéma :
 // `type` peut être absent). `url`/`file` ne servent qu'à l'aperçu client.
 type UploadValue = {
-  id: string;
+  id?: string;
   name: string;
-  size: number;
+  size?: number;
   type?: string;
   url?: string;
   file?: unknown;
@@ -194,7 +194,7 @@ export function ImageUpload({
     }
   };
 
-  const remove = (id: string) => {
+  const remove = (id: string | undefined) => {
     const it = items.find((x) => x.id === id);
     if (it?.url) URL.revokeObjectURL(it.url);
     onChange(items.filter((x) => x.id !== id));
@@ -242,7 +242,7 @@ export function ImageUpload({
         <ul className="grid grid-cols-3 gap-2 sm:grid-cols-4">
           {items.map((it) => (
             <li
-              key={it.id}
+              key={it.id ?? it.name}
               className="group relative aspect-square overflow-hidden rounded-lg border border-line bg-ink"
             >
               {it.url ? (
@@ -261,7 +261,7 @@ export function ImageUpload({
                 </span>
               )}
               <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 to-transparent px-1.5 pb-1 pt-4 text-[10px] text-cream-muted opacity-0 transition-opacity group-hover:opacity-100">
-                {formatSize(it.size)}
+                {it.size != null ? formatSize(it.size) : null}
               </span>
               <button
                 type="button"

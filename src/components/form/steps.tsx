@@ -4,6 +4,7 @@ import {
   Controller,
   useFieldArray,
   useFormContext,
+  useWatch,
 } from "react-hook-form";
 import {
   ChevronDown,
@@ -130,8 +131,9 @@ function TypeStep() {
 /* ── A. Activité ────────────────────────────────────────────────────────── */
 
 function ActiviteStep() {
-  const { register } = useFormContext<LeadValues>();
+  const { register, control } = useFormContext<LeadValues>();
   const err = useErr();
+  const mobile = useWatch<LeadValues>({ control, name: "mobile" });
   return (
     <div className="grid gap-5">
       <Field
@@ -160,22 +162,33 @@ function ActiviteStep() {
           {...register("trade")}
         />
       </Field>
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field
-          label="Ville"
-          hint="Ex. : « Lyon »"
-          htmlFor="city"
-          error={err("city")}
-        >
-          <TextInput
-            id="city"
-            placeholder="Votre ville principale"
-            invalid={!!err("city")}
-            {...register("city")}
+      <Field
+        label="Ville"
+        hint="Ex. : « Lyon »"
+        htmlFor="city"
+        error={err("city")}
+      >
+        <TextInput
+          id="city"
+          placeholder="Votre ville principale"
+          invalid={!!err("city")}
+          {...register("city")}
+        />
+      </Field>
+      <Controller
+        control={control}
+        name="mobile"
+        render={({ field }) => (
+          <CheckRow
+            checked={!!field.value}
+            onChange={field.onChange}
+            label="Je me déplace chez mes clients"
           />
-        </Field>
+        )}
+      />
+      {mobile ? (
         <Field
-          label="Zone de déplacement"
+          label="Zone d'intervention"
           hint="Ex. : « Lyon et 20 km autour »"
           htmlFor="serviceArea"
           error={err("serviceArea")}
@@ -187,7 +200,7 @@ function ActiviteStep() {
             {...register("serviceArea")}
           />
         </Field>
-      </div>
+      ) : null}
     </div>
   );
 }
@@ -699,6 +712,26 @@ function LanguesStep() {
   );
 }
 
+/* ── G. Mot de la fin ───────────────────────────────────────────────────── */
+
+function ExtraStep() {
+  const { register } = useFormContext<LeadValues>();
+  return (
+    <Field
+      label="Quelque chose à ajouter ?"
+      hint="Un service supplémentaire que vous aimeriez mettre en avant, une idée pour votre site, une particularité de votre métier, une attente précise… Tout ce qui peut nous aider à faire un site qui vous ressemble."
+      htmlFor="extra"
+      optional
+    >
+      <TextArea
+        id="extra"
+        placeholder="Écrivez librement — même une simple remarque nous est utile…"
+        {...register("extra")}
+      />
+    </Field>
+  );
+}
+
 /* ── Définition des étapes (avec branchement conditionnel) ──────────────── */
 
 const ALL_STEPS: StepDef[] = [
@@ -713,7 +746,7 @@ const ALL_STEPS: StepDef[] = [
     id: "activite",
     title: "Votre entreprise",
     subtitle: "Qui vous êtes et où vous travaillez.",
-    fields: ["companyName", "trade", "city", "serviceArea"],
+    fields: ["companyName", "trade", "city", "mobile", "serviceArea"],
     Component: ActiviteStep,
   },
   {
@@ -771,9 +804,17 @@ const ALL_STEPS: StepDef[] = [
   {
     id: "langues",
     title: "Langues & ambiance",
-    subtitle: "Les dernières préférences, et c'est tout bon.",
+    subtitle: "Vos préférences de langues et de style.",
     fields: ["languages"],
     Component: LanguesStep,
+  },
+  {
+    id: "extra",
+    title: "Le mot de la fin",
+    subtitle:
+      "Avez-vous autre chose à nous partager ? Une particularité, une envie… et c'est tout bon.",
+    fields: ["extra"],
+    Component: ExtraStep,
   },
 ];
 
