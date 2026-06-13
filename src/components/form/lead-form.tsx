@@ -50,9 +50,7 @@ function countFiles(values: LeadValues) {
     (items ?? []).filter((i) => i.file instanceof File).length;
   return (
     has(values.logo) +
-    has(values.venuePhotos) +
-    has(values.ambiancePhotos) +
-    has(values.servicePhotos) +
+    has(values.photos) +
     (values.products ?? []).reduce((n, p) => n + has(p.photos), 0)
   );
 }
@@ -79,18 +77,18 @@ export function LeadForm() {
       taxCredit: undefined,
       products: [],
       phone: "",
-      whatsapp: "",
+      noWhatsapp: false,
       email: "",
+      hasShop: false,
       address: "",
       availability: "",
       siret: "",
       noSiret: false,
       logo: [],
-      venuePhotos: [],
-      ambiancePhotos: [],
-      servicePhotos: [],
-      reviews: "",
+      photos: [],
       languages: ["fr"],
+      styleVibes: [],
+      colorPreference: "",
       ambiance: "",
       extra: "",
     },
@@ -132,13 +130,10 @@ export function LeadForm() {
       //    parallèle. Le webhook n'est appelé qu'une fois TOUS les uploads
       //    terminés (le Promise.all sert de barrière).
       setStatus(countFiles(values) > 0 ? "uploading" : "submitting");
-      const [logo, venuePhotos, ambiancePhotos, servicePhotos] =
-        await Promise.all([
-          uploadFiles(values.logo),
-          uploadFiles(values.venuePhotos),
-          uploadFiles(values.ambiancePhotos),
-          uploadFiles(values.servicePhotos),
-        ]);
+      const [logo, photos] = await Promise.all([
+        uploadFiles(values.logo),
+        uploadFiles(values.photos),
+      ]);
       const products = await Promise.all(
         (values.products ?? []).map(async (p) => ({
           ...p,
@@ -151,9 +146,7 @@ export function LeadForm() {
       const payload = {
         ...values,
         logo,
-        venuePhotos,
-        ambiancePhotos,
-        servicePhotos,
+        photos,
         products,
       };
 

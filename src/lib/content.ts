@@ -80,9 +80,9 @@ export const benefits = [
     body: "Tes clients t'appellent ou t'écrivent sur WhatsApp en un seul tap, depuis leur téléphone.",
   },
   {
-    icon: "Star",
-    title: "Tes avis Google mis en avant",
-    body: "On affiche tes meilleurs avis pour rassurer en un coup d'œil et donner envie de te choisir.",
+    icon: "ShieldCheck",
+    title: "Sécurisé et sans souci",
+    body: "Hébergement, HTTPS, sauvegardes et mises à jour : on gère toute la technique, ton site reste en ligne.",
   },
   {
     icon: "Smartphone",
@@ -165,7 +165,7 @@ export const faq = [
   },
   {
     q: "À qui appartiennent le site et le nom de domaine ?",
-    a: "Le contenu (textes, photos, avis) est à toi. Le nom de domaine peut être enregistré à ton nom. Si tu pars, on t'accompagne pour récupérer ton domaine.",
+    a: "Le contenu (textes, photos) est à toi. Le nom de domaine peut être enregistré à ton nom. Si tu pars, on t'accompagne pour récupérer ton domaine.",
   },
   {
     q: "Comment se passe le paiement ?",

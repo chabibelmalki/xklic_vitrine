@@ -61,36 +61,31 @@ export const leadSchema = z
 
     // B. Coordonnées
     phone: required("Un numéro pour te joindre est nécessaire."),
-    whatsapp: z.string().trim().optional(),
+    noWhatsapp: z.boolean().default(false), // coché = pas de WhatsApp sur le site
     email: z
       .string()
       .trim()
       .min(1, "Ton email est nécessaire.")
       .email("Cet email ne semble pas valide."),
+    hasShop: z.boolean().default(false), // a un local / une boutique
     address: z.string().trim().optional(),
     availability: z.string().trim().optional(),
 
-    // C. Entreprise
+    // C. SIRET (facultatif — on ne le réclame pas)
     siret: z.string().trim().optional(),
-    noSiret: z.boolean().default(false),
+    noSiret: z.boolean().default(false), // « SIRET en cours de création »
 
-    // D. Identité visuelle (tout optionnel)
+    // D. Identité visuelle (optionnel) : logo distinct + un seul bac photos
     logo: uploads(),
-    venuePhotos: uploads(),
-    ambiancePhotos: uploads(),
+    photos: uploads(),
 
-    // S2. Photos de services / réalisations (services / les-deux, optionnel)
-    servicePhotos: uploads(),
-
-    // E. Avis clients
-    reviews: z.string().trim().optional(),
-
-    // F. Langues & ambiance
+    // F. Langues & style
     languages: z
       .array(z.string())
       .min(1, "Garde au moins une langue.")
       .default(["fr"]),
-    languageOther: z.string().trim().optional(),
+    styleVibes: z.array(z.string()).default([]),
+    colorPreference: z.string().trim().optional(),
     ambiance: z.string().trim().optional(),
 
     // G. Mot de la fin (champ libre, facultatif)
@@ -104,24 +99,6 @@ export const leadSchema = z
         path: ["serviceArea"],
         message: "Indique ta zone de déplacement.",
       });
-    }
-
-    // SIRET (sauf si pas encore immatriculé)
-    if (!data.noSiret) {
-      const digits = (data.siret ?? "").replace(/\s/g, "");
-      if (!digits) {
-        ctx.addIssue({
-          code: "custom",
-          path: ["siret"],
-          message: "Renseigne ton SIRET, ou coche « Pas encore de SIRET ».",
-        });
-      } else if (!/^\d{14}$/.test(digits)) {
-        ctx.addIssue({
-          code: "custom",
-          path: ["siret"],
-          message: "Le SIRET comporte 14 chiffres.",
-        });
-      }
     }
 
     // Prestations requises pour les activités de service

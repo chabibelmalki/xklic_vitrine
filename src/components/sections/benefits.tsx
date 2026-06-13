@@ -2,9 +2,10 @@ import {
   Search,
   MessageSquare,
   Phone,
-  Star,
+  ShieldCheck,
   Smartphone,
   RefreshCw,
+  Star,
   type LucideIcon,
 } from "lucide-react";
 import { Section, SectionHeading } from "@/components/ui/section";
@@ -15,9 +16,10 @@ const icons: Record<string, LucideIcon> = {
   Search,
   MessageSquare,
   Phone,
-  Star,
+  ShieldCheck,
   Smartphone,
   RefreshCw,
+  Star,
 };
 
 export function Benefits() {

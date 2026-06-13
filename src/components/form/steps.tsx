@@ -7,6 +7,7 @@ import {
   useWatch,
 } from "react-hook-form";
 import {
+  Check,
   ChevronDown,
   ChevronUp,
   Layers,
@@ -128,12 +129,14 @@ function TypeStep() {
   );
 }
 
-/* ── A. Activité ────────────────────────────────────────────────────────── */
+/* ── A. Entreprise & contact (entreprise + coordonnées + SIRET fusionnés) ── */
 
-function ActiviteStep() {
-  const { register, control } = useFormContext<LeadValues>();
+function EntrepriseContactStep() {
+  const { register, control, setValue } = useFormContext<LeadValues>();
   const err = useErr();
   const mobile = useWatch<LeadValues>({ control, name: "mobile" });
+  const hasShop = useWatch<LeadValues>({ control, name: "hasShop" });
+  const noSiret = useWatch<LeadValues>({ control, name: "noSiret" });
   return (
     <div className="grid gap-5">
       <Field
@@ -175,6 +178,49 @@ function ActiviteStep() {
           {...register("city")}
         />
       </Field>
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <Field
+          label="Téléphone"
+          hint="Le numéro affiché sur ton site."
+          htmlFor="phone"
+          error={err("phone")}
+        >
+          <TextInput
+            id="phone"
+            type="tel"
+            placeholder="06 12 34 56 78"
+            invalid={!!err("phone")}
+            {...register("phone")}
+          />
+        </Field>
+        <Field
+          label="Email"
+          hint="C'est là qu'arriveront les demandes."
+          htmlFor="email"
+          error={err("email")}
+        >
+          <TextInput
+            id="email"
+            type="email"
+            placeholder="Ton adresse email"
+            invalid={!!err("email")}
+            {...register("email")}
+          />
+        </Field>
+      </div>
+      <Controller
+        control={control}
+        name="noWhatsapp"
+        render={({ field }) => (
+          <CheckRow
+            checked={!!field.value}
+            onChange={field.onChange}
+            label="Je n'ai pas WhatsApp (ne pas afficher de bouton WhatsApp)"
+          />
+        )}
+      />
+
       <Controller
         control={control}
         name="mobile"
@@ -201,6 +247,79 @@ function ActiviteStep() {
           />
         </Field>
       ) : null}
+
+      <Controller
+        control={control}
+        name="hasShop"
+        render={({ field }) => (
+          <CheckRow
+            checked={!!field.value}
+            onChange={field.onChange}
+            label="J'ai un local ou une boutique"
+          />
+        )}
+      />
+      {hasShop ? (
+        <Field
+          label="Adresse"
+          hint="Utile pour le référencement local et l'itinéraire."
+          htmlFor="address"
+          optional
+        >
+          <TextInput
+            id="address"
+            placeholder="12 rue de la République, 69002 Lyon"
+            {...register("address")}
+          />
+        </Field>
+      ) : null}
+
+      <Field
+        label="Disponibilités"
+        hint="Ex. : « Du lundi au samedi, 8h–19h »"
+        htmlFor="availability"
+        optional
+      >
+        <TextInput
+          id="availability"
+          placeholder="Tes horaires ou jours d'intervention"
+          {...register("availability")}
+        />
+      </Field>
+
+      <Field
+        label="Numéro SIRET"
+        hint="Facultatif. Coche ci-dessous si ton entreprise est en cours de création."
+        htmlFor="siret"
+        optional
+      >
+        <TextInput
+          id="siret"
+          inputMode="numeric"
+          placeholder="14 chiffres"
+          disabled={!!noSiret}
+          className={
+            noSiret
+              ? "cursor-not-allowed bg-ink-panel text-cream-faint"
+              : undefined
+          }
+          {...register("siret")}
+        />
+      </Field>
+      <Controller
+        control={control}
+        name="noSiret"
+        render={({ field }) => (
+          <CheckRow
+            checked={!!field.value}
+            onChange={(v) => {
+              field.onChange(v);
+              if (v) setValue("siret", "");
+            }}
+            label="SIRET en cours de création"
+          />
+        )}
+      />
     </div>
   );
 }
@@ -424,124 +543,47 @@ function ProduitsStep() {
   );
 }
 
-/* ── B. Coordonnées ─────────────────────────────────────────────────────── */
+/* ── Identité visuelle & préférences (logo, photos, langues, style) ──────── */
 
-function CoordonneesStep() {
-  const { register } = useFormContext<LeadValues>();
+// `flag` = code pays ISO pour l'image de drapeau (flagcdn). On évite les
+// emojis-drapeaux qui ne s'affichent pas sous Windows.
+const LANGS = [
+  { value: "fr", label: "Français", flag: "fr" },
+  { value: "en", label: "English", flag: "us" },
+  { value: "ar", label: "العربية", flag: "sa" },
+  { value: "es", label: "Español", flag: "es" },
+  { value: "tr", label: "Türkçe", flag: "tr" },
+  { value: "pt", label: "Português", flag: "pt" },
+  { value: "it", label: "Italiano", flag: "it" },
+  { value: "de", label: "Deutsch", flag: "de" },
+  { value: "ru", label: "Русский", flag: "ru" },
+  { value: "bn", label: "বাংলা", flag: "bd" },
+  { value: "hi", label: "हिन्दी", flag: "in" },
+];
+
+const STYLE_VIBES = [
+  "Chaleureux",
+  "Épuré / minimaliste",
+  "Pro & rassurant",
+  "Moderne & dynamique",
+  "Naturel",
+  "Élégant / premium",
+  "Fun & coloré",
+];
+
+const COLORS: { value: string; label: string; swatch?: string }[] = [
+  { value: "bleu", label: "Bleu", swatch: "#2563eb" },
+  { value: "vert", label: "Vert", swatch: "#16a34a" },
+  { value: "rouge-orange", label: "Rouge / orange", swatch: "#ea580c" },
+  { value: "violet", label: "Violet", swatch: "#7c3aed" },
+  { value: "noir-blanc", label: "Noir & blanc", swatch: "#111827" },
+  { value: "dore", label: "Doré", swatch: "#caa53d" },
+  { value: "equipe", label: "Laisse faire l'équipe" },
+];
+
+function IdentitePreferencesStep() {
+  const { control, register } = useFormContext<LeadValues>();
   const err = useErr();
-  return (
-    <div className="grid gap-5">
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field
-          label="Téléphone"
-          hint="Ex. : « 06 12 34 56 78 »"
-          htmlFor="phone"
-          error={err("phone")}
-        >
-          <TextInput
-            id="phone"
-            type="tel"
-            placeholder="Le numéro affiché sur le site"
-            invalid={!!err("phone")}
-            {...register("phone")}
-          />
-        </Field>
-        <Field
-          label="WhatsApp"
-          hint="Ex. : « 06 12 34 56 78 » — laisse vide si identique au téléphone"
-          htmlFor="whatsapp"
-          optional
-        >
-          <TextInput
-            id="whatsapp"
-            type="tel"
-            placeholder="Pour un bouton WhatsApp direct"
-            {...register("whatsapp")}
-          />
-        </Field>
-      </div>
-      <Field
-        label="Email"
-        hint="Ex. : « contact@tonentreprise.fr ». C'est là qu'arriveront les demandes."
-        htmlFor="email"
-        error={err("email")}
-      >
-        <TextInput
-          id="email"
-          type="email"
-          placeholder="Ton adresse email"
-          invalid={!!err("email")}
-          {...register("email")}
-        />
-      </Field>
-      <Field
-        label="Adresse"
-        hint="Ex. : « 12 rue de la République, 69002 Lyon ». Utile pour le référencement local."
-        htmlFor="address"
-        optional
-      >
-        <TextInput
-          id="address"
-          placeholder="Ton adresse, si tu souhaites l'afficher"
-          {...register("address")}
-        />
-      </Field>
-      <Field
-        label="Disponibilités"
-        hint="Ex. : « Du lundi au samedi, 8h–19h »"
-        htmlFor="availability"
-        optional
-      >
-        <TextInput
-          id="availability"
-          placeholder="Tes horaires ou jours d'intervention"
-          {...register("availability")}
-        />
-      </Field>
-    </div>
-  );
-}
-
-/* ── C. Entreprise ──────────────────────────────────────────────────────── */
-
-function EntrepriseStep() {
-  const { register, control } = useFormContext<LeadValues>();
-  const err = useErr();
-  return (
-    <div className="grid gap-5">
-      <Field
-        label="Numéro SIRET"
-        hint="Ex. : « 123 456 789 00012 » — les 14 chiffres de ton entreprise."
-        htmlFor="siret"
-        error={err("siret")}
-      >
-        <TextInput
-          id="siret"
-          inputMode="numeric"
-          placeholder="14 chiffres"
-          invalid={!!err("siret")}
-          {...register("siret")}
-        />
-      </Field>
-      <Controller
-        control={control}
-        name="noSiret"
-        render={({ field }) => (
-          <CheckRow
-            checked={!!field.value}
-            onChange={field.onChange}
-            label="Je n'ai pas encore de SIRET (immatriculation en cours)"
-          />
-        )}
-      />
-    </div>
-  );
-}
-
-/* ── D. Identité visuelle ───────────────────────────────────────────────── */
-
-function IdentiteStep() {
-  const { control } = useFormContext<LeadValues>();
   return (
     <div className="grid gap-6">
       <Field
@@ -565,73 +607,25 @@ function IdentiteStep() {
           )}
         />
       </Field>
+
       <Field
-        label="Photo du lieu / de la devanture"
-        hint="L'extérieur de ta boutique, ton atelier, ton camion… ce qui te représente."
+        label="Tes photos"
+        hint="Lieu, devanture, réalisations, toi au travail… tout ce qui te représente. On fait le tri."
         optional
       >
         <Controller
           control={control}
-          name="venuePhotos"
+          name="photos"
           render={({ field }) => (
-            <ImageUpload value={field.value} onChange={field.onChange} compact />
+            <ImageUpload
+              value={field.value}
+              onChange={field.onChange}
+              cta="Glisse tes photos ici, ou clique pour parcourir"
+            />
           )}
         />
       </Field>
-      <Field
-        label="Photos d'ambiance"
-        hint="Quelques images qui donnent le ton : toi au travail, tes coulisses, tes clients satisfaits."
-        optional
-      >
-        <Controller
-          control={control}
-          name="ambiancePhotos"
-          render={({ field }) => (
-            <ImageUpload value={field.value} onChange={field.onChange} />
-          )}
-        />
-      </Field>
-    </div>
-  );
-}
 
-/* ── S2. Photos de services / réalisations (services / les-deux) ────────── */
-
-function RealisationsStep() {
-  const { control } = useFormContext<LeadValues>();
-  return (
-    <Field
-      label="Photos de tes réalisations"
-      hint="Avant / après, chantiers terminés, prestations réussies… La preuve par l'image rassure énormément."
-      optional
-    >
-      <Controller
-        control={control}
-        name="servicePhotos"
-        render={({ field }) => (
-          <ImageUpload value={field.value} onChange={field.onChange} />
-        )}
-      />
-    </Field>
-  );
-}
-
-/* ── F. Langues & ambiance ──────────────────────────────────────────────── */
-
-const LANGS = [
-  { value: "fr", label: "Français" },
-  { value: "en", label: "Anglais" },
-  { value: "ar", label: "Arabe" },
-  { value: "es", label: "Espagnol" },
-  { value: "pt", label: "Portugais" },
-  { value: "it", label: "Italien" },
-];
-
-function LanguesStep() {
-  const { control, register } = useFormContext<LeadValues>();
-  const err = useErr();
-  return (
-    <div className="grid gap-6">
       <Field
         label="Langues du site"
         hint="Le français est inclus par défaut. Ajoute d'autres langues si ta clientèle en a besoin."
@@ -653,21 +647,41 @@ function LanguesStep() {
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                 {LANGS.map((l) => {
                   const active = selected.includes(l.value);
+                  const locked = l.value === "fr"; // toujours inclus
                   return (
                     <button
                       type="button"
                       key={l.value}
                       role="checkbox"
                       aria-checked={active}
-                      onClick={() => toggle(l.value)}
+                      aria-disabled={locked || undefined}
+                      disabled={locked}
+                      onClick={() => {
+                        if (!locked) toggle(l.value);
+                      }}
                       className={
-                        "rounded-xl border px-4 py-3 text-sm font-medium transition-all duration-200 " +
-                        (active
-                          ? "border-ember/50 bg-ember/10 text-cream"
-                          : "border-line bg-ink-soft text-cream-muted hover:border-line-strong hover:text-cream")
+                        "flex items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-medium transition-all duration-200 " +
+                        (locked
+                          ? "cursor-not-allowed border-line bg-ink-panel text-cream-faint"
+                          : active
+                            ? "border-ember/50 bg-ember/10 text-cream"
+                            : "border-line bg-ink-soft text-cream-muted hover:border-line-strong hover:text-cream")
                       }
                     >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`https://flagcdn.com/${l.flag}.svg`}
+                        alt=""
+                        aria-hidden
+                        className={
+                          "h-3.5 w-5 shrink-0 rounded-[2px] object-cover ring-1 ring-line " +
+                          (locked ? "opacity-60" : "")
+                        }
+                      />
                       {l.label}
+                      {locked ? (
+                        <Check size={14} className="text-cream-faint" />
+                      ) : null}
                     </button>
                   );
                 })}
@@ -676,15 +690,102 @@ function LanguesStep() {
           }}
         />
       </Field>
+
       <Field
-        label="Ambiance ou couleur souhaitée"
-        hint="Ex. : « Tons chaleureux, plutôt épuré » ou « bleu confiance ». On te proposera de toute façon une direction."
+        label="Style souhaité"
+        hint="Choisis une ou plusieurs ambiances. On s'en sert comme direction — rien n'est figé."
+        optional
+      >
+        <Controller
+          control={control}
+          name="styleVibes"
+          render={({ field }) => {
+            const selected = field.value ?? [];
+            const toggle = (v: string) =>
+              field.onChange(
+                selected.includes(v)
+                  ? selected.filter((x) => x !== v)
+                  : [...selected, v],
+              );
+            return (
+              <div className="flex flex-wrap gap-2">
+                {STYLE_VIBES.map((v) => {
+                  const active = selected.includes(v);
+                  return (
+                    <button
+                      type="button"
+                      key={v}
+                      role="checkbox"
+                      aria-checked={active}
+                      onClick={() => toggle(v)}
+                      className={
+                        "rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 " +
+                        (active
+                          ? "border-ember/50 bg-ember/10 text-cream"
+                          : "border-line bg-ink-soft text-cream-muted hover:border-line-strong hover:text-cream")
+                      }
+                    >
+                      {v}
+                    </button>
+                  );
+                })}
+              </div>
+            );
+          }}
+        />
+      </Field>
+
+      <Field
+        label="Couleur dominante"
+        hint="Une teinte qui te parle pour ton site ?"
+        optional
+      >
+        <Controller
+          control={control}
+          name="colorPreference"
+          render={({ field }) => (
+            <div className="flex flex-wrap gap-2">
+              {COLORS.map((c) => {
+                const active = field.value === c.value;
+                return (
+                  <button
+                    type="button"
+                    key={c.value}
+                    role="radio"
+                    aria-checked={active}
+                    onClick={() => field.onChange(active ? "" : c.value)}
+                    className={
+                      "flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 " +
+                      (active
+                        ? "border-ember/50 bg-ember/10 text-cream"
+                        : "border-line bg-ink-soft text-cream-muted hover:border-line-strong hover:text-cream")
+                    }
+                  >
+                    {c.swatch ? (
+                      <span
+                        className="h-3.5 w-3.5 shrink-0 rounded-full ring-1 ring-inset ring-black/10"
+                        style={{ backgroundColor: c.swatch }}
+                        aria-hidden
+                      />
+                    ) : null}
+                    {c.label}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        />
+      </Field>
+
+      <Field
+        label="Autre précision ?"
+        hint="Une idée, une marque que tu aimes, un détail à respecter…"
         htmlFor="ambiance"
         optional
       >
         <TextInput
           id="ambiance"
-          placeholder="Une préférence de style ou de couleur ?"
+          placeholder="Facultatif — écris librement"
           {...register("ambiance")}
         />
       </Field>
@@ -692,7 +793,7 @@ function LanguesStep() {
   );
 }
 
-/* ── G. Mot de la fin ───────────────────────────────────────────────────── */
+/* ── Mot de la fin ──────────────────────────────────────────────────────── */
 
 function ExtraStep() {
   const { register } = useFormContext<LeadValues>();
@@ -723,11 +824,11 @@ const ALL_STEPS: StepDef[] = [
     Component: TypeStep,
   },
   {
-    id: "activite",
-    title: "Ton entreprise",
-    subtitle: "Qui tu es et où tu travailles.",
-    fields: ["companyName", "trade", "city", "mobile", "serviceArea"],
-    Component: ActiviteStep,
+    id: "entreprise",
+    title: "Ton entreprise & contact",
+    subtitle: "Qui tu es, où tu travailles, et comment te joindre.",
+    fields: ["companyName", "trade", "city", "phone", "email", "serviceArea"],
+    Component: EntrepriseContactStep,
   },
   {
     id: "prestations",
@@ -746,40 +847,12 @@ const ALL_STEPS: StepDef[] = [
     Component: ProduitsStep,
   },
   {
-    id: "coordonnees",
-    title: "Tes coordonnées",
-    subtitle: "Pour que tes futurs clients puissent te joindre facilement.",
-    fields: ["phone", "email"],
-    Component: CoordonneesStep,
-  },
-  {
-    id: "entreprise",
-    title: "Informations légales",
-    subtitle: "Une formalité pour les mentions légales de ton site.",
-    fields: ["siret", "noSiret"],
-    Component: EntrepriseStep,
-  },
-  {
     id: "identite",
-    title: "Identité visuelle",
-    subtitle: "Logo et photos. Tout est facultatif — on s'adapte à ce que tu as.",
-    fields: [],
-    Component: IdentiteStep,
-  },
-  {
-    id: "realisations",
-    title: "Tes réalisations",
-    subtitle: "Quelques photos de ton travail. Facultatif, mais ça change tout.",
-    fields: [],
-    when: wantsServices,
-    Component: RealisationsStep,
-  },
-  {
-    id: "langues",
-    title: "Langues & ambiance",
-    subtitle: "Tes préférences de langues et de style.",
+    title: "Photos & préférences",
+    subtitle:
+      "Logo, photos et style. Tout est facultatif — on s'adapte à ce que tu as.",
     fields: ["languages"],
-    Component: LanguesStep,
+    Component: IdentitePreferencesStep,
   },
   {
     id: "extra",
