@@ -111,42 +111,45 @@ export const pricing = {
   ],
 };
 
-// Portfolio — Souad en premier. Remplace `image` par une vraie capture
-// déposée dans /public/portfolio/. Laisse `image` vide pour un placeholder.
+// Portfolio — vrais sites clients. `url` → capture mobile auto (voir Portfolio).
+// `image` (capture locale dans /public/portfolio/) a la priorité si renseigné.
 export type Work = {
   client: string;
   trade: string;
   city: string;
-  image?: string;
-  accent: string; // teinte du placeholder
+  url?: string; // site live → preview par capture
+  image?: string; // capture locale (prioritaire) /public/portfolio/…
+  accent: string; // teinte du placeholder / fond
 };
 
 export const portfolio: Work[] = [
   {
-    client: "Souad",
-    trade: "Ménage & repassage à domicile",
-    city: "Lyon",
-    // Dépose la capture dans /public/portfolio/souad.png puis décommente :
-    // image: "/portfolio/souad.png",
+    client: "SANAD CLEAN",
+    trade: "Nettoyage & services à la personne",
+    city: "Nîmes",
+    url: "https://sanadclean.xklic.com",
     accent: "from-rose-500/20 to-amber-500/10",
   },
   {
-    client: "Garage Mécaline",
-    trade: "Mécanique automobile",
-    city: "Villeurbanne",
-    accent: "from-sky-500/20 to-emerald-500/10",
+    client: "Atelier Douceur",
+    trade: "Pâtisserie de création",
+    city: "Saint-Germain-en-Laye",
+    url: "https://atelier-douceur.xklic.com",
+    accent: "from-pink-500/20 to-amber-500/10",
   },
   {
-    client: "Élec Pro",
-    trade: "Électricien certifié",
-    city: "Vénissieux",
-    accent: "from-amber-500/20 to-orange-500/10",
+    client: "Garage Méca Atlas",
+    trade: "Réparation automobile",
+    city: "Argenteuil",
+    url: "https://meca-atlas.xklic.com",
+    accent: "from-sky-500/20 to-slate-500/10",
   },
   {
-    client: "AquaFix",
-    trade: "Plomberie & dépannage",
-    city: "Bron",
-    accent: "from-cyan-500/20 to-blue-500/10",
+    client: "Vibe Coaching",
+    trade: "Coaching sportif",
+    city: "Lyon",
+    url: "https://vibe-coaching.xklic.com",
+    accent: "from-emerald-500/20 to-lime-500/10",
   },
 ];
 

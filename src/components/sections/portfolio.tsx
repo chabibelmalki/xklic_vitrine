@@ -32,8 +32,15 @@ export function Portfolio() {
 }
 
 function WorkCard({ work, featured }: { work: Work; featured?: boolean }) {
+  const Wrapper: React.ElementType = work.url ? "a" : "div";
+  const linkProps = work.url
+    ? { href: work.url, target: "_blank", rel: "noreferrer" }
+    : {};
   return (
-    <div className="group relative overflow-hidden rounded-[var(--radius-card)] border border-line bg-ink-soft transition-all duration-500 hover:border-line-strong hover:shadow-card">
+    <Wrapper
+      {...linkProps}
+      className="group relative block overflow-hidden rounded-[var(--radius-card)] border border-line bg-ink-soft transition-all duration-500 hover:border-line-strong hover:shadow-card"
+    >
       {/* Aperçu — maquette mobile sur fond chaud */}
       <div className="relative h-72 overflow-hidden sm:h-80">
         <div
@@ -63,6 +70,17 @@ function WorkCard({ work, featured }: { work: Work; featured?: boolean }) {
                   className="h-[300px] w-full object-cover object-top"
                   sizes="176px"
                 />
+              ) : work.url ? (
+                // Capture mobile auto du site live (microlink, gratuit, sans clé).
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={`https://api.microlink.io/?url=${encodeURIComponent(
+                    work.url,
+                  )}&screenshot=true&embed=screenshot.url&meta=false&viewport.width=414&viewport.height=896`}
+                  alt={`Site mobile de ${work.client} — ${work.trade}`}
+                  loading="lazy"
+                  className="h-[300px] w-full bg-ink object-cover object-top"
+                />
               ) : (
                 <PhoneSiteMock work={work} />
               )}
@@ -84,7 +102,7 @@ function WorkCard({ work, featured }: { work: Work; featured?: boolean }) {
           <ArrowUpRight size={16} />
         </span>
       </div>
-    </div>
+    </Wrapper>
   );
 }
 
