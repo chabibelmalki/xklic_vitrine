@@ -17,8 +17,8 @@ export function Faq() {
         <Reveal>
           <SectionHeading
             eyebrow="Questions"
-            title="Tout ce que vous vous demandez, sans détour."
-            description="Une autre question ? Écrivez-nous, on répond vite et clairement."
+            title="Tout ce que tu te demandes, sans détour."
+            description="Une autre question ? Écris-nous, on répond vite et clairement."
           />
         </Reveal>
 

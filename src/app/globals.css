@@ -1,30 +1,48 @@
 @import "tailwindcss";
 
+/* ───────────────────────────────────────────────────────────────────────────
+   XKLIC — Design system
+   Direction : « premium chaleureux ». Papier ivoire, encre presque-noire tiède,
+   un seul accent fort et assumé : vermillon (ember). Pas de bleu startup,
+   pas de corporate froid. Lisible, rassurant, mémorable — pensé mobile.
+   Convention de tokens : `ink*` = surfaces (fond), `cream*` = texte,
+   `ember*` = accent, `amber` = accent secondaire (dégradés uniquement).
+   ─────────────────────────────────────────────────────────────────────────── */
+
 @theme {
-  /* Surfaces — dark editorial chaud */
-  --color-ink: #0a0a0b;
-  --color-ink-soft: #0f0f12;
-  --color-ink-panel: #141417;
-  --color-cream: #faf7f2;
-  --color-cream-muted: #b7b2aa;
-  --color-cream-faint: #75726c;
+  /* Surfaces — ivoire chaud, premium, doux sur mobile */
+  --color-ink: #faf6f0; /* fond de page */
+  --color-ink-soft: #f3ece1; /* cartes, champs, surfaces alternées */
+  --color-ink-panel: #e9e0d2; /* survol / surface élevée */
 
-  /* Accent chaud — ember (terracotta/ambre) */
-  --color-ember: #ff6a3d;
-  --color-ember-soft: #ff8a5c;
-  --color-ember-deep: #d8502a;
-  --color-amber: #f0a85a;
+  /* Texte — presque-noir tiède (jamais #000, plus premium) */
+  --color-cream: #1b1611; /* texte principal */
+  --color-cream-muted: #6a6055; /* texte secondaire */
+  --color-cream-faint: #9c9286; /* texte tertiaire */
 
-  /* Hairlines */
-  --color-line: rgba(250, 247, 242, 0.08);
-  --color-line-strong: rgba(250, 247, 242, 0.14);
+  /* Accent — vermillon (énergie + confiance + chaleur) */
+  --color-ember: #e5431f;
+  --color-ember-soft: #f06438;
+  --color-ember-deep: #bf3315;
+  --color-amber: #f2a13a; /* secondaire, dégradés chauds */
+
+  /* Hairlines (encre tiède translucide sur fond clair) */
+  --color-line: rgba(27, 22, 17, 0.1);
+  --color-line-strong: rgba(27, 22, 17, 0.17);
 
   /* Fonts */
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
 
-  /* Easing */
+  /* Easing signature */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Rayons & ombres — échelle premium */
+  --radius-card: 1.5rem;
+  --shadow-card:
+    0 1px 2px rgba(27, 22, 17, 0.04), 0 18px 40px -22px rgba(27, 22, 17, 0.22);
+  --shadow-float:
+    0 2px 6px rgba(27, 22, 17, 0.05), 0 40px 90px -44px rgba(191, 51, 21, 0.32);
 }
 
 :root {
@@ -36,12 +54,6 @@ html {
   scroll-behavior: smooth;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
@@ -49,44 +61,113 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Display serif fine-tuning */
+/* Display serif — réglage optique, plus de caractère */
 .font-display {
   font-optical-sizing: auto;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
-/* Subtle film grain over the whole page */
-.grain::before {
+/* ── Effet signature 1 : aurora chaude animée (hero) ───────────────────────
+   Deux taches de lumière vermillon/ambre qui dérivent lentement.
+   Désactivée si prefers-reduced-motion. */
+.aurora {
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 760px;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(20px);
+}
+.aurora::before,
+.aurora::after {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  opacity: 0.5;
+  will-change: transform;
+}
+.aurora::before {
+  width: 52%;
+  height: 70%;
+  left: 8%;
+  top: 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(229, 67, 31, 0.5),
+    transparent 68%
+  );
+  animation: aurora-a 18s var(--ease-out-expo) infinite alternate;
+}
+.aurora::after {
+  width: 46%;
+  height: 64%;
+  right: 6%;
+  top: 6%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(242, 161, 58, 0.42),
+    transparent 70%
+  );
+  animation: aurora-b 22s var(--ease-out-expo) infinite alternate;
+}
+@keyframes aurora-a {
+  to {
+    transform: translate3d(8%, 6%, 0) scale(1.15);
+  }
+}
+@keyframes aurora-b {
+  to {
+    transform: translate3d(-9%, 4%, 0) scale(1.1);
+  }
+}
+
+/* Lueur d'accent douce (sections autres que le hero) */
+.glow-ember {
+  background: radial-gradient(
+    60% 60% at 50% 0%,
+    rgba(229, 67, 31, 0.12) 0%,
+    rgba(229, 67, 31, 0.05) 38%,
+    transparent 72%
+  );
+}
+
+/* Élévation de carte douce */
+.card-elev {
+  box-shadow: var(--shadow-card);
+}
+
+/* Texte en dégradé — vermillon → ambre, lisible sur ivoire */
+.text-gradient-warm {
+  background: linear-gradient(
+    100deg,
+    var(--color-ember-deep) 0%,
+    var(--color-ember) 48%,
+    var(--color-amber) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Grain fin — texture papier premium, très subtile */
+.grain::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Warm radial glow utility */
-.glow-ember {
-  background: radial-gradient(
-    60% 60% at 50% 0%,
-    rgba(255, 106, 61, 0.18) 0%,
-    rgba(255, 106, 61, 0.06) 35%,
-    transparent 70%
-  );
+/* Marquee — défilement continu des secteurs (Trust) */
+.marquee {
+  animation: marquee 38s linear infinite;
 }
-
-/* Gradient text */
-.text-gradient-warm {
-  background: linear-gradient(
-    120deg,
-    var(--color-cream) 0%,
-    var(--color-amber) 55%,
-    var(--color-ember) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* Hairline divider */
@@ -94,14 +175,31 @@ body {
   border-color: var(--color-line);
 }
 
-/* Focus ring — accessible, warm */
+/* Focus ring — accessible */
 *:focus-visible {
   outline: 2px solid var(--color-ember);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* Custom scrollbar (subtle) */
 ::selection {
-  background: rgba(255, 106, 61, 0.3);
+  background: rgba(229, 67, 31, 0.18);
+}
+
+/* ── Accessibilité : on coupe tout mouvement non essentiel ─────────────────*/
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .aurora::before,
+  .aurora::after {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

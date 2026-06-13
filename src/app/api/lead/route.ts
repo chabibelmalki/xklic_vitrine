@@ -26,7 +26,7 @@ export async function POST(req: Request) {
   const lead = {
     ...parsed.data,
     receivedAt: new Date().toISOString(),
-    source: "brio-vitrine",
+    source: "xklic-vitrine",
   };
 
   const webhook = process.env.N8N_WEBHOOK_URL;

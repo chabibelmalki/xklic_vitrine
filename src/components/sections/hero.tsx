@@ -1,12 +1,12 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Phone, MessageCircle, Star } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
 import { EASE_OUT } from "@/lib/utils";
 
-const proofs = ["En ligne en 48h", "Sans engagement", "49€ + 9,90€/mois"];
+const proofs = ["En ligne en 2h", "Sans engagement", "49€ + 9,90€/mois"];
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -21,15 +21,12 @@ export function Hero() {
   };
 
   return (
-    <section className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28 lg:pt-48">
-      {/* Warm glow */}
+    <section className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28 lg:pt-44">
+      {/* Effet signature : aurora chaude animée */}
+      <div className="aurora" aria-hidden />
+      {/* Texture pointillée très discrète */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-[700px] glow-ember"
-        aria-hidden
-      />
-      {/* Faint grid */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)]"
+        className="pointer-events-none absolute inset-0 opacity-[0.4] [background-image:radial-gradient(circle_at_1px_1px,rgba(27,22,17,0.07)_1px,transparent_0)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_75%_55%_at_50%_0%,rgba(0,0,0,0.5),transparent)]"
         aria-hidden
       />
 
@@ -40,22 +37,22 @@ export function Hero() {
           className="mx-auto flex max-w-3xl flex-col items-center text-center"
         >
           <motion.div custom={0} variants={item}>
-            <span className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-cream/[0.03] px-4 py-1.5 text-xs font-medium text-cream-muted backdrop-blur">
+            <span className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-ink/60 px-4 py-1.5 text-xs font-medium text-cream-muted backdrop-blur">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ember opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-ember" />
               </span>
-              Sites web pour artisans & TPE de service
+              Sites web pour artisans &amp; TPE de service
             </span>
           </motion.div>
 
           <motion.h1
             custom={1}
             variants={item}
-            className="font-display mt-7 text-4xl font-light leading-[1.02] tracking-tight text-cream sm:text-6xl lg:text-7xl"
+            className="font-display mt-7 text-[2.6rem] font-semibold leading-[1.04] tracking-[-0.02em] text-cream sm:text-6xl lg:text-7xl"
           >
-            Un site pro pour votre activité,{" "}
-            <span className="text-gradient-warm">en ligne en 48h.</span>
+            Ton site pro qui te{" "}
+            <span className="text-gradient-warm">ramène des clients.</span>
           </motion.h1>
 
           <motion.p
@@ -63,15 +60,15 @@ export function Hero() {
             variants={item}
             className="mt-6 max-w-xl text-base leading-relaxed text-cream-muted sm:text-lg"
           >
-            Vous êtes plombier, mécanicien, à votre compte dans le ménage&nbsp;?
-            On crée votre site clés en main, soigné et fait pour vous trouver de
-            nouveaux clients. Sans prise de tête.
+            Plombier, mécanicien, à ton compte dans le ménage&nbsp;? On crée ton
+            site clés en main, soigné et pensé pour te trouver de nouveaux
+            clients. En ligne en 2h, sans prise de tête.
           </motion.p>
 
           <motion.div
             custom={3}
             variants={item}
-            className="mt-9 flex flex-col items-center gap-3 sm:flex-row"
+            className="mt-9 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row"
           >
             <ButtonLink href="/demarrer" size="lg" className="w-full sm:w-auto">
               Créer mon site
@@ -107,62 +104,128 @@ export function Hero() {
           </motion.ul>
         </motion.div>
 
-        {/* Browser mockup */}
+        {/* Preuve visuelle : maquette mobile + demandes clients qui arrivent */}
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4, ease: EASE_OUT }}
-          className="relative mx-auto mt-16 max-w-4xl sm:mt-20"
+          className="relative mx-auto mt-20 flex max-w-md justify-center sm:mt-24"
         >
-          <div className="absolute -inset-x-8 -top-8 bottom-0 glow-ember opacity-60" aria-hidden />
-          <BrowserMock />
+          <PhoneMock reduce={!!reduce} />
         </motion.div>
       </Container>
     </section>
   );
 }
 
-function BrowserMock() {
+function PhoneMock({ reduce }: { reduce: boolean }) {
+  const float = (delay: number) =>
+    reduce
+      ? {}
+      : {
+          animate: { y: [0, -9, 0] },
+          transition: {
+            duration: 5,
+            delay,
+            repeat: Infinity,
+            ease: "easeInOut" as const,
+          },
+        };
+
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-line-strong bg-ink-panel shadow-[0_40px_120px_-30px_rgba(0,0,0,0.8)]">
-      {/* Top bar */}
-      <div className="flex items-center gap-2 border-b border-line px-4 py-3">
-        <span className="h-2.5 w-2.5 rounded-full bg-cream/15" />
-        <span className="h-2.5 w-2.5 rounded-full bg-cream/15" />
-        <span className="h-2.5 w-2.5 rounded-full bg-cream/15" />
-        <span className="ml-3 flex-1">
-          <span className="block w-fit rounded-md bg-cream/[0.05] px-3 py-1 text-[11px] text-cream-faint">
-            souad-menage.fr
-          </span>
-        </span>
-      </div>
-      {/* Fake site preview */}
-      <div className="relative grid gap-4 p-6 sm:grid-cols-5 sm:p-8">
-        <div className="sm:col-span-3 flex flex-col justify-center gap-3">
-          <span className="text-[11px] uppercase tracking-[0.2em] text-ember-soft">
-            Ménage à domicile · Lyon
-          </span>
-          <span className="font-display text-2xl font-light leading-tight text-cream sm:text-3xl">
-            Votre intérieur impeccable,
-            <br />
-            sans y penser.
-          </span>
-          <span className="text-sm text-cream-muted">
-            Crédit d&apos;impôt 50% · Devis gratuit en 24h
-          </span>
-          <div className="mt-1 flex gap-2">
-            <span className="rounded-full bg-ember px-4 py-2 text-xs font-medium text-ink">
-              Demander un devis
-            </span>
-            <span className="rounded-full border border-line-strong px-4 py-2 text-xs text-cream-muted">
-              06 12 34 56 78
-            </span>
+    <div className="relative">
+      {/* Halo derrière le téléphone */}
+      <div
+        className="pointer-events-none absolute -inset-10 rounded-full bg-ember/10 blur-3xl"
+        aria-hidden
+      />
+
+      {/* Téléphone */}
+      <div className="relative mx-auto w-[270px] rounded-[2.6rem] border border-line-strong bg-cream p-2.5 shadow-float sm:w-[300px]">
+        <div className="relative overflow-hidden rounded-[2rem] bg-ink">
+          {/* Encoche */}
+          <div className="absolute left-1/2 top-2.5 z-10 h-5 w-24 -translate-x-1/2 rounded-full bg-cream" />
+
+          {/* Mini-site artisan (exemple ménage) */}
+          <div className="h-[500px] overflow-hidden sm:h-[540px]">
+            {/* Header du mini-site */}
+            <div className="flex items-center justify-between px-4 pt-8 pb-3">
+              <span className="font-display text-sm font-semibold text-cream">
+                Souad·Ménage
+              </span>
+              <span className="rounded-full bg-ember px-2.5 py-1 text-[9px] font-semibold text-white">
+                Devis
+              </span>
+            </div>
+            {/* Hero du mini-site */}
+            <div className="relative px-4 pt-2">
+              <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-gradient-to-br from-ember/25 via-amber/15 to-transparent ring-1 ring-inset ring-line">
+                <div className="absolute inset-0 [background-image:radial-gradient(circle_at_1px_1px,rgba(27,22,17,0.05)_1px,transparent_0)] [background-size:14px_14px]" />
+              </div>
+              <span className="mt-3 block text-[10px] font-medium uppercase tracking-[0.18em] text-ember-deep">
+                Ménage à domicile · Lyon
+              </span>
+              <span className="font-display mt-1 block text-lg font-semibold leading-tight text-cream">
+                Votre intérieur impeccable, sans y penser.
+              </span>
+              <div className="mt-2 flex items-center gap-1 text-[10px] text-cream-muted">
+                <Star size={10} className="fill-amber text-amber" />
+                <Star size={10} className="fill-amber text-amber" />
+                <Star size={10} className="fill-amber text-amber" />
+                <Star size={10} className="fill-amber text-amber" />
+                <Star size={10} className="fill-amber text-amber" />
+                <span className="ml-1">Crédit d&apos;impôt 50%</span>
+              </div>
+              <div className="mt-3 flex gap-2">
+                <span className="flex-1 rounded-full bg-ember py-2 text-center text-[10px] font-semibold text-white">
+                  Demander un devis
+                </span>
+                <span className="flex items-center gap-1 rounded-full border border-line-strong px-3 py-2 text-[10px] text-cream-muted">
+                  <Phone size={10} /> Appeler
+                </span>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="sm:col-span-2">
-          <div className="aspect-[4/5] rounded-xl bg-gradient-to-br from-rose-500/25 via-amber-500/10 to-transparent ring-1 ring-inset ring-line" />
-        </div>
       </div>
+
+      {/* Carte flottante : nouvelle demande WhatsApp */}
+      <motion.div
+        {...float(0.2)}
+        className="absolute -left-6 top-24 w-max rounded-2xl border border-line bg-ink/90 px-3.5 py-2.5 shadow-card backdrop-blur sm:-left-12"
+        aria-hidden
+      >
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-600">
+            <MessageCircle size={15} />
+          </span>
+          <div className="leading-tight">
+            <p className="text-[11px] font-semibold text-cream">
+              Nouvelle demande
+            </p>
+            <p className="text-[10px] text-cream-muted">
+              « Bonjour, vous êtes dispo&nbsp;? »
+            </p>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Carte flottante : appel reçu */}
+      <motion.div
+        {...float(1.4)}
+        className="absolute -right-4 bottom-20 w-max rounded-2xl border border-line bg-ink/90 px-3.5 py-2.5 shadow-card backdrop-blur sm:-right-10"
+        aria-hidden
+      >
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ember/15 text-ember">
+            <Phone size={15} />
+          </span>
+          <div className="leading-tight">
+            <p className="text-[11px] font-semibold text-cream">Appel reçu</p>
+            <p className="text-[10px] text-cream-muted">+33 6 12 · 0:42</p>
+          </div>
+        </div>
+      </motion.div>
     </div>
   );
 }

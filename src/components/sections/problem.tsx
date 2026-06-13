@@ -3,17 +3,17 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { Frown, Smile } from "lucide-react";
 
 const problems = [
-  "Vos clients vous cherchent sur Google… et ne vous trouvent pas.",
+  "Tes clients te cherchent sur Google… et ne te trouvent pas.",
   "Une page Facebook ne suffit plus à inspirer confiance.",
   "Les devis d'agences web tournent à 1 500€, voire bien plus.",
-  "Vous n'avez ni le temps ni l'envie de gérer un site vous-même.",
+  "Tu n'as ni le temps ni l'envie de gérer un site toi-même.",
 ];
 
 const promises = [
-  "Un site qui vous fait apparaître quand on cherche votre métier près de chez vous.",
-  "Une vitrine soignée qui rassure et donne envie de vous appeler.",
+  "Un site qui te fait apparaître quand on cherche ton métier près de chez toi.",
+  "Une vitrine soignée qui rassure et donne envie de t'appeler.",
   "49€ à la création, 9,90€/mois. Tout compris, sans surprise.",
-  "Vous ne touchez à rien : on s'occupe de tout, vous validez.",
+  "Tu ne touches à rien : on s'occupe de tout, tu valides.",
 ];
 
 export function Problem() {
@@ -25,11 +25,11 @@ export function Problem() {
           title={
             <>
               Être bon dans son métier ne suffit plus.
-              <br className="hidden sm:block" /> Encore faut-il qu&apos;on vous
+              <br className="hidden sm:block" /> Encore faut-il qu&apos;on te
               trouve.
             </>
           }
-          description="Aujourd'hui, le premier réflexe d'un client, c'est Google. Sans site crédible, vous laissez vos concurrents prendre les appels qui auraient dû être les vôtres."
+          description="Aujourd'hui, le premier réflexe d'un client, c'est Google. Sans site crédible, tu laisses tes concurrents prendre les appels qui auraient dû être les tiens."
         />
       </Reveal>
 
@@ -41,7 +41,7 @@ export function Problem() {
               <Frown size={18} className="text-cream-faint" />
             </span>
             <span className="text-sm font-medium uppercase tracking-wider text-cream-faint">
-              Sans Brio
+              Sans Xklic
             </span>
           </div>
           {problems.map((p) => (
@@ -63,7 +63,7 @@ export function Problem() {
               <Smile size={18} className="text-ember-soft" />
             </span>
             <span className="text-sm font-medium uppercase tracking-wider text-ember-soft">
-              Avec Brio
+              Avec Xklic
             </span>
           </div>
           {promises.map((p) => (

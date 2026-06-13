@@ -8,8 +8,8 @@ export function Process() {
       <Reveal>
         <SectionHeading
           eyebrow="Comment ça marche"
-          title="Quatre étapes. Et vous recevez vos premières demandes."
-          description="Pas de jargon, pas de réunions interminables. Vous nous donnez l'essentiel, on fait le reste."
+          title="Quatre étapes. Et tu reçois tes premières demandes."
+          description="Pas de jargon, pas de réunions interminables. Tu nous donnes l'essentiel, on fait le reste."
         />
       </Reveal>
 

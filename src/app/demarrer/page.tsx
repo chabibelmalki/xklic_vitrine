@@ -3,11 +3,12 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Logo } from "@/components/site/logo";
 import { LeadForm } from "@/components/form/lead-form";
+import { FloatingActions } from "@/components/site/floating-actions";
 
 export const metadata: Metadata = {
   title: "Créer mon site",
   description:
-    "Décrivez votre activité en quelques minutes. On crée votre site pro et il est en ligne en 48h.",
+    "Décris ton activité en quelques minutes. On crée ton site pro et il est en ligne en 2h.",
 };
 
 export default function DemarrerPage() {
@@ -35,6 +36,8 @@ export default function DemarrerPage() {
       <main className="relative z-10 flex-1 px-5 py-12 sm:py-16 lg:py-20">
         <LeadForm />
       </main>
+
+      <FloatingActions />
     </div>
   );
 }

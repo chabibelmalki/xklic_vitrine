@@ -199,7 +199,7 @@ export function LeadForm() {
         {/* Card */}
         <div className="rounded-3xl border border-line bg-ink-soft/60 p-6 backdrop-blur-sm sm:p-9">
           <div className="mb-7">
-            <h1 className="font-display text-2xl font-light tracking-tight text-cream sm:text-3xl">
+            <h1 className="font-display text-2xl font-semibold tracking-tight text-cream sm:text-3xl">
               {current.title}
             </h1>
             <p className="mt-2 text-sm text-cream-muted">{current.subtitle}</p>
@@ -232,8 +232,8 @@ export function LeadForm() {
 
             {status === "error" ? (
               <p className="mt-5 rounded-lg border border-ember/30 bg-ember/10 px-4 py-3 text-sm text-ember-soft">
-                Oups, l&apos;envoi a échoué. Réessayez dans un instant, ou
-                écrivez-nous directement.
+                Oups, l&apos;envoi a échoué. Réessaie dans un instant, ou
+                écris-nous directement.
               </p>
             ) : null}
 
@@ -303,7 +303,7 @@ export function LeadForm() {
         </div>
 
         <p className="mt-6 text-center text-xs text-cream-faint">
-          Aucun paiement aujourd&apos;hui. On vous recontacte pour finaliser.
+          Aucun paiement aujourd&apos;hui. On te recontacte pour finaliser.
         </p>
       </div>
     </FormProvider>
@@ -321,12 +321,12 @@ function ThankYou() {
       <span className="flex h-16 w-16 items-center justify-center rounded-full border border-ember/30 bg-ember/10 text-ember-soft">
         <PartyPopper size={28} />
       </span>
-      <h1 className="font-display mt-7 text-3xl font-light tracking-tight text-cream sm:text-4xl">
+      <h1 className="font-display mt-7 text-3xl font-semibold tracking-tight text-cream sm:text-4xl">
         C&apos;est noté, merci&nbsp;!
       </h1>
       <p className="mt-4 max-w-md text-base leading-relaxed text-cream-muted">
-        Nous avons bien reçu vos informations. Notre équipe prépare votre site
-        et revient vers vous très vite — généralement sous 48h — pour vous
+        Nous avons bien reçu tes informations. Notre équipe prépare ton site
+        et revient vers toi très vite — généralement sous 2h — pour te
         montrer une première version.
       </p>
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -339,7 +339,7 @@ function ThankYou() {
         </Link>
       </div>
       <p className="mt-8 text-xs text-cream-faint">
-        Une question en attendant&nbsp;? bonjour@brio.studio
+        Une question en attendant&nbsp;? contact@xklic.fr
       </p>
     </motion.div>
   );

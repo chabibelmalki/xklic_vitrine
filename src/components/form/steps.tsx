@@ -48,19 +48,19 @@ const ACTIVITY_OPTIONS = [
   {
     value: "services" as const,
     title: "Des services",
-    desc: "Vous intervenez chez vos clients ou en atelier — ménage, plomberie, coiffure, mécanique…",
+    desc: "Tu interviens chez tes clients ou en atelier — ménage, plomberie, coiffure, mécanique…",
     Icon: Wrench,
   },
   {
     value: "produits" as const,
     title: "Des produits",
-    desc: "Vous vendez de la marchandise — boulangerie, boutique, créations artisanales…",
+    desc: "Tu vends de la marchandise — boulangerie, boutique, créations artisanales…",
     Icon: ShoppingBag,
   },
   {
     value: "les-deux" as const,
     title: "Les deux",
-    desc: "Vous proposez à la fois des prestations et des produits à la vente.",
+    desc: "Tu proposes à la fois des prestations et des produits à la vente.",
     Icon: Layers,
   },
 ];
@@ -70,8 +70,8 @@ function TypeStep() {
   const err = useErr();
   return (
     <Field
-      label="Que proposez-vous à vos clients ?"
-      hint="On adapte les questions suivantes à votre activité."
+      label="Que proposes-tu à tes clients ?"
+      hint="On adapte les questions suivantes à ton activité."
       error={err("activityType")}
     >
       <Controller
@@ -137,27 +137,27 @@ function ActiviteStep() {
   return (
     <div className="grid gap-5">
       <Field
-        label="Nom de votre entreprise"
+        label="Nom de ton entreprise"
         hint="Ex. : « Souad Ménage », « Garage Mécaline »"
         htmlFor="companyName"
         error={err("companyName")}
       >
         <TextInput
           id="companyName"
-          placeholder="Le nom sous lequel vos clients vous connaissent"
+          placeholder="Le nom sous lequel tes clients te connaissent"
           invalid={!!err("companyName")}
           {...register("companyName")}
         />
       </Field>
       <Field
-        label="Votre métier"
+        label="Ton métier"
         hint="Ex. : « Femme de ménage à domicile », « Plombier chauffagiste »"
         htmlFor="trade"
         error={err("trade")}
       >
         <TextInput
           id="trade"
-          placeholder="Ce que vous faites, en quelques mots"
+          placeholder="Ce que tu fais, en quelques mots"
           invalid={!!err("trade")}
           {...register("trade")}
         />
@@ -170,7 +170,7 @@ function ActiviteStep() {
       >
         <TextInput
           id="city"
-          placeholder="Votre ville principale"
+          placeholder="Ta ville principale"
           invalid={!!err("city")}
           {...register("city")}
         />
@@ -195,7 +195,7 @@ function ActiviteStep() {
         >
           <TextInput
             id="serviceArea"
-            placeholder="Jusqu'où vous intervenez"
+            placeholder="Jusqu'où tu interviens"
             invalid={!!err("serviceArea")}
             {...register("serviceArea")}
           />
@@ -213,21 +213,21 @@ function PrestationsStep() {
   return (
     <div className="grid gap-6">
       <Field
-        label="Vos prestations et vos prix"
-        hint="Écrivez en vrac, on met en forme. Ex. : « Ménage 25€/h, repassage 20€/h, grand nettoyage sur devis. »"
+        label="Tes prestations et tes prix"
+        hint="Écris en vrac, on met en forme. Ex. : « Ménage 25€/h, repassage 20€/h, grand nettoyage sur devis. »"
         htmlFor="services"
         error={err("services")}
       >
         <TextArea
           id="services"
-          placeholder="Listez ce que vous proposez et vos tarifs, même approximatifs…"
+          placeholder="Liste ce que tu proposes et tes tarifs, même approximatifs…"
           invalid={!!err("services")}
           {...register("services")}
         />
       </Field>
       <Field
         label="Services à la personne / crédit d'impôt 50% ?"
-        hint="Le crédit d'impôt est un argument fort : on le mettra en avant si vous êtes éligible."
+        hint="Le crédit d'impôt est un argument fort : on le mettra en avant si tu es éligible."
         error={err("taxCredit")}
       >
         <Controller
@@ -310,7 +310,7 @@ function ProductCard({ index }: { index: number }) {
         >
           <TextInput
             id={`products.${index}.category`}
-            placeholder="Pour regrouper vos produits"
+            placeholder="Pour regrouper tes produits"
             {...register(`products.${index}.category` as const)}
           />
         </Field>
@@ -324,7 +324,7 @@ function ProductCard({ index }: { index: number }) {
               value={field.value}
               onChange={field.onChange}
               compact
-              cta="Ajoutez une ou plusieurs photos"
+              cta="Ajoute une ou plusieurs photos"
             />
           )}
         />
@@ -360,8 +360,8 @@ function ProduitsStep() {
       {fields.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-line-strong bg-ink-soft px-5 py-8 text-center">
           <p className="text-sm text-cream-muted">
-            Aucun produit pour l&apos;instant. Ajoutez-en autant que vous le
-            souhaitez — vous pourrez les réordonner ou les retirer.
+            Aucun produit pour l&apos;instant. Ajoutes-en autant que tu le
+            souhaites — tu pourras les réordonner ou les retirer.
           </p>
         </div>
       ) : null}
@@ -448,7 +448,7 @@ function CoordonneesStep() {
         </Field>
         <Field
           label="WhatsApp"
-          hint="Ex. : « 06 12 34 56 78 » — laissez vide si identique au téléphone"
+          hint="Ex. : « 06 12 34 56 78 » — laisse vide si identique au téléphone"
           htmlFor="whatsapp"
           optional
         >
@@ -462,14 +462,14 @@ function CoordonneesStep() {
       </div>
       <Field
         label="Email"
-        hint="Ex. : « contact@votreentreprise.fr ». C'est là qu'arriveront les demandes."
+        hint="Ex. : « contact@tonentreprise.fr ». C'est là qu'arriveront les demandes."
         htmlFor="email"
         error={err("email")}
       >
         <TextInput
           id="email"
           type="email"
-          placeholder="Votre adresse email"
+          placeholder="Ton adresse email"
           invalid={!!err("email")}
           {...register("email")}
         />
@@ -482,7 +482,7 @@ function CoordonneesStep() {
       >
         <TextInput
           id="address"
-          placeholder="Votre adresse, si vous souhaitez l'afficher"
+          placeholder="Ton adresse, si tu souhaites l'afficher"
           {...register("address")}
         />
       </Field>
@@ -494,7 +494,7 @@ function CoordonneesStep() {
       >
         <TextInput
           id="availability"
-          placeholder="Vos horaires ou jours d'intervention"
+          placeholder="Tes horaires ou jours d'intervention"
           {...register("availability")}
         />
       </Field>
@@ -511,7 +511,7 @@ function EntrepriseStep() {
     <div className="grid gap-5">
       <Field
         label="Numéro SIRET"
-        hint="Ex. : « 123 456 789 00012 » — les 14 chiffres de votre entreprise."
+        hint="Ex. : « 123 456 789 00012 » — les 14 chiffres de ton entreprise."
         htmlFor="siret"
         error={err("siret")}
       >
@@ -545,8 +545,8 @@ function IdentiteStep() {
   return (
     <div className="grid gap-6">
       <Field
-        label="Votre logo"
-        hint="Si vous n'en avez pas, pas de souci : on vous en génère un."
+        label="Ton logo"
+        hint="Si tu n'en as pas, pas de souci : on t'en génère un."
         optional
       >
         <Controller
@@ -559,7 +559,7 @@ function IdentiteStep() {
               multiple={false}
               compact
               accept="image/*,.pdf,.svg"
-              cta="Déposez votre logo"
+              cta="Dépose ton logo"
               sub="PNG, SVG, JPG ou PDF"
             />
           )}
@@ -567,7 +567,7 @@ function IdentiteStep() {
       </Field>
       <Field
         label="Photo du lieu / de la devanture"
-        hint="L'extérieur de votre boutique, votre atelier, votre camion… ce qui vous représente."
+        hint="L'extérieur de ta boutique, ton atelier, ton camion… ce qui te représente."
         optional
       >
         <Controller
@@ -580,7 +580,7 @@ function IdentiteStep() {
       </Field>
       <Field
         label="Photos d'ambiance"
-        hint="Quelques images qui donnent le ton : vous au travail, vos coulisses, vos clients satisfaits."
+        hint="Quelques images qui donnent le ton : toi au travail, tes coulisses, tes clients satisfaits."
         optional
       >
         <Controller
@@ -601,7 +601,7 @@ function RealisationsStep() {
   const { control } = useFormContext<LeadValues>();
   return (
     <Field
-      label="Photos de vos réalisations"
+      label="Photos de tes réalisations"
       hint="Avant / après, chantiers terminés, prestations réussies… La preuve par l'image rassure énormément."
       optional
     >
@@ -634,7 +634,7 @@ function LanguesStep() {
     <div className="grid gap-6">
       <Field
         label="Langues du site"
-        hint="Le français est inclus par défaut. Ajoutez d'autres langues si votre clientèle en a besoin."
+        hint="Le français est inclus par défaut. Ajoute d'autres langues si ta clientèle en a besoin."
         error={err("languages")}
       >
         <Controller
@@ -678,7 +678,7 @@ function LanguesStep() {
       </Field>
       <Field
         label="Ambiance ou couleur souhaitée"
-        hint="Ex. : « Tons chaleureux, plutôt épuré » ou « bleu confiance ». On vous proposera de toute façon une direction."
+        hint="Ex. : « Tons chaleureux, plutôt épuré » ou « bleu confiance ». On te proposera de toute façon une direction."
         htmlFor="ambiance"
         optional
       >
@@ -699,13 +699,13 @@ function ExtraStep() {
   return (
     <Field
       label="Quelque chose à ajouter ?"
-      hint="Un service supplémentaire que vous aimeriez mettre en avant, une idée pour votre site, une particularité de votre métier, une attente précise… Tout ce qui peut nous aider à faire un site qui vous ressemble."
+      hint="Un service supplémentaire que tu aimerais mettre en avant, une idée pour ton site, une particularité de ton métier, une attente précise… Tout ce qui peut nous aider à faire un site qui te ressemble."
       htmlFor="extra"
       optional
     >
       <TextArea
         id="extra"
-        placeholder="Écrivez librement — même une simple remarque nous est utile…"
+        placeholder="Écris librement — même une simple remarque nous est utile…"
         {...register("extra")}
       />
     </Field>
@@ -717,59 +717,59 @@ function ExtraStep() {
 const ALL_STEPS: StepDef[] = [
   {
     id: "type",
-    title: "Votre activité",
-    subtitle: "Première chose : que vendez-vous ? On adapte la suite.",
+    title: "Ton activité",
+    subtitle: "Première chose : que vends-tu ? On adapte la suite.",
     fields: ["activityType"],
     Component: TypeStep,
   },
   {
     id: "activite",
-    title: "Votre entreprise",
-    subtitle: "Qui vous êtes et où vous travaillez.",
+    title: "Ton entreprise",
+    subtitle: "Qui tu es et où tu travailles.",
     fields: ["companyName", "trade", "city", "mobile", "serviceArea"],
     Component: ActiviteStep,
   },
   {
     id: "prestations",
     title: "Prestations & prix",
-    subtitle: "Ce que vous proposez. Pas besoin d'être exhaustif, on affinera.",
+    subtitle: "Ce que tu proposes. Pas besoin d'être exhaustif, on affinera.",
     fields: ["services", "taxCredit"],
     when: wantsServices,
     Component: PrestationsStep,
   },
   {
     id: "produits",
-    title: "Vos produits",
-    subtitle: "Ajoutez votre marchandise, un produit à la fois.",
+    title: "Tes produits",
+    subtitle: "Ajoute ta marchandise, un produit à la fois.",
     fields: ["products"],
     when: wantsProducts,
     Component: ProduitsStep,
   },
   {
     id: "coordonnees",
-    title: "Vos coordonnées",
-    subtitle: "Pour que vos futurs clients puissent vous joindre facilement.",
+    title: "Tes coordonnées",
+    subtitle: "Pour que tes futurs clients puissent te joindre facilement.",
     fields: ["phone", "email"],
     Component: CoordonneesStep,
   },
   {
     id: "entreprise",
     title: "Informations légales",
-    subtitle: "Une formalité pour les mentions légales de votre site.",
+    subtitle: "Une formalité pour les mentions légales de ton site.",
     fields: ["siret", "noSiret"],
     Component: EntrepriseStep,
   },
   {
     id: "identite",
     title: "Identité visuelle",
-    subtitle: "Logo et photos. Tout est facultatif — on s'adapte à ce que vous avez.",
+    subtitle: "Logo et photos. Tout est facultatif — on s'adapte à ce que tu as.",
     fields: [],
     Component: IdentiteStep,
   },
   {
     id: "realisations",
-    title: "Vos réalisations",
-    subtitle: "Quelques photos de votre travail. Facultatif, mais ça change tout.",
+    title: "Tes réalisations",
+    subtitle: "Quelques photos de ton travail. Facultatif, mais ça change tout.",
     fields: [],
     when: wantsServices,
     Component: RealisationsStep,
@@ -777,7 +777,7 @@ const ALL_STEPS: StepDef[] = [
   {
     id: "langues",
     title: "Langues & ambiance",
-    subtitle: "Vos préférences de langues et de style.",
+    subtitle: "Tes préférences de langues et de style.",
     fields: ["languages"],
     Component: LanguesStep,
   },
@@ -785,7 +785,7 @@ const ALL_STEPS: StepDef[] = [
     id: "extra",
     title: "Le mot de la fin",
     subtitle:
-      "Avez-vous autre chose à nous partager ? Une particularité, une envie… et c'est tout bon.",
+      "As-tu autre chose à nous partager ? Une particularité, une envie… et c'est tout bon.",
     fields: ["extra"],
     Component: ExtraStep,
   },

@@ -30,7 +30,7 @@ const uploads = () => z.array(uploadItemSchema).default([]);
 
 export const productSchema = z.object({
   id: z.string(),
-  title: required("Donnez un nom à ce produit."),
+  title: required("Donne un nom à ce produit."),
   description: z.string().trim().optional(),
   price: z.string().trim().optional(),
   category: z.string().trim().optional(),
@@ -42,13 +42,13 @@ export const leadSchema = z
   .object({
     // 0. Branchement
     activityType: z.enum(ACTIVITY_TYPES, {
-      message: "Faites un choix pour continuer.",
+      message: "Fais un choix pour continuer.",
     }),
 
     // A. Activité
-    companyName: required("Indiquez le nom de votre entreprise."),
-    trade: required("Indiquez votre métier."),
-    city: required("Indiquez votre ville."),
+    companyName: required("Indique le nom de ton entreprise."),
+    trade: required("Indique ton métier."),
+    city: required("Indique ta ville."),
     mobile: z.boolean().default(false),
     serviceArea: z.string().trim().optional(),
 
@@ -60,12 +60,12 @@ export const leadSchema = z
     products: z.array(productSchema).default([]),
 
     // B. Coordonnées
-    phone: required("Un numéro pour vous joindre est nécessaire."),
+    phone: required("Un numéro pour te joindre est nécessaire."),
     whatsapp: z.string().trim().optional(),
     email: z
       .string()
       .trim()
-      .min(1, "Votre email est nécessaire.")
+      .min(1, "Ton email est nécessaire.")
       .email("Cet email ne semble pas valide."),
     address: z.string().trim().optional(),
     availability: z.string().trim().optional(),
@@ -88,7 +88,7 @@ export const leadSchema = z
     // F. Langues & ambiance
     languages: z
       .array(z.string())
-      .min(1, "Gardez au moins une langue.")
+      .min(1, "Garde au moins une langue.")
       .default(["fr"]),
     languageOther: z.string().trim().optional(),
     ambiance: z.string().trim().optional(),
@@ -102,7 +102,7 @@ export const leadSchema = z
       ctx.addIssue({
         code: "custom",
         path: ["serviceArea"],
-        message: "Indiquez votre zone de déplacement.",
+        message: "Indique ta zone de déplacement.",
       });
     }
 
@@ -113,7 +113,7 @@ export const leadSchema = z
         ctx.addIssue({
           code: "custom",
           path: ["siret"],
-          message: "Renseignez votre SIRET, ou cochez « Pas encore de SIRET ».",
+          message: "Renseigne ton SIRET, ou coche « Pas encore de SIRET ».",
         });
       } else if (!/^\d{14}$/.test(digits)) {
         ctx.addIssue({
@@ -132,15 +132,15 @@ export const leadSchema = z
           code: "custom",
           path: ["services"],
           message: s
-            ? "Quelques mots de plus nous aident à bien vous présenter."
-            : "Décrivez vos prestations, même en vrac.",
+            ? "Quelques mots de plus nous aident à bien te présenter."
+            : "Décris tes prestations, même en vrac.",
         });
       }
       if (!data.taxCredit) {
         ctx.addIssue({
           code: "custom",
           path: ["taxCredit"],
-          message: "Faites un choix.",
+          message: "Fais un choix.",
         });
       }
     }
@@ -150,7 +150,7 @@ export const leadSchema = z
       ctx.addIssue({
         code: "custom",
         path: ["products"],
-        message: "Ajoutez au moins un produit pour continuer.",
+        message: "Ajoute au moins un produit pour continuer.",
       });
     }
   });

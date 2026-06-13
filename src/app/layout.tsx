@@ -16,16 +16,16 @@ const fraunces = Fraunces({
   axes: ["SOFT", "WONK", "opsz"],
 });
 
-const SITE_URL = "https://brio.studio";
+const SITE_URL = "https://xklic.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Brio — Un site pro pour votre activité, en ligne en 48h",
-    template: "%s · Brio",
+    default: "Xklic — Le site pro qui te ramène des clients, en ligne en 2h",
+    template: "%s · Xklic",
   },
   description:
-    "Brio crée le site web de votre activité, clés en main et en ligne en 48h. Sans prise de tête, sans engagement. 49€ à la création puis 9,90€/mois.",
+    "Xklic crée le site web de ton activité, clés en main et en ligne en 2h. Sans prise de tête, sans engagement. 49€ à la création puis 9,90€/mois.",
   keywords: [
     "site internet artisan",
     "site vitrine TPE",
@@ -37,16 +37,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "fr_FR",
     url: SITE_URL,
-    siteName: "Brio",
-    title: "Brio — Un site pro pour votre activité, en ligne en 48h",
+    siteName: "Xklic",
+    title: "Xklic — Le site pro qui te ramène des clients, en ligne en 2h",
     description:
-      "Le site web de votre activité, clés en main et en ligne en 48h. 49€ à la création puis 9,90€/mois, sans engagement.",
+      "Le site web de ton activité, clés en main et en ligne en 2h. 49€ à la création puis 9,90€/mois, sans engagement.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Brio — Un site pro pour votre activité, en ligne en 48h",
+    title: "Xklic — Le site pro qui te ramène des clients, en ligne en 2h",
     description:
-      "Le site web de votre activité, clés en main et en ligne en 48h. Sans prise de tête.",
+      "Le site web de ton activité, clés en main et en ligne en 2h. Sans prise de tête.",
   },
 };
 

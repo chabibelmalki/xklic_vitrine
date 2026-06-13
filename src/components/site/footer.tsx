@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Logo } from "./logo";
 import { Container } from "@/components/ui/container";
 import { brand, nav } from "@/lib/content";
+import { telLink, waLink } from "@/lib/utils";
 
 export function Footer() {
   return (
@@ -40,18 +41,46 @@ export function Footer() {
             >
               {brand.email}
             </a>
+            <a
+              href={telLink(brand.phone)}
+              className="text-sm text-cream-muted transition-colors hover:text-cream"
+            >
+              {brand.phoneDisplay}
+            </a>
+            <a
+              href={waLink(brand.whatsapp, brand.whatsappMessage)}
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm text-cream-muted transition-colors hover:text-cream"
+            >
+              WhatsApp
+            </a>
             <Link
               href="/demarrer"
-              className="text-sm text-ember-soft transition-colors hover:text-ember"
+              className="text-sm text-ember-deep transition-colors hover:text-ember"
             >
               Créer mon site →
             </Link>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 text-xs text-cream-faint sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-4 border-t border-line pt-6 text-xs text-cream-faint sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {brand.name}. Tous droits réservés.</p>
-          <p>Conçu en France · 49€ à la création puis 9,90€/mois</p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link
+              href="/mentions-legales"
+              className="transition-colors hover:text-cream"
+            >
+              Mentions légales
+            </Link>
+            <Link
+              href="/confidentialite"
+              className="transition-colors hover:text-cream"
+            >
+              Confidentialité
+            </Link>
+            <span className="hidden sm:inline">Conçu en France</span>
+          </div>
         </div>
       </Container>
     </footer>

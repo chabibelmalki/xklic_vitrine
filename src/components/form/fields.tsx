@@ -160,7 +160,7 @@ export function ImageUpload({
   onChange,
   multiple = true,
   accept = "image/*",
-  cta = "Glissez vos images ici, ou cliquez pour parcourir",
+  cta = "Glisse tes images ici, ou clique pour parcourir",
   sub = "JPG, PNG, WebP",
   compact = false,
 }: {
