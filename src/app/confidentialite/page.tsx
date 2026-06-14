@@ -6,6 +6,7 @@ import { brand, legal } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Politique de confidentialité",
   description: `Politique de confidentialité et traitement des données personnelles du site ${brand.name}.`,
+  alternates: { canonical: "/confidentialite" },
   robots: { index: false, follow: true },
 };
 

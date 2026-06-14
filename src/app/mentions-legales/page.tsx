@@ -6,6 +6,7 @@ import { brand, legal } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Mentions légales",
   description: `Mentions légales du site ${brand.name}.`,
+  alternates: { canonical: "/mentions-legales" },
   robots: { index: false, follow: true },
 };
 

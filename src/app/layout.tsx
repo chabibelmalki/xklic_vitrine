@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { Fraunces } from "next/font/google";
 import "./globals.css";
+import { SITE_URL, IS_INDEXABLE } from "@/lib/site";
+import { JsonLd } from "@/components/seo/json-ld";
+import { organizationLd } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,10 +19,14 @@ const fraunces = Fraunces({
   axes: ["SOFT", "WONK", "opsz"],
 });
 
-const SITE_URL = "https://xklic.com";
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  alternates: { canonical: "/" },
+  robots: {
+    index: IS_INDEXABLE,
+    follow: IS_INDEXABLE,
+    googleBot: { index: IS_INDEXABLE, follow: IS_INDEXABLE },
+  },
   title: {
     default: "Xklic — Le site pro qui te ramène des clients, en ligne en 2h",
     template: "%s · Xklic",
@@ -61,6 +68,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="bg-ink text-cream min-h-full flex flex-col font-sans selection:bg-ember/30 selection:text-cream">
+        <JsonLd data={organizationLd()} />
         {children}
       </body>
     </html>

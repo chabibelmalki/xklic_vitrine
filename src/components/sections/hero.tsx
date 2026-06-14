@@ -42,7 +42,7 @@ export function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ember opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-ember" />
               </span>
-              Sites web pour artisans &amp; TPE de service
+              Sites web professionnels, clés en main
             </span>
           </motion.div>
 
@@ -151,7 +151,7 @@ function PhoneMock({ reduce }: { reduce: boolean }) {
             {/* Header du mini-site */}
             <div className="flex items-center justify-between px-4 pt-8 pb-3">
               <span className="font-display text-sm font-semibold text-cream">
-                Souad·Ménage
+                Maison Martin
               </span>
               <span className="rounded-full bg-ember px-2.5 py-1 text-[9px] font-semibold text-white">
                 Devis
@@ -163,10 +163,10 @@ function PhoneMock({ reduce }: { reduce: boolean }) {
                 <div className="absolute inset-0 [background-image:radial-gradient(circle_at_1px_1px,rgba(27,22,17,0.05)_1px,transparent_0)] [background-size:14px_14px]" />
               </div>
               <span className="mt-3 block text-[10px] font-medium uppercase tracking-[0.18em] text-ember-deep">
-                Ménage à domicile · Lyon
+                Artisan à domicile · Lyon
               </span>
               <span className="font-display mt-1 block text-lg font-semibold leading-tight text-cream">
-                Votre intérieur impeccable, sans y penser.
+                Un travail soigné, près de chez vous.
               </span>
               <div className="mt-2 flex items-center gap-1 text-[10px] text-cream-muted">
                 <Star size={10} className="fill-amber text-amber" />
@@ -174,7 +174,7 @@ function PhoneMock({ reduce }: { reduce: boolean }) {
                 <Star size={10} className="fill-amber text-amber" />
                 <Star size={10} className="fill-amber text-amber" />
                 <Star size={10} className="fill-amber text-amber" />
-                <span className="ml-1">Crédit d&apos;impôt 50%</span>
+                <span className="ml-1">Devis gratuit en 24h</span>
               </div>
               <div className="mt-3 flex gap-2">
                 <span className="flex-1 rounded-full bg-ember py-2 text-center text-[10px] font-semibold text-white">

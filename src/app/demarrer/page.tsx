@@ -8,7 +8,8 @@ import { FloatingActions } from "@/components/site/floating-actions";
 export const metadata: Metadata = {
   title: "Créer mon site",
   description:
-    "Décris ton activité en quelques minutes. On crée ton site pro et il est en ligne en 2h.",
+    "Décris ton activité en quelques minutes. On crée ton site pro pour artisan, auto-entrepreneur ou TPE, et il est en ligne en 2h.",
+  alternates: { canonical: "/demarrer" },
 };
 
 export default function DemarrerPage() {

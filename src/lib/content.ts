@@ -12,6 +12,10 @@ export const brand = {
   phoneDisplay: "06 63 94 81 28", // affichage formaté
   whatsapp: "0663948128", // numéro WhatsApp (souvent identique)
   whatsappMessage: "Bonjour Xklic, je voudrais créer mon site.",
+  // Réseaux sociaux → alimente `sameAs` du JSON-LD Organization (SEO).
+  // Ajoute les URLs réelles (TikTok, Instagram…) quand elles existent, ex. :
+  // ["https://www.tiktok.com/@xklic", "https://www.instagram.com/xklic"]
+  social: [] as string[],
 };
 
 // Informations légales — ⚠️ À COMPLÉTER avec les vraies données de l'entreprise.
@@ -92,7 +96,7 @@ export const benefits = [
   {
     icon: "RefreshCw",
     title: "Modifications illimitées",
-    body: "Nouveau tarif, nouvelle photo, horaires d'été ? Tu nous écris, on met à jour — souvent dans la journée.",
+    body: "Nouveau tarif, nouvelle photo, horaires d'été ? Tu nous écris, on met à jour — souvent dans la journée, sous 3 jours ouvrés au plus tard.",
   },
 ];
 
@@ -164,7 +168,7 @@ export const faq = [
   },
   {
     q: "Et si je veux modifier mon site plus tard ?",
-    a: "Les modifications de contenu sont illimitées et incluses dans l'abonnement. Tu nous écris ce que tu veux changer, on s'en occupe — généralement dans la journée.",
+    a: "Les modifications de contenu sont illimitées et incluses dans l'abonnement. Tu nous écris ce que tu veux changer, on s'en occupe — généralement dans la journée, et au plus tard sous 3 jours ouvrés.",
   },
   {
     q: "À qui appartiennent le site et le nom de domaine ?",

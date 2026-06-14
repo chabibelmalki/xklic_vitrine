@@ -10,10 +10,14 @@ import { Benefits } from "@/components/sections/benefits";
 import { Pricing } from "@/components/sections/pricing";
 import { Faq } from "@/components/sections/faq";
 import { FinalCta } from "@/components/sections/final-cta";
+import { JsonLd } from "@/components/seo/json-ld";
+import { serviceLd, faqLd } from "@/lib/seo";
 
 export default function Home() {
   return (
     <div className="grain relative flex min-h-full flex-col">
+      <JsonLd data={serviceLd()} />
+      <JsonLd data={faqLd()} />
       <Header />
       <main className="flex-1">
         <Hero />
