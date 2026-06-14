@@ -5,6 +5,11 @@ const required = (msg: string) => z.string().trim().min(1, msg);
 export const ACTIVITY_TYPES = ["services", "produits", "les-deux"] as const;
 export type ActivityType = (typeof ACTIVITY_TYPES)[number];
 
+// Formules proposées (cf. `formules` dans content.ts). Le slug est la valeur
+// stockée dans le lead et passée en query `?formule=` depuis les cartes de prix.
+export const FORMULE_SLUGS = ["site", "google", "haut-google"] as const;
+export type FormuleSlug = (typeof FORMULE_SLUGS)[number];
+
 export const wantsServices = (t?: ActivityType) =>
   t === "services" || t === "les-deux";
 export const wantsProducts = (t?: ActivityType) =>
@@ -40,7 +45,12 @@ export type ProductValues = z.input<typeof productSchema>;
 
 export const leadSchema = z
   .object({
-    // 0. Branchement
+    // 0. Formule choisie (carte de prix ou étape dédiée du formulaire)
+    formule: z.enum(FORMULE_SLUGS, {
+      message: "Choisis une formule pour continuer.",
+    }),
+
+    // 1. Branchement
     activityType: z.enum(ACTIVITY_TYPES, {
       message: "Fais un choix pour continuer.",
     }),

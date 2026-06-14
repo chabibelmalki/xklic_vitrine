@@ -7,7 +7,7 @@ import { Problem } from "@/components/sections/problem";
 import { Process } from "@/components/sections/process";
 import { Portfolio } from "@/components/sections/portfolio";
 import { Benefits } from "@/components/sections/benefits";
-import { Pricing } from "@/components/sections/pricing";
+import { Formules } from "@/components/sections/formules";
 import { Faq } from "@/components/sections/faq";
 import { FinalCta } from "@/components/sections/final-cta";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -26,7 +26,7 @@ export default function Home() {
         <Process />
         <Portfolio />
         <Benefits />
-        <Pricing />
+        <Formules />
         <Faq />
         <FinalCta />
       </main>

@@ -1,5 +1,6 @@
 "use client";
 
+import { createContext, useContext } from "react";
 import {
   Controller,
   useFieldArray,
@@ -18,6 +19,7 @@ import {
 } from "lucide-react";
 import type { ActivityType, LeadValues } from "@/lib/lead-schema";
 import { wantsProducts, wantsServices } from "@/lib/lead-schema";
+import { formules } from "@/lib/content";
 import {
   CheckRow,
   Field,
@@ -33,14 +35,109 @@ export type StepDef = {
   subtitle: string;
   fields: (keyof LeadValues)[];
   when?: (t?: ActivityType) => boolean;
+  autoAdvance?: boolean; // étape à choix unique : le clic vaut « Continuer »
   Component: () => React.ReactNode;
 };
+
+// Permet à une étape à choix unique (formule, type d'activité) de passer à la
+// suite dès qu'une option est cliquée, sans bouton « Continuer ».
+const AdvanceContext = createContext<(() => void) | null>(null);
+
+export function StepNavProvider({
+  advance,
+  children,
+}: {
+  advance: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <AdvanceContext.Provider value={advance}>{children}</AdvanceContext.Provider>
+  );
+}
+
+function useAdvance() {
+  return useContext(AdvanceContext);
+}
 
 function useErr() {
   const {
     formState: { errors },
   } = useFormContext<LeadValues>();
   return (k: keyof LeadValues) => errors[k]?.message as string | undefined;
+}
+
+/* ── Étape formule : choix de l'offre (sautée si déjà choisie via une carte) ─ */
+
+function FormuleStep() {
+  const { control } = useFormContext<LeadValues>();
+  const err = useErr();
+  const advance = useAdvance();
+  return (
+    <Field
+      label="Quelle formule t'intéresse ?"
+      hint="Rien n'est définitif : on pourra en parler et l'ajuster ensemble."
+      error={err("formule")}
+    >
+      <Controller
+        control={control}
+        name="formule"
+        render={({ field }) => (
+          <div className="grid gap-3">
+            {formules.map((f) => {
+              const active = field.value === f.slug;
+              return (
+                <button
+                  type="button"
+                  key={f.slug}
+                  role="radio"
+                  aria-checked={active}
+                  onClick={() => {
+                    field.onChange(f.slug);
+                    advance?.();
+                  }}
+                  className={
+                    "flex items-start justify-between gap-4 rounded-2xl border px-5 py-4 text-left transition-all duration-200 " +
+                    (active
+                      ? "border-ember/50 bg-ember/10"
+                      : "border-line bg-ink-soft hover:border-line-strong")
+                  }
+                >
+                  <span className="flex flex-col gap-0.5">
+                    <span className="flex flex-wrap items-center gap-2">
+                      <span
+                        className={
+                          "text-base font-medium " +
+                          (active ? "text-cream" : "text-cream-muted")
+                        }
+                      >
+                        {f.name}
+                      </span>
+                      {f.featured ? (
+                        <span className="rounded-full bg-ember/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-ember-deep">
+                          Recommandé
+                        </span>
+                      ) : null}
+                    </span>
+                    <span className="text-sm leading-relaxed text-cream-faint">
+                      {f.phrase}
+                    </span>
+                  </span>
+                  <span className="shrink-0 text-right">
+                    <span className="font-display block text-xl font-semibold leading-none text-cream">
+                      {f.setup}
+                    </span>
+                    <span className="mt-1 block text-xs text-cream-faint">
+                      puis {f.monthly}/mois
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+      />
+    </Field>
+  );
 }
 
 /* ── Étape 0 : type d'activité (branchement) ────────────────────────────── */
@@ -69,6 +166,7 @@ const ACTIVITY_OPTIONS = [
 function TypeStep() {
   const { control } = useFormContext<LeadValues>();
   const err = useErr();
+  const advance = useAdvance();
   return (
     <Field
       label="Que proposes-tu à tes clients ?"
@@ -88,7 +186,10 @@ function TypeStep() {
                   key={opt.value}
                   role="radio"
                   aria-checked={active}
-                  onClick={() => field.onChange(opt.value)}
+                  onClick={() => {
+                    field.onChange(opt.value);
+                    advance?.();
+                  }}
                   className={
                     "flex items-start gap-4 rounded-2xl border px-5 py-4 text-left transition-all duration-200 " +
                     (active
@@ -963,12 +1064,24 @@ function ExtraStep() {
 
 /* ── Définition des étapes (avec branchement conditionnel) ──────────────── */
 
+// Étape facultative, prepended quand aucune formule n'a été choisie en amont
+// (clic sur « Créer mon site » plutôt que sur une carte de prix).
+const FORMULE_STEP: StepDef = {
+  id: "formule",
+  title: "Ta formule",
+  subtitle: "Choisis l'offre qui te convient. On pourra l'ajuster ensemble.",
+  fields: ["formule"],
+  autoAdvance: true,
+  Component: FormuleStep,
+};
+
 const ALL_STEPS: StepDef[] = [
   {
     id: "type",
     title: "Ton activité",
     subtitle: "Première chose : que vends-tu ? On adapte la suite.",
     fields: ["activityType"],
+    autoAdvance: true,
     Component: TypeStep,
   },
   {
@@ -1012,6 +1125,10 @@ const ALL_STEPS: StepDef[] = [
   },
 ];
 
-export function buildSteps(activityType?: ActivityType): StepDef[] {
-  return ALL_STEPS.filter((s) => !s.when || s.when(activityType));
+export function buildSteps(
+  activityType?: ActivityType,
+  includeFormule = false,
+): StepDef[] {
+  const steps = ALL_STEPS.filter((s) => !s.when || s.when(activityType));
+  return includeFormule ? [FORMULE_STEP, ...steps] : steps;
 }

@@ -7,9 +7,13 @@ import { upload } from "@vercel/blob/client";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Loader2, PartyPopper } from "lucide-react";
 import Link from "next/link";
-import { leadSchema, type LeadValues } from "@/lib/lead-schema";
+import {
+  leadSchema,
+  type LeadValues,
+  type FormuleSlug,
+} from "@/lib/lead-schema";
 import { Button } from "@/components/ui/button";
-import { buildSteps } from "./steps";
+import { buildSteps, StepNavProvider } from "./steps";
 import { cn, EASE_OUT } from "@/lib/utils";
 
 // Forme souple d'un fichier dans l'état du formulaire. `file` est le File brut
@@ -57,7 +61,13 @@ function countFiles(values: LeadValues) {
 
 type Status = "form" | "uploading" | "submitting" | "done" | "error";
 
-export function LeadForm() {
+export function LeadForm({
+  initialFormule,
+}: {
+  // Formule pré-choisie via `?formule=` (clic sur une carte de prix) : si elle
+  // est présente, on saute l'étape de choix de formule.
+  initialFormule?: FormuleSlug;
+}) {
   const reduce = useReducedMotion();
   const [step, setStep] = useState(0);
   const [dir, setDir] = useState(1);
@@ -67,6 +77,7 @@ export function LeadForm() {
     resolver: zodResolver(leadSchema),
     mode: "onTouched",
     defaultValues: {
+      formule: initialFormule,
       activityType: undefined,
       companyName: "",
       trade: "",
@@ -99,7 +110,8 @@ export function LeadForm() {
     control: methods.control,
     name: "activityType",
   });
-  const steps = buildSteps(activityType);
+  // Étape « formule » affichée seulement si aucune formule n'est déjà choisie.
+  const steps = buildSteps(activityType, !initialFormule);
   const total = steps.length;
   const safeStep = Math.min(step, total - 1);
   const current = steps[safeStep];
@@ -219,7 +231,9 @@ export function LeadForm() {
                   exit={reduce ? { opacity: 0 } : { opacity: 0, x: dir * -28 }}
                   transition={{ duration: 0.32, ease: EASE_OUT }}
                 >
-                  <current.Component />
+                  <StepNavProvider advance={() => void goNext()}>
+                    <current.Component />
+                  </StepNavProvider>
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -231,51 +245,64 @@ export function LeadForm() {
               </p>
             ) : null}
 
-            <div className="mt-8 flex items-center justify-between gap-4">
-              <button
-                type="button"
-                onClick={goPrev}
-                className={cn(
-                  "inline-flex items-center gap-1.5 text-sm text-cream-muted transition-colors hover:text-cream",
-                  safeStep === 0 && "pointer-events-none opacity-0",
-                )}
-              >
-                <ArrowLeft size={16} />
-                Précédent
-              </button>
+            {/* Étape à choix unique (formule, type) au tout début : le clic
+                vaut « Continuer », on masque donc toute la barre de navigation. */}
+            {current.autoAdvance && safeStep === 0 ? null : (
+              <div className="mt-8 flex items-center justify-between gap-4">
+                <button
+                  type="button"
+                  onClick={goPrev}
+                  className={cn(
+                    "inline-flex items-center gap-1.5 text-sm text-cream-muted transition-colors hover:text-cream",
+                    safeStep === 0 && "pointer-events-none opacity-0",
+                  )}
+                >
+                  <ArrowLeft size={16} />
+                  Précédent
+                </button>
 
-              <Button
-                type="submit"
-                size="lg"
-                disabled={status === "submitting" || status === "uploading"}
-                className="min-w-44"
-              >
-                {status === "uploading" ? (
-                  <>
-                    <Loader2 size={18} className="animate-spin" />
-                    Téléversement des images…
-                  </>
-                ) : status === "submitting" ? (
-                  <>
-                    <Loader2 size={18} className="animate-spin" />
-                    Envoi…
-                  </>
-                ) : isLast ? (
-                  <>
-                    Envoyer ma demande
-                    <Check size={18} />
-                  </>
+                {/* Sur les étapes auto-avance, pas de bouton « Continuer ». */}
+                {current.autoAdvance ? (
+                  <span className="text-xs text-cream-faint">
+                    Touche une option pour continuer
+                  </span>
                 ) : (
-                  <>
-                    Continuer
-                    <ArrowRight
-                      size={18}
-                      className="transition-transform duration-300 group-hover:translate-x-1"
-                    />
-                  </>
+                  <Button
+                    type="submit"
+                    size="lg"
+                    disabled={
+                      status === "submitting" || status === "uploading"
+                    }
+                    className="min-w-44"
+                  >
+                    {status === "uploading" ? (
+                      <>
+                        <Loader2 size={18} className="animate-spin" />
+                        Téléversement des images…
+                      </>
+                    ) : status === "submitting" ? (
+                      <>
+                        <Loader2 size={18} className="animate-spin" />
+                        Envoi…
+                      </>
+                    ) : isLast ? (
+                      <>
+                        Envoyer ma demande
+                        <Check size={18} />
+                      </>
+                    ) : (
+                      <>
+                        Continuer
+                        <ArrowRight
+                          size={18}
+                          className="transition-transform duration-300 group-hover:translate-x-1"
+                        />
+                      </>
+                    )}
+                  </Button>
                 )}
-              </Button>
-            </div>
+              </div>
+            )}
           </form>
         </div>
 

@@ -3,6 +3,8 @@
 // Ton : tutoiement (proche, rassurant), voix de Xklic vers l'artisan.
 // ─────────────────────────────────────────────────────────────────────────
 
+import type { FormuleSlug } from "./lead-schema";
+
 export const brand = {
   name: "Xklic",
   tagline: "Le site pro qui te ramène des clients, en ligne en 2h.",
@@ -40,7 +42,7 @@ export const legal = {
 export const nav = [
   { label: "Comment ça marche", href: "/#process" },
   { label: "Réalisations", href: "/#realisations" },
-  { label: "Tarif", href: "/#tarif" },
+  { label: "Formules", href: "/#tarif" },
   { label: "Questions", href: "/#faq" },
 ];
 
@@ -100,20 +102,73 @@ export const benefits = [
   },
 ];
 
-export const pricing = {
-  setup: "49€",
-  monthly: "9,90€",
-  includes: [
-    "Site sur-mesure, conçu pour ton métier",
-    "Mise en ligne en 2h, clés en main",
-    "Nom de domaine & hébergement inclus",
-    "Formulaire de contact + bouton d'appel direct",
-    "Optimisé mobile et référencement local Google",
-    "Modifications illimitées de ton contenu",
-    "Hébergement, sécurité et sauvegardes gérés",
-    "Sans engagement — résiliable à tout moment",
-  ],
+// Nos formules — 3 offres claires. Textes volontairement simples et humains
+// (audience = artisans peu à l'aise avec internet) : AUCUN mot technique.
+// Distinction nette « à l'installation (une seule fois) » vs « par mois ».
+export type Formule = {
+  slug: FormuleSlug; // identifiant stocké dans le lead + query `?formule=`
+  name: string;
+  phrase: string;
+  setup: string; // payé une seule fois, à l'installation
+  monthly: string; // par mois
+  priceNote?: string; // précision sous le prix (budget pub, etc.)
+  inherits?: string; // « Tout le pack précédent, et en plus : »
+  features: string[];
+  cta: string;
+  featured?: boolean; // carte mise en avant (« Recommandé »)
 };
+
+export const formules: Formule[] = [
+  {
+    slug: "site",
+    name: "Votre site",
+    phrase: "Pour exister sur internet, simplement.",
+    setup: "49€",
+    monthly: "9,90€",
+    features: [
+      "Un beau site professionnel à votre nom",
+      "Vous apparaissez sur Google quand on vous cherche",
+      "Vos clients vous trouvent et vous appellent en un clic",
+      "Un QR code à montrer à vos clients pour récolter des avis",
+    ],
+    cta: "Je veux mon site",
+  },
+  {
+    slug: "google",
+    name: "On s'occupe de votre Google",
+    phrase: "Vous travaillez, on s'occupe de votre image.",
+    setup: "149€",
+    monthly: "29€",
+    inherits: "Tout le pack Site, et en plus :",
+    features: [
+      "On répond à vos avis clients pour vous",
+      "On publie pour vous sur Google chaque mois",
+      "On garde vos horaires et vos photos à jour",
+      "Chaque mois, on vous dit combien de personnes vous ont trouvé et appelé",
+      "Sans payer de publicité",
+    ],
+    cta: "Je veux la tranquillité",
+  },
+  {
+    slug: "haut-google",
+    name: "En haut de Google",
+    phrase: "Soyez le premier que vos clients voient.",
+    setup: "290€",
+    monthly: "79€",
+    priceNote:
+      "Votre budget publicité, payé directement à Google — c'est vous qui choisissez le montant.",
+    inherits: "Tout le pack précédent, et en plus :",
+    features: [
+      "Vous apparaissez tout en haut de Google, avant tout le monde",
+      "Avec le badge vert « Garanti par Google » qui rassure vos clients",
+      "Les clients vous appellent directement",
+      "Vous ne payez Google que quand un vrai client vous contacte",
+      "On installe et on gère tout à votre place",
+    ],
+    cta: "Je veux plus de clients",
+    featured: true,
+  },
+];
 
 // Portfolio — vrais sites clients. `url` → capture mobile auto (voir Portfolio).
 // `image` (capture locale dans /public/portfolio/) a la priorité si renseigné.

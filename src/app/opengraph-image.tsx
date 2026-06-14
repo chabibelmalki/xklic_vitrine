@@ -1,5 +1,8 @@
 import { ImageResponse } from "next/og";
-import { brand, pricing } from "@/lib/content";
+import { brand, formules } from "@/lib/content";
+
+// Prix d'entrée affiché sur le visuel (1re formule « Votre site »).
+const entry = formules[0];
 
 // Visuel de marque 1200×630 partagé sur les réseaux (TikTok, etc.).
 // Généré à la volée → pas d'asset binaire à maintenir, reste on-brand.
@@ -97,9 +100,9 @@ export default function Image() {
               borderRadius: 999,
             }}
           >
-            {`${pricing.setup} à la création`}
+            {`${entry.setup} à la création`}
           </div>
-          <div style={{ color: INK }}>{`puis ${pricing.monthly}/mois`}</div>
+          <div style={{ color: INK }}>{`puis ${entry.monthly}/mois`}</div>
         </div>
       </div>
     ),

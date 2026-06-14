@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { Logo } from "@/components/site/logo";
 import { LeadForm } from "@/components/form/lead-form";
 import { FloatingActions } from "@/components/site/floating-actions";
+import { FORMULE_SLUGS, type FormuleSlug } from "@/lib/lead-schema";
 
 export const metadata: Metadata = {
   title: "Créer mon site",
@@ -12,7 +13,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/demarrer" },
 };
 
-export default function DemarrerPage() {
+export default async function DemarrerPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const raw = (await searchParams).formule;
+  const initialFormule = FORMULE_SLUGS.includes(raw as FormuleSlug)
+    ? (raw as FormuleSlug)
+    : undefined;
+
   return (
     <div className="grain relative flex min-h-full flex-col">
       {/* Warm glow */}
@@ -35,7 +45,7 @@ export default function DemarrerPage() {
       </header>
 
       <main className="relative z-10 flex-1 px-5 py-12 sm:py-16 lg:py-20">
-        <LeadForm />
+        <LeadForm initialFormule={initialFormule} />
       </main>
 
       <FloatingActions />
