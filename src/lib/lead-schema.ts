@@ -79,6 +79,18 @@ export const leadSchema = z
     logo: uploads(),
     photos: uploads(),
 
+    // E. Présence en ligne — réseaux sociaux + fiche Google (tout facultatif).
+    // Champs libres (lien ou pseudo) : l'équipe normalise, on ne bloque rien.
+    socials: z
+      .object({
+        facebook: z.string().trim().optional(),
+        instagram: z.string().trim().optional(),
+        tiktok: z.string().trim().optional(),
+        x: z.string().trim().optional(),
+        google: z.string().trim().optional(),
+      })
+      .default({}),
+
     // F. Langues & style
     languages: z
       .array(z.string())

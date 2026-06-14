@@ -86,6 +86,7 @@ export function LeadForm() {
       noSiret: false,
       logo: [],
       photos: [],
+      socials: { facebook: "", instagram: "", tiktok: "", x: "", google: "" },
       languages: ["fr"],
       styleVibes: [],
       colorPreference: "",
