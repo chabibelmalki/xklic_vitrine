@@ -1,10 +1,25 @@
 // ─────────────────────────────────────────────────────────────────────────
 // Données structurées (schema.org / JSON-LD) construites depuis le contenu.
-// Organization (site-wide) + Service/Offer + FAQPage (home).
+// WebSite + Organization (site-wide) + Service/Offer + FAQPage (home).
 // ─────────────────────────────────────────────────────────────────────────
 
 import { brand, faq } from "./content";
 import { SITE_URL } from "./site";
+
+// Signal de marque : associe le nom « Xklic » (et l'alias « Xklic.com ») au
+// domaine. Pas de SearchAction : le site n'a pas de moteur de recherche interne.
+export function websiteLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    name: brand.name,
+    alternateName: brand.domain,
+    url: SITE_URL,
+    inLanguage: "fr-FR",
+    publisher: { "@id": `${SITE_URL}/#organization` },
+  };
+}
 
 export function organizationLd() {
   return {

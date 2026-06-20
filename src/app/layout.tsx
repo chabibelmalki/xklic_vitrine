@@ -4,7 +4,7 @@ import { Fraunces } from "next/font/google";
 import "./globals.css";
 import { SITE_URL, IS_INDEXABLE } from "@/lib/site";
 import { JsonLd } from "@/components/seo/json-ld";
-import { organizationLd } from "@/lib/seo";
+import { organizationLd, websiteLd } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -68,6 +68,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="bg-ink text-cream min-h-full flex flex-col font-sans selection:bg-ember/30 selection:text-cream">
+        <JsonLd data={websiteLd()} />
         <JsonLd data={organizationLd()} />
         {children}
       </body>
