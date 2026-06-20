@@ -68,6 +68,12 @@ export function Footer() {
           <p>© {new Date().getFullYear()} {brand.name}. Tous droits réservés.</p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <Link
+              href="/realisations"
+              className="transition-colors hover:text-cream"
+            >
+              Réalisations
+            </Link>
+            <Link
               href="/mentions-legales"
               className="transition-colors hover:text-cream"
             >
