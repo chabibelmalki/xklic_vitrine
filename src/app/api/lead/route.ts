@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { leadSchema } from "@/lib/lead-schema";
-import { postToN8n } from "@/lib/n8n";
+import { appendOrderRow } from "@/lib/sheets";
 
 export const runtime = "nodejs";
 
@@ -24,13 +24,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const lead = {
-    ...parsed.data,
-    receivedAt: new Date().toISOString(),
-    source: "xklic-vitrine",
-  };
-
-  // Capture du lead (webhook configurable ; ne casse jamais l'expérience).
-  const forwarded = await postToN8n(lead);
+  // Capture du lead dans Google Sheets (best-effort ; ne casse jamais l'expérience).
+  const forwarded = await appendOrderRow({ statut: "lead", lead: parsed.data });
   return NextResponse.json({ ok: true, forwarded });
 }

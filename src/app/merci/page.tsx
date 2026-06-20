@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// success_url de Stripe. PAGE PUREMENT INFORMATIVE : aucun effet de bord, aucun
-// déclenchement n8n ici (le paiement n'est traité que par le webhook vérifié).
+// success_url de Stripe. PAGE PUREMENT INFORMATIVE : aucun effet de bord, aucune
+// écriture ici (le paiement n'est traité que par le webhook Stripe vérifié).
 export default function MerciPage() {
   return (
     <div className="grain relative flex min-h-full flex-col">

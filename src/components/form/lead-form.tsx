@@ -176,7 +176,7 @@ export function LeadForm({
 
       if (data.url) {
         // 4. Redirection vers Stripe Checkout. La confirmation du paiement (et
-        //    le déclenchement n8n) se fait UNIQUEMENT via le webhook vérifié —
+        //    l'écriture « payé ») se fait UNIQUEMENT via le webhook vérifié —
         //    jamais ici. On laisse l'écran tel quel pendant la redirection.
         window.location.assign(data.url);
         return;

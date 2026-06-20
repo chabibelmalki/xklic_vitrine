@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { leadSchema } from "@/lib/lead-schema";
 import { createOrder } from "@/lib/orders";
-import { postToN8n } from "@/lib/n8n";
+import { appendOrderRow } from "@/lib/sheets";
 import { stripe, pricesFor } from "@/lib/stripe";
 import { SITE_URL } from "@/lib/site";
 
@@ -16,8 +16,8 @@ export const runtime = "nodejs";
 //      d'installation, code promo activé, email pré-rempli, id en metadata),
 //   5. renvoie l'URL de la session pour redirection.
 //
-// IMPORTANT : aucun déclenchement n8n « paiement » ici. Le succès réel n'est
-// confirmé que par le webhook Stripe vérifié (/api/stripe/webhook).
+// IMPORTANT : aucune écriture « payé » ici. Le succès réel n'est confirmé que
+// par le webhook Stripe vérifié (/api/stripe/webhook).
 export async function POST(req: Request) {
   let body: unknown;
   try {
@@ -38,14 +38,9 @@ export async function POST(req: Request) {
   // 1+2. Persiste la commande (survit à Stripe).
   const order = await createOrder(lead);
 
-  // 3. Capture immédiate du lead (panier abandonné). Best-effort, ne bloque pas.
-  await postToN8n({
-    event: "checkout_started",
-    orderId: order.id,
-    ...lead,
-    receivedAt: new Date().toISOString(),
-    source: "xklic-vitrine",
-  });
+  // 3. Capture immédiate du lead = ligne « panier » (panier abandonné si le
+  //    client ne paie pas). Best-effort, ne bloque pas le parcours.
+  await appendOrderRow({ statut: "panier", lead, orderId: order.id });
 
   const prices = pricesFor(lead.formule);
   const origin = req.headers.get("origin") || SITE_URL;
