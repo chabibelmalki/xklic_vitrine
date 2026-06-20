@@ -12,7 +12,7 @@ const problems = [
 const promises = [
   "Un site qui te fait apparaître quand on cherche ton métier près de chez toi.",
   "Une vitrine soignée qui rassure et donne envie de t'appeler.",
-  "49€ à la création, 9,90€/mois. Tout compris, sans surprise.",
+  "49€ à la création, 9,99€/mois. Tout compris, sans surprise.",
   "Tu ne touches à rien : on s'occupe de tout, tu valides.",
 ];
 

@@ -35,7 +35,7 @@ export function FinalCta() {
             />
           </ButtonLink>
           <p className="mt-4 text-sm text-cream-faint">
-            49€ à la création · puis 9,90€/mois · résiliable à tout moment
+            49€ à la création · puis 9,99€/mois · résiliable à tout moment
           </p>
         </Reveal>
       </Container>

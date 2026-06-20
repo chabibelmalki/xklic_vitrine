@@ -29,7 +29,7 @@ export function serviceLd() {
     name: "Création de site web pour artisans, auto-entrepreneurs et TPE",
     serviceType: "Création de site internet professionnel",
     description:
-      "Site vitrine professionnel clés en main pour indépendants et TPE (artisan, femme de ménage, plombier, électricien…), en ligne en 2h. 49€ à la création puis 9,90€/mois, sans engagement.",
+      "Site vitrine professionnel clés en main pour indépendants et TPE (artisan, femme de ménage, plombier, électricien…), en ligne en 2h. 49€ à la création puis 9,99€/mois, sans engagement.",
     provider: {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
@@ -40,13 +40,13 @@ export function serviceLd() {
     offers: {
       "@type": "Offer",
       priceCurrency: "EUR",
-      price: "9.90",
-      description: "49€ à la création puis 9,90€/mois, sans engagement.",
+      price: "9.99",
+      description: "49€ à la création puis 9,99€/mois, sans engagement.",
       availability: "https://schema.org/InStock",
       url: `${SITE_URL}/demarrer`,
       priceSpecification: {
         "@type": "UnitPriceSpecification",
-        price: "9.90",
+        price: "9.99",
         priceCurrency: "EUR",
         unitText: "MONTH",
       },

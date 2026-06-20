@@ -124,7 +124,7 @@ export const formules: Formule[] = [
     name: "Votre site",
     phrase: "Pour exister sur internet, simplement.",
     setup: "49€",
-    monthly: "9,90€",
+    monthly: "9,99€",
     features: [
       "Un beau site professionnel à votre nom",
       "Vous apparaissez sur Google quand on vous cherche",
@@ -219,7 +219,7 @@ export const faq = [
   },
   {
     q: "Suis-je engagé sur la durée ?",
-    a: "Non. C'est sans engagement : 49€ une seule fois à la création, puis 9,90€/mois. Tu arrêtes quand tu veux, en un message.",
+    a: "Non. C'est sans engagement : 49€ une seule fois à la création, puis 9,99€/mois. Tu arrêtes quand tu veux, en un message.",
   },
   {
     q: "Et si je veux modifier mon site plus tard ?",
@@ -231,7 +231,7 @@ export const faq = [
   },
   {
     q: "Comment se passe le paiement ?",
-    a: "49€ à la création puis 9,90€/mois par prélèvement sécurisé. Le paiement en ligne arrive très bientôt ; pour l'instant on te recontacte pour finaliser après le formulaire.",
+    a: "Tu paies en ligne en toute sécurité (Stripe) à la fin du formulaire : seulement les 49€ d'installation aujourd'hui. Le premier prélèvement mensuel de 9,99€ intervient le mois suivant, et c'est sans engagement — tu arrêtes quand tu veux.",
   },
   {
     q: "Je n'ai pas encore de SIRET, c'est possible ?",

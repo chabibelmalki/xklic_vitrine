@@ -5,7 +5,7 @@ import { useForm, useWatch, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { upload } from "@vercel/blob/client";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Loader2, PartyPopper } from "lucide-react";
+import { ArrowLeft, ArrowRight, CreditCard, Loader2, PartyPopper } from "lucide-react";
 import Link from "next/link";
 import {
   leadSchema,
@@ -163,14 +163,27 @@ export function LeadForm({
         products,
       };
 
-      // 3. Envoi au webhook (via /api/lead).
+      // 3. Création de la commande + session de paiement (via /api/checkout) :
+      //    la commande est stockée et le lead capturé côté serveur AVANT Stripe.
       setStatus("submitting");
-      const res = await fetch("/api/lead", {
+      const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error("bad status");
+      const data = (await res.json()) as { ok: boolean; url?: string | null };
+
+      if (data.url) {
+        // 4. Redirection vers Stripe Checkout. La confirmation du paiement (et
+        //    le déclenchement n8n) se fait UNIQUEMENT via le webhook vérifié —
+        //    jamais ici. On laisse l'écran tel quel pendant la redirection.
+        window.location.assign(data.url);
+        return;
+      }
+
+      // Repli (Stripe non configuré) : la commande est enregistrée, on affiche
+      // le remerciement sans redirection.
       setStatus("done");
     } catch {
       setStatus("error");
@@ -283,12 +296,12 @@ export function LeadForm({
                     ) : status === "submitting" ? (
                       <>
                         <Loader2 size={18} className="animate-spin" />
-                        Envoi…
+                        Redirection vers le paiement…
                       </>
                     ) : isLast ? (
                       <>
-                        Envoyer ma demande
-                        <Check size={18} />
+                        Commander
+                        <CreditCard size={18} />
                       </>
                     ) : (
                       <>
@@ -324,7 +337,8 @@ export function LeadForm({
         </div>
 
         <p className="mt-6 text-center text-xs text-cream-faint">
-          Aucun paiement aujourd&apos;hui. On te recontacte pour finaliser.
+          Paiement sécurisé par Stripe. Code promo possible juste avant de
+          payer. Sans engagement, résiliable quand tu veux.
         </p>
       </div>
     </FormProvider>

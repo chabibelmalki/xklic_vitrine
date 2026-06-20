@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { leadSchema } from "@/lib/lead-schema";
+import { postToN8n } from "@/lib/n8n";
 
 export const runtime = "nodejs";
 
@@ -29,32 +30,7 @@ export async function POST(req: Request) {
     source: "xklic-vitrine",
   };
 
-  const webhook = process.env.N8N_WEBHOOK_URL;
-
-  // Pas de webhook configuré : on log et on renvoie un succès (ne plante pas).
-  if (!webhook) {
-    console.info(
-      "[lead] N8N_WEBHOOK_URL absent — lead reçu mais non transmis :",
-      JSON.stringify(lead),
-    );
-    return NextResponse.json({ ok: true, forwarded: false });
-  }
-
-  try {
-    const res = await fetch(webhook, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(lead),
-    });
-    if (!res.ok) {
-      console.error("[lead] Webhook a répondu", res.status);
-      // On renvoie quand même un succès au visiteur : le lead est récupérable
-      // côté logs / n8n retentera. Ne pas casser l'expérience.
-      return NextResponse.json({ ok: true, forwarded: false });
-    }
-    return NextResponse.json({ ok: true, forwarded: true });
-  } catch (err) {
-    console.error("[lead] Échec d'envoi au webhook :", err);
-    return NextResponse.json({ ok: true, forwarded: false });
-  }
+  // Capture du lead (webhook configurable ; ne casse jamais l'expérience).
+  const forwarded = await postToN8n(lead);
+  return NextResponse.json({ ok: true, forwarded });
 }

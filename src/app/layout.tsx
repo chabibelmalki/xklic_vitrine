@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     template: "%s · Xklic",
   },
   description:
-    "Xklic crée le site web de ton activité, clés en main et en ligne en 2h. Sans prise de tête, sans engagement. 49€ à la création puis 9,90€/mois.",
+    "Xklic crée le site web de ton activité, clés en main et en ligne en 2h. Sans prise de tête, sans engagement. 49€ à la création puis 9,99€/mois.",
   keywords: [
     "site internet artisan",
     "site vitrine TPE",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     siteName: "Xklic",
     title: "Xklic — Le site pro qui te ramène des clients, en ligne en 2h",
     description:
-      "Le site web de ton activité, clés en main et en ligne en 2h. 49€ à la création puis 9,90€/mois, sans engagement.",
+      "Le site web de ton activité, clés en main et en ligne en 2h. 49€ à la création puis 9,99€/mois, sans engagement.",
   },
   twitter: {
     card: "summary_large_image",

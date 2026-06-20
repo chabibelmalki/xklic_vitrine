@@ -6,7 +6,7 @@ import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
 import { EASE_OUT } from "@/lib/utils";
 
-const proofs = ["En ligne en 2h", "Sans engagement", "49€ + 9,90€/mois"];
+const proofs = ["En ligne en 2h", "Sans engagement", "49€ + 9,99€/mois"];
 
 export function Hero() {
   const reduce = useReducedMotion();
