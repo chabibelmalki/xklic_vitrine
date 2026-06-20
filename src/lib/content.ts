@@ -154,7 +154,7 @@ export const formules: Formule[] = [
     name: "En haut de Google",
     phrase: "Soyez le premier que vos clients voient.",
     setup: "290€",
-    monthly: "79€",
+    monthly: "49€",
     priceNote:
       "Votre budget publicité, payé directement à Google — c'est vous qui choisissez le montant.",
     inherits: "Tout le pack précédent, et en plus :",
