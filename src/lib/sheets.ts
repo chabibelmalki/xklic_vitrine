@@ -19,13 +19,35 @@ const TOKEN_URI = "https://oauth2.googleapis.com/token";
 const SCOPE = "https://www.googleapis.com/auth/spreadsheets";
 const SHEETS_API = "https://sheets.googleapis.com/v4/spreadsheets";
 
-// En-têtes canoniques (ordre = ordre des colonnes écrites).
+// En-têtes canoniques (ordre = ordre des colonnes écrites). EXHAUSTIF : tout
+// ce que le formulaire collecte (lead-schema) doit avoir sa colonne ici.
 const HEADERS = [
-  "Date", "Statut", "Formule", "Entreprise", "Metier", "Ville", "Type",
-  "Services", "Produits", "Telephone", "Email", "Adresse", "SIRET",
-  "Langues", "Ambiance", "Extra",
+  "Date", "Statut", "Formule",
+  "Entreprise", "Metier", "Ville", "Type",
+  "Se deplace", "Zone deplacement",
+  "Prestations", "Credit impot",
+  "Produits",
+  "Telephone", "WhatsApp", "Email",
+  "Local/Boutique", "Adresse", "Disponibilites",
+  "SIRET", "SIRET en cours",
+  "Langues", "Styles", "Couleur", "Ambiance",
+  "Logo", "Photos",
+  "Facebook", "Instagram", "TikTok", "X", "Google",
+  "Extra",
   "Montant", "CodePromo", "OrderId", "SessionStripe", "AbonnementStripe",
 ] as const;
+
+/** Index 1-based → lettre de colonne A1 (1→A, 27→AA…). */
+function colA1(n: number): string {
+  let s = "";
+  while (n > 0) {
+    const m = (n - 1) % 26;
+    s = String.fromCharCode(65 + m) + s;
+    n = Math.floor((n - 1) / 26);
+  }
+  return s;
+}
+const LAST_COL = colA1(HEADERS.length);
 
 export type Statut = "lead" | "panier" | "payé";
 
@@ -97,7 +119,7 @@ let _headersEnsured = false;
 async function ensureHeaders(token: string, sheetId: string): Promise<void> {
   if (_headersEnsured) return;
   const tab = SHEET_TAB();
-  const range = `${encodeURIComponent(tab)}!A1:U1`;
+  const range = `${encodeURIComponent(tab)}!A1:${LAST_COL}1`;
   const get = await fetch(`${SHEETS_API}/${sheetId}/values/${range}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -118,10 +140,15 @@ async function ensureHeaders(token: string, sheetId: string): Promise<void> {
   _headersEnsured = true;
 }
 
+const oN = (b?: boolean) => (b ? "oui" : "non");
+const join = (a?: string[]) => (Array.isArray(a) ? a.filter(Boolean).join(", ") : "");
+const urls = (items?: { url?: string }[]) =>
+  Array.isArray(items) ? items.map((i) => i.url).filter(Boolean).join(", ") : "";
+
 function buildRow(statut: Statut, lead: LeadData, orderId: string, payment?: PaymentInfo): string[] {
   const montant =
     payment?.amountTotal != null ? (payment.amountTotal / 100).toFixed(2) : "";
-  const langues = Array.isArray(lead.languages) ? lead.languages.join(", ") : "";
+  const s = lead.socials ?? {};
   return [
     new Date().toISOString(),
     statut,
@@ -130,14 +157,30 @@ function buildRow(statut: Statut, lead: LeadData, orderId: string, payment?: Pay
     lead.trade ?? "",
     lead.city ?? "",
     lead.activityType ?? "",
+    oN(lead.mobile),
+    lead.serviceArea ?? "",
     lead.services ?? "",
+    lead.taxCredit ?? "",
     lead.products?.length ? JSON.stringify(lead.products) : "",
     lead.phone ?? "",
+    oN(!lead.noWhatsapp), // colonne « WhatsApp » : oui sauf si désactivé
     lead.email ?? "",
+    oN(lead.hasShop),
     lead.address ?? "",
+    lead.availability ?? "",
     lead.siret ?? "",
-    langues,
+    oN(lead.noSiret),
+    join(lead.languages),
+    join(lead.styleVibes),
+    lead.colorPreference ?? "",
     lead.ambiance ?? "",
+    urls(lead.logo),
+    urls(lead.photos),
+    s.facebook ?? "",
+    s.instagram ?? "",
+    s.tiktok ?? "",
+    s.x ?? "",
+    s.google ?? "",
     lead.extra ?? "",
     montant,
     payment?.promoCode ?? "",
