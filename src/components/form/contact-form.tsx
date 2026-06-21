@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { Loader2, PartyPopper, Send } from "lucide-react";
 import { contactSchema, type ContactValues } from "@/lib/contact-schema";
 import { Field, TextInput, TextArea } from "@/components/form/fields";
+import { Turnstile, TURNSTILE_ENABLED } from "@/components/form/turnstile";
 import { Button } from "@/components/ui/button";
 import { EASE_OUT } from "@/lib/utils";
 
@@ -14,6 +15,7 @@ type Status = "form" | "submitting" | "done" | "error";
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("form");
+  const [token, setToken] = useState("");
   const {
     register,
     handleSubmit,
@@ -25,17 +27,23 @@ export function ContactForm() {
   });
 
   const onSubmit = async (values: ContactValues) => {
+    // Anti-robot : si Turnstile est activé, on exige un jeton avant l'envoi.
+    if (TURNSTILE_ENABLED && !token) {
+      setStatus("error");
+      return;
+    }
     setStatus("submitting");
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, turnstileToken: token || undefined }),
       });
       if (!res.ok) throw new Error(await res.text());
       setStatus("done");
     } catch {
       setStatus("error");
+      setToken("");
     }
   };
 
@@ -124,6 +132,8 @@ export function ContactForm() {
           {...register("message")}
         />
       </Field>
+
+      <Turnstile onVerify={setToken} onExpire={() => setToken("")} />
 
       {status === "error" ? (
         <p className="text-sm text-ember-soft">

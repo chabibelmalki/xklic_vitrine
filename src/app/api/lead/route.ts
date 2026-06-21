@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { leadSchema } from "@/lib/lead-schema";
 import { appendOrderRow } from "@/lib/sheets";
+import { verifyTurnstile, clientIp } from "@/lib/turnstile";
 
 export const runtime = "nodejs";
 
@@ -21,6 +22,14 @@ export async function POST(req: Request) {
     return NextResponse.json(
       { ok: false, error: "validation", issues: parsed.error.flatten() },
       { status: 422 },
+    );
+  }
+
+  // Anti-robot Cloudflare Turnstile (no-op si la clé secrète n'est pas définie).
+  if (!(await verifyTurnstile(parsed.data.turnstileToken, clientIp(req)))) {
+    return NextResponse.json(
+      { ok: false, error: "turnstile" },
+      { status: 403 },
     );
   }
 

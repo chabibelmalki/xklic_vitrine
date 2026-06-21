@@ -17,6 +17,8 @@ export const contactSchema = z.object({
     .max(4000, "Ton message est trop long."),
   // Honeypot — laissé vide par les humains.
   company: z.string().optional(),
+  // Jeton Cloudflare Turnstile (anti-robot), vérifié côté serveur.
+  turnstileToken: z.string().optional(),
 });
 
 export type ContactValues = z.infer<typeof contactSchema>;

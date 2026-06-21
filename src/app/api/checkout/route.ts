@@ -5,6 +5,7 @@ import { createOrder } from "@/lib/orders";
 import { appendOrderRow } from "@/lib/sheets";
 import { stripe, pricesFor } from "@/lib/stripe";
 import { SITE_URL } from "@/lib/site";
+import { verifyTurnstile, clientIp } from "@/lib/turnstile";
 
 export const runtime = "nodejs";
 
@@ -34,6 +35,12 @@ export async function POST(req: Request) {
     );
   }
   const lead = parsed.data;
+
+  // Anti-robot Cloudflare Turnstile (no-op si la clé secrète n'est pas définie).
+  // Bloque AVANT toute écriture / appel Stripe.
+  if (!(await verifyTurnstile(lead.turnstileToken, clientIp(req)))) {
+    return NextResponse.json({ ok: false, error: "turnstile" }, { status: 403 });
+  }
 
   // 1+2. Persiste la commande (survit à Stripe).
   const order = await createOrder(lead);

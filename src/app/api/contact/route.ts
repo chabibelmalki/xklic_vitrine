@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { contactSchema } from "@/lib/contact-schema";
 import { sendMail, buildEmail } from "@/lib/email";
+import { verifyTurnstile, clientIp } from "@/lib/turnstile";
 
 export const runtime = "nodejs";
 
@@ -28,6 +29,14 @@ export async function POST(req: Request) {
   // Honeypot rempli → bot : on ignore silencieusement (succès simulé).
   if (data.company && data.company.length > 0) {
     return NextResponse.json({ ok: true });
+  }
+
+  // Anti-robot Cloudflare Turnstile (no-op si la clé secrète n'est pas définie).
+  if (!(await verifyTurnstile(data.turnstileToken, clientIp(req)))) {
+    return NextResponse.json(
+      { error: "Vérification anti-robot échouée." },
+      { status: 403 },
+    );
   }
 
   const { html, text } = buildEmail({

@@ -112,6 +112,9 @@ export const leadSchema = z
 
     // G. Mot de la fin (champ libre, facultatif)
     extra: z.string().trim().optional(),
+
+    // Jeton Cloudflare Turnstile (anti-robot), vérifié côté serveur.
+    turnstileToken: z.string().optional(),
   })
   .superRefine((data, ctx) => {
     // Zone de déplacement requise seulement si l'artisan se déplace

@@ -13,6 +13,7 @@ import {
   type FormuleSlug,
 } from "@/lib/lead-schema";
 import { Button } from "@/components/ui/button";
+import { Turnstile, TURNSTILE_ENABLED } from "@/components/form/turnstile";
 import { buildSteps, StepNavProvider } from "./steps";
 import { cn, EASE_OUT } from "@/lib/utils";
 
@@ -72,6 +73,7 @@ export function LeadForm({
   const [step, setStep] = useState(0);
   const [dir, setDir] = useState(1);
   const [status, setStatus] = useState<Status>("form");
+  const [token, setToken] = useState("");
 
   const methods = useForm<LeadValues>({
     resolver: zodResolver(leadSchema),
@@ -138,6 +140,11 @@ export function LeadForm({
   };
 
   const submit = methods.handleSubmit(async (values) => {
+    // Anti-robot : si Turnstile est activé, on exige un jeton avant de payer.
+    if (TURNSTILE_ENABLED && !token) {
+      setStatus("error");
+      return;
+    }
     try {
       // 1. On téléverse d'abord toutes les images vers Vercel Blob, en
       //    parallèle. Le webhook n'est appelé qu'une fois TOUS les uploads
@@ -161,6 +168,7 @@ export function LeadForm({
         logo,
         photos,
         products,
+        turnstileToken: token || undefined,
       };
 
       // 3. Création de la commande + session de paiement (via /api/checkout) :
@@ -187,6 +195,7 @@ export function LeadForm({
       setStatus("done");
     } catch {
       setStatus("error");
+      setToken("");
     }
   });
 
@@ -250,6 +259,14 @@ export function LeadForm({
                 </motion.div>
               </AnimatePresence>
             </div>
+
+            {/* Défi anti-robot affiché à la dernière étape, juste avant le
+                paiement (le jeton expire vite, on le résout au plus tard). */}
+            {isLast && TURNSTILE_ENABLED ? (
+              <div className="mt-7 flex justify-center">
+                <Turnstile onVerify={setToken} onExpire={() => setToken("")} />
+              </div>
+            ) : null}
 
             {status === "error" ? (
               <p className="mt-5 rounded-lg border border-ember/30 bg-ember/10 px-4 py-3 text-sm text-ember-soft">
