@@ -2,6 +2,7 @@ import type Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { getOrderByUrl } from "@/lib/orders";
 import { appendOrderRow } from "@/lib/sheets";
+import { sendMail, buildEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
 // Corps brut requis pour vérifier la signature : on ne lit JAMAIS req.json().
@@ -82,5 +83,38 @@ export async function POST(req: Request) {
     // Échec d'écriture : 500 pour que Stripe réessaie (livraison fiable).
     return new Response("sheet write failed", { status: 500 });
   }
+
+  // 4. Notification e-mail à contact@xklic.com (best-effort, NON bloquant : un
+  //    échec d'envoi ne doit pas re-déclencher le webhook — la source de vérité
+  //    reste Google Sheets). On `await` quand même : sur Vercel, le travail
+  //    après le retour de la fonction n'est pas garanti.
+  const { lead } = order;
+  const montant =
+    session.amount_total != null
+      ? `${(session.amount_total / 100).toFixed(2)} ${(session.currency ?? "eur").toUpperCase()}`
+      : "—";
+  const { html, text } = buildEmail({
+    title: `Nouveau paiement confirmé — ${lead.companyName || "client"}`,
+    rows: [
+      ["Formule", lead.formule],
+      ["Entreprise", lead.companyName],
+      ["Métier", lead.trade],
+      ["Ville", lead.city],
+      ["Téléphone", lead.phone],
+      ["E-mail", lead.email],
+      ["Montant", montant],
+      ["Code promo", promoCode],
+      ["Commande", order.id],
+      ["Session Stripe", session.id],
+    ],
+    footer: "Le récap complet est dans Google Sheets (statut « payé »).",
+  });
+  await sendMail({
+    subject: `💳 Paiement confirmé — ${lead.companyName || "client"} (${montant})`,
+    html,
+    text,
+    replyTo: lead.email || undefined,
+  });
+
   return new Response("ok", { status: 200 });
 }

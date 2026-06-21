@@ -44,6 +44,7 @@ export const nav = [
   { label: "Réalisations", href: "/#realisations" },
   { label: "Formules", href: "/#tarif" },
   { label: "Questions", href: "/#faq" },
+  { label: "Contact", href: "/contact" },
 ];
 
 // Secteurs accompagnés — affichés dans le bandeau de confiance.
