@@ -15,6 +15,7 @@
 import type { Metier, Ville, PairContent } from "./types";
 import { metiers } from "./metiers";
 import { villes } from "./villes";
+import { handwrittenPairs } from "./pairs-handwritten";
 
 // ── Hash de chaîne déterministe (FNV-1a 32 bits) ─────────────────────────
 // Stable, sans dépendance, sans Math.random. Sert de graine à tous les choix.
@@ -90,6 +91,10 @@ function depuisVille(v: Ville): string {
 
 // ── Composition ───────────────────────────────────────────────────────────
 export function composePair(metier: Metier, ville: Ville): PairContent {
+  // Paires prioritaires rédigées à la main → on sert ce contenu tel quel.
+  const handwritten = handwrittenPairs[`${metier.slug}-${ville.slug}`];
+  if (handwritten) return handwritten;
+
   const seed = hashString(`${metier.slug}-${ville.slug}`);
   const r = makePicker(seed);
 
