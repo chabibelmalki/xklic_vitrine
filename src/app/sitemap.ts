@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
-import { metierSlugs, villeSlugs } from "@/data/compose";
+import { metierSlugs, villeSlugs, handwrittenPairList } from "@/data/compose";
+import { creerSitePages } from "@/data/creer-site";
 
 // Sitemap DYNAMIQUE : énumère les pages statiques + tout le SEO programmatique
 // (métiers, zones, paires métier×ville) en mappant sur les slugs du contrat de
@@ -60,6 +61,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
+  // Pages « créer site [métier] » — le CŒUR SEO (intention d'achat artisan).
+  const creerSiteEntries: MetadataRoute.Sitemap = creerSitePages.map((p) => ({
+    url: url(`/${p.urlSlug}`),
+    lastModified: now,
+    changeFrequency: "weekly",
+    priority: 0.9,
+  }));
+
   // Pages métier : /metiers/[metier]
   const metierEntries: MetadataRoute.Sitemap = metiers.map((slug) => ({
     url: url(`/metiers/${slug}`),
@@ -76,18 +85,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  // Pages paire métier×ville : /metiers/[metier]/[ville] (le gros du volume).
-  const pairEntries: MetadataRoute.Sitemap = metiers.flatMap((metier) =>
-    villes.map((ville) => ({
+  // Paires métier×ville : SEULES les paires rédigées à la main sont indexées
+  // (les 174 générées sont en noindex → volontairement hors sitemap, anti-doorway).
+  const pairEntries: MetadataRoute.Sitemap = handwrittenPairList().map(
+    ({ metier, ville }) => ({
       url: url(`/metiers/${metier}/${ville}`),
       lastModified: now,
       changeFrequency: "monthly" as const,
-      priority: 0.7,
-    })),
+      priority: 0.6,
+    }),
   );
 
   return [
     ...staticEntries,
+    ...creerSiteEntries,
     ...metierEntries,
     ...villeEntries,
     ...pairEntries,

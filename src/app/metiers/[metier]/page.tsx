@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Check } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
 import { FloatingActions } from "@/components/site/floating-actions";
@@ -21,6 +22,7 @@ import { SITE_URL } from "@/lib/site";
 import { metierSlugs, getMetier } from "@/data/compose";
 import { metiers } from "@/data/metiers";
 import { villes } from "@/data/villes";
+import { creerSiteUrlForMetier } from "@/data/creer-site";
 
 export const revalidate = 86400;
 
@@ -60,6 +62,7 @@ export default async function MetierPage({
     { name: metier.name, url: `${SITE_URL}/metiers/${metier.slug}` },
   ]);
   const faqLd = faqLdFrom(metier.faq);
+  const creerSiteHref = creerSiteUrlForMetier(metier.slug);
 
   // Maillage : toutes les villes pour ce métier + autres métiers.
   const villeGroups = [
@@ -109,6 +112,18 @@ export default async function MetierPage({
               <p className="mt-5 text-lg leading-relaxed text-cream-muted">
                 {metier.intro}
               </p>
+              {creerSiteHref ? (
+                <Link
+                  href={creerSiteHref}
+                  className="group mt-7 inline-flex items-center gap-2 rounded-full border border-ember/30 bg-ember/10 px-5 py-2.5 text-sm font-medium text-ember-deep transition-colors hover:bg-ember/15"
+                >
+                  Créer ton site de {metier.name.toLowerCase()}
+                  <ArrowRight
+                    size={16}
+                    className="transition-transform group-hover:translate-x-0.5"
+                  />
+                </Link>
+              ) : null}
             </div>
           </Container>
         </section>

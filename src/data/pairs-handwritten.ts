@@ -38,6 +38,20 @@ export const handwrittenPairs: Record<string, PairContent> = {
       "plombier 95 argenteuil",
       "plombier pas cher argenteuil",
     ],
+    faq: [
+      {
+        q: "Mon site va-t-il me faire apparaître sur « plombier Argenteuil » ?",
+        a: "C'est l'objectif. On optimise ton site pour les recherches locales d'Argenteuil et du Val-d'Oise (titre, contenu, fiche, vitesse mobile). Le référencement naturel prend quelques semaines à s'installer ; pour être tout en haut dès le premier jour, la formule « En haut de Google » ajoute la publicité locale.",
+      },
+      {
+        q: "Combien coûte un site pour un plombier à Argenteuil ?",
+        a: "49 € à l'installation, puis 9,99 €/mois, sans engagement. Pas de devis à rallonge ni de frais cachés : le tarif est le même pour un plombier d'Argenteuil que partout ailleurs.",
+      },
+      {
+        q: "Je tourne déjà au bouche-à-oreille à Argenteuil, à quoi sert un site ?",
+        a: "Le bouche-à-oreille amène les clients qui te connaissent déjà. Un site capte tous les autres : les nouveaux habitants, ceux qui cherchent en urgence « plombier Argenteuil » sur Google et ne te connaissent pas encore. C'est de la demande que tu laisses aujourd'hui à tes concurrents.",
+      },
+    ],
   },
 
   // ── Serrurerie × Paris (volume énorme, urgence, enjeu confiance/arnaques) ─
@@ -59,6 +73,20 @@ export const handwrittenPairs: Record<string, PairContent> = {
       "changement serrure paris",
       "serrurier paris 18",
       "serrurier pas cher paris",
+    ],
+    faq: [
+      {
+        q: "Comment mon site me différencie-t-il des arnaques de serruriers à Paris ?",
+        a: "En affichant ce que les arnaqueurs cachent : une vraie identité, des tarifs indicatifs, ta zone d'intervention par arrondissement et tes avis. Un site clair et honnête rassure le Parisien méfiant avant même qu'il décroche son téléphone.",
+      },
+      {
+        q: "Un site peut-il me ramener des interventions en urgence à Paris ?",
+        a: "Oui : avec un bouton d'appel et WhatsApp bien visibles, et un site optimisé pour « serrurier Paris » et « ouverture de porte », tu captes le client au moment précis où il est coincé devant sa porte et prêt à appeler.",
+      },
+      {
+        q: "Combien ça coûte, et suis-je engagé ?",
+        a: "49 € à l'installation puis 9,99 €/mois, sans engagement — tu arrêtes quand tu veux. La publicité Google, si tu veux être tout en haut tout de suite, est en option et payée séparément à Google.",
+      },
     ],
   },
 
@@ -82,6 +110,20 @@ export const handwrittenPairs: Record<string, PairContent> = {
       "électricien 95 argenteuil",
       "électricien pas cher argenteuil",
     ],
+    faq: [
+      {
+        q: "Mon site d'électricien va-t-il ressortir sur Google à Argenteuil ?",
+        a: "On l'optimise pour « électricien Argenteuil » et le 95 : structure, contenu, vitesse mobile et fiche locale. Le référencement naturel s'installe en quelques semaines ; la formule « En haut de Google » permet d'y être dès le départ via la publicité locale.",
+      },
+      {
+        q: "Je fais surtout des mises aux normes et rénovations, le site est-il adapté ?",
+        a: "Oui. On met en avant tes prestations à forte valeur (mise aux normes NF C 15-100, rénovation complète, bornes de recharge) avec un formulaire de devis, pour attirer les projets planifiés autant que les dépannages.",
+      },
+      {
+        q: "Quel est le tarif pour un électricien à Argenteuil ?",
+        a: "49 € à l'installation, puis 9,99 €/mois, sans engagement. Modifications de contenu incluses : un nouveau service, une photo de chantier, des horaires — tu nous écris, on met à jour.",
+      },
+    ],
   },
 
   // ── Ménage à domicile × Paris (volume + angle crédit d'impôt) ───────────
@@ -103,6 +145,20 @@ export const handwrittenPairs: Record<string, PairContent> = {
       "ménage crédit d'impôt paris",
       "repassage à domicile paris",
       "société de ménage paris",
+    ],
+    faq: [
+      {
+        q: "Mon site va-t-il mettre en avant le crédit d'impôt de 50 % ?",
+        a: "Oui, clairement — c'est ton meilleur argument à Paris. On explique simplement que ta prestation revient à moitié prix après l'avantage fiscal, avec l'avance immédiate. C'est souvent ce qui déclenche la prise de contact.",
+      },
+      {
+        q: "Comment être trouvée pour « femme de ménage » dans mon arrondissement ?",
+        a: "On optimise ton site pour les recherches locales (« femme de ménage Paris 11 », « aide-ménagère près de chez moi ») et on affiche ta zone par arrondissement. Tu apparais quand quelqu'un de ton secteur cherche, le soir, sur son téléphone.",
+      },
+      {
+        q: "C'est combien et est-ce sans engagement ?",
+        a: "49 € à l'installation puis 9,99 €/mois, sans engagement. Tu peux même démarrer sans SIRET et nous le transmettre plus tard.",
+      },
     ],
   },
 
@@ -126,6 +182,20 @@ export const handwrittenPairs: Record<string, PairContent> = {
       "plombier 95 cergy",
       "plombier pas cher cergy",
     ],
+    faq: [
+      {
+        q: "Y a-t-il vraiment de la demande pour un plombier à Cergy ?",
+        a: "Beaucoup : entre les résidences neuves qui demandent du SAV, les grands ensembles de Cergy-Préfecture et le fort turnover locatif lié à l'université et au RER A, les dépannages et entretiens s'enchaînent toute l'année.",
+      },
+      {
+        q: "Mon site m'aidera-t-il à travailler avec les bailleurs et agences de Cergy ?",
+        a: "Oui : un site sérieux, avec tes prestations, ta réactivité et tes coordonnées au même endroit, c'est exactement ce que cherchent les agences et propriétaires pour trouver — et rappeler — un plombier fiable sur Cergy.",
+      },
+      {
+        q: "Combien coûte le site et suis-je engagé ?",
+        a: "49 € à l'installation, puis 9,99 €/mois, sans engagement. Le tarif est le même partout, à Cergy comme ailleurs, sans frais caché.",
+      },
+    ],
   },
 
   // ── Mécanique auto × Argenteuil (lié au vrai client Garage Méca Atlas) ───
@@ -147,6 +217,20 @@ export const handwrittenPairs: Record<string, PairContent> = {
       "contrôle technique contre visite argenteuil",
       "garage automobile 95 argenteuil",
       "vidange argenteuil",
+    ],
+    faq: [
+      {
+        q: "Un site peut-il vraiment amener des clients à mon garage d'Argenteuil ?",
+        a: "Oui — c'est ce que vit déjà le Garage Méca Atlas, client Xklic à Argenteuil. Quand un automobiliste cherche « garage Argenteuil » ou « mécanicien près de chez moi », ton site te place dans la course avec tes avis, tes horaires et un bouton pour appeler ou réserver.",
+      },
+      {
+        q: "Que mettre en avant : l'entretien, la réparation, le contrôle technique ?",
+        a: "Tout ce qui fait revenir le client : vidange, freinage, pneus, distribution, contre-visite de contrôle technique. On présente tes prestations clairement et on invite au devis, pour rassurer avant qu'on te confie la voiture.",
+      },
+      {
+        q: "Quel est le prix et y a-t-il un engagement ?",
+        a: "49 € à l'installation, puis 9,99 €/mois, sans engagement. Modifications incluses : nouveaux services, horaires, photos de l'atelier — tu nous écris, on s'en occupe.",
+      },
     ],
   },
 };

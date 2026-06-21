@@ -23,6 +23,7 @@ import {
   getMetier,
   getVille,
   composePair,
+  isHandwrittenPair,
 } from "@/data/compose";
 import { metiers } from "@/data/metiers";
 import { villes } from "@/data/villes";
@@ -45,6 +46,10 @@ export async function generateMetadata({
 
   const { title, description } = composePair(metier, ville);
 
+  // Anti-doorway : seules les paires rédigées à la main sont indexables. Les
+  // paires générées passent en noindex + nofollow (accessibles mais hors index).
+  const generated = !isHandwrittenPair(metier.slug, ville.slug);
+
   return buildMetadata({
     title,
     description,
@@ -60,6 +65,7 @@ export async function generateMetadata({
       placename: ville.name,
       position: { lat: ville.geo.lat, lng: ville.geo.lng },
     },
+    ...(generated ? { noindex: true, nofollow: true } : {}),
   });
 }
 
@@ -73,7 +79,9 @@ export default async function PairPage({
   const ville = getVille(vSlug);
   if (!metier || !ville) notFound();
 
-  const { body, intents } = composePair(metier, ville);
+  const { body, intents, faq: pairFaq } = composePair(metier, ville);
+  // FAQ différenciée par ville sur les paires rédigées main ; sinon, FAQ métier.
+  const faq = pairFaq ?? metier.faq;
 
   const breadcrumb = breadcrumbLd([
     { name: "Accueil", url: `${SITE_URL}/` },
@@ -84,7 +92,7 @@ export default async function PairPage({
       url: `${SITE_URL}/metiers/${metier.slug}/${ville.slug}`,
     },
   ]);
-  const faqLd = faqLdFrom(metier.faq);
+  const faqLd = faqLdFrom(faq);
 
   // Maillage : autres métiers dans la même ville.
   const sameVilleGroup = {
@@ -204,8 +212,8 @@ export default async function PairPage({
 
         <ProofBloc reassurances={["En ligne en 2h", "Sans engagement", "Optimisé pour Google local"]} />
 
-        {/* FAQ métier */}
-        {metier.faq.length > 0 ? (
+        {/* FAQ (différenciée par ville sur les paires rédigées main) */}
+        {faq.length > 0 ? (
           <section className="relative border-t border-line py-16 sm:py-20">
             <Container>
               <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
@@ -216,7 +224,7 @@ export default async function PairPage({
                   </h2>
                 </div>
                 <ul className="flex flex-col">
-                  {metier.faq.map((item) => (
+                  {faq.map((item) => (
                     <li
                       key={item.q}
                       className="border-b border-line py-5 first:border-t"

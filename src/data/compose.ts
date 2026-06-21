@@ -246,6 +246,25 @@ export function villeSlugs(): string[] {
   return villes.map((v) => v.slug);
 }
 
+// ── Paires rédigées à la main (indexables) vs générées (noindex) ───────────
+// Une paire est « rédigée main » si elle a une entrée dans handwrittenPairs.
+// Sert à : (1) indexer uniquement ces paires, (2) ne mettre qu'elles au sitemap.
+export function isHandwrittenPair(metierSlug: string, villeSlug: string): boolean {
+  return Boolean(handwrittenPairs[`${metierSlug}-${villeSlug}`]);
+}
+
+// Les paires indexables, sous forme { metier, ville }, dérivées des clés.
+export function handwrittenPairList(): { metier: string; ville: string }[] {
+  return Object.keys(handwrittenPairs).map((key) => {
+    // clé = `${metierSlug}-${villeSlug}` ; le villeSlug est un slug simple
+    // (pas de tiret interne pour nos villes ? si, ex. "saint-denis").
+    // On résout en cherchant le métier connu qui préfixe la clé.
+    const metier = metiers.find((m) => key.startsWith(`${m.slug}-`));
+    const ville = metier ? key.slice(metier.slug.length + 1) : "";
+    return { metier: metier ? metier.slug : "", ville };
+  });
+}
+
 // Pratique pour le pré-rendu : toutes les paires (slug, slug).
 export function allPairs(): { metier: string; ville: string }[] {
   const out: { metier: string; ville: string }[] = [];

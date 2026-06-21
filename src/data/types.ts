@@ -81,4 +81,8 @@ export interface PairContent {
   body: string[];
   /** intentions/requêtes locales couvertes */
   intents: string[];
+  /** FAQ propre à la paire (optionnel). Présent sur les paires rédigées à la
+   *  main → différenciée par ville (ne PAS recycler metier.faq). Absent sur les
+   *  paires générées : la page retombe alors sur metier.faq. */
+  faq?: { q: string; a: string }[];
 }

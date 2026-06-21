@@ -15,6 +15,7 @@ import { breadcrumbLd } from "@/lib/seo";
 import { SITE_URL } from "@/lib/site";
 import { metiers } from "@/data/metiers";
 import { villes } from "@/data/villes";
+import { creerSiteUrlForMetier } from "@/data/creer-site";
 
 // ISR : contenu programmatique stable, revalidé une fois par jour.
 export const revalidate = 86400;
@@ -85,7 +86,11 @@ export default function MetiersPage() {
             <RevealGroup className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {metiers.map((metier) => (
                 <RevealItem key={metier.slug} className="flex">
-                  <MetierCard metier={metier} className="w-full" />
+                  <MetierCard
+                    metier={metier}
+                    href={creerSiteUrlForMetier(metier.slug)}
+                    className="w-full"
+                  />
                 </RevealItem>
               ))}
             </RevealGroup>

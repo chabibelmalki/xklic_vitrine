@@ -32,6 +32,9 @@ type BuildMetadataInput = {
   };
   /** Empêche l'indexation de cette page précise (ex. pages utilitaires). */
   noindex?: boolean;
+  /** Empêche aussi le suivi des liens (robots: nofollow). N'a d'effet qu'avec
+   *  `noindex`. Utilisé pour les pages métier×ville générées (anti-doorway). */
+  nofollow?: boolean;
 };
 
 /** Normalise un chemin en un chemin absolu commençant par "/". */
@@ -53,6 +56,7 @@ export function buildMetadata({
   keywords,
   geo,
   noindex,
+  nofollow,
 }: BuildMetadataInput): Metadata {
   const canonicalPath = normalizePath(path);
   const url = `${SITE_URL}${canonicalPath === "/" ? "" : canonicalPath}`;
@@ -88,7 +92,7 @@ export function buildMetadata({
       title,
       description,
     },
-    ...(noindex ? { robots: { index: false, follow: true } } : {}),
+    ...(noindex ? { robots: { index: false, follow: !nofollow } } : {}),
     ...(Object.keys(geoOther).length ? { other: geoOther } : {}),
   };
 }
