@@ -8,7 +8,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { faq } from "@/lib/content";
 import { cn, EASE_OUT } from "@/lib/utils";
 
-export function Faq() {
+export function Faq({ headingAs = "h2" }: { headingAs?: "h1" | "h2" } = {}) {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
@@ -16,6 +16,7 @@ export function Faq() {
       <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
         <Reveal>
           <SectionHeading
+            as={headingAs}
             eyebrow="Questions"
             title="Tout ce que tu te demandes, sans détour."
             description="Une autre question ? Écris-nous, on répond vite et clairement."

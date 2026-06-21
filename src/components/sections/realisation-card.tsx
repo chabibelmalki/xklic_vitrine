@@ -1,26 +1,30 @@
+import Link from "next/link";
 import { ArrowUpRight, Star } from "lucide-react";
 import type { Realisation } from "@/lib/realisations";
 import { cn } from "@/lib/utils";
 
-// Carte d'une réalisation client. POINT SEO : c'est une vraie balise <a href>
-// vers le site client (pas de nofollow), donc cliquable ET crawlable par Google
-// — c'est tout l'intérêt de la page (découverte + indexation des sites clients).
+// Carte d'une réalisation client.
+// • Par défaut (sans `href`) : vraie balise <a href> vers le site client live
+//   (pas de nofollow) — cliquable ET crawlable par Google.
+// • Avec `href` interne (ex. /realisations/<slug>) : la carte renvoie vers la
+//   page détail dédiée de la réalisation (qui, elle, porte le lien dofollow
+//   sortant vers le site client). Le maillage interne se fait alors via <Link>.
 export function RealisationCard({
   item,
   featured,
+  href,
 }: {
   item: Realisation;
   featured?: boolean;
+  /** lien interne optionnel (page détail). Si absent → lien externe vers item.url. */
+  href?: string;
 }) {
   const meta = [item.trade, item.city].filter(Boolean).join(" · ");
-  return (
-    <a
-      href={item.url}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={`Voir le site de ${item.client}${meta ? ` — ${meta}` : ""} (nouvel onglet)`}
-      className="group relative block overflow-hidden rounded-[var(--radius-card)] border border-line bg-ink-soft transition-all duration-500 hover:border-line-strong hover:shadow-card"
-    >
+  const cardClass =
+    "group relative block overflow-hidden rounded-[var(--radius-card)] border border-line bg-ink-soft transition-all duration-500 hover:border-line-strong hover:shadow-card";
+
+  const Inner = (
+    <>
       {/* Aperçu — maquette mobile sur fond chaud */}
       <div className="relative h-72 overflow-hidden sm:h-80">
         <div className={cn("absolute inset-0 bg-gradient-to-br", item.accent)} />
@@ -78,6 +82,31 @@ export function RealisationCard({
           <ArrowUpRight size={16} />
         </span>
       </div>
+    </>
+  );
+
+  // Lien interne (page détail) → <Link>. Sinon lien externe vers le site live.
+  if (href) {
+    return (
+      <Link
+        href={href}
+        aria-label={`Voir la réalisation : ${item.client}${meta ? ` — ${meta}` : ""}`}
+        className={cardClass}
+      >
+        {Inner}
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      href={item.url}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`Voir le site de ${item.client}${meta ? ` — ${meta}` : ""} (nouvel onglet)`}
+      className={cardClass}
+    >
+      {Inner}
     </a>
   );
 }

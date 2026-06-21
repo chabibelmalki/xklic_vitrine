@@ -1,35 +1,60 @@
 import Link from "next/link";
 import { Logo } from "./logo";
 import { Container } from "@/components/ui/container";
-import { brand, nav } from "@/lib/content";
+import { brand } from "@/lib/content";
 import { telLink, waLink } from "@/lib/utils";
+
+// Colonnes de liens du footer. Pensées pour le maillage interne multi-pages
+// (métiers, zones, réalisations, blog, tarifs, faq, contact, légal).
+const columns: { title: string; links: { href: string; label: string }[] }[] = [
+  {
+    title: "Services",
+    links: [
+      { href: "/metiers", label: "Tous les métiers" },
+      { href: "/zones", label: "Zones couvertes" },
+      { href: "/realisations", label: "Réalisations" },
+      { href: "/blog", label: "Blog" },
+    ],
+  },
+  {
+    title: "L'offre",
+    links: [
+      { href: "/#tarif", label: "Formules & tarifs" },
+      { href: "/#process", label: "Comment ça marche" },
+      { href: "/#faq", label: "Questions fréquentes" },
+      { href: "/demarrer", label: "Créer mon site" },
+    ],
+  },
+];
 
 export function Footer() {
   return (
     <footer className="relative border-t border-line py-14">
       <Container>
-        <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
-          <div className="max-w-xs">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          <div className="max-w-xs lg:col-span-1">
             <Logo />
             <p className="mt-4 text-sm leading-relaxed text-cream-muted">
               {brand.tagline} Sans prise de tête, sans engagement.
             </p>
           </div>
 
-          <nav className="flex flex-col gap-3">
-            <span className="text-xs uppercase tracking-[0.18em] text-cream-faint">
-              Navigation
-            </span>
-            {nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-sm text-cream-muted transition-colors hover:text-cream"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+          {columns.map((col) => (
+            <nav key={col.title} className="flex flex-col gap-3">
+              <span className="text-xs uppercase tracking-[0.18em] text-cream-faint">
+                {col.title}
+              </span>
+              {col.links.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-sm text-cream-muted transition-colors hover:text-cream"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          ))}
 
           <div className="flex flex-col gap-3">
             <span className="text-xs uppercase tracking-[0.18em] text-cream-faint">
@@ -67,11 +92,8 @@ export function Footer() {
         <div className="mt-12 flex flex-col gap-4 border-t border-line pt-6 text-xs text-cream-faint sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {brand.name}. Tous droits réservés.</p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <Link
-              href="/realisations"
-              className="transition-colors hover:text-cream"
-            >
-              Réalisations
+            <Link href="/contact" className="transition-colors hover:text-cream">
+              Contact
             </Link>
             <Link
               href="/mentions-legales"

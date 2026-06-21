@@ -8,7 +8,7 @@ import type { FormuleSlug } from "./lead-schema";
 export const brand = {
   name: "Xklic",
   tagline: "Le site pro qui te ramène des clients, en ligne en 2h.",
-  email: "contact@xklic.fr",
+  email: "contact@xklic.com",
   domain: "xklic.com",
   phone: "0663948128", // numéro brut (FR)
   phoneDisplay: "06 63 94 81 28", // affichage formaté
@@ -29,7 +29,7 @@ export const legal = {
   ape: "—", // code APE/NAF
   capital: "", // capital social (si société)
   address: "—", // siège social
-  email: "contact@xklic.fr",
+  email: "contact@xklic.com",
   phone: "", // téléphone (optionnel)
   host: {
     name: "Vercel Inc.",
@@ -40,10 +40,10 @@ export const legal = {
 };
 
 export const nav = [
-  { label: "Comment ça marche", href: "/#process" },
-  { label: "Réalisations", href: "/#realisations" },
-  { label: "Formules", href: "/#tarif" },
-  { label: "Questions", href: "/#faq" },
+  { label: "Métiers", href: "/metiers" },
+  { label: "Réalisations", href: "/realisations" },
+  { label: "Tarifs", href: "/tarifs" },
+  { label: "Questions", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];
 

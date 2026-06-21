@@ -374,7 +374,7 @@ function ThankYou() {
         </Link>
       </div>
       <p className="mt-8 text-xs text-cream-faint">
-        Une question en attendant&nbsp;? contact@xklic.fr
+        Une question en attendant&nbsp;? contact@xklic.com
       </p>
     </motion.div>
   );

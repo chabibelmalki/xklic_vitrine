@@ -5,7 +5,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { formules, type Formule } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
-export function Formules() {
+export function Formules({ headingAs = "h2" }: { headingAs?: "h1" | "h2" } = {}) {
   return (
     <Section id="tarif" className="relative border-t border-line">
       {/* Lueur chaude derrière la grille */}
@@ -16,6 +16,7 @@ export function Formules() {
 
       <Reveal>
         <SectionHeading
+          as={headingAs}
           align="center"
           eyebrow="Nos formules"
           title="Trois formules, simples et claires."

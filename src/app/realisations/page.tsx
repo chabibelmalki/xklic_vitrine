@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 // ISR : la liste vient du moteur, revalidée périodiquement (voir getRealisations).
 export const revalidate = 3600;
 
-function collectionLd(items: { client: string; url: string }[]) {
+function collectionLd(items: { client: string; slug: string }[]) {
   return {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -45,7 +45,7 @@ function collectionLd(items: { client: string; url: string }[]) {
       itemListElement: items.map((it, i) => ({
         "@type": "ListItem",
         position: i + 1,
-        url: it.url,
+        url: `${SITE_URL}/realisations/${it.slug}`,
         name: it.client,
       })),
     },
@@ -91,8 +91,12 @@ export default async function RealisationsPage() {
           <Container>
             <RevealGroup className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {items.map((item, i) => (
-                <RevealItem key={item.url}>
-                  <RealisationCard item={item} featured={i === 0} />
+                <RevealItem key={item.slug}>
+                  <RealisationCard
+                    item={item}
+                    featured={i === 0}
+                    href={`/realisations/${item.slug}`}
+                  />
                 </RevealItem>
               ))}
             </RevealGroup>
