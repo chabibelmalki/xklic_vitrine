@@ -22,13 +22,13 @@ export const brand = {
 
 // Informations légales — ⚠️ À COMPLÉTER avec les vraies données de l'entreprise.
 export const legal = {
-  company: "Xklic", // raison sociale exacte (ex. « Xklic SAS »)
-  status: "—", // forme juridique (SAS, SASU, auto-entrepreneur…)
-  manager: "—", // nom du/de la dirigeant·e
-  siren: "—", // SIREN / SIRET
-  ape: "—", // code APE/NAF
-  capital: "", // capital social (si société)
-  address: "—", // siège social
+  company: "MINHAJ", // raison sociale (la forme « SAS » est dans `status`)
+  status: "SAS", // forme juridique (Société par actions simplifiée)
+  manager: "Chabib El Malki, président", // représentant légal / dir. publication
+  siren: "106 303 944 · SIRET 106 303 944 00016", // SIREN · SIRET du siège
+  ape: "6202A — Conseil en systèmes et logiciels informatiques", // code APE/NAF
+  capital: "1 000 €", // capital social
+  address: "17 rue de Moscou, 95520 Osny", // siège social
   email: "contact@xklic.com",
   phone: "", // téléphone (optionnel)
   host: {
@@ -36,7 +36,7 @@ export const legal = {
     address: "440 N Barranca Ave #4133, Covina, CA 91723, États-Unis",
     site: "https://vercel.com",
   },
-  updated: "13 juin 2026", // date de dernière mise à jour
+  updated: "21 juin 2026", // date de dernière mise à jour
 };
 
 export const nav = [
