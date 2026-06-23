@@ -101,6 +101,9 @@ export function Footer() {
             >
               Mentions légales
             </Link>
+            <Link href="/cgv" className="transition-colors hover:text-cream">
+              CGV
+            </Link>
             <Link
               href="/confidentialite"
               className="transition-colors hover:text-cream"

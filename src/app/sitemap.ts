@@ -5,7 +5,8 @@ import { creerSitePages } from "@/data/creer-site";
 
 // Sitemap DYNAMIQUE : énumère les pages statiques + tout le SEO programmatique
 // (métiers, zones, paires métier×ville) en mappant sur les slugs du contrat de
-// données. Les pages légales (mentions-légales, confidentialité) sont en
+// données. La page « confidentialité » est indexable (exigence de vérification
+// Google Business Profile API) → incluse. Les « mentions-légales » restent en
 // noindex → volontairement absentes.
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -58,6 +59,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
+    },
+    {
+      url: url("/confidentialite"),
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
+      url: url("/cgv"),
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
   ];
 

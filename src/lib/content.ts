@@ -30,14 +30,74 @@ export const legal = {
   capital: "1 000 €", // capital social
   address: "17 rue de Moscou, 95520 Osny", // siège social
   email: "contact@xklic.com",
+  // Adresse dédiée aux demandes RGPD (droits, données personnelles).
+  // ⚠️ À CRÉER : alias/boîte réelle (peut rediriger vers contact@xklic.com),
+  // sinon les demandes d'exercice de droits resteront sans réponse.
+  privacyEmail: "rgpd@xklic.com",
   phone: "", // téléphone (optionnel)
   host: {
     name: "Vercel Inc.",
     address: "440 N Barranca Ave #4133, Covina, CA 91723, États-Unis",
     site: "https://vercel.com",
   },
-  updated: "21 juin 2026", // date de dernière mise à jour
+  updated: "22 juin 2026", // date de dernière mise à jour
 };
+
+// Sous-traitants / services tiers qui peuvent traiter des données personnelles
+// pour notre compte. Alimente la section « Destinataires » de la politique de
+// confidentialité. ⚠️ À TENIR À JOUR si on ajoute/retire un outil.
+// `location` sert à signaler les transferts hors UE.
+export type SubProcessor = {
+  name: string;
+  purpose: string;
+  location: string;
+  policy: string; // URL de la politique de confidentialité du prestataire
+};
+
+export const subProcessors: SubProcessor[] = [
+  {
+    name: "Vercel Inc.",
+    purpose:
+      "Hébergement du site et stockage sécurisé des fichiers que tu envoies (Vercel Blob).",
+    location: "États-Unis",
+    policy: "https://vercel.com/legal/privacy-policy",
+  },
+  {
+    name: "Stripe Payments Europe, Ltd.",
+    purpose:
+      "Traitement sécurisé des paiements en ligne. Tes données bancaires sont saisies directement chez Stripe — nous n'y avons jamais accès.",
+    location: "Irlande (UE), avec transferts possibles aux États-Unis",
+    policy: "https://stripe.com/fr/privacy",
+  },
+  {
+    name: "Resend",
+    purpose:
+      "Envoi des emails transactionnels et des notifications liées à ta demande.",
+    location: "États-Unis",
+    policy: "https://resend.com/legal/privacy-policy",
+  },
+  {
+    name: "Google (Google Ireland Ltd. / Google LLC)",
+    purpose:
+      "Réception et organisation des demandes (Google Sheets) et, pour les clients concernés, gestion de leur fiche Google Business Profile via l'API Google Business Profile (voir section dédiée).",
+    location: "Irlande (UE), avec transferts possibles aux États-Unis",
+    policy: "https://policies.google.com/privacy",
+  },
+  {
+    name: "n8n",
+    purpose:
+      "Automatisation interne : acheminement de ta demande jusqu'à notre équipe.",
+    location: "Union européenne",
+    policy: "https://n8n.io/legal/privacy/",
+  },
+  {
+    name: "Cloudflare, Inc.",
+    purpose:
+      "Protection anti-spam et anti-bot des formulaires (widget Cloudflare Turnstile) : un jeton est vérifié à l'envoi du formulaire de contact et du tunnel de commande.",
+    location: "États-Unis",
+    policy: "https://www.cloudflare.com/privacypolicy/",
+  },
+];
 
 export const nav = [
   { label: "Métiers", href: "/metiers" },

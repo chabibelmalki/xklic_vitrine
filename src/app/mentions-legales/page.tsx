@@ -79,6 +79,13 @@ export default function MentionsLegalesPage() {
         </p>
       </LegalSection>
 
+      <LegalSection title="Conditions de vente">
+        <p>
+          Les ventes de services sont régies par nos{" "}
+          <Link href="/cgv">conditions générales de vente</Link>.
+        </p>
+      </LegalSection>
+
       <LegalSection title="Contact">
         <p>
           Pour toute question relative au site :{" "}
