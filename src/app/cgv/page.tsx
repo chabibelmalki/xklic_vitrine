@@ -217,10 +217,22 @@ export default function CgvPage() {
       <LegalSection title="11. Propriété : contenus et nom de domaine">
         <p>
           Les contenus fournis par le client (textes, logo, photos) restent sa
-          propriété. Le nom de domaine peut être enregistré au nom du client ; en
-          cas de départ, {legal.company} l&apos;accompagne pour récupérer son
-          domaine. Le code, les gabarits et la technologie du moteur restent la
+          propriété. Le code, les gabarits et la technologie du moteur restent la
           propriété de {legal.company} et ne sont pas cédés.
+        </p>
+        <p>
+          Le nom de domaine en <strong>.fr</strong> est{" "}
+          <strong>offert</strong> : il est acheté, enregistré et géré par{" "}
+          {legal.company} pour le compte du client pendant toute la durée de
+          l&apos;abonnement actif. La gratuité couvre l&apos;achat et la gestion
+          du nom de domaine tant que l&apos;abonnement est en cours.
+        </p>
+        <p>
+          En cas de résiliation, le client peut demander le transfert du nom de
+          domaine en en faisant la demande via le{" "}
+          <Link href="/contact">formulaire de contact</Link> du site. Transfert
+          gratuit après 12 mois d&apos;abonnement ; avant 12 mois, le transfert
+          est facturé 30€ couvrant les frais de mise en place.
         </p>
       </LegalSection>
 

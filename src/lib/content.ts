@@ -184,6 +184,7 @@ export const formules: Formule[] = [
     monthly: "9,99€",
     features: [
       "Un beau site professionnel à votre nom",
+      "Votre nom de domaine .fr offert : on l'achète et on le gère pour vous, vous n'avez rien à faire",
       "Vous apparaissez sur Google quand on vous cherche",
       "Vos clients vous trouvent et vous appellent en un clic",
       "Un QR code à montrer à vos clients pour récolter des avis",
@@ -284,7 +285,7 @@ export const faq = [
   },
   {
     q: "À qui appartiennent le site et le nom de domaine ?",
-    a: "Le contenu (textes, photos) est à toi. Le nom de domaine peut être enregistré à ton nom. Si tu pars, on t'accompagne pour récupérer ton domaine.",
+    a: "Le contenu (textes, photos) est à toi. Le nom de domaine .fr est offert et géré par Xklic : on l'achète et on s'en occupe pour toi pendant toute la durée de ton abonnement, tu n'as rien à faire. Si tu arrêtes, tu peux demander à récupérer ton domaine via notre formulaire de contact (conditions détaillées dans nos CGV).",
   },
   {
     q: "Comment se passe le paiement ?",
@@ -314,7 +315,7 @@ export const steps = [
   {
     n: "03",
     title: "Il est en ligne en 2h",
-    body: "Ton site est publié sur ton nom de domaine, optimisé pour mobile et pour apparaître sur Google localement.",
+    body: "Ton site est publié sur ton nom de domaine .fr (offert, on s'en occupe pour toi), optimisé pour mobile et pour apparaître sur Google localement.",
   },
   {
     n: "04",
