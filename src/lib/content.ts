@@ -30,10 +30,6 @@ export const legal = {
   capital: "1 000 €", // capital social
   address: "17 rue de Moscou, 95520 Osny", // siège social
   email: "contact@xklic.com",
-  // Adresse dédiée aux demandes RGPD (droits, données personnelles).
-  // ⚠️ À CRÉER : alias/boîte réelle (peut rediriger vers contact@xklic.com),
-  // sinon les demandes d'exercice de droits resteront sans réponse.
-  privacyEmail: "rgpd@xklic.com",
   phone: "", // téléphone (optionnel)
   host: {
     name: "Vercel Inc.",

@@ -22,7 +22,7 @@ export default function ConfidentialitePage() {
           temps nous les conservons, avec quels prestataires elles transitent,
           et quels sont tes droits. Nous traitons le minimum de données
           nécessaire, nous ne les vendons jamais et tu peux nous écrire à tout
-          moment à <a href={`mailto:${legal.privacyEmail}`}>{legal.privacyEmail}</a>.
+          moment à <a href={`mailto:${legal.email}`}>{legal.email}</a>.
         </p>
       </LegalSection>
 
@@ -40,7 +40,7 @@ export default function ConfidentialitePage() {
           <li>Représentant légal : {legal.manager}</li>
           <li>
             Contact (données personnelles) :{" "}
-            <a href={`mailto:${legal.privacyEmail}`}>{legal.privacyEmail}</a>
+            <a href={`mailto:${legal.email}`}>{legal.email}</a>
           </li>
         </ul>
         <p>
@@ -241,7 +241,7 @@ export default function ConfidentialitePage() {
         <p>
           Tu gardes le contrôle à tout moment : tu peux révoquer notre accès à ta
           fiche Google depuis les paramètres de sécurité de ton compte Google, ou
-          en nous écrivant à <a href={`mailto:${legal.privacyEmail}`}>{legal.privacyEmail}</a>.
+          en nous écrivant à <a href={`mailto:${legal.email}`}>{legal.email}</a>.
           La révocation met fin à notre gestion de ta fiche sans affecter les
           données déjà publiées sur celle-ci.
         </p>
@@ -274,7 +274,7 @@ export default function ConfidentialitePage() {
           rectification, d&apos;effacement, d&apos;opposition, de limitation et
           de portabilité de tes données, ainsi que du droit de définir des
           directives sur leur sort après ton décès. Pour les exercer, écris-nous
-          à <a href={`mailto:${legal.privacyEmail}`}>{legal.privacyEmail}</a> ; nous te
+          à <a href={`mailto:${legal.email}`}>{legal.email}</a> ; nous te
           répondons dans un délai d&apos;un mois.
         </p>
         <p>
@@ -293,7 +293,7 @@ export default function ConfidentialitePage() {
           réalisons pas de profilage. {legal.company} n&apos;est pas tenue de
           désigner un délégué à la protection des données (DPO) ; pour toute
           question relative à tes données, le point de contact est{" "}
-          <a href={`mailto:${legal.privacyEmail}`}>{legal.privacyEmail}</a>.
+          <a href={`mailto:${legal.email}`}>{legal.email}</a>.
         </p>
       </LegalSection>
 
@@ -319,7 +319,7 @@ export default function ConfidentialitePage() {
       <LegalSection title="Contact">
         <p>
           Pour toute question relative à tes données personnelles :{" "}
-          <a href={`mailto:${legal.privacyEmail}`}>{legal.privacyEmail}</a>.
+          <a href={`mailto:${legal.email}`}>{legal.email}</a>.
         </p>
       </LegalSection>
     </LegalLayout>
