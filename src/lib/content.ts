@@ -26,6 +26,7 @@ export const legal = {
   status: "SAS", // forme juridique (Société par actions simplifiée)
   manager: "Chabib El Malki, président", // représentant légal / dir. publication
   siren: "106 303 944 · SIRET 106 303 944 00016", // SIREN · SIRET du siège
+  rcs: "106 303 944 R.C.S. Pontoise", // immatriculation au RCS
   ape: "6202A — Conseil en systèmes et logiciels informatiques", // code APE/NAF
   capital: "1 000 €", // capital social
   address: "17 rue de Moscou, 95520 Osny", // siège social

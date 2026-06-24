@@ -24,6 +24,7 @@ export default function MentionsLegalesPage() {
           <li>Représentant légal : {legal.manager}</li>
           <li>Siège social : {legal.address}</li>
           <li>SIREN / SIRET : {legal.siren}</li>
+          <li>Immatriculation au RCS : {legal.rcs}</li>
           <li>Code APE / NAF : {legal.ape}</li>
           <li>
             Email :{" "}
