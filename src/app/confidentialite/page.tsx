@@ -5,7 +5,7 @@ import { brand, legal, subProcessors } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Politique de confidentialité",
-  description: `Politique de confidentialité et traitement des données personnelles du site ${brand.name} : données collectées, finalités, base légale, sous-traitants, droits RGPD et usage de l'API Google Business Profile.`,
+  description: `Politique de confidentialité et traitement des données personnelles du site ${brand.name}{" "}: données collectées, finalités, base légale, sous-traitants, droits RGPD et usage de l'API Google Business Profile.`,
   alternates: { canonical: "/confidentialite" },
   // Page volontairement INDEXABLE : elle doit rester publiquement accessible
   // et référençable (exigence de vérification de la Google Business Profile API).
@@ -182,7 +182,7 @@ export default function ConfidentialitePage() {
           Dans le cadre de nos offres de gestion de présence en ligne (packs
           « On s&apos;occupe de votre Google » et « En haut de Google »), et{" "}
           <strong>uniquement avec ton autorisation explicite</strong> donnée via
-          la connexion sécurisée de Google (OAuth), {legal.company} accède à ta
+          la connexion sécurisée de Google (OAuth), {legal.company}{" "}accède à ta
           fiche d&apos;établissement Google et la gère pour ton compte au moyen
           de l&apos;<strong>API Google Business Profile</strong>.
         </p>
@@ -290,7 +290,7 @@ export default function ConfidentialitePage() {
         <p>
           Nous ne prenons aucune décision fondée exclusivement sur un traitement
           automatisé produisant des effets juridiques à ton égard, et nous ne
-          réalisons pas de profilage. {legal.company} n&apos;est pas tenue de
+          réalisons pas de profilage. {legal.company}{" "}n&apos;est pas tenue de
           désigner un délégué à la protection des données (DPO) ; pour toute
           question relative à tes données, le point de contact est{" "}
           <a href={`mailto:${legal.email}`}>{legal.email}</a>.

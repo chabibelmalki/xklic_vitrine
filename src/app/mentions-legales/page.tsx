@@ -54,7 +54,7 @@ export default function MentionsLegalesPage() {
           L&apos;ensemble des éléments du site (textes, visuels, mise en page,
           code) est protégé par le droit de la propriété intellectuelle. Toute
           reproduction ou représentation, totale ou partielle, sans
-          autorisation écrite de {legal.company} est interdite.
+          autorisation écrite de {legal.company}{" "}est interdite.
         </p>
         <p>
           Les contenus fournis par les clients (textes, logos, photos) restent
@@ -64,9 +64,9 @@ export default function MentionsLegalesPage() {
 
       <LegalSection title="Responsabilité">
         <p>
-          {legal.company} s&apos;efforce d&apos;assurer l&apos;exactitude des
+          {legal.company}{" "}s&apos;efforce d&apos;assurer l&apos;exactitude des
           informations diffusées sur ce site, sans pouvoir en garantir
-          l&apos;exhaustivité. {legal.company} ne saurait être tenue responsable
+          l&apos;exhaustivité. {legal.company}{" "}ne saurait être tenue responsable
           des dommages résultant de l&apos;utilisation du site ou d&apos;une
           interruption de service.
         </p>

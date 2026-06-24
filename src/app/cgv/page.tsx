@@ -5,7 +5,7 @@ import { brand, legal, formules } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Conditions générales de vente",
-  description: `Conditions générales de vente (CGV) de ${legal.company} : offres, prix, paiement, abonnement, résiliation, livraison et garanties du service ${brand.name}.`,
+  description: `Conditions générales de vente (CGV) de ${legal.company}{" "}: offres, prix, paiement, abonnement, résiliation, livraison et garanties du service ${brand.name}.`,
   alternates: { canonical: "/cgv" },
   // Page indexable : une CGV publiquement accessible est attendue d'un site
   // marchand (confiance + obligation d'information précontractuelle).
@@ -58,7 +58,7 @@ export default function CgvPage() {
 
       <LegalSection title="3. Description du Service">
         <p>
-          {brand.name} conçoit, met en ligne et héberge un site internet
+          {brand.name}{" "}conçoit, met en ligne et héberge un site internet
           professionnel pour le compte du client, et propose des prestations
           complémentaires de gestion de présence en ligne (notamment la gestion
           de la fiche Google Business Profile selon l&apos;offre souscrite). Le
@@ -101,7 +101,7 @@ export default function CgvPage() {
           budget publicitaire éventuel, lequel est défini par le client et réglé
           directement à Google. Les tarifs en vigueur sont ceux affichés sur la
           page <Link href="/tarifs">Tarifs</Link> au moment de la commande.
-          {legal.company} se réserve le droit de faire évoluer ses tarifs ;
+          {legal.company}{" "}se réserve le droit de faire évoluer ses tarifs ;
           toute modification de prix d&apos;un abonnement en cours est notifiée au
           client, qui reste libre de résilier.
         </p>
@@ -140,7 +140,7 @@ export default function CgvPage() {
           </li>
         </ul>
         <p>
-          En cas d&apos;incident de paiement, {legal.company} peut suspendre le
+          En cas d&apos;incident de paiement, {legal.company}{" "}peut suspendre le
           Service après information du client et tant que la situation n&apos;est
           pas régularisée.
         </p>
@@ -158,7 +158,7 @@ export default function CgvPage() {
           pas remboursables une fois le site mis en ligne.
         </p>
         <p>
-          {legal.company} peut résilier ou suspendre le Service en cas de
+          {legal.company}{" "}peut résilier ou suspendre le Service en cas de
           manquement grave du client aux présentes CGV (notamment contenu
           illicite, défaut de paiement, usage frauduleux).
         </p>
@@ -209,7 +209,7 @@ export default function CgvPage() {
             sa fiche Google Business Profile ;
           </li>
           <li>
-            tenir {legal.company} indemne de toute réclamation liée aux contenus
+            tenir {legal.company}{" "}indemne de toute réclamation liée aux contenus
             qu&apos;il fournit.
           </li>
         </ul>
@@ -219,12 +219,12 @@ export default function CgvPage() {
         <p>
           Les contenus fournis par le client (textes, logo, photos) restent sa
           propriété. Le code, les gabarits et la technologie du moteur restent la
-          propriété de {legal.company} et ne sont pas cédés.
+          propriété de {legal.company}{" "}et ne sont pas cédés.
         </p>
         <p>
           Le nom de domaine en <strong>.fr</strong> est{" "}
           <strong>offert</strong> : il est acheté, enregistré et géré par{" "}
-          {legal.company} pour le compte du client pendant toute la durée de
+          {legal.company}{" "}pour le compte du client pendant toute la durée de
           l&apos;abonnement actif. La gratuité couvre l&apos;achat et la gestion
           du nom de domaine tant que l&apos;abonnement est en cours.
         </p>
@@ -239,10 +239,10 @@ export default function CgvPage() {
 
       <LegalSection title="12. Disponibilité et responsabilité">
         <p>
-          {legal.company} met en œuvre les moyens raisonnables pour assurer la
+          {legal.company}{" "}met en œuvre les moyens raisonnables pour assurer la
           disponibilité et la sécurité du Service, sans garantie d&apos;une
           disponibilité ininterrompue (maintenance, dépendance à des prestataires
-          tiers, force majeure). La responsabilité de {legal.company} est
+          tiers, force majeure). La responsabilité de {legal.company}{" "}est
           limitée aux dommages directs et prouvés et ne saurait excéder les
           sommes versées par le client au titre des douze derniers mois. Le
           client demeure seul responsable des contenus publiés sur son site et sa
