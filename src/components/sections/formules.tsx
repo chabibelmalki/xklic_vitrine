@@ -31,6 +31,12 @@ export function Formules({ headingAs = "h2" }: { headingAs?: "h1" | "h2" } = {})
           </RevealItem>
         ))}
       </RevealGroup>
+
+      <Reveal>
+        <p className="mt-8 text-center text-xs text-cream-faint">
+          Tous nos prix sont indiqués en euros, TTC.
+        </p>
+      </Reveal>
     </Section>
   );
 }
@@ -71,7 +77,7 @@ function FormuleCard({ formule: f }: { formule: Formule }) {
             {f.setup}
           </span>
           <span className="text-sm font-medium leading-tight text-cream-muted">
-            à l&apos;installation
+            TTC à l&apos;installation
             <br />
             <span className="text-cream-faint">(une seule fois)</span>
           </span>
@@ -81,7 +87,7 @@ function FormuleCard({ formule: f }: { formule: Formule }) {
           <span className="font-display text-3xl font-semibold leading-none text-cream">
             {f.monthly}
           </span>
-          <span className="text-sm font-medium text-cream-muted">par mois</span>
+          <span className="text-sm font-medium text-cream-muted">TTC par mois</span>
         </div>
         {f.priceNote ? (
           <div className="mt-3.5 flex items-start gap-2.5 rounded-xl border border-ember/20 bg-ember/[0.06] px-3.5 py-2.5">

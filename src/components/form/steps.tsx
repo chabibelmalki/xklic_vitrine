@@ -127,7 +127,7 @@ function FormuleStep() {
                       {f.setup}
                     </span>
                     <span className="mt-1 block text-xs text-cream-faint">
-                      puis {f.monthly}/mois
+                      puis {f.monthly}/mois · TTC
                     </span>
                   </span>
                 </button>

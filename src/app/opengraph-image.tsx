@@ -102,7 +102,7 @@ export default function Image() {
           >
             {`${entry.setup} à la création`}
           </div>
-          <div style={{ color: INK }}>{`puis ${entry.monthly}/mois`}</div>
+          <div style={{ color: INK }}>{`puis ${entry.monthly}/mois TTC`}</div>
         </div>
       </div>
     ),
