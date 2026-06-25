@@ -102,7 +102,7 @@ export function LeadForm({
       socials: { facebook: "", instagram: "", tiktok: "", x: "", google: "" },
       languages: ["fr"],
       styleVibes: [],
-      colorPreference: "",
+      colorPreference: [],
       ambiance: "",
       extra: "",
       assisted: false,

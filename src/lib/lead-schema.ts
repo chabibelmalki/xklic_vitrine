@@ -107,7 +107,9 @@ export const leadSchema = z
       .min(1, "Garde au moins une langue.")
       .default(["fr"]),
     styleVibes: z.array(z.string()).default([]),
-    colorPreference: z.string().trim().optional(),
+    // Jusqu'à 2 couleurs : [0] = principale, [1] = secondaire/accent.
+    // Vide = on laisse l'équipe décider. Masqué dans l'UI si un logo est fourni.
+    colorPreference: z.array(z.string()).max(2, "Deux couleurs maximum.").default([]),
     ambiance: z.string().trim().optional(),
 
     // G. Mot de la fin (champ libre, facultatif)

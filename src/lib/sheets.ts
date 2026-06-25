@@ -173,7 +173,7 @@ function buildRow(statut: Statut, lead: LeadData, orderId: string, payment?: Pay
     oN(lead.noSiret),
     join(lead.languages),
     join(lead.styleVibes),
-    lead.colorPreference ?? "",
+    join(lead.colorPreference),
     lead.ambiance ?? "",
     urls(lead.logo),
     urls(lead.photos),

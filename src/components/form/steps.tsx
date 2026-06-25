@@ -672,14 +672,17 @@ const STYLE_VIBES = [
   "Fun & coloré",
 ];
 
-const COLORS: { value: string; label: string; swatch?: string }[] = [
+// Palette volontairement limitée et curée. La valeur (slug) part dans le lead ;
+// l'équipe la traduit en graine de marque côté engine (branding.colors).
+const COLORS: { value: string; label: string; swatch: string }[] = [
   { value: "bleu", label: "Bleu", swatch: "#2563eb" },
+  { value: "turquoise", label: "Turquoise", swatch: "#0d9488" },
   { value: "vert", label: "Vert", swatch: "#16a34a" },
   { value: "rouge-orange", label: "Rouge / orange", swatch: "#ea580c" },
+  { value: "rose", label: "Rose", swatch: "#e11d48" },
   { value: "violet", label: "Violet", swatch: "#7c3aed" },
-  { value: "noir-blanc", label: "Noir & blanc", swatch: "#111827" },
   { value: "dore", label: "Doré", swatch: "#caa53d" },
-  { value: "equipe", label: "Laisse faire l'équipe" },
+  { value: "noir-blanc", label: "Noir & blanc", swatch: "#111827" },
 ];
 
 /* ── Réseaux sociaux & fiche Google (présence en ligne, facultatif) ──────── */
@@ -831,6 +834,10 @@ function SocialLinks() {
 function IdentitePreferencesStep() {
   const { control, register } = useFormContext<LeadValues>();
   const err = useErr();
+  // Si un logo est fourni, on en extraira les couleurs côté production :
+  // inutile (et déroutant) de demander une couleur au client.
+  const logo = useWatch({ control, name: "logo" });
+  const hasLogo = Array.isArray(logo) && logo.length > 0;
   return (
     <div className="grid gap-6">
       <Field
@@ -984,47 +991,106 @@ function IdentitePreferencesStep() {
         />
       </Field>
 
-      <Field
-        label="Couleur dominante"
-        hint="Une teinte qui te parle pour ton site ?"
-        optional
-      >
-        <Controller
-          control={control}
-          name="colorPreference"
-          render={({ field }) => (
-            <div className="flex flex-wrap gap-2">
-              {COLORS.map((c) => {
-                const active = field.value === c.value;
-                return (
+      {hasLogo ? (
+        <Field label="Tes couleurs" optional>
+          <p className="flex items-center gap-2 rounded-xl border border-line bg-ink-soft px-4 py-3 text-sm text-cream-muted">
+            <Check size={16} className="shrink-0 text-ember" />
+            On reprendra les couleurs de ton logo — rien à choisir ici.
+          </p>
+        </Field>
+      ) : (
+        <Field
+          label="Tes couleurs"
+          hint="Choisis jusqu'à 2 couleurs : une principale, puis une seconde en accent (facultatif). Ou laisse l'équipe décider."
+          error={err("colorPreference")}
+          optional
+        >
+          <Controller
+            control={control}
+            name="colorPreference"
+            render={({ field }) => {
+              const selected: string[] = field.value ?? [];
+              const full = selected.length >= 2;
+              const toggle = (v: string) => {
+                if (selected.includes(v)) {
+                  field.onChange(selected.filter((x) => x !== v));
+                } else if (!full) {
+                  field.onChange([...selected, v]);
+                }
+              };
+              return (
+                <div className="grid gap-3">
+                  <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+                    {COLORS.map((c) => {
+                      const idx = selected.indexOf(c.value);
+                      const active = idx !== -1;
+                      const disabled = !active && full;
+                      return (
+                        <button
+                          type="button"
+                          key={c.value}
+                          role="checkbox"
+                          aria-checked={active}
+                          aria-disabled={disabled || undefined}
+                          disabled={disabled}
+                          onClick={() => toggle(c.value)}
+                          className={
+                            "relative flex flex-col items-center gap-2 rounded-2xl border px-3 py-4 text-sm font-medium transition-all duration-200 " +
+                            (active
+                              ? "border-ember/60 bg-ember/10 text-cream"
+                              : disabled
+                                ? "cursor-not-allowed border-line bg-ink-soft text-cream-faint opacity-50"
+                                : "border-line bg-ink-soft text-cream-muted hover:border-line-strong hover:text-cream")
+                          }
+                        >
+                          <span
+                            className="h-9 w-9 shrink-0 rounded-full ring-1 ring-inset ring-black/20"
+                            style={{ backgroundColor: c.swatch }}
+                            aria-hidden
+                          />
+                          {c.label}
+                          {active ? (
+                            <span className="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-ember text-[11px] font-bold text-ink">
+                              {idx + 1}
+                            </span>
+                          ) : null}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {selected.length > 0 ? (
+                    <p className="text-xs text-cream-muted">
+                      <span className="font-semibold text-cream">1</span> principale
+                      {selected.length > 1 ? (
+                        <>
+                          {" · "}
+                          <span className="font-semibold text-cream">2</span> accent
+                        </>
+                      ) : (
+                        " — clique une 2ᵉ couleur pour un accent (facultatif)"
+                      )}
+                    </p>
+                  ) : null}
+
                   <button
                     type="button"
-                    key={c.value}
-                    role="radio"
-                    aria-checked={active}
-                    onClick={() => field.onChange(active ? "" : c.value)}
+                    onClick={() => field.onChange([])}
                     className={
-                      "flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 " +
-                      (active
+                      "self-start rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 " +
+                      (selected.length === 0
                         ? "border-ember/50 bg-ember/10 text-cream"
                         : "border-line bg-ink-soft text-cream-muted hover:border-line-strong hover:text-cream")
                     }
                   >
-                    {c.swatch ? (
-                      <span
-                        className="h-3.5 w-3.5 shrink-0 rounded-full ring-1 ring-inset ring-black/10"
-                        style={{ backgroundColor: c.swatch }}
-                        aria-hidden
-                      />
-                    ) : null}
-                    {c.label}
+                    Laisse faire l&apos;équipe
                   </button>
-                );
-              })}
-            </div>
-          )}
-        />
-      </Field>
+                </div>
+              );
+            }}
+          />
+        </Field>
+      )}
 
       <Field
         label="Autre précision ?"
