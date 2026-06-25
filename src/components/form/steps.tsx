@@ -12,6 +12,7 @@ import {
   ChevronDown,
   ChevronUp,
   Layers,
+  Pipette,
   Plus,
   ShoppingBag,
   Trash2,
@@ -672,18 +673,10 @@ const STYLE_VIBES = [
   "Fun & coloré",
 ];
 
-// Palette volontairement limitée et curée. La valeur (slug) part dans le lead ;
-// l'équipe la traduit en graine de marque côté engine (branding.colors).
-const COLORS: { value: string; label: string; swatch: string }[] = [
-  { value: "bleu", label: "Bleu", swatch: "#2563eb" },
-  { value: "turquoise", label: "Turquoise", swatch: "#0d9488" },
-  { value: "vert", label: "Vert", swatch: "#16a34a" },
-  { value: "rouge-orange", label: "Rouge / orange", swatch: "#ea580c" },
-  { value: "rose", label: "Rose", swatch: "#e11d48" },
-  { value: "violet", label: "Violet", swatch: "#7c3aed" },
-  { value: "dore", label: "Doré", swatch: "#caa53d" },
-  { value: "noir-blanc", label: "Noir & blanc", swatch: "#111827" },
-];
+// Couleurs proposées par défaut quand le client clique « + » (il les ajuste
+// ensuite au sélecteur). La valeur hex stockée part telle quelle dans le lead
+// et sert de graine de marque côté engine (branding.colors).
+const COLOR_DEFAULTS = ["#2563eb", "#f59e0b"]; // [principale, accent]
 
 /* ── Réseaux sociaux & fiche Google (présence en ligne, facultatif) ──────── */
 
@@ -1001,7 +994,7 @@ function IdentitePreferencesStep() {
       ) : (
         <Field
           label="Tes couleurs"
-          hint="Choisis jusqu'à 2 couleurs : une principale, puis une seconde en accent (facultatif). Ou laisse l'équipe décider."
+          hint="Clique le rond pour choisir ta couleur principale, puis « + » pour une couleur d'accent (facultatif). Ou laisse l'équipe décider."
           error={err("colorPreference")}
           optional
         >
@@ -1010,81 +1003,90 @@ function IdentitePreferencesStep() {
             name="colorPreference"
             render={({ field }) => {
               const selected: string[] = field.value ?? [];
-              const full = selected.length >= 2;
-              const toggle = (v: string) => {
-                if (selected.includes(v)) {
-                  field.onChange(selected.filter((x) => x !== v));
-                } else if (!full) {
-                  field.onChange([...selected, v]);
+              const setAt = (i: number, v: string) =>
+                field.onChange(selected.map((c, j) => (j === i ? v : c)));
+              const removeAt = (i: number) =>
+                field.onChange(selected.filter((_, j) => j !== i));
+              const add = () => {
+                if (selected.length < 2) {
+                  field.onChange([...selected, COLOR_DEFAULTS[selected.length]]);
                 }
               };
               return (
-                <div className="grid gap-3">
-                  <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-                    {COLORS.map((c) => {
-                      const idx = selected.indexOf(c.value);
-                      const active = idx !== -1;
-                      const disabled = !active && full;
-                      return (
+                <div className="flex flex-wrap items-start gap-5">
+                  {selected.map((c, i) => (
+                    <div key={i} className="flex flex-col items-center gap-1.5">
+                      <div className="relative">
+                        <label
+                          className="block h-14 w-14 cursor-pointer rounded-full shadow-sm ring-2 ring-line transition hover:ring-line-strong"
+                          style={{ backgroundColor: c }}
+                          title="Changer la couleur"
+                        >
+                          <input
+                            type="color"
+                            value={c}
+                            onChange={(e) => setAt(i, e.target.value)}
+                            className="sr-only"
+                            aria-label={i === 0 ? "Couleur principale" : "Couleur d'accent"}
+                          />
+                        </label>
                         <button
                           type="button"
-                          key={c.value}
-                          role="checkbox"
-                          aria-checked={active}
-                          aria-disabled={disabled || undefined}
-                          disabled={disabled}
-                          onClick={() => toggle(c.value)}
-                          className={
-                            "relative flex flex-col items-center gap-2 rounded-2xl border px-3 py-4 text-sm font-medium transition-all duration-200 " +
-                            (active
-                              ? "border-ember/60 bg-ember/10 text-cream"
-                              : disabled
-                                ? "cursor-not-allowed border-line bg-ink-soft text-cream-faint opacity-50"
-                                : "border-line bg-ink-soft text-cream-muted hover:border-line-strong hover:text-cream")
-                          }
+                          onClick={() => removeAt(i)}
+                          aria-label="Retirer cette couleur"
+                          className="absolute -right-1.5 -top-1.5 flex h-6 w-6 items-center justify-center rounded-full border border-line bg-ink text-cream-muted transition hover:border-line-strong hover:text-cream"
                         >
-                          <span
-                            className="h-9 w-9 shrink-0 rounded-full ring-1 ring-inset ring-black/20"
-                            style={{ backgroundColor: c.swatch }}
-                            aria-hidden
-                          />
-                          {c.label}
-                          {active ? (
-                            <span className="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-ember text-[11px] font-bold text-ink">
-                              {idx + 1}
-                            </span>
-                          ) : null}
+                          <Trash2 size={12} />
                         </button>
-                      );
-                    })}
-                  </div>
+                      </div>
+                      <span className="text-xs text-cream-muted">
+                        {i === 0 ? "Principale" : "Accent"}
+                      </span>
+                    </div>
+                  ))}
 
-                  {selected.length > 0 ? (
-                    <p className="text-xs text-cream-muted">
-                      <span className="font-semibold text-cream">1</span> principale
-                      {selected.length > 1 ? (
-                        <>
-                          {" · "}
-                          <span className="font-semibold text-cream">2</span> accent
-                        </>
-                      ) : (
-                        " — clique une 2ᵉ couleur pour un accent (facultatif)"
-                      )}
-                    </p>
+                  {selected.length === 0 ? (
+                    // Premier rond = ouvre directement le sélecteur natif.
+                    <div className="flex flex-col items-center gap-1.5">
+                      <label
+                        className="flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border-2 border-dashed border-line text-cream-muted transition hover:border-line-strong hover:text-cream"
+                        title="Choisir ta couleur"
+                      >
+                        <Pipette size={20} />
+                        <input
+                          type="color"
+                          defaultValue={COLOR_DEFAULTS[0]}
+                          onChange={(e) => field.onChange([e.target.value])}
+                          className="sr-only"
+                          aria-label="Choisir la couleur principale"
+                        />
+                      </label>
+                      <span className="text-xs text-cream-faint">Choisir</span>
+                    </div>
+                  ) : selected.length < 2 ? (
+                    // « + » = ajoute un 2ᵉ rond (accent), éditable au clic.
+                    <div className="flex flex-col items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={add}
+                        aria-label="Ajouter une couleur d'accent"
+                        className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-dashed border-line text-cream-muted transition hover:border-line-strong hover:text-cream"
+                      >
+                        <Plus size={20} />
+                      </button>
+                      <span className="text-xs text-cream-faint">Accent</span>
+                    </div>
                   ) : null}
 
-                  <button
-                    type="button"
-                    onClick={() => field.onChange([])}
-                    className={
-                      "self-start rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 " +
-                      (selected.length === 0
-                        ? "border-ember/50 bg-ember/10 text-cream"
-                        : "border-line bg-ink-soft text-cream-muted hover:border-line-strong hover:text-cream")
-                    }
-                  >
-                    Laisse faire l&apos;équipe
-                  </button>
+                  {selected.length > 0 ? (
+                    <button
+                      type="button"
+                      onClick={() => field.onChange([])}
+                      className="self-center text-sm font-medium text-cream-muted underline-offset-4 transition hover:text-cream hover:underline"
+                    >
+                      Laisse faire l&apos;équipe
+                    </button>
+                  ) : null}
                 </div>
               );
             }}
