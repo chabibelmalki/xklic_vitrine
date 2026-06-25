@@ -190,8 +190,16 @@ export function LeadForm({
 
       // 2. Payload : chaque objet fichier est remplacé par { name, url }
       //    (URL publique Blob). Le reste de la structure est inchangé.
+      //    Couleur : on ne transmet un choix que s'il est RÉEL — vide si un
+      //    logo est fourni (on en extraira les couleurs) ou si le client n'a
+      //    pas touché à la couleur par défaut (champ non « dirty »).
+      const colorPreference =
+        logo.length > 0 || !methods.formState.dirtyFields.colorPreference
+          ? []
+          : values.colorPreference;
       const payload = {
         ...values,
+        colorPreference,
         logo,
         photos,
         products,
