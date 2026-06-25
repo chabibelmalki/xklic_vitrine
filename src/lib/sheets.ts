@@ -34,6 +34,7 @@ const HEADERS = [
   "Logo", "Photos",
   "Facebook", "Instagram", "TikTok", "X", "Google",
   "Extra",
+  "Mode",
   "Montant", "CodePromo", "OrderId", "SessionStripe", "AbonnementStripe",
 ] as const;
 
@@ -182,6 +183,7 @@ function buildRow(statut: Statut, lead: LeadData, orderId: string, payment?: Pay
     s.x ?? "",
     s.google ?? "",
     lead.extra ?? "",
+    lead.assisted ? "À compléter par téléphone (conseiller)" : "Formulaire complet",
     montant,
     payment?.promoCode ?? "",
     orderId,

@@ -113,6 +113,12 @@ export const leadSchema = z
     // G. Mot de la fin (champ libre, facultatif)
     extra: z.string().trim().optional(),
 
+    // Parcours « express » : le client réserve avec ses seules coordonnées et
+    // un conseiller complète le reste (prestations, produits, identité…) par
+    // téléphone. Quand il est à true, on relâche les exigences des étapes
+    // sautées pour pouvoir passer au paiement immédiatement.
+    assisted: z.boolean().default(false),
+
     // Jeton Cloudflare Turnstile (anti-robot), vérifié côté serveur.
     turnstileToken: z.string().optional(),
   })
@@ -125,6 +131,10 @@ export const leadSchema = z
         message: "Indique ta zone de déplacement.",
       });
     }
+
+    // En mode express, les étapes prestations/produits sont sautées : un
+    // conseiller les recueille par téléphone, on n'exige donc rien de plus.
+    if (data.assisted) return;
 
     // Prestations requises pour les activités de service
     if (wantsServices(data.activityType)) {
