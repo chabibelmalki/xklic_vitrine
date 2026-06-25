@@ -102,7 +102,9 @@ export function LeadForm({
       socials: { facebook: "", instagram: "", tiktok: "", x: "", google: "" },
       languages: ["fr"],
       styleVibes: [],
-      colorPreference: [],
+      // Principale pré-remplie : le rond est déjà là, le client n'a qu'à
+      // l'ajuster (ou ajouter un accent, ou tout effacer = équipe décide).
+      colorPreference: ["#2563eb"],
       ambiance: "",
       extra: "",
       assisted: false,
