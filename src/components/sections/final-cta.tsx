@@ -21,7 +21,7 @@ export function FinalCta() {
         <Reveal className="mx-auto flex max-w-2xl flex-col items-center text-center">
           <h2 className="font-display text-3xl font-semibold leading-[1.05] tracking-[-0.02em] text-cream sm:text-5xl">
             Ton site pro,{" "}
-            <span className="text-gradient-warm">prêt sous 2h.</span>
+            <span className="text-gradient-warm">prêt sous 48h.</span>
           </h2>
           <p className="mt-5 max-w-lg text-base leading-relaxed text-cream-muted sm:text-lg">
             Quelques minutes pour remplir le formulaire. On s&apos;occupe du

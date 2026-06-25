@@ -348,7 +348,7 @@ export const articles: Article[] = [
       },
       {
         type: "p",
-        text: "C'est exactement la philosophie de Xklic : un site vitrine pro, pensé pour ton métier et ta ville, en ligne en 2h, qui va droit au but — décrocher des appels. 49 € à la création puis 9,99 €/mois, sans engagement.",
+        text: "C'est exactement la philosophie de Xklic : un site vitrine pro, pensé pour ton métier et ta ville, en ligne en 48h, qui va droit au but — décrocher des appels. 49 € à la création puis 9,99 €/mois, sans engagement.",
       },
       {
         type: "links",

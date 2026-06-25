@@ -7,7 +7,7 @@ import type { FormuleSlug } from "./lead-schema";
 
 export const brand = {
   name: "Xklic",
-  tagline: "Le site pro qui te ramène des clients, en ligne en 2h.",
+  tagline: "Le site pro qui te ramène des clients, en ligne en 48h.",
   email: "contact@xklic.com",
   domain: "xklic.com",
   phone: "0663948128", // numéro brut (FR)
@@ -120,7 +120,7 @@ export const trades = [
 
 // Piliers de confiance — honnêtes (agence jeune, pas de chiffres gonflés).
 export const trustPillars = [
-  { value: "2h", label: "pour être en ligne" },
+  { value: "48h", label: "pour être en ligne" },
   { value: "Sans", label: "engagement, résiliable quand tu veux" },
   { value: "100%", label: "pensé pour le mobile" },
   { value: "🇫🇷", label: "conçu et géré en France" },
@@ -274,7 +274,7 @@ export const portfolio: Work[] = [
 export const faq = [
   {
     q: "En combien de temps mon site est-il en ligne ?",
-    a: "2h après réception de tes informations via le formulaire. Tu valides une version, on l'ajuste si besoin, puis on publie. Pas de réunions, pas de cahier des charges à rédiger.",
+    a: "48h après réception de tes informations via le formulaire. Tu valides une version, on l'ajuste si besoin, puis on publie. Pas de réunions, pas de cahier des charges à rédiger.",
   },
   {
     q: "Suis-je engagé sur la durée ?",
@@ -315,7 +315,7 @@ export const steps = [
   },
   {
     n: "03",
-    title: "Il est en ligne en 2h",
+    title: "Il est en ligne en 48h",
     body: "Ton site est publié sur ton nom de domaine .fr (offert, on s'en occupe pour toi), optimisé pour mobile et pour apparaître sur Google localement.",
   },
   {

@@ -9,7 +9,7 @@ import { FORMULE_SLUGS, type FormuleSlug } from "@/lib/lead-schema";
 export const metadata: Metadata = {
   title: "Créer mon site",
   description:
-    "Décris ton activité en quelques minutes. On crée ton site pro pour artisan, auto-entrepreneur ou TPE, et il est en ligne en 2h.",
+    "Décris ton activité en quelques minutes. On crée ton site pro pour artisan, auto-entrepreneur ou TPE, et il est en ligne en 48h.",
   alternates: { canonical: "/demarrer" },
 };
 

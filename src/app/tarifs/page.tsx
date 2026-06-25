@@ -36,7 +36,7 @@ export default function TarifsPage() {
 
       <main className="relative flex-1 pt-16 lg:pt-18">
         <Formules headingAs="h1" />
-        <ProofBloc reassurances={["En ligne en 2h", "Sans engagement", "Modifications illimitées"]} />
+        <ProofBloc reassurances={["En ligne en 48h", "Sans engagement", "Modifications illimitées"]} />
         <CtaBand
           title="Une question avant de te lancer ?"
           subtitle="Appelle-nous ou écris sur WhatsApp, on répond vite et clairement."

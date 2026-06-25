@@ -186,7 +186,7 @@ export default function CgvPage() {
 
       <LegalSection title="9. Délai de livraison">
         <p>
-          Le site est généralement mis en ligne sous 2 heures à 48 heures après
+          Le site est généralement mis en ligne sous 48 heures après
           réception des informations complètes nécessaires via le formulaire,
           sous réserve de la disponibilité et de la conformité des contenus
           fournis par le client. Ces délais sont indicatifs et n&apos;ouvrent pas

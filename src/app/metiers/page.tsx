@@ -23,7 +23,7 @@ export const revalidate = 86400;
 export const metadata: Metadata = buildMetadata({
   title: "Sites web par métier — artisans & indépendants",
   description:
-    "Plomberie, électricité, ménage, mécanique, serrurerie… Xklic crée un site web pro pensé pour ton métier, en ligne en 2h, optimisé pour le référencement local en Île-de-France.",
+    "Plomberie, électricité, ménage, mécanique, serrurerie… Xklic crée un site web pro pensé pour ton métier, en ligne en 48h, optimisé pour le référencement local en Île-de-France.",
   path: "/metiers",
   keywords: [
     "site web artisan",
@@ -73,7 +73,7 @@ export default function MetiersPage() {
                 <p className="max-w-xl text-base leading-relaxed text-cream-muted sm:text-lg">
                   Chaque métier a ses clients, ses urgences et ses arguments.
                   On crée un site qui parle le bon langage et te fait trouver
-                  sur Google par les gens du coin — en ligne en 2h, sans
+                  sur Google par les gens du coin — en ligne en 48h, sans
                   engagement.
                 </p>
               </div>
@@ -97,7 +97,7 @@ export default function MetiersPage() {
           </Container>
         </section>
 
-        <ProofBloc reassurances={["En ligne en 2h", "Sans engagement", "Conçu et géré en France"]} />
+        <ProofBloc reassurances={["En ligne en 48h", "Sans engagement", "Conçu et géré en France"]} />
 
         <InternalLinks
           eyebrow="Maillage local"
@@ -107,7 +107,7 @@ export default function MetiersPage() {
 
         <CtaBand
           title="Ton métier mérite un vrai site."
-          subtitle="On le crée pour toi, clés en main, en ligne en 2h. Sans engagement."
+          subtitle="On le crée pour toi, clés en main, en ligne en 48h. Sans engagement."
         />
       </main>
 

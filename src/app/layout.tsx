@@ -28,11 +28,11 @@ export const metadata: Metadata = {
     googleBot: { index: IS_INDEXABLE, follow: IS_INDEXABLE },
   },
   title: {
-    default: "Xklic — Le site pro qui te ramène des clients, en ligne en 2h",
+    default: "Xklic — Le site pro qui te ramène des clients, en ligne en 48h",
     template: "%s · Xklic",
   },
   description:
-    "Xklic crée le site web de ton activité, clés en main et en ligne en 2h. Sans prise de tête, sans engagement. 49€ à la création puis 9,99€/mois.",
+    "Xklic crée le site web de ton activité, clés en main et en ligne en 48h. Sans prise de tête, sans engagement. 49€ à la création puis 9,99€/mois.",
   keywords: [
     "site internet artisan",
     "site vitrine TPE",
@@ -45,15 +45,15 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     url: SITE_URL,
     siteName: "Xklic",
-    title: "Xklic — Le site pro qui te ramène des clients, en ligne en 2h",
+    title: "Xklic — Le site pro qui te ramène des clients, en ligne en 48h",
     description:
-      "Le site web de ton activité, clés en main et en ligne en 2h. 49€ à la création puis 9,99€/mois, sans engagement.",
+      "Le site web de ton activité, clés en main et en ligne en 48h. 49€ à la création puis 9,99€/mois, sans engagement.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Xklic — Le site pro qui te ramène des clients, en ligne en 2h",
+    title: "Xklic — Le site pro qui te ramène des clients, en ligne en 48h",
     description:
-      "Le site web de ton activité, clés en main et en ligne en 2h. Sans prise de tête.",
+      "Le site web de ton activité, clés en main et en ligne en 48h. Sans prise de tête.",
   },
 };
 

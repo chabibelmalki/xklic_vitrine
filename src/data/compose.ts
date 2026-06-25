@@ -120,11 +120,11 @@ export function composePair(metier: Metier, ville: Ville): PairContent {
 
   // ── Variantes de DESCRIPTION (4) ─────────────────────────────────────────
   const descVariants = [
-    `Tu es ${unMetier(metier)} ${ville.prep} ? Xklic te crée un site web pro qui te fait trouver sur Google par les habitants ${depuisVille(ville)} et remplit ton planning. En ligne en 2h, 49€ puis 9,99€/mois, sans engagement.`,
+    `Tu es ${unMetier(metier)} ${ville.prep} ? Xklic te crée un site web pro qui te fait trouver sur Google par les habitants ${depuisVille(ville)} et remplit ton planning. En ligne en 48h, 49€ puis 9,99€/mois, sans engagement.`,
     `Site web pour ${metier.nounPlural} ${ville.prep}${
       ville.dept === ville.name ? "" : " et dans le " + ville.dept
     }. Apparais quand on cherche ${metier.name.toLowerCase()} ${ville.prep}, reçois les demandes directement. Installation 49€, 9,99€/mois.`,
-    `${capitalize(metier.name)} ${ville.prep} : un site clair qui rassure tes clients et te place sur les recherches locales. Pensé pour les artisans, en ligne en 2h avec Xklic.`,
+    `${capitalize(metier.name)} ${ville.prep} : un site clair qui rassure tes clients et te place sur les recherches locales. Pensé pour les artisans, en ligne en 48h avec Xklic.`,
     `Développe ton activité de ${metier.name.toLowerCase()} ${ville.prep} avec un site web qui attire les clients du secteur (${reperes2.join(", ")}). Simple, rapide, sans engagement.`,
   ];
   const description = descVariants[r.int(descVariants.length)];
@@ -170,9 +170,9 @@ export function composePair(metier: Metier, ville: Ville): PairContent {
 
   // P-E : promesse Xklic (toujours présent, légère variation)
   const pEVariants = [
-    `Avec Xklic, ton site de ${metier.name.toLowerCase()} ${ville.prep} est en ligne en 2h : bouton d'appel, WhatsApp, formulaire de contact et fiche optimisée pour Google. 49€ à l'installation, 9,99€/mois, et c'est sans engagement.`,
+    `Avec Xklic, ton site de ${metier.name.toLowerCase()} ${ville.prep} est en ligne en 48h : bouton d'appel, WhatsApp, formulaire de contact et fiche optimisée pour Google. 49€ à l'installation, 9,99€/mois, et c'est sans engagement.`,
     `Xklic s'occupe de tout : on conçoit ton site de ${metier.noun} ${ville.prep}, optimisé mobile et Google local, avec appel direct et WhatsApp. Tu n'as rien à installer. 49€ puis 9,99€/mois, résiliable quand tu veux.`,
-    `Le principe Xklic est simple : un site pro de ${metier.name.toLowerCase()} ${ville.prep}, en ligne en 2h, qui te ramène des clients du secteur. Appel en un tap, WhatsApp, formulaire. 49€ à la création, 9,99€/mois, sans engagement.`,
+    `Le principe Xklic est simple : un site pro de ${metier.name.toLowerCase()} ${ville.prep}, en ligne en 48h, qui te ramène des clients du secteur. Appel en un tap, WhatsApp, formulaire. 49€ à la création, 9,99€/mois, sans engagement.`,
   ];
 
   // P-F : confiance & preuve locale (avis, proximité, réactivité)

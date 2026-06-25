@@ -37,7 +37,7 @@ export default function FaqPage() {
         <Faq headingAs="h1" />
         <CtaBand
           title="Tout est clair ? On y va."
-          subtitle="Ton site pro, en ligne en 2h. Sans engagement."
+          subtitle="Ton site pro, en ligne en 48h. Sans engagement."
         />
       </main>
 

@@ -138,7 +138,7 @@ export default async function PairPage({
           eyebrow={`${metier.name} · ${ville.name}`}
           title={`${metier.name}`}
           highlight={ville.prep}
-          subtitle={`Tu es ${metier.gender === "f" ? "une" : "un"} ${metier.noun} ${ville.prep} ? On crée ton site pro qui te fait trouver sur Google par les habitants du secteur. En ligne en 2h.`}
+          subtitle={`Tu es ${metier.gender === "f" ? "une" : "un"} ${metier.noun} ${ville.prep} ? On crée ton site pro qui te fait trouver sur Google par les habitants du secteur. En ligne en 48h.`}
           breadcrumbs={[
             { href: "/", label: "Accueil" },
             { href: "/metiers", label: "Métiers" },
@@ -210,7 +210,7 @@ export default async function PairPage({
           </Container>
         </section>
 
-        <ProofBloc reassurances={["En ligne en 2h", "Sans engagement", "Optimisé pour Google local"]} />
+        <ProofBloc reassurances={["En ligne en 48h", "Sans engagement", "Optimisé pour Google local"]} />
 
         {/* FAQ (différenciée par ville sur les paires rédigées main) */}
         {faq.length > 0 ? (
@@ -250,7 +250,7 @@ export default async function PairPage({
         />
 
         <CtaBand
-          title={`Ton site de ${metier.name.toLowerCase()} ${ville.prep}, en ligne en 2h.`}
+          title={`Ton site de ${metier.name.toLowerCase()} ${ville.prep}, en ligne en 48h.`}
           subtitle="Clés en main, optimisé pour Google local. Sans engagement."
         />
       </main>

@@ -35,7 +35,7 @@ export async function generateMetadata({
 
   return buildMetadata({
     title: `Création de site web ${ville.prep} (${ville.deptCode})`,
-    description: `Xklic crée des sites web pro pour les artisans et indépendants ${ville.prep} (${ville.dept}). En ligne en 2h, optimisés pour le référencement local. 49€ puis 9,99€/mois.`,
+    description: `Xklic crée des sites web pro pour les artisans et indépendants ${ville.prep} (${ville.dept}). En ligne en 48h, optimisés pour le référencement local. 49€ puis 9,99€/mois.`,
     path: `/zones/${ville.slug}`,
     keywords: [
       `site web ${ville.name}`,
@@ -101,7 +101,7 @@ export default async function VillePage({
           eyebrow={`${ville.dept} · ${ville.deptCode}`}
           title={`Sites web pour artisans`}
           highlight={ville.prep}
-          subtitle={`On crée ton site pro et on te rend visible auprès des habitants ${ville.prep}. En ligne en 2h, optimisé pour Google local.`}
+          subtitle={`On crée ton site pro et on te rend visible auprès des habitants ${ville.prep}. En ligne en 48h, optimisé pour Google local.`}
           breadcrumbs={[
             { href: "/", label: "Accueil" },
             { label: ville.name },
@@ -147,7 +147,7 @@ export default async function VillePage({
           </section>
         ) : null}
 
-        <ProofBloc reassurances={["En ligne en 2h", "Sans engagement", "Référencement local"]} />
+        <ProofBloc reassurances={["En ligne en 48h", "Sans engagement", "Référencement local"]} />
 
         <InternalLinks
           eyebrow="Par métier"
@@ -164,7 +164,7 @@ export default async function VillePage({
 
         <CtaBand
           title={`Fais-toi trouver ${ville.prep}.`}
-          subtitle="On crée ton site pro, clés en main, en ligne en 2h. Sans engagement."
+          subtitle="On crée ton site pro, clés en main, en ligne en 48h. Sans engagement."
         />
       </main>
 

@@ -39,9 +39,9 @@ export const creerSitePages: CreerSite[] = [
     urlSlug: "creer-site-plombier",
     metierSlug: "plomberie",
     metierLabel: "Plomberie",
-    metaTitle: "Créer un site de plombier : pro, en ligne en 2h",
+    metaTitle: "Créer un site de plombier : pro, en ligne en 48h",
     metaDescription:
-      "Tu es plombier ou chauffagiste ? Crée ton site web pro avec Xklic : dépannage, urgences, devis, appel en un tap. En ligne en 2h, 49€ puis 9,99€/mois, sans engagement.",
+      "Tu es plombier ou chauffagiste ? Crée ton site web pro avec Xklic : dépannage, urgences, devis, appel en un tap. En ligne en 48h, 49€ puis 9,99€/mois, sans engagement.",
     keywords: [
       "créer site plombier",
       "site internet plombier",
@@ -53,7 +53,7 @@ export const creerSitePages: CreerSite[] = [
     h1: "Créer le site web d'un plombier",
     lead: "Un plombier se choisit en urgence, sur un téléphone, en quelques secondes. Si tu n'es pas visible à ce moment-là, c'est ton concurrent qu'on appelle.",
     intro:
-      "Xklic te crée un site de plombier pensé pour ça : être trouvé sur Google quand quelqu'un a une fuite près de chez toi, rassurer en quelques secondes, et déclencher l'appel. Pas de jargon, pas de cahier des charges — un site pro, en ligne en 2h.",
+      "Xklic te crée un site de plombier pensé pour ça : être trouvé sur Google quand quelqu'un a une fuite près de chez toi, rassurer en quelques secondes, et déclencher l'appel. Pas de jargon, pas de cahier des charges — un site pro, en ligne en 48h.",
     sections: [
       {
         h2: "Pourquoi un plombier a besoin d'un site",
@@ -79,7 +79,7 @@ export const creerSitePages: CreerSite[] = [
       },
       {
         q: "En combien de temps mon site de plombier est-il en ligne ?",
-        a: "2 heures après réception de tes informations. Tu remplis un formulaire guidé, on conçoit le site, tu valides, on publie. Pas de cahier des charges ni de réunions.",
+        a: "48 heures après réception de tes informations. Tu remplis un formulaire guidé, on conçoit le site, tu valides, on publie. Pas de cahier des charges ni de réunions.",
       },
       {
         q: "Le site va-t-il me faire apparaître sur Google ?",
@@ -94,7 +94,7 @@ export const creerSitePages: CreerSite[] = [
     metierLabel: "Ménage à domicile",
     metaTitle: "Créer un site de femme de ménage / aide à domicile",
     metaDescription:
-      "Aide-ménagère, repassage, ménage à domicile ? Crée ton site web pro avec Xklic et mets en avant le crédit d'impôt de 50%. En ligne en 2h, 49€ puis 9,99€/mois.",
+      "Aide-ménagère, repassage, ménage à domicile ? Crée ton site web pro avec Xklic et mets en avant le crédit d'impôt de 50%. En ligne en 48h, 49€ puis 9,99€/mois.",
     keywords: [
       "créer site femme de ménage",
       "site aide à domicile",
@@ -106,7 +106,7 @@ export const creerSitePages: CreerSite[] = [
     h1: "Créer le site d'une activité de ménage à domicile",
     lead: "Le ménage à domicile, c'est de la confiance avant tout : on laisse entrer quelqu'un chez soi. Un site pro rassure et met en avant ton meilleur argument.",
     intro:
-      "Xklic te crée un site clair qui montre ton sérieux, explique simplement le crédit d'impôt de 50 % et te fait trouver par les familles débordées de ton secteur. En ligne en 2h, sans engagement — et tu peux démarrer même sans SIRET.",
+      "Xklic te crée un site clair qui montre ton sérieux, explique simplement le crédit d'impôt de 50 % et te fait trouver par les familles débordées de ton secteur. En ligne en 48h, sans engagement — et tu peux démarrer même sans SIRET.",
     sections: [
       {
         h2: "Pourquoi une femme de ménage a besoin d'un site",
@@ -147,7 +147,7 @@ export const creerSitePages: CreerSite[] = [
     metierLabel: "Électricité",
     metaTitle: "Créer un site d'électricien : pro et local",
     metaDescription:
-      "Électricien ? Crée ton site web pro avec Xklic : mises aux normes, dépannage, rénovation, devis en ligne. En ligne en 2h, 49€ puis 9,99€/mois, sans engagement.",
+      "Électricien ? Crée ton site web pro avec Xklic : mises aux normes, dépannage, rénovation, devis en ligne. En ligne en 48h, 49€ puis 9,99€/mois, sans engagement.",
     keywords: [
       "créer site électricien",
       "site internet électricien",
@@ -159,7 +159,7 @@ export const creerSitePages: CreerSite[] = [
     h1: "Créer le site web d'un électricien",
     lead: "L'électricité, c'est de l'urgence (panne, disjoncteur) et du projet (mise aux normes, rénovation, bornes de recharge). Ton site doit parler aux deux.",
     intro:
-      "Xklic te crée un site d'électricien qui te fait trouver et qui inspire confiance — sécurité oblige. Tes prestations, ton assurance, tes réalisations et un formulaire de devis, le tout en ligne en 2h et optimisé pour le référencement local.",
+      "Xklic te crée un site d'électricien qui te fait trouver et qui inspire confiance — sécurité oblige. Tes prestations, ton assurance, tes réalisations et un formulaire de devis, le tout en ligne en 48h et optimisé pour le référencement local.",
     sections: [
       {
         h2: "Pourquoi un électricien a besoin d'un site",
@@ -200,7 +200,7 @@ export const creerSitePages: CreerSite[] = [
     metierLabel: "Mécanique auto",
     metaTitle: "Créer un site pour garage / mécanicien",
     metaDescription:
-      "Garage ou mécanicien auto ? Crée ton site web pro avec Xklic : entretien, réparation, contrôle technique, contact facile. En ligne en 2h, 49€ puis 9,99€/mois.",
+      "Garage ou mécanicien auto ? Crée ton site web pro avec Xklic : entretien, réparation, contrôle technique, contact facile. En ligne en 48h, 49€ puis 9,99€/mois.",
     keywords: [
       "créer site garage",
       "site internet mécanicien",
@@ -212,7 +212,7 @@ export const creerSitePages: CreerSite[] = [
     h1: "Créer le site d'un garage ou d'un mécanicien",
     lead: "Avant de confier sa voiture, l'automobiliste vérifie les avis, regarde si le garage est proche et cherche un ordre de prix. Sans site, tu dépends du passage devant ta vitrine.",
     intro:
-      "Xklic te crée un site de garage qui te rend visible et qui rassure : tes services, tes horaires, tes avis et un moyen simple d'appeler ou de demander un rendez-vous. En ligne en 2h, optimisé pour le référencement local.",
+      "Xklic te crée un site de garage qui te rend visible et qui rassure : tes services, tes horaires, tes avis et un moyen simple d'appeler ou de demander un rendez-vous. En ligne en 48h, optimisé pour le référencement local.",
     sections: [
       {
         h2: "Pourquoi un garage a besoin d'un site",
@@ -253,7 +253,7 @@ export const creerSitePages: CreerSite[] = [
     metierLabel: "Serrurerie",
     metaTitle: "Créer un site de serrurier : pro et rassurant",
     metaDescription:
-      "Serrurier ? Crée ton site web pro avec Xklic : ouverture de porte, dépannage, blindage, tarifs clairs qui rassurent. En ligne en 2h, 49€ puis 9,99€/mois.",
+      "Serrurier ? Crée ton site web pro avec Xklic : ouverture de porte, dépannage, blindage, tarifs clairs qui rassurent. En ligne en 48h, 49€ puis 9,99€/mois.",
     keywords: [
       "créer site serrurier",
       "site internet serrurier",
@@ -265,7 +265,7 @@ export const creerSitePages: CreerSite[] = [
     h1: "Créer le site web d'un serrurier",
     lead: "La serrurerie souffre d'une réputation d'arnaques. Ton meilleur atout, c'est la transparence : un site clair te sépare instantanément des arnaqueurs.",
     intro:
-      "Xklic te crée un site de serrurier honnête et pro : une vraie identité, des tarifs indicatifs, ta zone et tes avis. De quoi rassurer le client méfiant avant même qu'il décroche — et déclencher l'appel. En ligne en 2h, sans engagement.",
+      "Xklic te crée un site de serrurier honnête et pro : une vraie identité, des tarifs indicatifs, ta zone et tes avis. De quoi rassurer le client méfiant avant même qu'il décroche — et déclencher l'appel. En ligne en 48h, sans engagement.",
     sections: [
       {
         h2: "Pourquoi un serrurier a besoin d'un site",
@@ -306,7 +306,7 @@ export const creerSitePages: CreerSite[] = [
     metierLabel: "Jardinage",
     metaTitle: "Créer un site de jardinier / paysagiste",
     metaDescription:
-      "Jardinier ou paysagiste ? Crée ton site web pro avec Xklic : entretien, création de jardin, élagage, crédit d'impôt. En ligne en 2h, 49€ puis 9,99€/mois.",
+      "Jardinier ou paysagiste ? Crée ton site web pro avec Xklic : entretien, création de jardin, élagage, crédit d'impôt. En ligne en 48h, 49€ puis 9,99€/mois.",
     keywords: [
       "créer site jardinier",
       "site internet paysagiste",
@@ -318,7 +318,7 @@ export const creerSitePages: CreerSite[] = [
     h1: "Créer le site d'un jardinier ou paysagiste",
     lead: "Le jardinage est un métier visuel et saisonnier. De belles photos de tes réalisations valent mille mots, et un site capte la demande au bon moment.",
     intro:
-      "Xklic te crée un site qui montre ton travail, met en avant le crédit d'impôt sur l'entretien à domicile et remplit ton agenda — au printemps, avant l'été, à la rentrée. En ligne en 2h, sans engagement.",
+      "Xklic te crée un site qui montre ton travail, met en avant le crédit d'impôt sur l'entretien à domicile et remplit ton agenda — au printemps, avant l'été, à la rentrée. En ligne en 48h, sans engagement.",
     sections: [
       {
         h2: "Pourquoi un jardinier a besoin d'un site",
@@ -359,7 +359,7 @@ export const creerSitePages: CreerSite[] = [
     metierLabel: "Coiffure & beauté",
     metaTitle: "Créer un site de coiffeur / salon de beauté",
     metaDescription:
-      "Coiffeur, barbier, esthéticienne ? Crée ton site web pro avec Xklic : prestations, photos, contact et réservation faciles. En ligne en 2h, 49€ puis 9,99€/mois.",
+      "Coiffeur, barbier, esthéticienne ? Crée ton site web pro avec Xklic : prestations, photos, contact et réservation faciles. En ligne en 48h, 49€ puis 9,99€/mois.",
     keywords: [
       "créer site coiffeur",
       "site internet salon de coiffure",
@@ -371,7 +371,7 @@ export const creerSitePages: CreerSite[] = [
     h1: "Créer le site d'un coiffeur ou d'un salon de beauté",
     lead: "Coiffure, barbier, esthétique, onglerie : c'est un métier d'image et de fidélité. Un site met en valeur ton style, tes prestations et tes avis.",
     intro:
-      "Xklic te crée un site à la hauteur de ton salon : ta galerie, tes prestations et tarifs, tes horaires et un moyen simple de te contacter ou de réserver. En ligne en 2h, optimisé pour le référencement local.",
+      "Xklic te crée un site à la hauteur de ton salon : ta galerie, tes prestations et tarifs, tes horaires et un moyen simple de te contacter ou de réserver. En ligne en 48h, optimisé pour le référencement local.",
     sections: [
       {
         h2: "Pourquoi un salon a besoin d'un site",
@@ -412,7 +412,7 @@ export const creerSitePages: CreerSite[] = [
     metierLabel: "Maçonnerie",
     metaTitle: "Créer un site de maçon : pro et local",
     metaDescription:
-      "Maçon ou entreprise de gros œuvre ? Crée ton site web pro avec Xklic : construction, rénovation, extension, devis en ligne. En ligne en 2h, 49€ puis 9,99€/mois.",
+      "Maçon ou entreprise de gros œuvre ? Crée ton site web pro avec Xklic : construction, rénovation, extension, devis en ligne. En ligne en 48h, 49€ puis 9,99€/mois.",
     keywords: [
       "créer site maçon",
       "site internet maçonnerie",
@@ -424,7 +424,7 @@ export const creerSitePages: CreerSite[] = [
     h1: "Créer le site web d'un maçon",
     lead: "La maçonnerie, ce sont des projets importants : on ne choisit pas son maçon à la légère. Tes clients veulent voir tes chantiers et vérifier ton sérieux.",
     intro:
-      "Xklic te crée un site qui montre ton savoir-faire et génère des demandes de devis qualifiées : tes réalisations, ton assurance décennale, tes avis et un formulaire clair. En ligne en 2h, sans engagement.",
+      "Xklic te crée un site qui montre ton savoir-faire et génère des demandes de devis qualifiées : tes réalisations, ton assurance décennale, tes avis et un formulaire clair. En ligne en 48h, sans engagement.",
     sections: [
       {
         h2: "Pourquoi un maçon a besoin d'un site",
@@ -465,7 +465,7 @@ export const creerSitePages: CreerSite[] = [
     metierLabel: "Peinture",
     metaTitle: "Créer un site de peintre en bâtiment",
     metaDescription:
-      "Peintre en bâtiment ou décorateur ? Crée ton site web pro avec Xklic : intérieur, façade, rénovation, devis en ligne. En ligne en 2h, 49€ puis 9,99€/mois.",
+      "Peintre en bâtiment ou décorateur ? Crée ton site web pro avec Xklic : intérieur, façade, rénovation, devis en ligne. En ligne en 48h, 49€ puis 9,99€/mois.",
     keywords: [
       "créer site peintre",
       "site internet peintre en bâtiment",
@@ -477,7 +477,7 @@ export const creerSitePages: CreerSite[] = [
     h1: "Créer le site web d'un peintre en bâtiment",
     lead: "La peinture, c'est un métier où le rendu se voit. Des photos avant/après de tes chantiers valent tous les arguments.",
     intro:
-      "Xklic te crée un site qui montre la qualité de ton travail et te fait trouver par les clients de ton secteur : galerie avant/après, prestations, avis et formulaire de devis. En ligne en 2h, sans engagement.",
+      "Xklic te crée un site qui montre la qualité de ton travail et te fait trouver par les clients de ton secteur : galerie avant/après, prestations, avis et formulaire de devis. En ligne en 48h, sans engagement.",
     sections: [
       {
         h2: "Pourquoi un peintre a besoin d'un site",

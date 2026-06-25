@@ -9,7 +9,7 @@ import { cn, telLink, waLink } from "@/lib/utils";
 // appel direct (tel:), WhatsApp. Conversions = sacrées : ne pas dévier.
 export function CtaBand({
   title = "Prêt à être trouvé par vos clients ?",
-  subtitle = "On crée votre site pro, clés en main, en ligne en 2h. Sans engagement.",
+  subtitle = "On crée votre site pro, clés en main, en ligne en 48h. Sans engagement.",
   primaryLabel = "Créer mon site",
   className,
 }: {

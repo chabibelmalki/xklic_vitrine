@@ -45,7 +45,7 @@ export function serviceLd() {
     name: "Création de site web pour artisans, auto-entrepreneurs et TPE",
     serviceType: "Création de site internet professionnel",
     description:
-      "Site vitrine professionnel clés en main pour indépendants et TPE (artisan, femme de ménage, plombier, électricien…), en ligne en 2h. 49€ à la création puis 9,99€/mois, sans engagement.",
+      "Site vitrine professionnel clés en main pour indépendants et TPE (artisan, femme de ménage, plombier, électricien…), en ligne en 48h. 49€ à la création puis 9,99€/mois, sans engagement.",
     provider: {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
@@ -138,7 +138,7 @@ export function localBusinessLd(metier: Metier, ville: Ville) {
     "@id": `${SITE_URL}/metiers/${metier.slug}/${ville.slug}#service`,
     name: `Création de site internet pour ${metier.noun} ${ville.prep}`,
     serviceType: `Site web pour ${metier.noun}`,
-    description: `Site vitrine professionnel pour ${metier.nounPlural} ${ville.prep} (${ville.deptCode}) — en ligne en 2h, optimisé pour le référencement local.`,
+    description: `Site vitrine professionnel pour ${metier.nounPlural} ${ville.prep} (${ville.deptCode}) — en ligne en 48h, optimisé pour le référencement local.`,
     provider: { "@id": `${SITE_URL}/#organization` },
     areaServed: {
       "@type": "City",

@@ -108,7 +108,7 @@ export default async function RealisationsPage() {
                   La prochaine, c&apos;est peut-être la tienne.
                 </p>
                 <p className="max-w-md text-sm text-cream-muted">
-                  Ton site pro, en ligne en 2h. Sans prise de tête, sans
+                  Ton site pro, en ligne en 48h. Sans prise de tête, sans
                   engagement.
                 </p>
                 <ButtonLink href="/demarrer" size="lg">

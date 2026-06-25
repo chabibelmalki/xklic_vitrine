@@ -4,7 +4,7 @@ import { trustPillars } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 export type ProofPoint = {
-  /** valeur forte (ex. « 2h », « Sans », « 100% ») */
+  /** valeur forte (ex. « 48h », « Sans », « 100% ») */
   value: string;
   /** libellé explicatif */
   label: string;

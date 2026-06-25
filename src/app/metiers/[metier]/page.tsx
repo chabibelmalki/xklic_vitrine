@@ -41,7 +41,7 @@ export async function generateMetadata({
 
   return buildMetadata({
     title: `Site web pour ${metier.noun} — ${metier.name}`,
-    description: `${metier.hero} Xklic crée ton site de ${metier.name.toLowerCase()} en 2h, optimisé pour le référencement local. 49€ puis 9,99€/mois, sans engagement.`,
+    description: `${metier.hero} Xklic crée ton site de ${metier.name.toLowerCase()} en 48h, optimisé pour le référencement local. 49€ puis 9,99€/mois, sans engagement.`,
     path: `/metiers/${metier.slug}`,
     keywords: metier.keywords,
   });
@@ -169,7 +169,7 @@ export default async function MetierPage({
           </Container>
         </section>
 
-        <ProofBloc reassurances={["En ligne en 2h", "Sans engagement", "Optimisé pour Google local"]} />
+        <ProofBloc reassurances={["En ligne en 48h", "Sans engagement", "Optimisé pour Google local"]} />
 
         {/* FAQ métier */}
         {metier.faq.length > 0 ? (
@@ -212,7 +212,7 @@ export default async function MetierPage({
 
         <CtaBand
           title={`Prêt à attirer plus de clients en ${metier.name.toLowerCase()} ?`}
-          subtitle="On crée ton site pro, clés en main, en ligne en 2h. Sans engagement."
+          subtitle="On crée ton site pro, clés en main, en ligne en 48h. Sans engagement."
         />
       </main>
 

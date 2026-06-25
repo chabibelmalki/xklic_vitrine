@@ -6,7 +6,7 @@ import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
 import { EASE_OUT } from "@/lib/utils";
 
-const proofs = ["En ligne en 2h", "Sans engagement", "49€ + 9,99€/mois"];
+const proofs = ["En ligne en 48h", "Sans engagement", "49€ + 9,99€/mois"];
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -62,7 +62,7 @@ export function Hero() {
           >
             Plombier, mécanicien, à ton compte dans le ménage&nbsp;? On crée ton
             site clés en main, soigné et pensé pour te trouver de nouveaux
-            clients. En ligne en 2h, sans prise de tête.
+            clients. En ligne en 48h, sans prise de tête.
           </motion.p>
 
           <motion.div

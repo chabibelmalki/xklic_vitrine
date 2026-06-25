@@ -156,7 +156,7 @@ export function CreerSiteTemplate({ urlSlug }: { urlSlug: string }) {
         </section>
 
         <ProofBloc
-          reassurances={["En ligne en 2h", "49€ puis 9,99€/mois", "Sans engagement"]}
+          reassurances={["En ligne en 48h", "49€ puis 9,99€/mois", "Sans engagement"]}
         />
 
         {/* FAQ métier (création de site) */}
@@ -197,7 +197,7 @@ export function CreerSiteTemplate({ urlSlug }: { urlSlug: string }) {
         />
 
         <CtaBand
-          title={`Ton site de ${page.metierLabel.toLowerCase()}, en ligne en 2h.`}
+          title={`Ton site de ${page.metierLabel.toLowerCase()}, en ligne en 48h.`}
           subtitle="Clés en main, optimisé pour Google. 49€ puis 9,99€/mois, sans engagement."
         />
       </main>

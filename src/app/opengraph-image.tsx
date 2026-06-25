@@ -6,7 +6,7 @@ const entry = formules[0];
 
 // Visuel de marque 1200×630 partagé sur les réseaux (TikTok, etc.).
 // Généré à la volée → pas d'asset binaire à maintenir, reste on-brand.
-export const alt = "Xklic — le site pro qui te ramène des clients, en ligne en 2h";
+export const alt = "Xklic — le site pro qui te ramène des clients, en ligne en 48h";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -76,7 +76,7 @@ export default function Image() {
               color: VERMILLON,
             }}
           >
-            en ligne en 2h.
+            en ligne en 48h.
           </div>
           <div style={{ fontSize: 32, color: MUTED, marginTop: 22 }}>
             Artisans, auto-entrepreneurs &amp; TPE — clés en main, sans engagement.

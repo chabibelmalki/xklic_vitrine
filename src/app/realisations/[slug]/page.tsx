@@ -78,7 +78,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${item.client}${meta ? ` — ${meta}` : ""}`,
     description: `Site web créé par Xklic pour ${item.client}${
       item.trade ? `, ${item.trade.toLowerCase()}` : ""
-    }${item.city ? ` à ${item.city}` : ""}. Découvre le site en ligne et lance le tien, en ligne en 2h.`,
+    }${item.city ? ` à ${item.city}` : ""}. Découvre le site en ligne et lance le tien, en ligne en 48h.`,
     path: `/realisations/${item.slug}`,
   });
 }
@@ -311,7 +311,7 @@ export default async function RealisationDetailPage({ params }: Props) {
         {/* CTA fort (conversions sacrées) */}
         <CtaBand
           title="Vous voulez un site comme celui-ci ?"
-          subtitle="On crée le vôtre, clés en main, en ligne en 2h. Sans engagement."
+          subtitle="On crée le vôtre, clés en main, en ligne en 48h. Sans engagement."
         />
       </main>
 
