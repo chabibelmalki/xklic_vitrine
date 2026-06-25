@@ -62,11 +62,18 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, orderId: order.id, url: null });
   }
 
+  // TVA 20% (France) — ventilée sur les factures. Les Prices sont en
+  // tax_behavior "inclusive" : les montants encaissés restent INCHANGÉS, seule
+  // la facture détaille la part de TVA. No-op si le taux n'est pas configuré.
+  const tvaRateId = process.env.STRIPE_TVA_RATE_ID?.trim();
+  const taxRates = tvaRateId ? [tvaRateId] : undefined;
+
   // Mensuel (récurrent) + installation (one-time, facturé sur la 1ʳᵉ facture).
+  // En mode "subscription", tax_rates s'applique au niveau de chaque line_item.
   const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
-    { price: prices.monthly, quantity: 1 },
+    { price: prices.monthly, quantity: 1, tax_rates: taxRates },
   ];
-  if (prices.setup) lineItems.push({ price: prices.setup, quantity: 1 });
+  if (prices.setup) lineItems.push({ price: prices.setup, quantity: 1, tax_rates: taxRates });
 
   const metadata = { orderId: order.id, orderUrl: order.url, formule: lead.formule };
 
