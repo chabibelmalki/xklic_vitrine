@@ -2,6 +2,7 @@ import type Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { getOrderByUrl } from "@/lib/orders";
 import { appendOrderRow } from "@/lib/sheets";
+import { upsertOrder } from "@/lib/baserow";
 import { sendMail, buildEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
@@ -83,6 +84,23 @@ export async function POST(req: Request) {
     // Échec d'écriture : 500 pour que Stripe réessaie (livraison fiable).
     return new Response("sheet write failed", { status: 500 });
   }
+
+  // Double écriture Baserow (best-effort, NON bloquant pendant la migration :
+  // Sheets reste la source de vérité, un échec ici ne re-déclenche pas Stripe).
+  // L'upsert par Ref retrouve la fiche « panier » et la passe en « payé ».
+  await upsertOrder({
+    statut: "payé",
+    lead: order.lead,
+    orderId: order.id,
+    payment: {
+      amountTotal: session.amount_total,
+      currency: session.currency,
+      promoCode,
+      sessionId: session.id,
+      subscriptionId:
+        typeof session.subscription === "string" ? session.subscription : null,
+    },
+  });
 
   // 4. Notification e-mail à contact@xklic.com (best-effort, NON bloquant : un
   //    échec d'envoi ne doit pas re-déclencher le webhook — la source de vérité

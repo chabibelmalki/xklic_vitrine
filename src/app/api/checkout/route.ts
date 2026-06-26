@@ -3,6 +3,7 @@ import type Stripe from "stripe";
 import { leadSchema } from "@/lib/lead-schema";
 import { createOrder } from "@/lib/orders";
 import { appendOrderRow } from "@/lib/sheets";
+import { upsertOrder } from "@/lib/baserow";
 import { stripe, pricesFor } from "@/lib/stripe";
 import { SITE_URL } from "@/lib/site";
 import { verifyTurnstile, clientIp } from "@/lib/turnstile";
@@ -47,7 +48,10 @@ export async function POST(req: Request) {
 
   // 3. Capture immédiate du lead = ligne « panier » (panier abandonné si le
   //    client ne paie pas). Best-effort, ne bloque pas le parcours.
+  //    Double écriture : Sheets (legacy) + Baserow (upsert par Ref, le temps de
+  //    valider la migration). Le upsert évite le doublon panier/payé.
   await appendOrderRow({ statut: "panier", lead, orderId: order.id });
+  await upsertOrder({ statut: "panier", lead, orderId: order.id });
 
   const prices = pricesFor(lead.formule);
   const origin = req.headers.get("origin") || SITE_URL;
