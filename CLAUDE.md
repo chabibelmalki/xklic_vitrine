@@ -114,7 +114,4 @@ visiteur ne casse jamais. À reporter dans Vercel (Production + Preview).
 ## Autres docs (statut)
 
 - **`AGENTS.md`** — avertissement Next.js 16 (à lire avant de coder). **Vivant.**
-- `SESSION_CONTEXT.md`, `QA-REPORT.md` — **historiques datés** (la build initiale).
-  `SESSION_CONTEXT.md` décrit un ancien plan **n8n abandonné** : le flux réel est
-  celui décrit ici, pas celui-là.
 - `RESEAU_CHANTIER.md` — **roadmap** d'un futur annuaire prestataires (non implémenté).
