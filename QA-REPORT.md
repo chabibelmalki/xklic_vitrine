@@ -1,5 +1,10 @@
 # QA Report — Xklic SEO multi-page buildout
 
+> 📌 **Snapshot daté (2026-06-21)** — rapport QA d'un build SEO précis. Conservé comme
+> trace historique ; son périmètre excluait volontairement le tunnel (Stripe/Sheets/
+> Baserow), qui a évolué depuis. Pour l'état actuel, voir `CLAUDE.md`.
+
+
 **Date:** 2026-06-21
 **Auditor:** Agent 5 (Performance & QA — final gate)
 **Build:** Next.js 16.2.9, App Router. `npm run build` PASSES (240 pages, `tsc --noEmit` clean).

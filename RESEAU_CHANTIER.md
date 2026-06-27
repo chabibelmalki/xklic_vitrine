@@ -1,5 +1,11 @@
 # Xklic — Annuaire prestataires & base de données clients (spec, pour plus tard)
 
+> 🗺️ **Roadmap / non implémenté.** Document de spécification d'une future itération
+> (annuaire public). Aucune partie n'est dans le code actuel ; les références à n8n /
+> Meilisearch sont des pistes, pas l'état présent. La base clients réelle est Baserow
+> (voir `CLAUDE.md`).
+
+
 > Objectif : connecter tous les clients Xklic dans une base unique, exposer un **annuaire public searchable** (SEO + leads croisés entre prestataires), et garder une vue interne pour piloter.
 
 ---
