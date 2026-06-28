@@ -203,7 +203,6 @@ export const formules: Formule[] = [
       "On répond à vos avis clients pour vous",
       "On publie pour vous sur Google chaque mois",
       "On garde vos horaires et vos photos à jour",
-      "Chaque mois, on vous dit combien de personnes vous ont trouvé et appelé",
       "Sans payer de publicité",
     ],
     cta: "Je veux la tranquillité",

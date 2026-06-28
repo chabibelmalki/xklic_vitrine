@@ -195,11 +195,7 @@ export default function ConfidentialitePage() {
           <li>
             la lecture des avis clients et la publication de réponses en ton nom ;
           </li>
-          <li>la création de publications (posts, actualités, offres) ;</li>
-          <li>
-            la lecture des statistiques de la fiche pour te fournir un suivi de
-            performance.
-          </li>
+          <li>la création de publications (posts, actualités, offres).</li>
         </ul>
         <p>
           <strong>Usage limité des données Google.</strong> L&apos;accès et
