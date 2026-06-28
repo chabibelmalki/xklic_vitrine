@@ -218,7 +218,7 @@ export const formules: Formule[] = [
     inherits: "Tout le pack précédent, et en plus :",
     features: [
       "Vous apparaissez tout en haut de Google, avant tout le monde",
-      "Avec le badge vert « Garanti par Google » qui rassure vos clients",
+      "On monte votre dossier pour le badge vert « Garanti par Google » (pièces légales, assurance selon le métier) — il s'affiche une fois Google validé",
       "Les clients vous appellent directement",
       "Vous ne payez Google que quand un vrai client vous contacte",
       "On installe et on gère tout à votre place",

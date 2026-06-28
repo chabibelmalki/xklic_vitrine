@@ -114,6 +114,10 @@ function FormuleCard({ formule: f }: { formule: Formule }) {
             Ce que vos clients verront en cherchant votre métier :
           </p>
           <GoogleMock />
+          <p className="mt-2.5 text-[11px] leading-relaxed text-cream-faint">
+            Le badge « Garanti par Google » s&apos;affiche une fois votre dossier
+            validé par Google (pièces légales, assurance selon le métier).
+          </p>
         </div>
       ) : null}
 
