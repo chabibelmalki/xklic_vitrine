@@ -17,7 +17,6 @@ import { brand } from "@/lib/content";
 import { formatArticleDate } from "@/lib/format-date";
 import { articles, getArticle, type Block } from "@/data/articles";
 import { metiers } from "@/data/metiers";
-import { villes } from "@/data/villes";
 
 // Revalidation quotidienne — contenu éditorial stable.
 export const revalidate = 86400;
@@ -162,20 +161,14 @@ export default async function ArticlePage({
     { name: article.title, url },
   ]);
 
-  // Maillage interne contextuel — métiers + zones liés à l'article.
+  // Maillage interne contextuel — métiers liés à l'article.
   const metierLinks = article.relatedMetiers
     .map((s) => metiers.find((m) => m.slug === s))
     .filter((m): m is NonNullable<typeof m> => Boolean(m))
     .map((m) => ({ href: `/metiers/${m.slug}`, label: m.name }));
 
-  const villeLinks = article.relatedVilles
-    .map((s) => villes.find((v) => v.slug === s))
-    .filter((v): v is NonNullable<typeof v> => Boolean(v))
-    .map((v) => ({ href: `/zones/${v.slug}`, label: v.name }));
-
   const groups: LinkGroup[] = [
     { title: "Sites par métier", links: metierLinks },
-    { title: "Sites par ville", links: villeLinks },
     {
       title: "Passer à l'action",
       links: [
@@ -251,7 +244,7 @@ export default async function ArticlePage({
 
         <InternalLinks
           eyebrow="Pour aller plus loin"
-          heading="Le site qui va avec ton métier et ta ville"
+          heading="Le site qui va avec ton métier"
           groups={groups}
         />
       </main>

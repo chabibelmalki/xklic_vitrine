@@ -169,11 +169,11 @@ export const articles: Article[] = [
       },
       {
         type: "links",
-        title: "Des pages pensées pour le local",
+        title: "Des pages pensées pour ton métier",
         links: [
           { href: "/metiers/serrurerie", label: "Site internet pour serrurier" },
-          { href: "/zones/sarcelles", label: "Artisans à Sarcelles" },
-          { href: "/zones/nanterre", label: "Artisans à Nanterre" },
+          { href: "/metiers/plomberie", label: "Site internet pour plombier" },
+          { href: "/creer-site-serrurier", label: "Créer ton site de serrurier" },
         ],
       },
       { type: "h2", text: "4. La publicité Google : utile, mais pas indispensable" },
@@ -339,11 +339,11 @@ export const articles: Article[] = [
       },
       {
         type: "links",
-        title: "Pour ton métier et ta zone",
+        title: "Pour ton métier",
         links: [
           { href: "/metiers/plomberie", label: "Site internet pour plombier" },
           { href: "/metiers/electricite", label: "Site internet pour électricien" },
-          { href: "/zones/argenteuil", label: "Artisans à Argenteuil" },
+          { href: "/creer-site-plombier", label: "Créer ton site de plombier" },
         ],
       },
       {

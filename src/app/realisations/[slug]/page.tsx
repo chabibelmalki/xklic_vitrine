@@ -127,15 +127,9 @@ export default async function RealisationDetailPage({ params }: Props) {
     { label: item.client },
   ];
 
-  // Maillage interne : page métier×ville si on a une correspondance, page
-  // métier seul si on a juste le métier, sinon liens utiles génériques.
+  // Maillage interne : fiche-métier si on a une correspondance, sinon liens
+  // utiles génériques. (Les anciennes pages métier×ville sont supprimées.)
   const relatedLinks: LinkGroup["links"] = [];
-  if (metier && ville) {
-    relatedLinks.push({
-      href: `/metiers/${metier.slug}/${ville.slug}`,
-      label: `${metier.name} ${ville.prep}`,
-    });
-  }
   if (metier) {
     relatedLinks.push({
       href: `/metiers/${metier.slug}`,
@@ -251,7 +245,7 @@ export default async function RealisationDetailPage({ params }: Props) {
                     <p className="mt-4 text-sm text-cream-muted">
                       Vous êtes {metier.noun} {ville.prep} ?{" "}
                       <Link
-                        href={`/metiers/${metier.slug}/${ville.slug}`}
+                        href={`/metiers/${metier.slug}`}
                         className="inline-flex items-center gap-1 font-medium text-ember-deep underline-offset-4 hover:underline"
                       >
                         Découvrez nos sites pour {metier.nounPlural} {ville.prep}
