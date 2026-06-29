@@ -3,7 +3,6 @@ import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
 import { FloatingActions } from "@/components/site/floating-actions";
 import { MetierCard } from "@/components/sections/metier-card";
-import { InternalLinks } from "@/components/sections/internal-links";
 import { CtaBand } from "@/components/sections/cta-band";
 import { ProofBloc } from "@/components/sections/proof-bloc";
 import { Container } from "@/components/ui/container";
@@ -14,7 +13,6 @@ import { buildMetadata } from "@/lib/metadata";
 import { breadcrumbLd } from "@/lib/seo";
 import { SITE_URL } from "@/lib/site";
 import { metiers } from "@/data/metiers";
-import { villes } from "@/data/villes";
 import { creerSiteUrlForMetier } from "@/data/creer-site";
 
 // ISR : contenu programmatique stable, revalidé une fois par jour.
@@ -39,17 +37,6 @@ export default function MetiersPage() {
     { name: "Accueil", url: `${SITE_URL}/` },
     { name: "Métiers", url: `${SITE_URL}/metiers` },
   ]);
-
-  // Maillage interne vers les zones desservies.
-  const zoneGroups = [
-    {
-      title: "Zones desservies",
-      links: villes.map((v) => ({
-        href: `/zones/${v.slug}`,
-        label: `${v.name} (${v.deptCode})`,
-      })),
-    },
-  ];
 
   return (
     <div className="grain relative flex min-h-full flex-col">
@@ -98,12 +85,6 @@ export default function MetiersPage() {
         </section>
 
         <ProofBloc reassurances={["En ligne en 48h", "Sans engagement", "Conçu et géré en France"]} />
-
-        <InternalLinks
-          eyebrow="Maillage local"
-          heading="On intervient près de chez toi"
-          groups={zoneGroups}
-        />
 
         <CtaBand
           title="Ton métier mérite un vrai site."

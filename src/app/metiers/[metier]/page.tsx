@@ -20,7 +20,6 @@ import {
 } from "@/lib/seo";
 import { SITE_URL } from "@/lib/site";
 import { metiers, metierSlugs, getMetier } from "@/data/metiers";
-import { villes } from "@/data/villes";
 import { creerSiteUrlForMetier } from "@/data/creer-site";
 
 export const revalidate = 86400;
@@ -63,16 +62,7 @@ export default async function MetierPage({
   const faqLd = faqLdFrom(metier.faq);
   const creerSiteHref = creerSiteUrlForMetier(metier.slug);
 
-  // Maillage : toutes les villes pour ce métier + autres métiers.
-  const villeGroups = [
-    {
-      title: `${metier.name} par ville`,
-      links: villes.map((v) => ({
-        href: `/metiers/${metier.slug}/${v.slug}`,
-        label: `${metier.name} ${v.prep}`,
-      })),
-    },
-  ];
+  // Maillage : autres métiers (fiche recadrée — plus de pages métier×ville).
   const otherMetierGroup = [
     {
       title: "Autres métiers",
@@ -201,13 +191,7 @@ export default async function MetierPage({
           </section>
         ) : null}
 
-        <InternalLinks
-          eyebrow="Référencement local"
-          heading={`${metier.name} près de chez toi`}
-          groups={villeGroups}
-        />
-
-        <InternalLinks groups={otherMetierGroup} className="!border-t-0 !pt-0" />
+        <InternalLinks groups={otherMetierGroup} />
 
         <CtaBand
           title={`Prêt à attirer plus de clients en ${metier.name.toLowerCase()} ?`}
