@@ -5,7 +5,7 @@
 
 import { brand, faq } from "./content";
 import { SITE_URL } from "./site";
-import type { Metier, Ville } from "@/data/types";
+import type { Metier } from "@/data/types";
 
 // Signal de marque : associe le nom « Xklic » (et l'alias « Xklic.com ») au
 // domaine. Pas de SearchAction : le site n'a pas de moteur de recherche interne.
@@ -125,37 +125,6 @@ export function metierServiceLd(metier: Metier) {
           },
         }
       : {}),
-  };
-}
-
-// LocalBusiness/Service ancré sur une paire métier×ville (page
-// /metiers/[metier]/[ville]). areaServed = la ville, geo depuis ville.geo,
-// provider = l'Organization site-wide (par @id, pas de duplication).
-export function localBusinessLd(metier: Metier, ville: Ville) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${SITE_URL}/metiers/${metier.slug}/${ville.slug}#service`,
-    name: `Création de site internet pour ${metier.noun} ${ville.prep}`,
-    serviceType: `Site web pour ${metier.noun}`,
-    description: `Site vitrine professionnel pour ${metier.nounPlural} ${ville.prep} (${ville.deptCode}) — en ligne en 48h, optimisé pour le référencement local.`,
-    provider: { "@id": `${SITE_URL}/#organization` },
-    areaServed: {
-      "@type": "City",
-      name: ville.name,
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: ville.name,
-        addressRegion: ville.dept,
-        postalCode: ville.postalCodes[0],
-        addressCountry: "FR",
-      },
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: ville.geo.lat,
-        longitude: ville.geo.lng,
-      },
-    },
   };
 }
 
