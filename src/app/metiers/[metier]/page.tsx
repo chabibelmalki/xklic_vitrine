@@ -19,8 +19,7 @@ import {
   faqLdFrom,
 } from "@/lib/seo";
 import { SITE_URL } from "@/lib/site";
-import { metierSlugs, getMetier } from "@/data/compose";
-import { metiers } from "@/data/metiers";
+import { metiers, metierSlugs, getMetier } from "@/data/metiers";
 import { villes } from "@/data/villes";
 import { creerSiteUrlForMetier } from "@/data/creer-site";
 

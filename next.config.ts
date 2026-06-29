@@ -28,6 +28,22 @@ const nextConfig: NextConfig = {
       // anciennes entrées de conversion
       { source: "/commander", destination: "/demarrer", permanent: true },
       { source: "/devis", destination: "/demarrer", permanent: true },
+
+      // ── Nettoyage SEO geo-métier (Phase A) ──────────────────────────────
+      // Les anciennes paires métier×ville sont supprimées : on redirige (308)
+      // chaque paire vers la page-offre acheteur du métier correspondant.
+      // `:ville+` exige AU MOINS un segment ville → ne matche JAMAIS la fiche
+      // métier nue `/metiers/{métier}` (conservée), ni le hub `/metiers`.
+      // Les /zones partent en 410 (cf. src/proxy.ts), pas ici.
+      { source: "/metiers/plomberie/:ville+", destination: "/creer-site-plombier", permanent: true },
+      { source: "/metiers/menage/:ville+", destination: "/creer-site-menage", permanent: true },
+      { source: "/metiers/electricite/:ville+", destination: "/creer-site-electricien", permanent: true },
+      { source: "/metiers/mecanique-auto/:ville+", destination: "/creer-site-mecanicien", permanent: true },
+      { source: "/metiers/serrurerie/:ville+", destination: "/creer-site-serrurier", permanent: true },
+      { source: "/metiers/jardinage/:ville+", destination: "/creer-site-jardinier", permanent: true },
+      { source: "/metiers/coiffure-beaute/:ville+", destination: "/creer-site-coiffeur", permanent: true },
+      { source: "/metiers/maconnerie/:ville+", destination: "/creer-site-macon", permanent: true },
+      { source: "/metiers/peinture/:ville+", destination: "/creer-site-peintre", permanent: true },
     ];
   },
 

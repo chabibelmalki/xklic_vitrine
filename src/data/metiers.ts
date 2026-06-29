@@ -575,3 +575,14 @@ export const metiers: Metier[] = [
     ],
   },
 ];
+
+// ── Lookup helpers ─────────────────────────────────────────────────────────
+// Relocalisés depuis l'ancien compose.ts (moteur de composition supprimé).
+// Servent aux pages fiche-métier `/metiers` et au sitemap.
+export function getMetier(slug: string): Metier | undefined {
+  return metiers.find((m) => m.slug === slug);
+}
+
+export function metierSlugs(): string[] {
+  return metiers.map((m) => m.slug);
+}

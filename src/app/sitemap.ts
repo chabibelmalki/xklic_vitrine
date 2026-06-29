@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
-import { metierSlugs, villeSlugs, handwrittenPairList } from "@/data/compose";
+import { metierSlugs } from "@/data/metiers";
+import { villeSlugs, handwrittenPairList } from "@/data/compose";
 import { creerSitePages } from "@/data/creer-site";
 
 // Sitemap DYNAMIQUE : énumère les pages statiques + tout le SEO programmatique
