@@ -65,24 +65,6 @@ export interface Ville {
   landmarks: string[];
   /** coordonnées centre-ville pour geo.position / LocalBusiness */
   geo: { lat: number; lng: number };
-  /** slugs des villes voisines (3–5) — maillage interne /zones */
+  /** slugs des villes voisines (3–5) — maillage interne */
   nearby: string[];
-}
-
-/** Résultat de la composition métier×ville : contenu UNIQUE par paire.
- *  Implémenté par data/compose.ts (export `composePair(metier, ville)`).
- *  L'unicité vient de la combinaison + de variantes structurelles choisies
- *  de façon déterministe (hash de slug paire), PAS d'un simple remplacement
- *  du nom de ville. Cible : ≥ 300 mots réellement variés par page. */
-export interface PairContent {
-  title: string;
-  description: string;
-  /** paragraphes du corps (≥ 4), tissant métier + ville + paire */
-  body: string[];
-  /** intentions/requêtes locales couvertes */
-  intents: string[];
-  /** FAQ propre à la paire (optionnel). Présent sur les paires rédigées à la
-   *  main → différenciée par ville (ne PAS recycler metier.faq). Absent sur les
-   *  paires générées : la page retombe alors sur metier.faq. */
-  faq?: { q: string; a: string }[];
 }
