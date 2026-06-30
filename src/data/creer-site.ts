@@ -9,6 +9,28 @@
 // URL : /creer-site-[noun] (segment unique). `metierSlug` relie à /metiers/[x].
 // ─────────────────────────────────────────────────────────────────────────
 
+/** Un frein d'achat du petit pro (persona-acheteur) + la réponse qui le lève. */
+export interface Objection {
+  frein: string;
+  reponse: string;
+}
+
+/** Une preuve : un site réel du secteur (lien-live) ou une maquette « exemple ». */
+export interface ProofItem {
+  /** nom affiché (entreprise réelle, ou nom de démo pour une maquette). */
+  nom: string;
+  /** ville / accroche secondaire. */
+  ville?: string;
+  /** site live → lien cliquable. Absent si maquette sans démo en ligne. */
+  url?: string;
+  /** capture d'écran optimisée dans /public (next/image). */
+  image?: string;
+  /** badge « Fiche Google » (preuve E-E-A-T) — jamais de note chiffrée. */
+  googleAvis?: boolean;
+  /** true = maquette de démonstration, étiquetée « exemple », jamais un client. */
+  exemple?: boolean;
+}
+
 export interface CreerSite {
   /** segment d'URL = nom du dossier de route, ex. "creer-site-plombier". */
   urlSlug: string;
@@ -32,6 +54,10 @@ export interface CreerSite {
   bullets: string[];
   /** FAQ propre au métier (créer un site), différente de metier.faq. */
   faq: { q: string; a: string }[];
+  /** NOUVEAU — 2-3 freins/peurs du persona-acheteur + réponse qui les lève. */
+  objections?: Objection[];
+  /** NOUVEAU — preuve : sites réels du secteur (liens-live) ou maquettes « exemple ». */
+  proof?: { intro: string; items: ProofItem[] };
 }
 
 export const creerSitePages: CreerSite[] = [

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Check } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
+import Image from "next/image";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
 import { FloatingActions } from "@/components/site/floating-actions";
@@ -154,6 +155,117 @@ export function CreerSiteTemplate({ urlSlug }: { urlSlug: string }) {
             </ul>
           </Container>
         </section>
+
+        {/* Objections — on lève les freins du persona-acheteur */}
+        {page.objections?.length ? (
+          <section className="relative border-t border-line py-16 sm:py-20">
+            <Container>
+              <Eyebrow>On lève les doutes</Eyebrow>
+              <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-cream sm:text-3xl">
+                Ce qui te retient — et pourquoi ça va le faire
+              </h2>
+              <ul className="mt-8 flex max-w-3xl flex-col gap-4">
+                {page.objections.map((o) => (
+                  <li
+                    key={o.frein}
+                    className="rounded-2xl border border-line bg-ink-soft px-6 py-5"
+                  >
+                    <p className="text-base font-medium text-cream">
+                      « {o.frein} »
+                    </p>
+                    <p className="mt-2 text-base leading-relaxed text-cream-muted">
+                      {o.reponse}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </Container>
+          </section>
+        ) : null}
+
+        {/* Preuve — sites réels du secteur (liens-live) ou maquettes « exemple » */}
+        {page.proof?.items.length ? (
+          <section className="relative border-t border-line py-16 sm:py-20">
+            <Container>
+              <Eyebrow>La preuve</Eyebrow>
+              <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-cream sm:text-3xl">
+                Des sites déjà en ligne
+              </h2>
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-cream-muted sm:text-lg">
+                {page.proof.intro}
+              </p>
+              <ul className="mt-8 grid gap-5 sm:grid-cols-2">
+                {page.proof.items.map((it) => {
+                  const inner = (
+                    <>
+                      <div className="relative aspect-[16/10] overflow-hidden bg-ink">
+                        {it.image ? (
+                          <Image
+                            src={it.image}
+                            alt={`Aperçu du site ${it.nom}${it.ville ? ` — ${it.ville}` : ""}`}
+                            fill
+                            sizes="(max-width: 640px) 100vw, 50vw"
+                            className="object-cover object-top"
+                          />
+                        ) : (
+                          <div className="flex h-full items-center justify-center text-sm text-cream-faint">
+                            Aperçu à venir
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex flex-1 flex-col gap-1 px-5 py-4">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="text-base font-medium text-cream">
+                            {it.nom}
+                          </span>
+                          {it.exemple ? (
+                            <span className="rounded-full border border-line bg-ink px-2.5 py-0.5 text-xs text-cream-faint">
+                              Exemple
+                            </span>
+                          ) : null}
+                          {it.googleAvis ? (
+                            <span className="rounded-full border border-ember/30 bg-ember/10 px-2.5 py-0.5 text-xs text-ember-deep">
+                              Fiche Google
+                            </span>
+                          ) : null}
+                        </div>
+                        {it.ville ? (
+                          <span className="text-sm text-cream-muted">
+                            {it.ville}
+                          </span>
+                        ) : null}
+                        {it.url ? (
+                          <span className="mt-1 inline-flex items-center gap-1 text-sm font-medium text-ember-deep">
+                            Voir le site en ligne
+                            <ArrowUpRight size={14} />
+                          </span>
+                        ) : null}
+                      </div>
+                    </>
+                  );
+                  return (
+                    <li key={it.nom} className="flex">
+                      {it.url ? (
+                        <a
+                          href={it.url}
+                          target="_blank"
+                          rel="noopener"
+                          className="group flex w-full flex-col overflow-hidden rounded-2xl border border-line bg-ink-soft transition-colors hover:border-line-strong"
+                        >
+                          {inner}
+                        </a>
+                      ) : (
+                        <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-line bg-ink-soft">
+                          {inner}
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </Container>
+          </section>
+        ) : null}
 
         <ProofBloc
           reassurances={["En ligne en 48h", "49€ puis 9,99€/mois", "Sans engagement"]}
