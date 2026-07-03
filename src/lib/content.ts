@@ -39,7 +39,7 @@ export const legal = {
     address: "440 N Barranca Ave #4133, Covina, CA 91723, États-Unis",
     site: "https://vercel.com",
   },
-  updated: "22 juin 2026", // date de dernière mise à jour
+  updated: "4 juillet 2026", // date de dernière mise à jour
 };
 
 // Sous-traitants / services tiers qui peuvent traiter des données personnelles

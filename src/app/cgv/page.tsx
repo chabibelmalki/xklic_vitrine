@@ -222,6 +222,13 @@ export default function CgvPage() {
           propriété de {legal.company}{" "}et ne sont pas cédés.
         </p>
         <p>
+          {legal.company}{" "}peut faire figurer une mention discrète «&nbsp;Site
+          créé par {brand.name}&nbsp;», accompagnée d&apos;un lien vers{" "}
+          {brand.domain}, dans le pied de page du site livré. Le client peut en
+          demander le retrait à tout moment via le{" "}
+          <Link href="/contact">formulaire de contact</Link>.
+        </p>
+        <p>
           Le nom de domaine en <strong>.fr</strong> est{" "}
           <strong>offert</strong> : il est acheté, enregistré et géré par{" "}
           {legal.company}{" "}pour le compte du client pendant toute la durée de
@@ -231,7 +238,8 @@ export default function CgvPage() {
         <p>
           En cas de résiliation, le client peut demander le transfert du nom de
           domaine en en faisant la demande via le{" "}
-          <Link href="/contact">formulaire de contact</Link> du site. Transfert
+          <Link href="/contact">formulaire de contact</Link>{" "}du site.
+          Transfert
           gratuit après 12 mois d&apos;abonnement ; avant 12 mois, le transfert
           est facturé 30€ couvrant les frais de mise en place.
         </p>
