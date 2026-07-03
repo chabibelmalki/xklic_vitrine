@@ -14,10 +14,12 @@ export const brand = {
   phoneDisplay: "06 63 94 81 28", // affichage formaté
   whatsapp: "0663948128", // numéro WhatsApp (souvent identique)
   whatsappMessage: "Bonjour Xklic, je voudrais créer mon site.",
-  // Réseaux sociaux → alimente `sameAs` du JSON-LD Organization (SEO).
-  // Ajoute les URLs réelles (TikTok, Instagram…) quand elles existent, ex. :
-  // ["https://www.tiktok.com/@xklic", "https://www.instagram.com/xklic"]
-  social: [] as string[],
+  // Réseaux sociaux → icônes du footer + `sameAs` du JSON-LD Organization (SEO).
+  social: [
+    { label: "Instagram", href: "https://www.instagram.com/agence.xklic/" },
+    { label: "TikTok", href: "https://www.tiktok.com/@xklic4" },
+    { label: "Fiche Google", href: "https://share.google/QO3auQYHNVvJyrl30" },
+  ],
 };
 
 // Informations légales — ⚠️ À COMPLÉTER avec les vraies données de l'entreprise.

@@ -33,8 +33,9 @@ export function organizationLd() {
     image: `${SITE_URL}/opengraph-image`,
     email: brand.email,
     description: brand.tagline,
-    // Renseigne brand.social (TikTok, Instagram…) pour activer sameAs.
-    ...(brand.social.length ? { sameAs: brand.social } : {}),
+    ...(brand.social.length
+      ? { sameAs: brand.social.map((s) => s.href) }
+      : {}),
   };
 }
 
