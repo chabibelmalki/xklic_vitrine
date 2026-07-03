@@ -1,25 +1,17 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Check, Phone, MessageCircle, Star } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
-import { EASE_OUT } from "@/lib/utils";
 
 const proofs = ["En ligne en 48h", "Sans engagement", "49€ + 9,99€/mois"];
 
+// Composant serveur : les entrées se font en CSS pur (.rise) pour que le
+// h1 — élément LCP — peigne dès le premier rendu HTML, sans attendre
+// l'hydratation de framer-motion. prefers-reduced-motion est géré
+// globalement dans globals.css (animations coupées).
+const rise = (i: number) =>
+  ({ "--rise-delay": `${0.05 * i}s` }) as React.CSSProperties;
+
 export function Hero() {
-  const reduce = useReducedMotion();
-
-  const item = {
-    hidden: { opacity: 0, y: 24 },
-    show: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, delay: 0.05 * i, ease: EASE_OUT },
-    }),
-  };
-
   return (
     <section className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28 lg:pt-44">
       {/* Effet signature : aurora chaude animée */}
@@ -31,12 +23,8 @@ export function Hero() {
       />
 
       <Container className="relative">
-        <motion.div
-          initial={reduce ? false : "hidden"}
-          animate="show"
-          className="mx-auto flex max-w-3xl flex-col items-center text-center"
-        >
-          <motion.div custom={0} variants={item}>
+        <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+          <div className="rise" style={rise(0)}>
             <span className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-ink/60 px-4 py-1.5 text-xs font-medium text-cream-muted backdrop-blur">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ember opacity-75" />
@@ -44,31 +32,28 @@ export function Hero() {
               </span>
               Sites web professionnels, clés en main
             </span>
-          </motion.div>
+          </div>
 
-          <motion.h1
-            custom={1}
-            variants={item}
-            className="font-display mt-7 text-[2.6rem] font-semibold leading-[1.04] tracking-[-0.02em] text-cream sm:text-6xl lg:text-7xl"
+          <h1
+            className="rise font-display mt-7 text-[2.6rem] font-semibold leading-[1.04] tracking-[-0.02em] text-cream sm:text-6xl lg:text-7xl"
+            style={rise(1)}
           >
             Ton site pro qui te{" "}
             <span className="text-gradient-warm">ramène des clients.</span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            custom={2}
-            variants={item}
-            className="mt-6 max-w-xl text-base leading-relaxed text-cream-muted sm:text-lg"
+          <p
+            className="rise mt-6 max-w-xl text-base leading-relaxed text-cream-muted sm:text-lg"
+            style={rise(2)}
           >
             Plombier, mécanicien, à ton compte dans le ménage&nbsp;? On crée ton
             site clés en main, soigné et pensé pour te trouver de nouveaux
             clients. En ligne en 48h, sans prise de tête.
-          </motion.p>
+          </p>
 
-          <motion.div
-            custom={3}
-            variants={item}
-            className="mt-9 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row"
+          <div
+            className="rise mt-9 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row"
+            style={rise(3)}
           >
             <ButtonLink href="/demarrer" size="lg" className="w-full sm:w-auto">
               Créer mon site
@@ -85,12 +70,11 @@ export function Hero() {
             >
               Voir des réalisations
             </ButtonLink>
-          </motion.div>
+          </div>
 
-          <motion.ul
-            custom={4}
-            variants={item}
-            className="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-2"
+          <ul
+            className="rise mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-2"
+            style={rise(4)}
           >
             {proofs.map((p) => (
               <li
@@ -101,37 +85,22 @@ export function Hero() {
                 {p}
               </li>
             ))}
-          </motion.ul>
-        </motion.div>
+          </ul>
+        </div>
 
         {/* Preuve visuelle : maquette mobile + demandes clients qui arrivent */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4, ease: EASE_OUT }}
-          className="relative mx-auto mt-20 flex max-w-md justify-center sm:mt-24"
+        <div
+          className="rise relative mx-auto mt-20 flex max-w-md justify-center sm:mt-24"
+          style={rise(8)}
         >
-          <PhoneMock reduce={!!reduce} />
-        </motion.div>
+          <PhoneMock />
+        </div>
       </Container>
     </section>
   );
 }
 
-function PhoneMock({ reduce }: { reduce: boolean }) {
-  const float = (delay: number) =>
-    reduce
-      ? {}
-      : {
-          animate: { y: [0, -9, 0] },
-          transition: {
-            duration: 5,
-            delay,
-            repeat: Infinity,
-            ease: "easeInOut" as const,
-          },
-        };
-
+function PhoneMock() {
   return (
     <div className="relative">
       {/* Halo derrière le téléphone */}
@@ -190,9 +159,9 @@ function PhoneMock({ reduce }: { reduce: boolean }) {
       </div>
 
       {/* Carte flottante : nouvelle demande WhatsApp */}
-      <motion.div
-        {...float(0.2)}
-        className="absolute -left-6 top-24 w-max rounded-2xl border border-line bg-ink/90 px-3.5 py-2.5 shadow-card backdrop-blur sm:-left-12"
+      <div
+        className="float-soft absolute -left-6 top-24 w-max rounded-2xl border border-line bg-ink/90 px-3.5 py-2.5 shadow-card backdrop-blur sm:-left-12"
+        style={{ "--float-delay": "0.2s" } as React.CSSProperties}
         aria-hidden
       >
         <div className="flex items-center gap-2.5">
@@ -208,12 +177,12 @@ function PhoneMock({ reduce }: { reduce: boolean }) {
             </p>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Carte flottante : appel reçu */}
-      <motion.div
-        {...float(1.4)}
-        className="absolute -right-4 bottom-20 w-max rounded-2xl border border-line bg-ink/90 px-3.5 py-2.5 shadow-card backdrop-blur sm:-right-10"
+      <div
+        className="float-soft absolute -right-4 bottom-20 w-max rounded-2xl border border-line bg-ink/90 px-3.5 py-2.5 shadow-card backdrop-blur sm:-right-10"
+        style={{ "--float-delay": "1.4s" } as React.CSSProperties}
         aria-hidden
       >
         <div className="flex items-center gap-2.5">
@@ -225,7 +194,7 @@ function PhoneMock({ reduce }: { reduce: boolean }) {
             <p className="text-[10px] text-cream-muted">+33 6 12 · 0:42</p>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

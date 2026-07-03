@@ -121,6 +121,35 @@ body {
   }
 }
 
+/* ── Entrée du hero — CSS pur, sans framer-motion ──────────────────────────
+   Le texte du hero est l'élément LCP : il doit peindre dès le premier rendu
+   HTML, sans attendre l'hydratation JS. Délai décalé via --rise-delay. */
+.rise {
+  animation: rise 0.8s var(--ease-out-expo) both;
+  animation-delay: var(--rise-delay, 0s);
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+/* Flottement doux des cartes du hero (demande WhatsApp, appel reçu) */
+.float-soft {
+  animation: float-soft 5s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
 /* Lueur d'accent douce (sections autres que le hero) */
 .glow-ember {
   background: radial-gradient(
