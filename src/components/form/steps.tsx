@@ -1,16 +1,9 @@
 "use client";
 
 import { createContext, useContext } from "react";
-import {
-  Controller,
-  useFieldArray,
-  useFormContext,
-  useWatch,
-} from "react-hook-form";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 import {
   Check,
-  ChevronDown,
-  ChevronUp,
   Layers,
   Pipette,
   Plus,
@@ -19,7 +12,7 @@ import {
   Wrench,
 } from "lucide-react";
 import type { ActivityType, LeadValues } from "@/lib/lead-schema";
-import { wantsProducts, wantsServices } from "@/lib/lead-schema";
+import { wantsServices } from "@/lib/lead-schema";
 import { formules } from "@/lib/content";
 import {
   CheckRow,
@@ -467,180 +460,6 @@ function PrestationsStep() {
           )}
         />
       </Field>
-    </div>
-  );
-}
-
-/* ── P1. Marchandise (produits / les-deux) — étape répétable ────────────── */
-
-function ProductCard({ index }: { index: number }) {
-  const {
-    register,
-    control,
-    formState: { errors },
-  } = useFormContext<LeadValues>();
-  const titleErr = errors.products?.[index]?.title?.message as
-    | string
-    | undefined;
-  return (
-    <div className="grid gap-4">
-      <Field
-        label="Nom du produit"
-        hint="Ex. : « Croissant au beurre », « Bouquet de saison »"
-        htmlFor={`products.${index}.title`}
-        error={titleErr}
-      >
-        <TextInput
-          id={`products.${index}.title`}
-          placeholder="Comment s'appelle ce produit ?"
-          invalid={!!titleErr}
-          {...register(`products.${index}.title` as const)}
-        />
-      </Field>
-      <Field
-        label="Description courte"
-        hint="En vrac, on l'améliorera. Ex. : « pur beurre, fait maison chaque matin »"
-        htmlFor={`products.${index}.description`}
-        optional
-      >
-        <TextArea
-          id={`products.${index}.description`}
-          className="min-h-20"
-          placeholder="Quelques mots sur ce produit…"
-          {...register(`products.${index}.description` as const)}
-        />
-      </Field>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field
-          label="Prix"
-          hint="Ex. : « 1,20 € » ou « à partir de 25 € »"
-          htmlFor={`products.${index}.price`}
-          optional
-        >
-          <TextInput
-            id={`products.${index}.price`}
-            placeholder="Le tarif affiché"
-            {...register(`products.${index}.price` as const)}
-          />
-        </Field>
-        <Field
-          label="Catégorie"
-          hint="Ex. : « Viennoiseries », « Gâteaux »"
-          htmlFor={`products.${index}.category`}
-          optional
-        >
-          <TextInput
-            id={`products.${index}.category`}
-            placeholder="Pour regrouper tes produits"
-            {...register(`products.${index}.category` as const)}
-          />
-        </Field>
-      </div>
-      <Field label="Photos du produit" optional>
-        <Controller
-          control={control}
-          name={`products.${index}.photos` as const}
-          render={({ field }) => (
-            <ImageUpload
-              value={field.value}
-              onChange={field.onChange}
-              compact
-              cta="Ajoute une ou plusieurs photos"
-            />
-          )}
-        />
-      </Field>
-    </div>
-  );
-}
-
-function ProduitsStep() {
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext<LeadValues>();
-  const { fields, append, remove, move } = useFieldArray({
-    control,
-    name: "products",
-  });
-  const arrayErr = (errors.products as { message?: string } | undefined)
-    ?.message;
-
-  const addProduct = () =>
-    append({
-      id: crypto.randomUUID(),
-      title: "",
-      description: "",
-      price: "",
-      category: "",
-      photos: [],
-    });
-
-  return (
-    <div className="grid gap-5">
-      {fields.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-line-strong bg-ink-soft px-5 py-8 text-center">
-          <p className="text-sm text-cream-muted">
-            Aucun produit pour l&apos;instant. Ajoutes-en autant que tu le
-            souhaites — tu pourras les réordonner ou les retirer.
-          </p>
-        </div>
-      ) : null}
-
-      {fields.map((f, i) => (
-        <div
-          key={f.id}
-          className="rounded-2xl border border-line bg-ink/40 p-5"
-        >
-          <div className="mb-4 flex items-center justify-between gap-3">
-            <span className="text-sm font-medium text-cream-muted">
-              Produit {i + 1}
-            </span>
-            <div className="flex items-center gap-1">
-              <button
-                type="button"
-                onClick={() => move(i, i - 1)}
-                disabled={i === 0}
-                aria-label="Monter le produit"
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-line text-cream-muted transition-colors hover:border-line-strong hover:text-cream disabled:pointer-events-none disabled:opacity-30"
-              >
-                <ChevronUp size={15} />
-              </button>
-              <button
-                type="button"
-                onClick={() => move(i, i + 1)}
-                disabled={i === fields.length - 1}
-                aria-label="Descendre le produit"
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-line text-cream-muted transition-colors hover:border-line-strong hover:text-cream disabled:pointer-events-none disabled:opacity-30"
-              >
-                <ChevronDown size={15} />
-              </button>
-              <button
-                type="button"
-                onClick={() => remove(i)}
-                aria-label="Supprimer le produit"
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-line text-cream-muted transition-colors hover:border-ember/40 hover:bg-ember/10 hover:text-ember-soft"
-              >
-                <Trash2 size={15} />
-              </button>
-            </div>
-          </div>
-          <ProductCard index={i} />
-        </div>
-      ))}
-
-      {arrayErr && fields.length === 0 ? (
-        <p className="text-xs text-ember-soft">{arrayErr}</p>
-      ) : null}
-
-      <button
-        type="button"
-        onClick={addProduct}
-        className="flex items-center justify-center gap-2 rounded-xl border border-dashed border-line-strong bg-ink-soft px-4 py-3.5 text-sm font-medium text-cream transition-colors hover:border-ember/40 hover:bg-ember/[0.03]"
-      >
-        <Plus size={16} />
-        Ajouter un produit
-      </button>
     </div>
   );
 }
@@ -1166,14 +985,6 @@ const ALL_STEPS: StepDef[] = [
     fields: ["services", "taxCredit"],
     when: wantsServices,
     Component: PrestationsStep,
-  },
-  {
-    id: "produits",
-    title: "Tes produits",
-    subtitle: "Ajoute ta marchandise, un produit à la fois.",
-    fields: ["products"],
-    when: wantsProducts,
-    Component: ProduitsStep,
   },
   {
     id: "identite",

@@ -134,8 +134,8 @@ export const leadSchema = z
       });
     }
 
-    // En mode express, les étapes prestations/produits sont sautées : un
-    // conseiller les recueille par téléphone, on n'exige donc rien de plus.
+    // En mode express, l'étape prestations est sautée : un conseiller la
+    // recueille par téléphone, on n'exige donc rien de plus.
     if (data.assisted) return;
 
     // Prestations requises pour les activités de service
@@ -159,14 +159,8 @@ export const leadSchema = z
       }
     }
 
-    // Au moins un produit pour les activités qui vendent de la marchandise
-    if (wantsProducts(data.activityType) && (data.products?.length ?? 0) === 0) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["products"],
-        message: "Ajoute au moins un produit pour continuer.",
-      });
-    }
+    // Les produits ne sont plus saisis dans le tunnel : les marchands les
+    // gèrent eux-mêmes dans le back-office e-commerce (étape retirée 2026-07-06).
   });
 
 export type LeadValues = z.input<typeof leadSchema>;
