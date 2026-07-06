@@ -50,14 +50,18 @@ export async function POST(req: Request) {
     return new Response("order not found", { status: 200 });
   }
 
-  // Récupère le code promo éventuel (non développé dans l'événement brut).
+  // Récupère le code promo éventuel (non développé dans l'événement brut) et
+  // le montant de la réduction appliquée.
   let promoCode: string | null = null;
+  let discountCents: number | null = null;
   try {
     const full = await stripe.checkout.sessions.retrieve(session.id, {
       expand: ["discounts.promotion_code"],
     });
     const promo = full.discounts?.[0]?.promotion_code;
     if (promo && typeof promo !== "string") promoCode = promo.code;
+    const discount = full.total_details?.amount_discount;
+    if (typeof discount === "number" && discount > 0) discountCents = discount;
   } catch {
     /* enrichissement best-effort */
   }
@@ -76,6 +80,7 @@ export async function POST(req: Request) {
       amountTotal: session.amount_total,
       currency: session.currency,
       promoCode,
+      discountCents,
       sessionId: session.id,
       subscriptionId:
         typeof session.subscription === "string" ? session.subscription : null,

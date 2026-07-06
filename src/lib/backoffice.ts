@@ -24,6 +24,7 @@ export interface PaymentInfo {
   amountTotal?: number | null; // en centimes
   currency?: string | null;
   promoCode?: string | null;
+  discountCents?: number | null; // réduction appliquée (total_details.amount_discount)
   sessionId?: string | null;
   subscriptionId?: string | null;
 }
@@ -113,6 +114,7 @@ export async function upsertOrder(args: {
   if (payment) {
     body.payment = {
       amount_cents: payment.amountTotal ?? null,
+      discount_cents: payment.discountCents ?? null,
       promo_code: payment.promoCode ?? "",
       stripe_session: payment.sessionId ?? "",
       stripe_subscription: payment.subscriptionId ?? "",
