@@ -1,0 +1,139 @@
+import "server-only";
+import type { LeadData } from "./lead-schema";
+
+// ─────────────────────────────────────────────────────────────────────────
+// Écriture des commandes dans le back-office (API Go → Postgres), source de
+// vérité unique depuis le 2026-07-05 (doc de chantier à la racine de /xklic).
+//
+// UN SEUL appel : POST {BACKOFFICE_API_URL}/v1/public/agency/orders, upsert
+// transactionnel par `ref` (= OrderId) côté serveur :
+//   • dossier   → upsert (la règle « Statut production jamais rétrogradé »
+//                 est appliquée PAR L'API, plus ici) ;
+//   • products  → sync remplaçante (envoyés à chaque appel) ;
+//   • payment   → upsert par `stripe_session` (replay webhook idempotent).
+//
+// Ne jette jamais, renvoie un booléen. L'appelant décide quoi faire du `false` :
+//   • /api/checkout, /api/lead → fire-and-forget (le parcours continue) ;
+//   • webhook Stripe           → 500 pour forcer le retry Stripe (durabilité
+//                                du statut « payé »).
+// ─────────────────────────────────────────────────────────────────────────
+
+export type Statut = "lead" | "panier" | "payé";
+
+export interface PaymentInfo {
+  amountTotal?: number | null; // en centimes
+  currency?: string | null;
+  promoCode?: string | null;
+  sessionId?: string | null;
+  subscriptionId?: string | null;
+}
+
+const API_URL = () => process.env.BACKOFFICE_API_URL?.trim().replace(/\/$/, "");
+const API_KEY = () => process.env.BACKOFFICE_API_KEY?.trim();
+
+const TIMEOUT_MS = 5000;
+
+const urls = (items?: { url?: string }[]): string[] =>
+  Array.isArray(items) ? items.map((i) => i.url).filter((u): u is string => Boolean(u)) : [];
+
+const arr = (a?: string[]): string[] => (Array.isArray(a) ? a.filter(Boolean) : []);
+
+/** Mappe le lead vers les colonnes `agency_orders` (snake_case, types natifs). */
+function dossierFields(lead: LeadData): Record<string, unknown> {
+  const s = lead.socials ?? {};
+  return {
+    entreprise: lead.companyName ?? "",
+    formule: lead.formule ?? "",
+    metier: lead.trade ?? "",
+    ville: lead.city ?? "",
+    type_activite: lead.activityType ?? "",
+    se_deplace: Boolean(lead.mobile),
+    zone_deplacement: lead.serviceArea ?? "",
+    prestations: lead.services ?? "",
+    credit_impot: lead.taxCredit ?? "",
+    telephone: lead.phone ?? "",
+    whatsapp: !lead.noWhatsapp,
+    email: lead.email ?? "",
+    local_boutique: Boolean(lead.hasShop),
+    adresse: lead.address ?? "",
+    disponibilites: lead.availability ?? "",
+    siret: lead.siret ?? "",
+    siret_en_cours: Boolean(lead.noSiret),
+    langues: arr(lead.languages),
+    styles: arr(lead.styleVibes),
+    couleurs: arr(lead.colorPreference),
+    ambiance: lead.ambiance ?? "",
+    logo_urls: urls(lead.logo),
+    photo_urls: urls(lead.photos),
+    facebook: s.facebook ?? "",
+    instagram: s.instagram ?? "",
+    tiktok: s.tiktok ?? "",
+    x: s.x ?? "",
+    google: s.google ?? "",
+    extra: lead.extra ?? "",
+    mode: lead.assisted ? "À compléter par téléphone (conseiller)" : "Formulaire complet",
+  };
+}
+
+/**
+ * Upsert d'une commande dans le back-office. Même signature que les écritures
+ * historiques qu'il remplace — branchement sans friction dans les 3 routes.
+ */
+export async function upsertOrder(args: {
+  statut: Statut;
+  lead: LeadData;
+  orderId?: string;
+  payment?: PaymentInfo;
+}): Promise<boolean> {
+  const url = API_URL();
+  const key = API_KEY();
+  if (!url || !key) {
+    console.info("[backoffice] non configuré (BACKOFFICE_API_URL / BACKOFFICE_API_KEY) — ignoré.");
+    return false;
+  }
+
+  const { statut, lead, orderId, payment } = args;
+
+  // `ref` est requis par l'API (clé d'upsert). Cas « lead » sans commande :
+  // pas d'OrderId → on génère un UUID, comme `createOrder` le fait au checkout.
+  const ref = orderId || crypto.randomUUID();
+
+  const body: Record<string, unknown> = {
+    ref,
+    statut,
+    dossier: dossierFields(lead),
+    // Toujours envoyés : la sync remplaçante est côté serveur ([] = vider).
+    products: (lead.products ?? []).map((p) => ({
+      titre: p.title ?? "",
+      description: p.description ?? "",
+      prix: p.price ?? "",
+      categorie: p.category ?? "",
+    })),
+  };
+  if (payment) {
+    body.payment = {
+      amount_cents: payment.amountTotal ?? null,
+      promo_code: payment.promoCode ?? "",
+      stripe_session: payment.sessionId ?? "",
+      stripe_subscription: payment.subscriptionId ?? "",
+    };
+  }
+
+  try {
+    const res = await fetch(`${url}/v1/public/agency/orders`, {
+      method: "POST",
+      headers: { "X-API-Key": key, "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      console.error("[backoffice] upsert a répondu", res.status, await res.text().catch(() => ""));
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("[backoffice] upsert échoué :", err);
+    return false;
+  }
+}

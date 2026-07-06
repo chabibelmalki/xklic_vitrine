@@ -78,7 +78,7 @@ export const subProcessors: SubProcessor[] = [
   {
     name: "Google (Google Ireland Ltd. / Google LLC)",
     purpose:
-      "Réception et organisation des demandes (Google Sheets) et, pour les clients concernés, gestion de leur fiche Google Business Profile via l'API Google Business Profile (voir section dédiée).",
+      "Pour les clients concernés, gestion de leur fiche Google Business Profile via l'API Google Business Profile (voir section dédiée).",
     location: "Irlande (UE), avec transferts possibles aux États-Unis",
     policy: "https://policies.google.com/privacy",
   },

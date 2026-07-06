@@ -36,45 +36,40 @@ Parcours réel : `/demarrer` → formulaire multi-étapes → paiement → enreg
 2. **`POST /api/checkout`** — valide le lead, **persiste la commande** dans Vercel
    Blob (`src/lib/orders.ts` ; pas de base de données — l'URL Blob voyage dans les
    `metadata` Stripe pour survivre au paiement), capture le lead en statut
-   **`panier`** (double écriture, cf. ci-dessous), puis crée une **session Stripe
+   **`panier`** dans le back-office (fire-and-forget, cf. ci-dessous), puis crée
+   une **session Stripe
    Checkout** en mode `subscription` (mensuel + frais d'installation one-time,
    essai 30 j, codes promo activés). Renvoie l'URL de redirection.
 3. **Stripe Checkout** → succès → `/merci` : page **informative seule, aucun effet
    de bord** (la redirection n'est pas fiable).
 4. **`POST /api/stripe/webhook`** — **seul point qui confirme un paiement**. Vérifie
    la signature Stripe (sur le corps **brut**), écoute `checkout.session.completed`,
-   recharge la commande via l'URL Blob en `metadata`, écrit le statut **`payé`**,
-   puis envoie un mail (Resend). Idempotent côté données.
+   recharge la commande via l'URL Blob en `metadata`, écrit le statut **`payé`**
+   dans le back-office (**bloquant** : échec → `500` → retry Stripe), puis envoie
+   un mail (Resend). Idempotent côté données.
 
 Routes annexes : `POST /api/lead` (capture simple, statut `lead` — **non utilisée
 par l'UI actuelle**) ; `POST /api/contact` (formulaire de contact → email).
 
-## Persistance : double écriture Google Sheets + Baserow
+## Persistance : back-office (API Go → Postgres)
 
-Migration en cours **Sheets → Baserow**. Pendant la transition, **double écriture**
-sur les 3 routes ; **Google Sheets reste la source de vérité** : c'est l'échec de
-son écriture qui renvoie `500` au webhook (→ retry Stripe). Baserow est best-effort.
+Google Sheets et Baserow sont **retirés** (décision CEO 2026-07-05, cf.
+`../CHANTIER-BASEROW-OUT.md`). Le back-office (`xklic-backoffice`, API Go +
+Postgres) est la **source de vérité unique**.
 
-- **`src/lib/sheets.ts`** → `appendOrderRow()` : **append** d'une ligne (compte de
-  service Google, JWT RS256 signé via `node:crypto`, sans dépendance).
-- **`src/lib/baserow.ts`** → `upsertOrder()` : **upsert** (corrige le bug de
-  doublons `panier`/`payé` que produisait l'append aveugle). Même signature que
-  `appendOrderRow`, appelé en parallèle.
-
-Logique Baserow clé :
-- **Upsert par `Ref` (= OrderId)** : `panier` crée la fiche, `payé` la met à jour.
-- **Garde-fou contact** : si pas trouvé par `Ref`, réutilise une fiche **non payée**
-  de même email/téléphone et réécrit son `Ref` (gère 2 tentatives / session périmée).
-- **Statut production auto** : `Prospect` à la création → `À faire` au paiement,
-  **sans jamais écraser** un statut avancé par l'équipe (En prod / En ligne / SAV).
-- **Liens natifs** : les Paiements/Produits créés posent le lien `Fiche`.
-- ⚠️ Un champ **menu déroulant** (single-select) Baserow renvoie un objet `{value}`
-  via l'API → toujours comparer via le helper `cellStr()`.
-
-Modèle Baserow (base « xklic ») : `Dossiers` (clé `Ref`) ←─ tables liées
-`Paiements`, `Production`, `Notes`, `Produits`. **`Production` et `Notes` sont
-remplies à la MAIN** par l'équipe (l'app n'y touche pas). Deux statuts distincts :
-`Statut commande` (lead/panier/payé, écrit par l'app) ≠ `Statut production` (kanban).
+- **`src/lib/backoffice.ts`** → `upsertOrder({statut, lead, orderId?, payment?})` :
+  UN POST `/v1/public/agency/orders` (header `X-API-Key`), upsert transactionnel
+  **côté serveur** par `ref` (= OrderId) : dossier + sync remplaçante des produits
+  déclarés + upsert paiement par `stripe_session`. Ne jette jamais, renvoie un
+  booléen, timeout 5 s.
+- **Règles côté serveur** (plus dans la vitrine) : promotion `Statut production`
+  (`Prospect` → `À faire` au paiement, jamais de rétrogradation d'un statut posé
+  par l'équipe), idempotence du replay webhook.
+- **Politique d'appel** : `/api/checkout` et `/api/lead` = fire-and-forget (un
+  échec est logué, le parcours visiteur continue) ; **webhook Stripe = BLOQUANT**
+  (échec → `500` → retry Stripe, garantit qu'aucun statut « payé » n'est perdu).
+- Cas lead sans commande (`/api/lead`) : pas d'OrderId → `ref` générée
+  (`crypto.randomUUID()`).
 
 ## Organisation du repo
 
@@ -82,34 +77,24 @@ remplies à la MAIN** par l'équipe (l'app n'y touche pas). Deux statuts distinc
   (`metiers/[metier]/[ville]`, `zones/[ville]`, `creer-site-<metier>`, `blog/…`,
   pages légales) et **routes API** `api/{checkout,stripe/webhook,lead,contact,blob/upload}`.
 - `src/lib/` — logique serveur : `lead-schema.ts` (Zod), `orders.ts` (Blob),
-  `sheets.ts`, `baserow.ts`, `stripe.ts`, `email.ts` (Resend), `turnstile.ts`, `seo.ts`.
+  `backoffice.ts`, `stripe.ts`, `email.ts` (Resend), `turnstile.ts`, `seo.ts`.
 - `src/components/` — `form/` (tunnel), `sections/` (blocs de page), `site/`, `ui/`.
 - `src/data/` — contenu SEO (métiers, villes, articles…).
 
 ## Variables d'environnement
 
-`.env.local` (gitignoré ; cf. `.env.example`). Toutes les intégrations externes
+`.env.local` (gitignoré). Toutes les intégrations externes
 sont **best-effort** : env absente → fonctionnalité ignorée proprement, le parcours
 visiteur ne casse jamais. À reporter dans Vercel (Production + Preview).
 
 - **Stripe** : `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`,
   `STRIPE_PRICE_{SITE,GOOGLE,HAUT_GOOGLE}_{MONTHLY,SETUP}`, `STRIPE_TVA_RATE_ID` (opt).
-- **Google Sheets** : `GOOGLE_SERVICE_ACCOUNT_JSON` **ou**
-  (`GOOGLE_SERVICE_ACCOUNT_EMAIL` + `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`),
-  `GOOGLE_SHEET_ID`, `GOOGLE_SHEET_TAB` (défaut « Leads »).
-- **Baserow** : `BASEROW_TOKEN`, `BASEROW_API_URL` (défaut `https://api.baserow.io`),
-  `BASEROW_TABLE_DOSSIERS`, `BASEROW_TABLE_PAIEMENTS`, `BASEROW_TABLE_PRODUITS`
-  (l'app n'écrit pas Production/Notes).
+- **Back-office** : `BACKOFFICE_API_URL` (API Go, sans slash final),
+  `BACKOFFICE_API_KEY` (= `ENGINE_API_KEY` côté back-office).
 - **Email (Resend)** : `RESEND_API_KEY`, `RESEND_FROM`, `LEAD_TO`.
 - **Turnstile** : `TURNSTILE_SECRET_KEY`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`.
 - **Uploads** : `BLOB_READ_WRITE_TOKEN` (Vercel Blob).
 - **Divers** : `NEXT_PUBLIC_SITE_URL` (défaut `https://xklic.com`), `AGENCE_ENGINE_URL`.
-
-## Cutover (le jour où on coupe Sheets)
-
-1. Basculer le retry `500` du webhook de Sheets **vers Baserow**.
-2. Mettre à jour le texte du mail de notif (« Google Sheets » → Baserow).
-3. Retirer les appels Sheets + les clés `GOOGLE_*`.
 
 ## Autres docs (statut)
 

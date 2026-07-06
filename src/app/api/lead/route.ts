@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { leadSchema } from "@/lib/lead-schema";
-import { appendOrderRow } from "@/lib/sheets";
-import { upsertOrder } from "@/lib/baserow";
+import { upsertOrder } from "@/lib/backoffice";
 import { verifyTurnstile, clientIp } from "@/lib/turnstile";
 
 export const runtime = "nodejs";
@@ -34,9 +33,8 @@ export async function POST(req: Request) {
     );
   }
 
-  // Capture du lead (best-effort ; ne casse jamais l'expérience).
-  // Double écriture Sheets (legacy) + Baserow (le temps de valider la migration).
-  const forwarded = await appendOrderRow({ statut: "lead", lead: parsed.data });
-  await upsertOrder({ statut: "lead", lead: parsed.data });
+  // Capture du lead dans le back-office (fire-and-forget : upsertOrder ne
+  // jette jamais, un échec est logué et ne casse jamais l'expérience).
+  const forwarded = await upsertOrder({ statut: "lead", lead: parsed.data });
   return NextResponse.json({ ok: true, forwarded });
 }

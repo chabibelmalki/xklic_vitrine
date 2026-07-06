@@ -1,8 +1,7 @@
 import type Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { getOrderByUrl } from "@/lib/orders";
-import { appendOrderRow } from "@/lib/sheets";
-import { upsertOrder } from "@/lib/baserow";
+import { upsertOrder } from "@/lib/backoffice";
 import { sendMail, buildEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
@@ -13,7 +12,7 @@ export const runtime = "nodejs";
 // La redirection success_url N'EST PAS fiable (falsifiable, ratable) : on ne
 // déclenche donc rien depuis /merci. Ici, on VÉRIFIE LA SIGNATURE Stripe
 // (obligatoire), on écoute checkout.session.completed, on recharge la commande
-// via l'URL en metadata, et on écrit la ligne « payé » dans Google Sheets.
+// via l'URL en metadata, et on écrit le statut « payé » dans le back-office.
 export async function POST(req: Request) {
   const secret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
   const sig = req.headers.get("stripe-signature");
@@ -63,10 +62,13 @@ export async function POST(req: Request) {
     /* enrichissement best-effort */
   }
 
-  // 3. Écriture de la ligne « payé » dans Google Sheets (SEUL déclenchement
-  //    déclenché par le paiement, depuis ce webhook vérifié). Stripe peut
-  //    renvoyer l'événement → un doublon éventuel est toléré (rare).
-  const written = await appendOrderRow({
+  // 3. Écriture du statut « payé » dans le back-office (SEUL déclenchement
+  //    provoqué par le paiement, depuis ce webhook vérifié). BLOQUANT : le
+  //    back-office est la source de vérité — un échec renvoie 500 et Stripe
+  //    rejouera l'événement (retries pendant plusieurs jours). Le replay est
+  //    idempotent côté serveur : upsert du dossier par `ref` + upsert du
+  //    paiement par `stripe_session` (aucun doublon).
+  const written = await upsertOrder({
     statut: "payé",
     lead: order.lead,
     orderId: order.id,
@@ -82,30 +84,13 @@ export async function POST(req: Request) {
 
   if (!written) {
     // Échec d'écriture : 500 pour que Stripe réessaie (livraison fiable).
-    return new Response("sheet write failed", { status: 500 });
+    return new Response("backoffice write failed", { status: 500 });
   }
-
-  // Double écriture Baserow (best-effort, NON bloquant pendant la migration :
-  // Sheets reste la source de vérité, un échec ici ne re-déclenche pas Stripe).
-  // L'upsert par Ref retrouve la fiche « panier » et la passe en « payé ».
-  await upsertOrder({
-    statut: "payé",
-    lead: order.lead,
-    orderId: order.id,
-    payment: {
-      amountTotal: session.amount_total,
-      currency: session.currency,
-      promoCode,
-      sessionId: session.id,
-      subscriptionId:
-        typeof session.subscription === "string" ? session.subscription : null,
-    },
-  });
 
   // 4. Notification e-mail à contact@xklic.com (best-effort, NON bloquant : un
   //    échec d'envoi ne doit pas re-déclencher le webhook — la source de vérité
-  //    reste Google Sheets). On `await` quand même : sur Vercel, le travail
-  //    après le retour de la fonction n'est pas garanti.
+  //    est le back-office, déjà écrit ci-dessus). On `await` quand même : sur
+  //    Vercel, le travail après le retour de la fonction n'est pas garanti.
   const { lead } = order;
   const montant =
     session.amount_total != null
@@ -125,7 +110,7 @@ export async function POST(req: Request) {
       ["Commande", order.id],
       ["Session Stripe", session.id],
     ],
-    footer: "Le récap complet est dans Google Sheets (statut « payé »).",
+    footer: "Le récap complet est dans le back-office (statut « payé »).",
   });
   await sendMail({
     subject: `💳 Paiement confirmé — ${lead.companyName || "client"} (${montant})`,

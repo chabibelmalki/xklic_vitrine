@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { leadSchema } from "@/lib/lead-schema";
 import { createOrder } from "@/lib/orders";
-import { appendOrderRow } from "@/lib/sheets";
-import { upsertOrder } from "@/lib/baserow";
+import { upsertOrder } from "@/lib/backoffice";
 import { stripe, pricesFor } from "@/lib/stripe";
 import { SITE_URL } from "@/lib/site";
 import { verifyTurnstile, clientIp } from "@/lib/turnstile";
@@ -46,11 +45,10 @@ export async function POST(req: Request) {
   // 1+2. Persiste la commande (survit à Stripe).
   const order = await createOrder(lead);
 
-  // 3. Capture immédiate du lead = ligne « panier » (panier abandonné si le
-  //    client ne paie pas). Best-effort, ne bloque pas le parcours.
-  //    Double écriture : Sheets (legacy) + Baserow (upsert par Ref, le temps de
-  //    valider la migration). Le upsert évite le doublon panier/payé.
-  await appendOrderRow({ statut: "panier", lead, orderId: order.id });
+  // 3. Capture immédiate du lead = dossier « panier » dans le back-office
+  //    (panier abandonné si le client ne paie pas). FIRE-AND-FORGET strict :
+  //    upsertOrder ne jette jamais, un échec est logué et le parcours continue
+  //    (le statut « payé » durable est garanti par le webhook, pas ici).
   await upsertOrder({ statut: "panier", lead, orderId: order.id });
 
   const prices = pricesFor(lead.formule);
