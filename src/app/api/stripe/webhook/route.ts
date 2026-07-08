@@ -84,6 +84,11 @@ export async function POST(req: Request) {
       sessionId: session.id,
       subscriptionId:
         typeof session.subscription === "string" ? session.subscription : null,
+      // Client Stripe (cus_…) — nécessaire pour modifier l'abonnement plus tard
+      // (ajout/retrait de l'item boutique). Non capturé jusqu'ici (colonne
+      // stripe_customer, lot 1). En mode subscription, `customer` est toujours posé.
+      customerId:
+        typeof session.customer === "string" ? session.customer : null,
     },
   });
 
