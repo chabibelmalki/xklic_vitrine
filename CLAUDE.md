@@ -88,7 +88,9 @@ sont **best-effort** : env absente → fonctionnalité ignorée proprement, le p
 visiteur ne casse jamais. À reporter dans Vercel (Production + Preview).
 
 - **Stripe** : `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`,
-  `STRIPE_PRICE_{SITE,GOOGLE,HAUT_GOOGLE}_{MONTHLY,SETUP}`, `STRIPE_TVA_RATE_ID` (opt).
+  `STRIPE_PRICE_{SITE,GOOGLE,HAUT_GOOGLE}_{MONTHLY,SETUP}`,
+  `STRIPE_PRICE_SHOP_{STARTER,PRO,BUSINESS}_MONTHLY` (option boutique, mensuel seul),
+  `STRIPE_TVA_RATE_ID` (opt).
 - **Back-office** : `BACKOFFICE_API_URL` (API Go, sans slash final),
   `BACKOFFICE_API_KEY` (= `ENGINE_API_KEY` côté back-office).
 - **Email (Resend)** : `RESEND_API_KEY`, `RESEND_FROM`, `LEAD_TO`.

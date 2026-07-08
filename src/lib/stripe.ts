@@ -43,3 +43,22 @@ export function pricesFor(formule: FormuleSlug): FormulePrices {
   };
   return map[formule];
 }
+
+// Paliers de l'option boutique e-commerce (2e item du même abonnement que le
+// socle). Contrairement au socle, PAS de frais d'installation : la boutique est
+// self-service, uniquement du mensuel récurrent.
+export type BoutiqueTier = "starter" | "pro" | "business";
+
+/**
+ * Mapping palier boutique → identifiant de prix Stripe MENSUEL, via variables
+ * d'env. Même comportement que `pricesFor` : renvoie `undefined` si la var
+ * n'est pas configurée (repli gracieux géré par l'appelant, pas d'exception).
+ */
+export function shopPriceFor(tier: BoutiqueTier): string | undefined {
+  const map: Record<BoutiqueTier, string | undefined> = {
+    starter: process.env.STRIPE_PRICE_SHOP_STARTER_MONTHLY,
+    pro: process.env.STRIPE_PRICE_SHOP_PRO_MONTHLY,
+    business: process.env.STRIPE_PRICE_SHOP_BUSINESS_MONTHLY,
+  };
+  return map[tier];
+}
