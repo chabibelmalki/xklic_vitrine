@@ -27,6 +27,7 @@ export interface PaymentInfo {
   discountCents?: number | null; // réduction appliquée (total_details.amount_discount)
   sessionId?: string | null;
   subscriptionId?: string | null;
+  customerId?: string | null; // cus_… → colonne stripe_customer (lot 1)
 }
 
 const API_URL = () => process.env.BACKOFFICE_API_URL?.trim().replace(/\/$/, "");
@@ -45,6 +46,10 @@ function dossierFields(lead: LeadData): Record<string, unknown> {
   return {
     entreprise: lead.companyName ?? "",
     formule: lead.formule ?? "",
+    // Champ OPTIONNEL par nature : null (pas "") quand absent, pour que le
+    // `WHERE boutique_tier IS NOT NULL` du lot 4 ne matche que les vraies
+    // boutiques. Le tag Go `*string` écrit alors NULL (pas de coalesce à l'insert).
+    boutique_tier: lead.boutiqueTier ?? null,
     metier: lead.trade ?? "",
     ville: lead.city ?? "",
     type_activite: lead.activityType ?? "",
@@ -118,6 +123,9 @@ export async function upsertOrder(args: {
       promo_code: payment.promoCode ?? "",
       stripe_session: payment.sessionId ?? "",
       stripe_subscription: payment.subscriptionId ?? "",
+      // Plain string côté Go (nullif('') = ne pas écraser) : "" quand absent,
+      // comme stripe_subscription. Le webhook (étape 3) fournira le cus_….
+      stripe_customer: payment.customerId ?? "",
     };
   }
 
