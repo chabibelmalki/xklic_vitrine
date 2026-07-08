@@ -10,6 +10,12 @@ export type ActivityType = (typeof ACTIVITY_TYPES)[number];
 export const FORMULE_SLUGS = ["site", "google", "haut-google"] as const;
 export type FormuleSlug = (typeof FORMULE_SLUGS)[number];
 
+// Paliers de l'option boutique e-commerce (facultative — absente = pas de
+// boutique). Source de vérité unique du type, comme FORMULE_SLUGS ; `stripe.ts`
+// l'importe pour shopPriceFor().
+export const BOUTIQUE_TIERS = ["starter", "pro", "business"] as const;
+export type BoutiqueTier = (typeof BOUTIQUE_TIERS)[number];
+
 export const wantsServices = (t?: ActivityType) =>
   t === "services" || t === "les-deux";
 export const wantsProducts = (t?: ActivityType) =>
@@ -49,6 +55,11 @@ export const leadSchema = z
     formule: z.enum(FORMULE_SLUGS, {
       message: "Choisis une formule pour continuer.",
     }),
+
+    // 0bis. Option boutique e-commerce (facultative). undefined = pas de
+    // boutique ; sinon palier choisi → 2e item mensuel sur le même abonnement
+    // Stripe que le socle. Persisté en base à null quand absent (cf. backoffice).
+    boutiqueTier: z.enum(BOUTIQUE_TIERS).optional(),
 
     // 1. Branchement
     activityType: z.enum(ACTIVITY_TYPES, {

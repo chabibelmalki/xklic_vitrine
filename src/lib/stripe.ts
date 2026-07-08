@@ -1,6 +1,6 @@
 import "server-only";
 import Stripe from "stripe";
-import type { FormuleSlug } from "./lead-schema";
+import type { FormuleSlug, BoutiqueTier } from "./lead-schema";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Stripe — CÔTÉ SERVEUR UNIQUEMENT. La clé secrète et le secret de webhook ne
@@ -44,10 +44,9 @@ export function pricesFor(formule: FormuleSlug): FormulePrices {
   return map[formule];
 }
 
-// Paliers de l'option boutique e-commerce (2e item du même abonnement que le
-// socle). Contrairement au socle, PAS de frais d'installation : la boutique est
-// self-service, uniquement du mensuel récurrent.
-export type BoutiqueTier = "starter" | "pro" | "business";
+// Option boutique : 2e item du même abonnement que le socle, PAS de frais
+// d'installation (self-service, mensuel récurrent seul). Le type `BoutiqueTier`
+// vient de lead-schema.ts (source de vérité unique, cf. `FormuleSlug`).
 
 /**
  * Mapping palier boutique → identifiant de prix Stripe MENSUEL, via variables
