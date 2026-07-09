@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Turnstile, TURNSTILE_ENABLED } from "@/components/form/turnstile";
 import { buildSteps, StepNavProvider } from "./steps";
+import { clearLeadDraft, useLeadDraft } from "./use-lead-draft";
 import { cn, EASE_OUT } from "@/lib/utils";
 
 // Forme souple d'un fichier dans l'état du formulaire. `file` est le File brut
@@ -115,6 +116,10 @@ export function LeadForm({
     },
   });
 
+  // Persistance du brouillon (sessionStorage) : un rechargement ou un retour
+  // navigateur restaure les champs saisis et l'étape en cours.
+  useLeadDraft(methods, step, setStep);
+
   // Tunnel minimal : 3 étapes fixes (identité → offre → SIRET). La formule est
   // pré-sélectionnée par `initialFormule` mais toujours modifiable dans l'offre.
   const steps = buildSteps();
@@ -193,6 +198,10 @@ export function LeadForm({
       });
       if (!res.ok) throw new Error("bad status");
       const data = (await res.json()) as { ok: boolean; url?: string | null };
+
+      // La commande est enregistrée côté serveur : le brouillon local n'a plus
+      // lieu d'être (évite de ressusciter d'anciennes données au retour Stripe).
+      clearLeadDraft();
 
       if (data.url) {
         // 4. Redirection vers Stripe Checkout. La confirmation du paiement (et
