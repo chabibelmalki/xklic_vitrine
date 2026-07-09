@@ -1,16 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { useForm, useWatch, FormProvider } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { upload } from "@vercel/blob/client";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowLeft, ArrowRight, CreditCard, Loader2, PartyPopper, PhoneCall, Zap } from "lucide-react";
+import { ArrowLeft, ArrowRight, CreditCard, Loader2, PartyPopper } from "lucide-react";
 import Link from "next/link";
 import {
   leadSchema,
   type LeadValues,
   type FormuleSlug,
+  type BoutiqueTier,
 } from "@/lib/lead-schema";
 import { Button } from "@/components/ui/button";
 import { Turnstile, TURNSTILE_ENABLED } from "@/components/form/turnstile";
@@ -64,10 +65,12 @@ type Status = "form" | "uploading" | "submitting" | "done" | "error";
 
 export function LeadForm({
   initialFormule,
+  initialBoutique,
 }: {
-  // Formule pré-choisie via `?formule=` (clic sur une carte de prix) : si elle
-  // est présente, on saute l'étape de choix de formule.
+  // Formule pré-choisie via `?formule=` (clic sur une carte de prix).
   initialFormule?: FormuleSlug;
+  // Palier boutique pré-choisi via `?boutique=` (select des cartes tarifs).
+  initialBoutique?: BoutiqueTier;
 }) {
   const reduce = useReducedMotion();
   const [step, setStep] = useState(0);
@@ -80,7 +83,8 @@ export function LeadForm({
     mode: "onTouched",
     defaultValues: {
       formule: initialFormule,
-      activityType: undefined,
+      boutiqueTier: initialBoutique,
+      wantsServices: true,
       companyName: "",
       trade: "",
       city: "",
@@ -111,24 +115,14 @@ export function LeadForm({
     },
   });
 
-  const activityType = useWatch({
-    control: methods.control,
-    name: "activityType",
-  });
-  // Étape « formule » affichée seulement si aucune formule n'est déjà choisie.
-  const steps = buildSteps(activityType, !initialFormule);
+  // Tunnel minimal : 3 étapes fixes (identité → offre → SIRET). La formule est
+  // pré-sélectionnée par `initialFormule` mais toujours modifiable dans l'offre.
+  const steps = buildSteps();
   const total = steps.length;
   const safeStep = Math.min(step, total - 1);
   const current = steps[safeStep];
   const isLast = safeStep === total - 1;
   const progress = ((safeStep + 1) / total) * 100;
-
-  // Raccourci « express » : visible dès qu'on a recueilli les coordonnées
-  // (étape contact) et jusqu'à l'avant-dernière étape. Sur la dernière, c'est
-  // le bouton « Commander » classique qui prend le relais.
-  const contactStepIndex = steps.findIndex((s) => s.id === "entreprise");
-  const showExpress =
-    contactStepIndex !== -1 && safeStep >= contactStepIndex && !isLast;
 
   const goNext = async () => {
     const ok = await methods.trigger(current.fields as never[], {
@@ -147,23 +141,6 @@ export function LeadForm({
     if (safeStep === 0) return;
     setDir(-1);
     setStep(safeStep - 1);
-  };
-
-  // Parcours « express » : depuis l'étape coordonnées, le client réserve avec
-  // ses seules infos de contact et un conseiller complète le reste par
-  // téléphone. On valide uniquement les champs de l'étape courante (le flag
-  // `assisted` relâche les exigences des étapes sautées), puis on lance le
-  // même submit() → capture du lead dans le Sheet + redirection Stripe.
-  const expressCheckout = async () => {
-    // On valide les champs de l'étape contact (pas ceux de l'étape courante :
-    // l'option est désormais proposée aussi sur les étapes suivantes).
-    const contactFields = steps.find((s) => s.id === "entreprise")?.fields;
-    const ok = await methods.trigger((contactFields ?? current.fields) as never[], {
-      shouldFocus: true,
-    });
-    if (!ok) return;
-    methods.setValue("assisted", true);
-    void submit();
   };
 
   const submit = methods.handleSubmit(async (values) => {
@@ -369,65 +346,6 @@ export function LeadForm({
               </div>
             )}
 
-            {/* Raccourci « express » : proposé dès l'étape coordonnées et
-                jusqu'à l'avant-dernière étape. Il réserve tout de suite et un
-                conseiller complète le reste par téléphone. */}
-            {showExpress ? (
-              <div className="mt-8 border-t border-line pt-7">
-                <div className="rounded-2xl border border-ember/20 bg-ember/[0.05] p-5">
-                  <div className="flex items-start gap-3">
-                    <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ember/15 text-ember-deep">
-                      <Zap size={17} />
-                    </span>
-                    <div>
-                      <p className="text-sm font-semibold text-cream">
-                        Pressé&nbsp;? Réserve maintenant, on finit par
-                        téléphone.
-                      </p>
-                      <p className="mt-1 text-sm leading-relaxed text-cream-muted">
-                        Tes coordonnées suffisent pour démarrer. Valide ta
-                        commande et un conseiller te rappelle pour construire
-                        ton site avec toi — 5 min, rien de plus à remplir.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Turnstile nécessaire ici aussi : le paiement part depuis
-                      cette étape, pas de la dernière. */}
-                  {TURNSTILE_ENABLED ? (
-                    <div className="mt-4 flex justify-center">
-                      <Turnstile
-                        onVerify={setToken}
-                        onExpire={() => setToken("")}
-                      />
-                    </div>
-                  ) : null}
-
-                  <Button
-                    type="button"
-                    onClick={() => void expressCheckout()}
-                    variant="secondary"
-                    size="lg"
-                    disabled={
-                      status === "submitting" || status === "uploading"
-                    }
-                    className="mt-4 w-full"
-                  >
-                    {status === "submitting" || status === "uploading" ? (
-                      <>
-                        <Loader2 size={18} className="animate-spin" />
-                        Redirection vers le paiement…
-                      </>
-                    ) : (
-                      <>
-                        <PhoneCall size={18} />
-                        Réserver et finir par téléphone
-                      </>
-                    )}
-                  </Button>
-                </div>
-              </div>
-            ) : null}
           </form>
         </div>
 

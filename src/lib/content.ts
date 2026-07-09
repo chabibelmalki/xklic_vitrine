@@ -3,7 +3,7 @@
 // Ton : tutoiement (proche, rassurant), voix de Xklic vers l'artisan.
 // ─────────────────────────────────────────────────────────────────────────
 
-import type { FormuleSlug } from "./lead-schema";
+import type { FormuleSlug, BoutiqueTier } from "./lead-schema";
 
 export const brand = {
   name: "Xklic",
@@ -169,8 +169,10 @@ export type Formule = {
   slug: FormuleSlug; // identifiant stocké dans le lead + query `?formule=`
   name: string;
   phrase: string;
-  setup: string; // payé une seule fois, à l'installation
-  monthly: string; // par mois
+  setup: string; // payé une seule fois, à l'installation (affichage)
+  monthly: string; // par mois (affichage)
+  setupCents: number; // installation en centimes — DOIT matcher le price_id Stripe
+  monthlyCents: number; // mensuel en centimes — DOIT matcher le price_id Stripe
   priceNote?: string; // précision sous le prix (budget pub, etc.)
   inherits?: string; // « Tout le pack précédent, et en plus : »
   features: string[];
@@ -185,6 +187,8 @@ export const formules: Formule[] = [
     phrase: "Pour exister sur internet, simplement.",
     setup: "49€",
     monthly: "9,99€",
+    setupCents: 4900,
+    monthlyCents: 999,
     features: [
       "Un beau site professionnel à votre nom",
       "Votre nom de domaine .fr offert : on l'achète et on le gère pour vous, vous n'avez rien à faire",
@@ -200,6 +204,8 @@ export const formules: Formule[] = [
     phrase: "Vous travaillez, on s'occupe de votre image.",
     setup: "149€",
     monthly: "29€",
+    setupCents: 14900,
+    monthlyCents: 2900,
     inherits: "Tout le pack Site, et en plus :",
     features: [
       "On répond à vos avis clients pour vous",
@@ -215,6 +221,8 @@ export const formules: Formule[] = [
     phrase: "Soyez le premier que vos clients voient.",
     setup: "290€",
     monthly: "49€",
+    setupCents: 29000,
+    monthlyCents: 4900,
     priceNote:
       "Votre budget publicité, payé directement à Google — c'est vous qui choisissez le montant.",
     inherits: "Tout le pack précédent, et en plus :",
@@ -229,6 +237,26 @@ export const formules: Formule[] = [
     featured: true,
   },
 ];
+
+// Paliers boutique — mensuel seul (pas d'installation). Montants = prix des
+// price_id Stripe (STRIPE_PRICE_SHOP_*_MONTHLY) : DOIVENT rester synchronisés.
+export const BOUTIQUE_MONTHLY_CENTS: Record<BoutiqueTier, number> = {
+  starter: 1200,
+  pro: 2900,
+  business: 4900,
+};
+export const BOUTIQUE_LABELS: Record<BoutiqueTier, string> = {
+  starter: "Starter",
+  pro: "Pro",
+  business: "Business",
+};
+
+/** Centimes → euros TTC lisibles : 1200 → « 12€ », 2199 → « 21,99€ ». */
+export function euros(cents: number): string {
+  return cents % 100 === 0
+    ? `${cents / 100}€`
+    : `${(cents / 100).toFixed(2).replace(".", ",")}€`;
+}
 
 // Portfolio — vrais sites clients. `url` → capture mobile auto (voir Portfolio).
 // `image` (capture locale dans /public/portfolio/) a la priorité si renseigné.

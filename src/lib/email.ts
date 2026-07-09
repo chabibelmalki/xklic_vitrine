@@ -130,3 +130,54 @@ export function buildEmail(opts: {
 
   return { html, text };
 }
+
+/**
+ * E-mail CLIENT post-paiement (anti-abandon) : confirme le paiement et invite à
+ * compléter le profil via un lien RÉUTILISABLE vers /merci?session_id=… (le
+ * session_id est durable → le client peut revenir plus tard, formulaire prérempli).
+ * Ton rassurant, un seul CTA. À envoyer à `lead.email` (≠ e-mail équipe).
+ */
+export function buildCompletionEmail(opts: {
+  companyName?: string | null;
+  url: string;
+}): { html: string; text: string } {
+  const who = opts.companyName?.trim();
+  const hello = who ? `Bonjour ${who},` : "Bonjour,";
+
+  const text = [
+    hello,
+    "",
+    "Merci ! Votre paiement est confirmé et notre équipe prépare déjà votre site.",
+    "",
+    "Dernière étape pour qu'on le construise à votre image : complétez votre profil (photos, logo, couleurs, description de votre activité…).",
+    "",
+    `Compléter mon profil : ${opts.url}`,
+    "",
+    "Pas le temps maintenant ? Ce lien reste valable : revenez quand vous voulez, vos informations seront déjà là.",
+    "",
+    "— L'équipe Xklic",
+  ].join("\n");
+
+  const html = `<div style="font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:560px;margin:0 auto;padding:8px">
+    <div style="background:#faf6f0;border:1px solid rgba(27,22,17,.1);border-radius:20px;padding:28px 24px">
+      <div style="font-size:13px;font-weight:700;letter-spacing:.04em;color:#e5431f">XKLIC</div>
+      <h1 style="font-size:21px;line-height:1.3;color:#1b1611;margin:10px 0 16px">Paiement confirmé — votre site est en préparation 🎉</h1>
+      <p style="color:#4a433b;font-size:15px;line-height:1.6;margin:0 0 12px">${escapeHtml(hello)}</p>
+      <p style="color:#4a433b;font-size:15px;line-height:1.6;margin:0 0 12px">
+        Merci&nbsp;! Votre paiement est bien confirmé et notre équipe prépare déjà votre site.
+      </p>
+      <p style="color:#4a433b;font-size:15px;line-height:1.6;margin:0 0 22px">
+        <strong>Dernière étape</strong> pour qu'on le construise à votre image&nbsp;:
+        complétez votre profil — photos, logo, couleurs, description de votre activité…
+      </p>
+      <a href="${escapeHtml(opts.url)}" style="display:inline-block;background:#e5431f;color:#ffffff;text-decoration:none;font-size:15px;font-weight:600;padding:13px 26px;border-radius:999px">Compléter mon profil</a>
+      <p style="color:#9c9286;font-size:13px;line-height:1.6;margin:24px 0 0">
+        Pas le temps maintenant&nbsp;? Ce lien reste valable&nbsp;: revenez quand vous
+        voulez, vos informations seront déjà préremplies.
+      </p>
+      <p style="color:#9c9286;font-size:13px;margin:18px 0 0">— L'équipe Xklic</p>
+    </div>
+  </div>`;
+
+  return { html, text };
+}

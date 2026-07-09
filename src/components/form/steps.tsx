@@ -1,40 +1,29 @@
 "use client";
 
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { ShoppingBag } from "lucide-react";
+import { BOUTIQUE_TIERS, type BoutiqueTier, type LeadValues } from "@/lib/lead-schema";
 import {
-  Check,
-  Layers,
-  Pipette,
-  Plus,
-  ShoppingBag,
-  Trash2,
-  Wrench,
-} from "lucide-react";
-import type { ActivityType, LeadValues } from "@/lib/lead-schema";
-import { wantsServices } from "@/lib/lead-schema";
-import { formules } from "@/lib/content";
-import {
-  CheckRow,
-  Field,
-  ImageUpload,
-  RadioCards,
-  TextArea,
-  TextInput,
-} from "./fields";
+  BOUTIQUE_LABELS,
+  BOUTIQUE_MONTHLY_CENTS,
+  euros,
+  formules,
+} from "@/lib/content";
+import { CheckRow, Field, TextInput } from "./fields";
 
 export type StepDef = {
   id: string;
   title: string;
   subtitle: string;
   fields: (keyof LeadValues)[];
-  when?: (t?: ActivityType) => boolean;
   autoAdvance?: boolean; // étape à choix unique : le clic vaut « Continuer »
   Component: () => React.ReactNode;
 };
 
-// Permet à une étape à choix unique (formule, type d'activité) de passer à la
-// suite dès qu'une option est cliquée, sans bouton « Continuer ».
+// Contexte d'auto-avance — conservé pour compatibilité avec lead-form (qui
+// enveloppe chaque étape). Depuis la refonte du tunnel minimal, aucune étape ne
+// l'utilise ; on garde le Provider pour ne pas toucher au rendu de lead-form.
 const AdvanceContext = createContext<(() => void) | null>(null);
 
 export function StepNavProvider({
@@ -49,10 +38,6 @@ export function StepNavProvider({
   );
 }
 
-function useAdvance() {
-  return useContext(AdvanceContext);
-}
-
 function useErr() {
   const {
     formState: { errors },
@@ -60,224 +45,52 @@ function useErr() {
   return (k: keyof LeadValues) => errors[k]?.message as string | undefined;
 }
 
-/* ── Étape formule : choix de l'offre (sautée si déjà choisie via une carte) ─ */
+/* ── Identité + SIRET (dernière étape, juste avant le paiement) ───────────── */
 
-function FormuleStep() {
-  const { control } = useFormContext<LeadValues>();
+function IdentiteStep() {
+  const { register, control } = useFormContext<LeadValues>();
   const err = useErr();
-  const advance = useAdvance();
-  return (
-    <Field
-      label="Quelle formule t'intéresse ?"
-      hint="Rien n'est définitif : on pourra en parler et l'ajuster ensemble."
-      error={err("formule")}
-    >
-      <Controller
-        control={control}
-        name="formule"
-        render={({ field }) => (
-          <div className="grid gap-3">
-            {formules.map((f) => {
-              const active = field.value === f.slug;
-              return (
-                <button
-                  type="button"
-                  key={f.slug}
-                  role="radio"
-                  aria-checked={active}
-                  onClick={() => {
-                    field.onChange(f.slug);
-                    advance?.();
-                  }}
-                  className={
-                    "flex items-start justify-between gap-4 rounded-2xl border px-5 py-4 text-left transition-all duration-200 " +
-                    (active
-                      ? "border-ember/50 bg-ember/10"
-                      : "border-line bg-ink-soft hover:border-line-strong")
-                  }
-                >
-                  <span className="flex flex-col gap-0.5">
-                    <span className="flex flex-wrap items-center gap-2">
-                      <span
-                        className={
-                          "text-base font-medium " +
-                          (active ? "text-cream" : "text-cream-muted")
-                        }
-                      >
-                        {f.name}
-                      </span>
-                      {f.featured ? (
-                        <span className="rounded-full bg-ember/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-ember-deep">
-                          Recommandé
-                        </span>
-                      ) : null}
-                    </span>
-                    <span className="text-sm leading-relaxed text-cream-faint">
-                      {f.phrase}
-                    </span>
-                  </span>
-                  <span className="shrink-0 text-right">
-                    <span className="font-display block text-xl font-semibold leading-none text-cream">
-                      {f.setup}
-                    </span>
-                    <span className="mt-1 block text-xs text-cream-faint">
-                      puis {f.monthly}/mois · TTC
-                    </span>
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        )}
-      />
-    </Field>
-  );
-}
-
-/* ── Étape 0 : type d'activité (branchement) ────────────────────────────── */
-
-const ACTIVITY_OPTIONS = [
-  {
-    value: "services" as const,
-    title: "Des services",
-    desc: "Tu interviens chez tes clients ou en atelier — ménage, plomberie, coiffure, mécanique…",
-    Icon: Wrench,
-  },
-  {
-    value: "produits" as const,
-    title: "Des produits",
-    desc: "Tu vends de la marchandise — boulangerie, boutique, créations artisanales…",
-    Icon: ShoppingBag,
-  },
-  {
-    value: "les-deux" as const,
-    title: "Les deux",
-    desc: "Tu proposes à la fois des prestations et des produits à la vente.",
-    Icon: Layers,
-  },
-];
-
-function TypeStep() {
-  const { control } = useFormContext<LeadValues>();
-  const err = useErr();
-  const advance = useAdvance();
-  return (
-    <Field
-      label="Que proposes-tu à tes clients ?"
-      hint="On adapte les questions suivantes à ton activité."
-      error={err("activityType")}
-    >
-      <Controller
-        control={control}
-        name="activityType"
-        render={({ field }) => (
-          <div className="grid gap-3">
-            {ACTIVITY_OPTIONS.map((opt) => {
-              const active = field.value === opt.value;
-              return (
-                <button
-                  type="button"
-                  key={opt.value}
-                  role="radio"
-                  aria-checked={active}
-                  onClick={() => {
-                    field.onChange(opt.value);
-                    advance?.();
-                  }}
-                  className={
-                    "flex items-start gap-4 rounded-2xl border px-5 py-4 text-left transition-all duration-200 " +
-                    (active
-                      ? "border-ember/50 bg-ember/10"
-                      : "border-line bg-ink-soft hover:border-line-strong")
-                  }
-                >
-                  <span
-                    className={
-                      "mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border transition-colors " +
-                      (active
-                        ? "border-ember/40 bg-ember/15 text-ember-soft"
-                        : "border-line text-cream-muted")
-                    }
-                  >
-                    <opt.Icon size={18} />
-                  </span>
-                  <span className="flex flex-col gap-0.5">
-                    <span
-                      className={
-                        "text-base font-medium " +
-                        (active ? "text-cream" : "text-cream-muted")
-                      }
-                    >
-                      {opt.title}
-                    </span>
-                    <span className="text-sm leading-relaxed text-cream-faint">
-                      {opt.desc}
-                    </span>
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        )}
-      />
-    </Field>
-  );
-}
-
-/* ── A. Entreprise & contact (entreprise + coordonnées + SIRET fusionnés) ── */
-
-function EntrepriseContactStep() {
-  const { register, control, setValue } = useFormContext<LeadValues>();
-  const err = useErr();
-  const mobile = useWatch<LeadValues>({ control, name: "mobile" });
-  const hasShop = useWatch<LeadValues>({ control, name: "hasShop" });
   const noSiret = useWatch<LeadValues>({ control, name: "noSiret" });
   return (
     <div className="grid gap-5">
       <Field
-        label="Nom de ton entreprise"
+        label="Nom de votre entreprise"
         hint="Ex. : « Souad Ménage », « Garage Mécaline »"
         htmlFor="companyName"
         error={err("companyName")}
       >
         <TextInput
           id="companyName"
-          placeholder="Le nom sous lequel tes clients te connaissent"
+          placeholder="Le nom sous lequel vos clients vous connaissent"
           invalid={!!err("companyName")}
           {...register("companyName")}
         />
       </Field>
       <Field
-        label="Ton métier"
+        label="Votre métier"
         hint="Ex. : « Femme de ménage à domicile », « Plombier chauffagiste »"
         htmlFor="trade"
         error={err("trade")}
       >
         <TextInput
           id="trade"
-          placeholder="Ce que tu fais, en quelques mots"
+          placeholder="Ce que vous faites, en quelques mots"
           invalid={!!err("trade")}
           {...register("trade")}
         />
       </Field>
-      <Field
-        label="Ville"
-        hint="Ex. : « Lyon »"
-        htmlFor="city"
-        error={err("city")}
-      >
+      <Field label="Ville" hint="Ex. : « Lyon »" htmlFor="city" error={err("city")}>
         <TextInput
           id="city"
-          placeholder="Ta ville principale"
+          placeholder="Votre ville principale"
           invalid={!!err("city")}
           {...register("city")}
         />
       </Field>
-
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
           label="Téléphone"
-          hint="Le numéro affiché sur ton site."
+          hint="Le numéro affiché sur votre site."
           htmlFor="phone"
           error={err("phone")}
         >
@@ -298,106 +111,24 @@ function EntrepriseContactStep() {
           <TextInput
             id="email"
             type="email"
-            placeholder="Ton adresse email"
+            placeholder="Votre adresse email"
             invalid={!!err("email")}
             {...register("email")}
           />
         </Field>
       </div>
-      <Controller
-        control={control}
-        name="noWhatsapp"
-        render={({ field }) => (
-          <CheckRow
-            checked={!!field.value}
-            onChange={field.onChange}
-            label="Je n'ai pas WhatsApp (ne pas afficher de bouton WhatsApp)"
-          />
-        )}
-      />
 
-      <Controller
-        control={control}
-        name="mobile"
-        render={({ field }) => (
-          <CheckRow
-            checked={!!field.value}
-            onChange={field.onChange}
-            label="Je me déplace chez mes clients"
-          />
-        )}
-      />
-      {mobile ? (
-        <Field
-          label="Zone d'intervention"
-          hint="Ex. : « Lyon et 20 km autour »"
-          htmlFor="serviceArea"
-          error={err("serviceArea")}
-        >
-          <TextInput
-            id="serviceArea"
-            placeholder="Jusqu'où tu interviens"
-            invalid={!!err("serviceArea")}
-            {...register("serviceArea")}
-          />
-        </Field>
-      ) : null}
-
-      <Controller
-        control={control}
-        name="hasShop"
-        render={({ field }) => (
-          <CheckRow
-            checked={!!field.value}
-            onChange={field.onChange}
-            label="J'ai un local ou une boutique"
-          />
-        )}
-      />
-      {hasShop ? (
-        <Field
-          label="Adresse"
-          hint="Utile pour le référencement local et l'itinéraire."
-          htmlFor="address"
-          optional
-        >
-          <TextInput
-            id="address"
-            placeholder="12 rue de la République, 69002 Lyon"
-            {...register("address")}
-          />
-        </Field>
-      ) : null}
-
+      {/* SIRET (facultatif) — fusionné ici : c'est la dernière étape avant de payer. */}
       <Field
-        label="Disponibilités"
-        hint="Ex. : « Du lundi au samedi, 8h–19h »"
-        htmlFor="availability"
+        label="SIRET"
         optional
-      >
-        <TextInput
-          id="availability"
-          placeholder="Tes horaires ou jours d'intervention"
-          {...register("availability")}
-        />
-      </Field>
-
-      <Field
-        label="Numéro SIRET"
-        hint="Facultatif. Coche ci-dessous si ton entreprise est en cours de création."
+        hint="Facultatif — vous pourrez le renseigner plus tard."
         htmlFor="siret"
-        optional
       >
         <TextInput
           id="siret"
-          inputMode="numeric"
-          placeholder="14 chiffres"
+          placeholder="Numéro SIRET (14 chiffres)"
           disabled={!!noSiret}
-          className={
-            noSiret
-              ? "cursor-not-allowed bg-ink-panel text-cream-faint"
-              : undefined
-          }
           {...register("siret")}
         />
       </Field>
@@ -407,10 +138,7 @@ function EntrepriseContactStep() {
         render={({ field }) => (
           <CheckRow
             checked={!!field.value}
-            onChange={(v) => {
-              field.onChange(v);
-              if (v) setValue("siret", "");
-            }}
+            onChange={field.onChange}
             label="SIRET en cours de création"
           />
         )}
@@ -419,595 +147,191 @@ function EntrepriseContactStep() {
   );
 }
 
-/* ── S1. Prestations & prix (services / les-deux) ───────────────────────── */
+/* ── L'offre : formule socle + option boutique + prestations (1re étape) ──── */
 
-function PrestationsStep() {
-  const { register, control } = useFormContext<LeadValues>();
+const selectClass =
+  "w-full rounded-xl border border-line bg-ink-soft px-4 py-3 text-[0.95rem] text-cream transition-colors duration-200 focus:border-line-strong focus:outline-none focus:ring-0";
+
+function OffreStep() {
+  const { control } = useFormContext<LeadValues>();
   const err = useErr();
+  const formuleSlug = useWatch<LeadValues>({ control, name: "formule" });
+  const boutique = useWatch<LeadValues>({ control, name: "boutiqueTier" }) as
+    | BoutiqueTier
+    | undefined;
+  const selected = formules.find((f) => f.slug === formuleSlug);
+  const monthlyCents =
+    (selected?.monthlyCents ?? 0) +
+    (boutique ? BOUTIQUE_MONTHLY_CENTS[boutique] : 0);
+  const setupCents = selected?.setupCents ?? 0;
   return (
     <div className="grid gap-6">
+      {/* Formule socle */}
       <Field
-        label="Tes prestations et tes prix"
-        hint="Écris en vrac, on met en forme. Ex. : « Ménage 25€/h, repassage 20€/h, grand nettoyage sur devis. »"
-        htmlFor="services"
-        error={err("services")}
-      >
-        <TextArea
-          id="services"
-          placeholder="Liste ce que tu proposes et tes tarifs, même approximatifs…"
-          invalid={!!err("services")}
-          {...register("services")}
-        />
-      </Field>
-      <Field
-        label="Services à la personne / crédit d'impôt 50% ?"
-        hint="Le crédit d'impôt est un argument fort : on le mettra en avant si tu es éligible."
-        error={err("taxCredit")}
+        label="Votre formule"
+        hint="Vous pourrez en changer avec nous."
+        error={err("formule")}
       >
         <Controller
           control={control}
-          name="taxCredit"
+          name="formule"
           render={({ field }) => (
-            <RadioCards
-              value={field.value}
-              onChange={field.onChange}
-              options={[
-                { value: "oui", label: "Oui" },
-                { value: "non", label: "Non" },
-                { value: "je-ne-sais-pas", label: "Je ne sais pas" },
-              ]}
-            />
-          )}
-        />
-      </Field>
-    </div>
-  );
-}
-
-/* ── Identité visuelle & préférences (logo, photos, langues, style) ──────── */
-
-// `flag` = code pays ISO pour l'image de drapeau (flagcdn). On évite les
-// emojis-drapeaux qui ne s'affichent pas sous Windows.
-const LANGS = [
-  { value: "fr", label: "Français", flag: "fr" },
-  { value: "en", label: "English", flag: "us" },
-  { value: "ar", label: "العربية", flag: "sa" },
-  { value: "es", label: "Español", flag: "es" },
-  { value: "tr", label: "Türkçe", flag: "tr" },
-  { value: "pt", label: "Português", flag: "pt" },
-  { value: "it", label: "Italiano", flag: "it" },
-  { value: "de", label: "Deutsch", flag: "de" },
-  { value: "ru", label: "Русский", flag: "ru" },
-  { value: "bn", label: "বাংলা", flag: "bd" },
-  { value: "hi", label: "हिन्दी", flag: "in" },
-];
-
-const STYLE_VIBES = [
-  "Chaleureux",
-  "Épuré / minimaliste",
-  "Pro & rassurant",
-  "Moderne & dynamique",
-  "Naturel",
-  "Élégant / premium",
-  "Fun & coloré",
-];
-
-// Couleurs proposées par défaut quand le client clique « + » (il les ajuste
-// ensuite au sélecteur). La valeur hex stockée part telle quelle dans le lead
-// et sert de graine de marque côté engine (branding.colors).
-const COLOR_DEFAULTS = ["#2563eb", "#f59e0b"]; // [principale, accent]
-
-/* ── Réseaux sociaux & fiche Google (présence en ligne, facultatif) ──────── */
-
-// Icônes de marque en inline SVG (lucide n'expose pas ces logos de façon
-// fiable). Monochrome `currentColor`, sauf Google qui garde ses 4 couleurs
-// pour rester instantanément reconnaissable.
-const FacebookIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="h-[18px] w-[18px]">
-    <path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6 4.39 10.97 10.13 11.87v-8.4H7.08v-3.47h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.95H15.83c-1.49 0-1.96.93-1.96 1.87v2.25h3.33l-.53 3.47h-2.8v8.4C19.61 23.04 24 18.07 24 12.07z" />
-  </svg>
-);
-const InstagramIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="h-[18px] w-[18px]">
-    <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.13 1.38C1.35 2.68.93 3.35.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13.67.66 1.34 1.08 2.13 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38 5.9 5.9 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4zm6.4-10.41a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z" />
-  </svg>
-);
-const TiktokIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="h-[18px] w-[18px]">
-    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z" />
-  </svg>
-);
-const XIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
-    <path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.6l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z" />
-  </svg>
-);
-const GoogleIcon = () => (
-  <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]">
-    <path
-      fill="#4285F4"
-      d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47a5.4 5.4 0 0 1-2.4 3.58v2.84h3.86c2.26-2.09 3.56-5.17 3.56-8.66z"
-    />
-    <path
-      fill="#34A853"
-      d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-2.84c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09A11.99 11.99 0 0 0 12 24z"
-    />
-    <path
-      fill="#FBBC05"
-      d="M5.27 14.45a7.2 7.2 0 0 1 0-4.62V6.74H1.29a12 12 0 0 0 0 10.8z"
-    />
-    <path
-      fill="#EA4335"
-      d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0A11.99 11.99 0 0 0 1.29 6.74l3.98 3.09C6.22 6.86 8.87 4.75 12 4.75z"
-    />
-  </svg>
-);
-
-// Ordre logique pour une TPE/artisan FR (du plus répandu/visuel au moins
-// utilisé). Google est traité à part : c'est une fiche d'établissement / avis,
-// pas un fil social.
-const SOCIALS = [
-  {
-    name: "facebook" as const,
-    label: "Lien Facebook",
-    placeholder: "facebook.com/ton-entreprise",
-    Icon: FacebookIcon,
-  },
-  {
-    name: "instagram" as const,
-    label: "Lien Instagram",
-    placeholder: "instagram.com/ton-compte",
-    Icon: InstagramIcon,
-  },
-  {
-    name: "tiktok" as const,
-    label: "Lien TikTok",
-    placeholder: "tiktok.com/@ton-compte",
-    Icon: TiktokIcon,
-  },
-  {
-    name: "x" as const,
-    label: "Lien X (Twitter)",
-    placeholder: "x.com/ton-compte",
-    Icon: XIcon,
-  },
-];
-
-function SocialRow({
-  label,
-  placeholder,
-  Icon,
-  name,
-}: {
-  label: string;
-  placeholder: string;
-  Icon: () => React.ReactNode;
-  name: `socials.${"facebook" | "instagram" | "tiktok" | "x" | "google"}`;
-}) {
-  const { register } = useFormContext<LeadValues>();
-  return (
-    <div className="flex items-center gap-3">
-      <span
-        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-line bg-ink-soft text-cream-muted"
-        aria-hidden
-      >
-        <Icon />
-      </span>
-      <TextInput
-        type="url"
-        inputMode="url"
-        autoCapitalize="none"
-        spellCheck={false}
-        aria-label={label}
-        placeholder={placeholder}
-        {...register(name)}
-      />
-    </div>
-  );
-}
-
-function SocialLinks() {
-  return (
-    <div className="flex flex-col gap-1.5">
-      <span className="flex items-baseline gap-2 text-sm font-medium text-cream">
-        Tes réseaux &amp; ta fiche Google
-        <span className="text-xs font-normal text-cream-faint">
-          (facultatif)
-        </span>
-      </span>
-      <p className="text-xs text-cream-faint">
-        Déjà présent en ligne&nbsp;? Colle tes liens — on ajoute les boutons sur
-        ton site et on relie tes avis Google.
-      </p>
-      <div className="mt-2 flex flex-col gap-2.5">
-        {SOCIALS.map((s) => (
-          <SocialRow
-            key={s.name}
-            name={`socials.${s.name}`}
-            label={s.label}
-            placeholder={s.placeholder}
-            Icon={s.Icon}
-          />
-        ))}
-        {/* Google mis à part : fiche d'établissement / avis, pas un fil social */}
-        <div className="mt-1 border-t border-line pt-3">
-          <SocialRow
-            name="socials.google"
-            label="Lien de ta fiche Google"
-            placeholder="Ta fiche d'établissement Google (lien Maps)"
-            Icon={GoogleIcon}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function IdentitePreferencesStep() {
-  const { control, register } = useFormContext<LeadValues>();
-  const err = useErr();
-  // Si un logo est fourni, on en extraira les couleurs côté production :
-  // inutile (et déroutant) de demander une couleur au client.
-  const logo = useWatch({ control, name: "logo" });
-  const hasLogo = Array.isArray(logo) && logo.length > 0;
-  return (
-    <div className="grid gap-6">
-      <Field
-        label="Ton logo"
-        hint="Si tu n'en as pas, pas de souci : on t'en génère un."
-        optional
-      >
-        <Controller
-          control={control}
-          name="logo"
-          render={({ field }) => (
-            <ImageUpload
-              value={field.value}
-              onChange={field.onChange}
-              multiple={false}
-              compact
-              accept="image/*,.pdf,.svg"
-              cta="Dépose ton logo"
-              sub="PNG, SVG, JPG ou PDF"
-            />
-          )}
-        />
-      </Field>
-
-      <Field
-        label="Tes photos"
-        hint="Lieu, devanture, réalisations, toi au travail… tout ce qui te représente. On fait le tri."
-        optional
-      >
-        <Controller
-          control={control}
-          name="photos"
-          render={({ field }) => (
-            <ImageUpload
-              value={field.value}
-              onChange={field.onChange}
-              cta="Glisse tes photos ici, ou clique pour parcourir"
-            />
-          )}
-        />
-      </Field>
-
-      <SocialLinks />
-
-      <Field
-        label="Langues du site"
-        hint="Le français est inclus par défaut. Ajoute d'autres langues si ta clientèle en a besoin."
-        error={err("languages")}
-      >
-        <Controller
-          control={control}
-          name="languages"
-          render={({ field }) => {
-            const selected = field.value ?? ["fr"];
-            const toggle = (v: string) => {
-              if (selected.includes(v)) {
-                field.onChange(selected.filter((x) => x !== v));
-              } else {
-                field.onChange([...selected, v]);
-              }
-            };
-            return (
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                {LANGS.map((l) => {
-                  const active = selected.includes(l.value);
-                  const locked = l.value === "fr"; // toujours inclus
-                  return (
-                    <button
-                      type="button"
-                      key={l.value}
-                      role="checkbox"
-                      aria-checked={active}
-                      aria-disabled={locked || undefined}
-                      disabled={locked}
-                      onClick={() => {
-                        if (!locked) toggle(l.value);
-                      }}
-                      className={
-                        "flex items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-medium transition-all duration-200 " +
-                        (locked
-                          ? "cursor-not-allowed border-line bg-ink-panel text-cream-faint"
-                          : active
-                            ? "border-ember/50 bg-ember/10 text-cream"
-                            : "border-line bg-ink-soft text-cream-muted hover:border-line-strong hover:text-cream")
-                      }
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={`https://flagcdn.com/${l.flag}.svg`}
-                        alt=""
-                        aria-hidden
-                        className={
-                          "h-3.5 w-5 shrink-0 rounded-[2px] object-cover ring-1 ring-line " +
-                          (locked ? "opacity-60" : "")
-                        }
-                      />
-                      {l.label}
-                      {locked ? (
-                        <Check size={14} className="text-cream-faint" />
-                      ) : null}
-                    </button>
-                  );
-                })}
-              </div>
-            );
-          }}
-        />
-      </Field>
-
-      <Field
-        label="Style souhaité"
-        hint="Choisis une ou plusieurs ambiances. On s'en sert comme direction — rien n'est figé."
-        optional
-      >
-        <Controller
-          control={control}
-          name="styleVibes"
-          render={({ field }) => {
-            const selected = field.value ?? [];
-            const toggle = (v: string) =>
-              field.onChange(
-                selected.includes(v)
-                  ? selected.filter((x) => x !== v)
-                  : [...selected, v],
-              );
-            return (
-              <div className="flex flex-wrap gap-2">
-                {STYLE_VIBES.map((v) => {
-                  const active = selected.includes(v);
-                  return (
-                    <button
-                      type="button"
-                      key={v}
-                      role="checkbox"
-                      aria-checked={active}
-                      onClick={() => toggle(v)}
-                      className={
-                        "rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 " +
-                        (active
-                          ? "border-ember/50 bg-ember/10 text-cream"
-                          : "border-line bg-ink-soft text-cream-muted hover:border-line-strong hover:text-cream")
-                      }
-                    >
-                      {v}
-                    </button>
-                  );
-                })}
-              </div>
-            );
-          }}
-        />
-      </Field>
-
-      {hasLogo ? (
-        <Field label="Tes couleurs" optional>
-          <p className="flex items-center gap-2 rounded-xl border border-line bg-ink-soft px-4 py-3 text-sm text-cream-muted">
-            <Check size={16} className="shrink-0 text-ember" />
-            On reprendra les couleurs de ton logo — rien à choisir ici.
-          </p>
-        </Field>
-      ) : (
-        <Field
-          label="Tes couleurs"
-          hint="Clique le rond pour choisir ta couleur principale, puis « + » pour une couleur d'accent (facultatif). Ou laisse l'équipe décider."
-          error={err("colorPreference")}
-          optional
-        >
-          <Controller
-            control={control}
-            name="colorPreference"
-            render={({ field }) => {
-              const selected: string[] = field.value ?? [];
-              const setAt = (i: number, v: string) =>
-                field.onChange(selected.map((c, j) => (j === i ? v : c)));
-              const removeAt = (i: number) =>
-                field.onChange(selected.filter((_, j) => j !== i));
-              const add = () => {
-                if (selected.length < 2) {
-                  field.onChange([...selected, COLOR_DEFAULTS[selected.length]]);
-                }
-              };
-              return (
-                <div className="flex flex-wrap items-start gap-5">
-                  {selected.map((c, i) => (
-                    <div key={i} className="flex flex-col items-center gap-1.5">
-                      <div className="relative">
-                        <label
-                          className="block h-14 w-14 cursor-pointer rounded-full shadow-sm ring-2 ring-line transition hover:ring-line-strong"
-                          style={{ backgroundColor: c }}
-                          title="Changer la couleur"
+            <div className="grid gap-3">
+              {formules.map((f) => {
+                const active = field.value === f.slug;
+                return (
+                  <button
+                    type="button"
+                    key={f.slug}
+                    role="radio"
+                    aria-checked={active}
+                    onClick={() => field.onChange(f.slug)}
+                    className={
+                      "flex items-start justify-between gap-4 rounded-2xl border px-5 py-4 text-left transition-all duration-200 " +
+                      (active
+                        ? "border-ember/50 bg-ember/10"
+                        : "border-line bg-ink-soft hover:border-line-strong")
+                    }
+                  >
+                    <span className="flex flex-col gap-0.5">
+                      <span className="flex flex-wrap items-center gap-2">
+                        <span
+                          className={
+                            "text-base font-medium " +
+                            (active ? "text-cream" : "text-cream-muted")
+                          }
                         >
-                          <input
-                            type="color"
-                            value={c}
-                            onChange={(e) => setAt(i, e.target.value)}
-                            className="sr-only"
-                            aria-label={i === 0 ? "Couleur principale" : "Couleur d'accent"}
-                          />
-                        </label>
-                        <button
-                          type="button"
-                          onClick={() => removeAt(i)}
-                          aria-label="Retirer cette couleur"
-                          className="absolute -right-1.5 -top-1.5 flex h-6 w-6 items-center justify-center rounded-full border border-line bg-ink text-cream-muted transition hover:border-line-strong hover:text-cream"
-                        >
-                          <Trash2 size={12} />
-                        </button>
-                      </div>
-                      <span className="text-xs text-cream-muted">
-                        {i === 0 ? "Principale" : "Accent"}
+                          {f.name}
+                        </span>
+                        {f.featured ? (
+                          <span className="rounded-full bg-ember/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-ember-deep">
+                            Recommandé
+                          </span>
+                        ) : null}
                       </span>
-                    </div>
-                  ))}
-
-                  {selected.length === 0 ? (
-                    // Premier rond = ouvre directement le sélecteur natif.
-                    <div className="flex flex-col items-center gap-1.5">
-                      <label
-                        className="flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border-2 border-dashed border-line text-cream-muted transition hover:border-line-strong hover:text-cream"
-                        title="Choisir ta couleur"
-                      >
-                        <Pipette size={20} />
-                        <input
-                          type="color"
-                          defaultValue={COLOR_DEFAULTS[0]}
-                          onChange={(e) => field.onChange([e.target.value])}
-                          className="sr-only"
-                          aria-label="Choisir la couleur principale"
-                        />
-                      </label>
-                      <span className="text-xs text-cream-faint">Choisir</span>
-                    </div>
-                  ) : selected.length < 2 ? (
-                    // « + » = ajoute un 2ᵉ rond (accent), éditable au clic.
-                    <div className="flex flex-col items-center gap-1.5">
-                      <button
-                        type="button"
-                        onClick={add}
-                        aria-label="Ajouter une couleur d'accent"
-                        className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-dashed border-line text-cream-muted transition hover:border-line-strong hover:text-cream"
-                      >
-                        <Plus size={20} />
-                      </button>
-                      <span className="text-xs text-cream-faint">Accent</span>
-                    </div>
-                  ) : null}
-
-                  {selected.length > 0 ? (
-                    <button
-                      type="button"
-                      onClick={() => field.onChange([])}
-                      className="self-center text-sm font-medium text-cream-muted underline-offset-4 transition hover:text-cream hover:underline"
-                    >
-                      Laisse faire l&apos;équipe
-                    </button>
-                  ) : null}
-                </div>
-              );
-            }}
-          />
-        </Field>
-      )}
-
-      <Field
-        label="Autre précision ?"
-        hint="Une idée, une marque que tu aimes, un détail à respecter…"
-        htmlFor="ambiance"
-        optional
-      >
-        <TextInput
-          id="ambiance"
-          placeholder="Facultatif — écris librement"
-          {...register("ambiance")}
+                      <span className="text-sm leading-relaxed text-cream-faint">
+                        {f.phrase}
+                      </span>
+                    </span>
+                    <span className="shrink-0 text-right">
+                      <span className="font-display block text-xl font-semibold leading-none text-cream">
+                        {f.setup}
+                      </span>
+                      <span className="mt-1 block text-xs text-cream-faint">
+                        puis {f.monthly}/mois · TTC
+                      </span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
         />
       </Field>
+
+      {/* Option boutique e-commerce (2e item du même abonnement) */}
+      <Field
+        label="Ajouter une boutique en ligne ?"
+        hint="Mensuel, sans engagement, zéro commission. Vous ajouterez vos produits après."
+      >
+        <Controller
+          control={control}
+          name="boutiqueTier"
+          render={({ field }) => (
+            <div className="flex items-center gap-2.5">
+              <ShoppingBag size={18} className="shrink-0 text-cream-muted" />
+              <select
+                className={selectClass + " min-w-0 flex-1"}
+                value={field.value ?? ""}
+                onChange={(e) =>
+                  field.onChange(e.target.value === "" ? undefined : e.target.value)
+                }
+              >
+                <option value="">Pas de boutique</option>
+                {BOUTIQUE_TIERS.map((t) => (
+                  <option key={t} value={t}>
+                    {BOUTIQUE_LABELS[t]} — +{euros(BOUTIQUE_MONTHLY_CENTS[t])}/mois
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+        />
+      </Field>
+
+      {/* Prestations : proposé seulement si une boutique est choisie */}
+      {boutique ? (
+        <Controller
+          control={control}
+          name="wantsServices"
+          render={({ field }) => (
+            <CheckRow
+              checked={field.value !== false}
+              onChange={field.onChange}
+              label="Je propose aussi des prestations (pas seulement de la vente)"
+            />
+          )}
+        />
+      ) : null}
+
+      {/* Récap prix — dès qu'une formule est choisie ; se met à jour live avec
+          le palier boutique. Essai 30 j : aujourd'hui = l'installation seule. */}
+      {selected ? (
+        <div className="rounded-2xl border border-line bg-ink-soft/60 p-5">
+          {boutique ? (
+            <div className="mb-3 space-y-1.5 border-b border-line pb-3 text-sm text-cream-muted">
+              <div className="flex justify-between gap-4">
+                <span>{selected.name}</span>
+                <span className="shrink-0">{euros(selected.monthlyCents)}/mois</span>
+              </div>
+              <div className="flex justify-between gap-4">
+                <span>Boutique {BOUTIQUE_LABELS[boutique]}</span>
+                <span className="shrink-0">
+                  +{euros(BOUTIQUE_MONTHLY_CENTS[boutique])}/mois
+                </span>
+              </div>
+            </div>
+          ) : null}
+          <div className="flex items-end justify-between gap-4">
+            <span className="text-sm font-medium text-cream">Total TTC</span>
+            <div className="text-right">
+              <div className="font-display text-2xl font-semibold leading-none text-cream">
+                {euros(monthlyCents)}
+                <span className="text-sm font-normal text-cream-muted"> /mois</span>
+              </div>
+              <div className="mt-1.5 text-xs text-cream-faint">
+                + {euros(setupCents)} d&apos;installation aujourd&apos;hui
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
 
-/* ── Mot de la fin ──────────────────────────────────────────────────────── */
+/* ── Registre des étapes (tunnel minimal avant paiement) ──────────────────── */
 
-function ExtraStep() {
-  const { register } = useFormContext<LeadValues>();
-  return (
-    <Field
-      label="Quelque chose à ajouter ?"
-      hint="Un service supplémentaire que tu aimerais mettre en avant, une idée pour ton site, une particularité de ton métier, une attente précise… Tout ce qui peut nous aider à faire un site qui te ressemble."
-      htmlFor="extra"
-      optional
-    >
-      <TextArea
-        id="extra"
-        placeholder="Écris librement — même une simple remarque nous est utile…"
-        {...register("extra")}
-      />
-    </Field>
-  );
-}
-
-/* ── Définition des étapes (avec branchement conditionnel) ──────────────── */
-
-// Étape facultative, prepended quand aucune formule n'a été choisie en amont
-// (clic sur « Créer mon site » plutôt que sur une carte de prix).
-const FORMULE_STEP: StepDef = {
-  id: "formule",
-  title: "Ta formule",
-  subtitle: "Choisis l'offre qui te convient. On pourra l'ajuster ensemble.",
-  fields: ["formule"],
-  autoAdvance: true,
-  Component: FormuleStep,
-};
-
+// Ordre : l'OFFRE d'abord (le client voit le prix tout de suite, et `?formule=`
+// pré-sélectionne la carte), puis l'IDENTITÉ (+ SIRET) qui précède directement
+// le paiement.
 const ALL_STEPS: StepDef[] = [
   {
-    id: "type",
-    title: "Ton activité",
-    subtitle: "Première chose : que vends-tu ? On adapte la suite.",
-    fields: ["activityType"],
-    autoAdvance: true,
-    Component: TypeStep,
-  },
-  {
-    id: "entreprise",
-    title: "Ton entreprise & contact",
-    subtitle: "Qui tu es, où tu travailles, et comment te joindre.",
-    fields: ["companyName", "trade", "city", "phone", "email", "serviceArea"],
-    Component: EntrepriseContactStep,
-  },
-  {
-    id: "prestations",
-    title: "Prestations & prix",
-    subtitle: "Ce que tu proposes. Pas besoin d'être exhaustif, on affinera.",
-    fields: ["services", "taxCredit"],
-    when: wantsServices,
-    Component: PrestationsStep,
+    id: "offre",
+    title: "Votre offre",
+    subtitle: "Choisissez votre formule, et une boutique en ligne si vous le souhaitez.",
+    fields: ["formule"],
+    Component: OffreStep,
   },
   {
     id: "identite",
-    title: "Photos & préférences",
-    subtitle:
-      "Logo, photos et style. Tout est facultatif — on s'adapte à ce que tu as.",
-    fields: ["languages", "socials"],
-    Component: IdentitePreferencesStep,
-  },
-  {
-    id: "extra",
-    title: "Le mot de la fin",
-    subtitle:
-      "As-tu autre chose à nous partager ? Une particularité, une envie… et c'est tout bon.",
-    fields: ["extra"],
-    Component: ExtraStep,
+    title: "Vos coordonnées",
+    subtitle: "Dernière étape avant le paiement : qui vous êtes et comment vous joindre.",
+    fields: ["companyName", "trade", "city", "phone", "email"],
+    Component: IdentiteStep,
   },
 ];
 
-export function buildSteps(
-  activityType?: ActivityType,
-  includeFormule = false,
-): StepDef[] {
-  const steps = ALL_STEPS.filter((s) => !s.when || s.when(activityType));
-  return includeFormule ? [FORMULE_STEP, ...steps] : steps;
+export function buildSteps(): StepDef[] {
+  return ALL_STEPS;
 }

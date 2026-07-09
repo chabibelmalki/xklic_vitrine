@@ -2,7 +2,8 @@ import type Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { getOrderByUrl } from "@/lib/orders";
 import { upsertOrder } from "@/lib/backoffice";
-import { sendMail, buildEmail } from "@/lib/email";
+import { sendMail, buildEmail, buildCompletionEmail } from "@/lib/email";
+import { SITE_URL } from "@/lib/site";
 
 export const runtime = "nodejs";
 // Corps brut requis pour vérifier la signature : on ne lit JAMAIS req.json().
@@ -128,6 +129,29 @@ export async function POST(req: Request) {
     text,
     replyTo: lead.email || undefined,
   });
+
+  // 5. E-mail CLIENT anti-abandon (distinct de l'e-mail équipe ci-dessus, qui
+  //    part vers LEAD_TO : les DEUX partent). Confirmation + lien RÉUTILISABLE
+  //    vers la page de complétion — le session_id est durable, donc le client
+  //    peut revenir des jours plus tard sur son formulaire prérempli.
+  //    BEST-EFFORT STRICT : un échec ici ne doit JAMAIS faire échouer le webhook
+  //    (sinon Stripe rejoue en boucle → risque de doublons). Le try/catch avale
+  //    tout et on renvoie 200 quoi qu'il arrive (le statut « payé » est déjà
+  //    écrit et durable au point 3).
+  if (lead.email) {
+    try {
+      const completionUrl = `${SITE_URL}/merci?session_id=${session.id}`;
+      const client = buildCompletionEmail({ companyName: lead.companyName, url: completionUrl });
+      await sendMail({
+        to: lead.email,
+        subject: "Votre paiement est confirmé — dernière étape pour votre site",
+        html: client.html,
+        text: client.text,
+      });
+    } catch (err) {
+      console.error("[stripe-webhook] E-mail client échoué (ignoré) :", err);
+    }
+  }
 
   return new Response("ok", { status: 200 });
 }

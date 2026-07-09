@@ -4,7 +4,12 @@ import { ArrowLeft } from "lucide-react";
 import { Logo } from "@/components/site/logo";
 import { LeadForm } from "@/components/form/lead-form";
 import { FloatingActions } from "@/components/site/floating-actions";
-import { FORMULE_SLUGS, type FormuleSlug } from "@/lib/lead-schema";
+import {
+  FORMULE_SLUGS,
+  BOUTIQUE_TIERS,
+  type FormuleSlug,
+  type BoutiqueTier,
+} from "@/lib/lead-schema";
 
 export const metadata: Metadata = {
   title: "Créer mon site",
@@ -18,9 +23,14 @@ export default async function DemarrerPage({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const raw = (await searchParams).formule;
-  const initialFormule = FORMULE_SLUGS.includes(raw as FormuleSlug)
-    ? (raw as FormuleSlug)
+  const sp = await searchParams;
+  const initialFormule = FORMULE_SLUGS.includes(sp.formule as FormuleSlug)
+    ? (sp.formule as FormuleSlug)
+    : undefined;
+  // ?boutique=<tier|none> depuis les cartes tarifs. "none" / absent / invalide
+  // → pas de boutique présélectionnée.
+  const initialBoutique = BOUTIQUE_TIERS.includes(sp.boutique as BoutiqueTier)
+    ? (sp.boutique as BoutiqueTier)
     : undefined;
 
   return (
@@ -45,7 +55,7 @@ export default async function DemarrerPage({
       </header>
 
       <main className="relative z-10 flex-1 px-5 py-12 sm:py-16 lg:py-20">
-        <LeadForm initialFormule={initialFormule} />
+        <LeadForm initialFormule={initialFormule} initialBoutique={initialBoutique} />
       </main>
 
       <FloatingActions />

@@ -2,9 +2,6 @@ import { z } from "zod";
 
 const required = (msg: string) => z.string().trim().min(1, msg);
 
-export const ACTIVITY_TYPES = ["services", "produits", "les-deux"] as const;
-export type ActivityType = (typeof ACTIVITY_TYPES)[number];
-
 // Formules proposées (cf. `formules` dans content.ts). Le slug est la valeur
 // stockée dans le lead et passée en query `?formule=` depuis les cartes de prix.
 export const FORMULE_SLUGS = ["site", "google", "haut-google"] as const;
@@ -15,11 +12,6 @@ export type FormuleSlug = (typeof FORMULE_SLUGS)[number];
 // l'importe pour shopPriceFor().
 export const BOUTIQUE_TIERS = ["starter", "pro", "business"] as const;
 export type BoutiqueTier = (typeof BOUTIQUE_TIERS)[number];
-
-export const wantsServices = (t?: ActivityType) =>
-  t === "services" || t === "les-deux";
-export const wantsProducts = (t?: ActivityType) =>
-  t === "produits" || t === "les-deux";
 
 // Un fichier uploadé. Deux formes transitent par ce schéma :
 //   • côté client (état du formulaire) : { id, name, size, type, url, file }
@@ -61,10 +53,11 @@ export const leadSchema = z
     // Stripe que le socle. Persisté en base à null quand absent (cf. backoffice).
     boutiqueTier: z.enum(BOUTIQUE_TIERS).optional(),
 
-    // 1. Branchement
-    activityType: z.enum(ACTIVITY_TYPES, {
-      message: "Fais un choix pour continuer.",
-    }),
+    // 0ter. « Je propose aussi des prestations (pas seulement de la vente) ».
+    // Coché par défaut. Surtout pertinent quand une boutique est choisie. Sert
+    // à dériver `type_activite` (back-office) et à décider si la description de
+    // l'activité est demandée après paiement (page de complétion).
+    wantsServices: z.boolean().default(true),
 
     // A. Activité
     companyName: required("Indique le nom de ton entreprise."),
@@ -134,45 +127,44 @@ export const leadSchema = z
 
     // Jeton Cloudflare Turnstile (anti-robot), vérifié côté serveur.
     turnstileToken: z.string().optional(),
-  })
-  .superRefine((data, ctx) => {
-    // Zone de déplacement requise seulement si l'artisan se déplace
-    if (data.mobile && !(data.serviceArea ?? "").trim()) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["serviceArea"],
-        message: "Indique ta zone de déplacement.",
-      });
-    }
-
-    // En mode express, l'étape prestations est sautée : un conseiller la
-    // recueille par téléphone, on n'exige donc rien de plus.
-    if (data.assisted) return;
-
-    // Prestations requises pour les activités de service
-    if (wantsServices(data.activityType)) {
-      const s = (data.services ?? "").trim();
-      if (s.length < 10) {
-        ctx.addIssue({
-          code: "custom",
-          path: ["services"],
-          message: s
-            ? "Quelques mots de plus nous aident à bien te présenter."
-            : "Décris tes prestations, même en vrac.",
-        });
-      }
-      if (!data.taxCredit) {
-        ctx.addIssue({
-          code: "custom",
-          path: ["taxCredit"],
-          message: "Fais un choix.",
-        });
-      }
-    }
-
-    // Les produits ne sont plus saisis dans le tunnel : les marchands les
-    // gèrent eux-mêmes dans le back-office e-commerce (étape retirée 2026-07-06).
   });
 
 export type LeadValues = z.input<typeof leadSchema>;
 export type LeadData = z.output<typeof leadSchema>;
+
+// ─── Complétion post-paiement (page /merci) ─────────────────────────────────
+// Le dossier « propose des prestations » — donc on lui demande une description
+// de l'activité APRÈS paiement — si `type_activite` vaut services ou les-deux
+// (valeur dérivée au checkout, cf. backoffice.ts). Remplace l'ancien
+// `wantsServices(activityType)`, désormais basé sur la valeur stockée.
+export const impliesServices = (typeActivite?: string | null) =>
+  typeActivite === "services" || typeActivite === "les-deux";
+
+// Payload accepté par POST /api/complete. Whitelist STRICTE : Zod retire toute
+// clé inconnue par défaut → `statut`, `formule`, `payment`… ne peuvent JAMAIS
+// passer. Tous les champs (sauf sessionId) sont optionnels : on n'écrit que ce
+// qui est fourni (le back-office coalesce, les autres colonnes restent intactes).
+export const completionSchema = z.object({
+  sessionId: z.string().trim().min(1),
+  description: z.string().trim().optional(),
+  logo: z.array(uploadItemSchema).optional(),
+  photos: z.array(uploadItemSchema).optional(),
+  colorPreference: z.array(z.string()).max(2, "Deux couleurs maximum.").optional(),
+  styleVibes: z.array(z.string()).optional(),
+  ambiance: z.string().trim().optional(),
+  socials: z
+    .object({
+      facebook: z.string().trim().optional(),
+      instagram: z.string().trim().optional(),
+      tiktok: z.string().trim().optional(),
+      x: z.string().trim().optional(),
+      google: z.string().trim().optional(),
+    })
+    .partial()
+    .optional(),
+  languages: z.array(z.string()).optional(),
+  noWhatsapp: z.boolean().optional(),
+  siret: z.string().trim().optional(),
+});
+export type CompletionValues = z.input<typeof completionSchema>;
+export type CompletionData = z.output<typeof completionSchema>;

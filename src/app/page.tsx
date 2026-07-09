@@ -26,7 +26,7 @@ export default function Home() {
         <Process />
         <Portfolio />
         <Benefits />
-        <Formules />
+        <Formules variant="home" />
         <Faq />
         <FinalCta />
       </main>
