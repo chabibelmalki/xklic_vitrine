@@ -7,6 +7,7 @@ import { BOUTIQUE_TIERS, type BoutiqueTier, type LeadValues } from "@/lib/lead-s
 import {
   BOUTIQUE_LABELS,
   BOUTIQUE_MONTHLY_CENTS,
+  BOUTIQUE_PRODUCTS,
   euros,
   formules,
 } from "@/lib/content";
@@ -251,6 +252,7 @@ function OffreStep() {
                 {BOUTIQUE_TIERS.map((t) => (
                   <option key={t} value={t}>
                     {BOUTIQUE_LABELS[t]} — +{euros(BOUTIQUE_MONTHLY_CENTS[t])}/mois
+                    {" "}({BOUTIQUE_PRODUCTS[t]})
                   </option>
                 ))}
               </select>

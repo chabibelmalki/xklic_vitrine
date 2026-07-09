@@ -250,6 +250,14 @@ export const BOUTIQUE_LABELS: Record<BoutiqueTier, string> = {
   pro: "Pro",
   business: "Business",
 };
+// Capacité produits de chaque palier — affichée à côté du prix pour que le
+// visiteur comprenne ce que change le pack (sinon Starter/Pro/Business ne dit
+// rien). Purement informatif (aucun quota technique appliqué côté boutique).
+export const BOUTIQUE_PRODUCTS: Record<BoutiqueTier, string> = {
+  starter: "jusqu'à 20 produits",
+  pro: "jusqu'à 100 produits",
+  business: "produits illimités",
+};
 
 /** Centimes → euros TTC lisibles : 1200 → « 12€ », 2199 → « 21,99€ ». */
 export function euros(cents: number): string {

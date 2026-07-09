@@ -15,6 +15,7 @@ import {
   type Formule,
   BOUTIQUE_MONTHLY_CENTS,
   BOUTIQUE_LABELS,
+  BOUTIQUE_PRODUCTS,
   euros,
 } from "@/lib/content";
 import { BOUTIQUE_TIERS, type BoutiqueTier } from "@/lib/lead-schema";
@@ -110,7 +111,8 @@ export function FormuleCard({
           <option value="">Pas de boutique</option>
           {BOUTIQUE_TIERS.map((t) => (
             <option key={t} value={t}>
-              {BOUTIQUE_LABELS[t]} — +{euros(BOUTIQUE_MONTHLY_CENTS[t])}/mois
+              {BOUTIQUE_LABELS[t]} — +{euros(BOUTIQUE_MONTHLY_CENTS[t])}/mois (
+              {BOUTIQUE_PRODUCTS[t]})
             </option>
           ))}
         </select>
