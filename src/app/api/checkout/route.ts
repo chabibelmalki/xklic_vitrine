@@ -3,7 +3,7 @@ import type Stripe from "stripe";
 import { leadSchema } from "@/lib/lead-schema";
 import { createOrder } from "@/lib/orders";
 import { upsertOrder } from "@/lib/backoffice";
-import { stripe, pricesFor } from "@/lib/stripe";
+import { stripe, pricesFor, shopPriceFor } from "@/lib/stripe";
 import { SITE_URL } from "@/lib/site";
 import { verifyTurnstile, clientIp } from "@/lib/turnstile";
 
@@ -77,7 +77,26 @@ export async function POST(req: Request) {
   ];
   if (prices.setup) lineItems.push({ price: prices.setup, quantity: 1, tax_rates: taxRates });
 
-  const metadata = { orderId: order.id, orderUrl: order.url, formule: lead.formule };
+  // Option boutique : 2e item MENSUEL récurrent sur le MÊME abonnement (pas de
+  // frais d'installation). Palier choisi mais price_id manquant = anomalie (ne
+  // doit jamais arriver — les STRIPE_PRICE_SHOP_* sont en prod) : on NE crée PAS
+  // une session sous-facturée → log explicite + vraie erreur au client (pas de
+  // redirection muette), pour que l'équipe le sache.
+  if (lead.boutiqueTier) {
+    const shopPrice = shopPriceFor(lead.boutiqueTier);
+    if (!shopPrice) {
+      console.error(`[checkout] Prix Stripe boutique manquant pour le palier "${lead.boutiqueTier}".`);
+      return NextResponse.json({ ok: false, error: "boutique_price_missing" }, { status: 502 });
+    }
+    lineItems.push({ price: shopPrice, quantity: 1, tax_rates: taxRates });
+  }
+
+  const metadata = {
+    orderId: order.id,
+    orderUrl: order.url,
+    formule: lead.formule,
+    ...(lead.boutiqueTier ? { boutiqueTier: lead.boutiqueTier } : {}),
+  };
 
   try {
     const session = await stripe.checkout.sessions.create({
