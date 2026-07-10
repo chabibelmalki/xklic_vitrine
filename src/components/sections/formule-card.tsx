@@ -44,7 +44,7 @@ export function FormuleCard({
   return (
     <div
       className={cn(
-        "relative flex h-full w-full flex-col rounded-[var(--radius-card)] border bg-ink-soft p-7 sm:p-8",
+        "relative flex h-full w-full flex-col rounded-[var(--radius-card)] border bg-card p-7 sm:p-8",
         f.featured
           ? "border-ember/30 shadow-float ring-1 ring-ember/15 lg:-translate-y-3"
           : "border-line shadow-card",

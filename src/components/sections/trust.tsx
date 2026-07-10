@@ -8,17 +8,17 @@ export function Trust() {
   return (
     <section
       aria-label="Secteurs accompagnés et garanties"
-      className="relative border-y border-line bg-ink-soft/50 py-10"
+      className="relative border-y border-line bg-card/60 py-10"
     >
       <Container>
-        {/* Piliers de confiance */}
-        <ul className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+        {/* Piliers de confiance — filets verticaux, rythme éditorial */}
+        <ul className="grid grid-cols-2 gap-y-8 sm:grid-cols-4 sm:divide-x sm:divide-line">
           {trustPillars.map((p) => (
-            <li key={p.label} className="text-center">
+            <li key={p.label} className="px-4 text-center sm:px-6">
               <div className="font-display text-3xl font-semibold text-cream sm:text-4xl">
                 {p.value}
               </div>
-              <div className="mt-1 text-xs leading-snug text-cream-muted sm:text-sm">
+              <div className="mx-auto mt-1.5 max-w-[11rem] text-xs leading-snug text-cream-muted sm:text-sm">
                 {p.label}
               </div>
             </li>
@@ -32,7 +32,7 @@ export function Trust() {
           {loop.map((trade, i) => (
             <span
               key={`${trade}-${i}`}
-              className="flex shrink-0 items-center gap-2 rounded-full border border-line bg-ink px-4 py-2 text-sm text-cream-muted"
+              className="flex shrink-0 items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-sm text-cream-muted"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-ember" aria-hidden />
               {trade}

@@ -34,7 +34,7 @@ export function ProofBloc({
           {points.map((p) => (
             <div
               key={p.label}
-              className="flex flex-col items-center gap-1 bg-ink-soft px-4 py-7 text-center"
+              className="flex flex-col items-center gap-1 bg-card px-4 py-7 text-center"
             >
               <dt className="font-display text-3xl font-semibold text-cream sm:text-4xl">
                 {p.value}

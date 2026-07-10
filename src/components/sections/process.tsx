@@ -17,9 +17,9 @@ export function Process() {
         {steps.map((step) => (
           <RevealItem
             key={step.n}
-            className="group relative flex flex-col gap-4 bg-ink-soft p-7 transition-colors duration-300 hover:bg-ink-panel"
+            className="group relative flex flex-col gap-4 bg-card p-7 transition-colors duration-300 hover:bg-[#fffcf7]"
           >
-            <span className="font-display text-5xl font-light text-cream/10 transition-colors duration-300 group-hover:text-ember/40">
+            <span className="font-display flex h-11 w-11 items-center justify-center rounded-full border border-ember/25 bg-ember/[0.08] text-base font-semibold text-ember-deep transition-all duration-300 group-hover:border-ember/50 group-hover:bg-ember group-hover:text-white">
               {step.n}
             </span>
             <h3 className="text-base font-medium text-cream">{step.title}</h3>

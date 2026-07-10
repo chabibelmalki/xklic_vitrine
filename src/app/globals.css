@@ -26,9 +26,22 @@
   --color-ember-deep: #bf3315;
   --color-amber: #f2a13a; /* secondaire, dégradés chauds */
 
+  /* Cartes — blanc pur : les blocs se détachent nettement de l'ivoire */
+  --color-card: #ffffff;
+
+  /* Panneaux sombres — encre chaude profonde, pour le contraste signature */
+  --color-night: #211a13;
+  --color-night-soft: #2c231a;
+
+  /* Texte sur panneaux sombres */
+  --color-paper: #faf6f0;
+  --color-paper-muted: rgba(250, 246, 240, 0.66);
+  --color-paper-faint: rgba(250, 246, 240, 0.42);
+
   /* Hairlines (encre tiède translucide sur fond clair) */
   --color-line: rgba(27, 22, 17, 0.1);
   --color-line-strong: rgba(27, 22, 17, 0.17);
+  --color-line-dark: rgba(250, 246, 240, 0.14);
 
   /* Fonts */
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
@@ -72,41 +85,41 @@ body {
    Désactivée si prefers-reduced-motion. */
 .aurora {
   position: absolute;
-  inset: -20% -10% auto -10%;
-  height: 760px;
+  inset: -28% -10% auto -10%;
+  height: 640px;
   pointer-events: none;
   z-index: 0;
-  filter: blur(20px);
+  filter: blur(24px);
 }
 .aurora::before,
 .aurora::after {
   content: "";
   position: absolute;
   border-radius: 9999px;
-  opacity: 0.5;
+  opacity: 0.32;
   will-change: transform;
 }
 .aurora::before {
-  width: 52%;
-  height: 70%;
-  left: 8%;
+  width: 48%;
+  height: 62%;
+  left: 4%;
   top: 0;
   background: radial-gradient(
     circle at 50% 50%,
-    rgba(229, 67, 31, 0.5),
-    transparent 68%
+    rgba(229, 67, 31, 0.42),
+    transparent 66%
   );
   animation: aurora-a 18s var(--ease-out-expo) infinite alternate;
 }
 .aurora::after {
-  width: 46%;
-  height: 64%;
-  right: 6%;
-  top: 6%;
+  width: 44%;
+  height: 58%;
+  right: 2%;
+  top: 8%;
   background: radial-gradient(
     circle at 50% 50%,
-    rgba(242, 161, 58, 0.42),
-    transparent 70%
+    rgba(242, 161, 58, 0.36),
+    transparent 68%
   );
   animation: aurora-b 22s var(--ease-out-expo) infinite alternate;
 }

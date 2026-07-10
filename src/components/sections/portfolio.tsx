@@ -39,7 +39,7 @@ function WorkCard({ work, featured }: { work: Work; featured?: boolean }) {
   return (
     <Wrapper
       {...linkProps}
-      className="group relative block overflow-hidden rounded-[var(--radius-card)] border border-line bg-ink-soft transition-all duration-500 hover:border-line-strong hover:shadow-card"
+      className="group relative block overflow-hidden rounded-[var(--radius-card)] border border-line bg-card shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-line-strong hover:shadow-float"
     >
       {/* Aperçu — maquette mobile sur fond chaud */}
       <div className="relative h-72 overflow-hidden sm:h-80">

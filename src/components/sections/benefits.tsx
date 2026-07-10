@@ -39,7 +39,7 @@ export function Benefits() {
           return (
             <RevealItem
               key={b.title}
-              className="group flex flex-col gap-4 bg-ink-soft p-7 transition-colors duration-300 hover:bg-ink-panel sm:p-8"
+              className="group flex flex-col gap-4 bg-card p-7 transition-colors duration-300 hover:bg-[#fffcf7] sm:p-8"
             >
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-ember/12 text-ember-deep transition-transform duration-300 group-hover:scale-110">
                 <Icon size={20} />
