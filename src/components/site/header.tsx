@@ -1,14 +1,29 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import { Logo } from "./logo";
+import { LanguageSwitcher } from "./language-switcher";
 import { ButtonLink } from "@/components/ui/button";
-import { nav } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
+// Liens de navigation : href stable, libellé traduit via la clé `nav.*`.
+// `frOnly` = pointe vers un contenu franco-français non traduit (métiers,
+// réalisations) → masqué dans les autres langues.
+const NAV_ITEMS = [
+  { href: "/metiers", key: "metiers", frOnly: true },
+  { href: "/realisations", key: "realisations", frOnly: true },
+  { href: "/tarifs", key: "tarifs", frOnly: false },
+  { href: "/faq", key: "faq", frOnly: false },
+  { href: "/contact", key: "contact", frOnly: false },
+] as const;
+
 export function Header() {
+  const t = useTranslations("nav");
+  const locale = useLocale();
+  const navItems = NAV_ITEMS.filter((i) => locale === "fr" || !i.frOnly);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -39,32 +54,36 @@ export function Header() {
         <Logo />
 
         <nav className="hidden items-center gap-8 md:flex">
-          {nav.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className="text-sm text-cream-muted transition-colors hover:text-cream"
             >
-              {item.label}
+              {t(item.key)}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-2 md:flex">
+          <LanguageSwitcher />
           <ButtonLink href="/demarrer" size="md">
-            Créer mon site
+            {t("cta")}
           </ButtonLink>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-cream md:hidden"
-          aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-          aria-expanded={open}
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="flex items-center gap-1 md:hidden">
+          <LanguageSwitcher />
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-cream"
+            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-expanded={open}
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -75,22 +94,18 @@ export function Header() {
         )}
       >
         <nav className="flex flex-col gap-1 px-5 py-4">
-          {nav.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
               className="rounded-lg px-3 py-3 text-base text-cream-muted transition-colors hover:bg-cream/[0.04] hover:text-cream"
             >
-              {item.label}
+              {t(item.key)}
             </Link>
           ))}
-          <ButtonLink
-            href="/demarrer"
-            size="lg"
-            className="mt-3 w-full"
-          >
-            Créer mon site
+          <ButtonLink href="/demarrer" size="lg" className="mt-3 w-full">
+            {t("cta")}
           </ButtonLink>
         </nav>
       </div>

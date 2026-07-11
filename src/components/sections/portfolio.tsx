@@ -1,37 +1,57 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { portfolio, type Work } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight, Phone, Star } from "lucide-react";
 
+// Libellés de métier traduits, dans l'ordre du tableau `portfolio`.
+const TRADE_KEYS = ["sanad", "atelier", "meca", "vibe"] as const;
+
 export function Portfolio() {
+  const t = useTranslations("portfolio");
   return (
     <Section id="realisations" className="border-t border-line">
       <Reveal>
         <SectionHeading
-          eyebrow="Réalisations"
-          title="Des sites simples, crédibles, qui travaillent pour eux."
-          description="Chaque site est pensé pour un métier et une zone, et d'abord pour le mobile. Voici quelques activités que nous accompagnons."
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+          description={t("description")}
         />
       </Reveal>
 
       <RevealGroup className="mt-14 grid gap-6 sm:grid-cols-2">
         {portfolio.map((work, i) => (
           <RevealItem key={work.client}>
-            <WorkCard work={work} featured={i === 0} />
+            <WorkCard
+              work={{ ...work, trade: t(`trades.${TRADE_KEYS[i] ?? "sanad"}`) }}
+              featured={i === 0}
+              featuredLabel={t("firstClient")}
+              quoteLabel={t("quote")}
+            />
           </RevealItem>
         ))}
       </RevealGroup>
 
       <p className="mt-8 text-center text-sm text-cream-faint">
-        Ton activité ici très bientôt.
+        {t("yoursSoon")}
       </p>
     </Section>
   );
 }
 
-function WorkCard({ work, featured }: { work: Work; featured?: boolean }) {
+function WorkCard({
+  work,
+  featured,
+  featuredLabel,
+  quoteLabel,
+}: {
+  work: Work;
+  featured?: boolean;
+  featuredLabel: string;
+  quoteLabel: string;
+}) {
   const Wrapper: React.ElementType = work.url ? "a" : "div";
   const linkProps = work.url
     ? { href: work.url, target: "_blank", rel: "noreferrer" }
@@ -53,7 +73,7 @@ function WorkCard({ work, featured }: { work: Work; featured?: boolean }) {
 
         {featured ? (
           <span className="absolute left-4 top-4 z-10 rounded-full border border-ember/30 bg-ink/80 px-3 py-1 text-[11px] font-medium text-ember-deep backdrop-blur">
-            Première cliente
+            {featuredLabel}
           </span>
         ) : null}
 
@@ -82,7 +102,7 @@ function WorkCard({ work, featured }: { work: Work; featured?: boolean }) {
                   className="h-[300px] w-full bg-ink object-cover object-top"
                 />
               ) : (
-                <PhoneSiteMock work={work} />
+                <PhoneSiteMock work={work} quoteLabel={quoteLabel} />
               )}
             </div>
           </div>
@@ -106,7 +126,7 @@ function WorkCard({ work, featured }: { work: Work; featured?: boolean }) {
   );
 }
 
-function PhoneSiteMock({ work }: { work: Work }) {
+function PhoneSiteMock({ work, quoteLabel }: { work: Work; quoteLabel: string }) {
   return (
     <div className="h-[300px] w-full">
       {/* Encoche */}
@@ -117,7 +137,7 @@ function PhoneSiteMock({ work }: { work: Work }) {
             {work.client}
           </span>
           <span className="rounded-full bg-ember px-2 py-0.5 text-[7px] font-semibold text-white">
-            Devis
+            {quoteLabel}
           </span>
         </div>
         <div className="mt-2 aspect-[5/3] rounded-lg bg-gradient-to-br from-ember/25 via-amber/15 to-transparent ring-1 ring-inset ring-line" />

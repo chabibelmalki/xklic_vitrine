@@ -1,0 +1,504 @@
+{
+  "nav": {
+    "metiers": "Oficios",
+    "realisations": "Trabajos",
+    "tarifs": "Precios",
+    "faq": "Preguntas",
+    "contact": "Contacto",
+    "cta": "Crear mi sitio"
+  },
+  "language": {
+    "label": "Idioma",
+    "choose": "Elegir el idioma"
+  },
+  "common": {
+    "createSite": "Crear mi sitio",
+    "priceLine": "49€ al crearlo · luego 9,99€/mes · cancelable en cualquier momento",
+    "whatsappAria": "Escribir por WhatsApp",
+    "callAria": "Llamar al {phone}",
+    "optional": "(opcional)"
+  },
+  "footer": {
+    "tagline": "El sitio profesional que te trae clientes, en línea en 48h. Sin complicaciones, sin compromiso.",
+    "col": {
+      "services": "Servicios",
+      "offer": "La oferta",
+      "contact": "Contacto"
+    },
+    "links": {
+      "allMetiers": "Todos los oficios",
+      "realisations": "Trabajos",
+      "blog": "Blog",
+      "pricing": "Planes y precios",
+      "how": "Cómo funciona",
+      "faq": "Preguntas frecuentes",
+      "createSite": "Crear mi sitio"
+    },
+    "rights": "Todos los derechos reservados.",
+    "legal": {
+      "mentions": "Aviso legal",
+      "cgv": "Condiciones de venta",
+      "privacy": "Privacidad"
+    },
+    "designedIn": "Hecho en Francia"
+  },
+  "hero": {
+    "badge": "Sitios web profesionales, llave en mano",
+    "titleLead": "Tu sitio profesional que te",
+    "titleAccent": "trae clientes.",
+    "subtitle": "¿Fontanero, mecánico, por tu cuenta en la limpieza? Creamos tu sitio llave en mano, cuidado y pensado para conseguirte nuevos clientes. En línea en 48h, sin complicaciones.",
+    "ctaPrimary": "Crear mi sitio",
+    "ctaSecondary": "Ver trabajos",
+    "proofs": {
+      "online": "En línea en 48h",
+      "noCommitment": "Sin compromiso",
+      "price": "49€ + 9,99€/mes"
+    },
+    "mock": {
+      "rank": "1º en Google",
+      "rankQuery": "« fontanero Lyon »",
+      "newRequest": "Nueva solicitud",
+      "newRequestMsg": "« Hola, ¿estás disponible? »",
+      "callReceived": "Llamada recibida",
+      "navServices": "Servicios",
+      "navPricing": "Precios",
+      "navReviews": "Opiniones",
+      "navContact": "Contacto",
+      "badge": "Fontanero · Lyon · 7/7",
+      "title": "Tu fontanero de confianza en Lyon.",
+      "quote": "Pedir presupuesto",
+      "call": "Llamar",
+      "reviews": "4,9 · 87 opiniones",
+      "intervention": "Intervención en 30 min",
+      "g1": "Urgencias 24h",
+      "g2": "Presupuesto gratis",
+      "g3": "Trabajo garantizado"
+    }
+  },
+  "trust": {
+    "aria": "Sectores que acompañamos y garantías",
+    "pillars": {
+      "speed": "para estar en línea",
+      "commitment": "compromiso, cancelable cuando quieras",
+      "mobile": "pensado para el móvil",
+      "madeIn": "diseñado y gestionado en Francia"
+    },
+    "trades": {
+      "menage": "Limpieza a domicilio",
+      "plomberie": "Fontanería",
+      "electricite": "Electricidad",
+      "mecanique": "Mecánica de autos",
+      "serrurerie": "Cerrajería",
+      "jardinage": "Jardinería",
+      "coiffure": "Peluquería y belleza",
+      "maconnerie": "Albañilería",
+      "peinture": "Pintura",
+      "chauffagiste": "Calefacción"
+    },
+    "notListed": "¿Un oficio que no está en la lista? También lo hacemos.",
+    "pillarValues": {
+      "speed": "48h",
+      "commitment": "Sin",
+      "mobile": "100%",
+      "madeIn": "🇫🇷"
+    }
+  },
+  "problem": {
+    "eyebrow": "El diagnóstico",
+    "titleLine1": "Ser bueno en tu oficio ya no basta.",
+    "titleLine2": "Además hay que poder encontrarte.",
+    "description": "Hoy, lo primero que hace un cliente es buscar en Google. Sin un sitio creíble, dejas que tu competencia se lleve las llamadas que deberían haber sido tuyas.",
+    "withoutLabel": "Sin Xklic",
+    "withLabel": "Con Xklic",
+    "problems": [
+      "Tus clientes te buscan en Google… y no te encuentran.",
+      "Una página de Facebook ya no basta para inspirar confianza.",
+      "Los presupuestos de las agencias web rondan los 1 500€, o mucho más.",
+      "No tienes ni el tiempo ni las ganas de gestionar un sitio tú mismo."
+    ],
+    "promises": [
+      "Un sitio que hace que aparezcas cuando buscan tu oficio cerca de ti.",
+      "Un escaparate cuidado que da confianza y ganas de llamarte.",
+      "49€ al crearlo, 9,99€/mes. Todo incluido, sin sorpresas.",
+      "Tú no tocas nada: nos encargamos de todo, tú validas."
+    ]
+  },
+  "process": {
+    "eyebrow": "Cómo funciona",
+    "title": "Cuatro pasos. Y recibes tus primeras solicitudes.",
+    "description": "Sin jerga, sin reuniones interminables. Nos das lo esencial, nosotros hacemos el resto.",
+    "steps": [
+      {
+        "title": "Rellenas el formulario",
+        "body": "Unos minutos para describir tu actividad, tus servicios y tus datos de contacto. Hay ejemplos que te guían en cada paso."
+      },
+      {
+        "title": "Creamos tu sitio",
+        "body": "Nuestro equipo diseña un sitio profesional, cuidado y pensado para tu oficio. No tienes que instalar ni configurar nada."
+      },
+      {
+        "title": "Está en línea en 48h",
+        "body": "Tu sitio se publica en tu nombre de dominio .fr (gratis, nos encargamos por ti), optimizado para el móvil y para aparecer en Google a nivel local."
+      },
+      {
+        "title": "Recibes tus solicitudes de clientes",
+        "body": "Formulario de contacto, botón de llamada y WhatsApp: las solicitudes llegan directamente a ti, listas para convertir."
+      }
+    ]
+  },
+  "portfolio": {
+    "eyebrow": "Trabajos",
+    "title": "Sitios simples, creíbles, que trabajan por ellos.",
+    "description": "Cada sitio está pensado para un oficio y una zona, y ante todo para el móvil. Estas son algunas actividades que acompañamos.",
+    "firstClient": "Primera clienta",
+    "yoursSoon": "Tu actividad aquí muy pronto.",
+    "quote": "Presupuesto",
+    "trades": {
+      "sanad": "Limpieza y servicios a domicilio",
+      "atelier": "Pastelería de autor",
+      "meca": "Reparación de autos",
+      "vibe": "Entrenamiento deportivo"
+    }
+  },
+  "benefits": {
+    "eyebrow": "Lo que te aporta",
+    "title": "Un sitio, pero sobre todo más clientes.",
+    "description": "No solo una página bonita: una herramienta que trabaja por ti, todos los días, incluso cuando estás en una obra.",
+    "items": [
+      {
+        "title": "Te encuentran en Google",
+        "body": "Optimizado para el posicionamiento local: apareces cuando un cliente busca tu oficio cerca de él."
+      },
+      {
+        "title": "Las solicitudes llegan a ti",
+        "body": "Formulario de contacto y notificaciones: cada solicitud cae directamente en tu bandeja, lista para devolver la llamada."
+      },
+      {
+        "title": "Botón de llamada y WhatsApp",
+        "body": "Tus clientes te llaman o te escriben por WhatsApp con un solo toque, desde su teléfono."
+      },
+      {
+        "title": "Seguro y sin preocupaciones",
+        "body": "Alojamiento, HTTPS, copias de seguridad y actualizaciones: gestionamos toda la parte técnica, tu sitio sigue en línea."
+      },
+      {
+        "title": "Perfecto en el móvil",
+        "body": "8 de cada 10 visitantes llegan desde el teléfono. Tu sitio es rápido, nítido y legible en cualquier pantalla."
+      },
+      {
+        "title": "Modificaciones ilimitadas",
+        "body": "¿Nuevo precio, nueva foto, horarios de verano? Nos escribes, actualizamos — a menudo en el mismo día, y como máximo en 3 días hábiles."
+      }
+    ]
+  },
+  "formules": {
+    "eyebrow": "Nuestros planes",
+    "title": "Tres planes, simples y claros.",
+    "description": "Empiezas donde quieras, cambias cuando quieras. Sin sorpresas, y siempre sin compromiso.",
+    "boutiqueNote": "Tienda e-commerce opcional en cualquier plan —",
+    "boutiqueNoteStrong": "0 % de comisión",
+    "boutiqueNoteEnd": "sobre tus ventas.",
+    "vatNote": "Todos nuestros precios están indicados en euros, impuestos incluidos.",
+    "card": {
+      "recommended": "Recomendado",
+      "perMonthSuffix": "/mes · imp. incl.",
+      "setupLine": "+ {price} de instalación",
+      "setupOnce": "(un solo pago)",
+      "noEngagement": "Sin compromiso · cancelable cuando quieras",
+      "addShop": "¿Añadir una tienda en línea?",
+      "noShop": "Sin tienda",
+      "shopOption": "{label} — +{price}/mes ({products})",
+      "showDetails": "Ver los detalles",
+      "hideDetails": "Ocultar los detalles",
+      "seeFormuleDetail": "Ver el detalle de este plan",
+      "googleMockIntro": "Lo que verán tus clientes al buscar tu oficio:"
+    },
+    "googleMock": {
+      "guaranteed": "Garantizado por Google",
+      "businessName": "Plomería Dupont",
+      "status": "París · Abierto · Disponible ahora",
+      "reviews": "(87 reseñas)",
+      "call": "Llamar"
+    },
+    "boutiqueProducts": {
+      "starter": "hasta 20 productos",
+      "pro": "hasta 100 productos",
+      "business": "productos ilimitados"
+    },
+    "items": {
+      "site": {
+        "name": "Tu sitio",
+        "phrase": "Para existir en internet, de forma sencilla.",
+        "features": [
+          "Un sitio profesional y bonito con tu nombre",
+          "Tu nombre de dominio .fr gratis: lo compramos y lo gestionamos por ti, no tienes que hacer nada",
+          "Apareces en Google cuando te buscan",
+          "Tus clientes te encuentran y te llaman con un clic",
+          "Un QR code para mostrar a tus clientes y recoger reseñas"
+        ],
+        "cta": "Quiero mi sitio"
+      },
+      "google": {
+        "name": "Nos ocupamos de tu Google",
+        "phrase": "Tú trabajas, nosotros cuidamos tu imagen.",
+        "inherits": "Todo el pack Sitio, y además:",
+        "features": [
+          "Respondemos a tus reseñas de clientes por ti",
+          "Publicamos por ti en Google cada mes",
+          "Mantenemos tus horarios y tus fotos al día",
+          "Sin pagar publicidad"
+        ],
+        "cta": "Quiero la tranquilidad"
+      },
+      "haut-google": {
+        "name": "Arriba en Google",
+        "phrase": "Sé el primero que ven tus clientes.",
+        "priceNote": "Tu presupuesto de publicidad, pagado directamente a Google — eres tú quien elige el importe.",
+        "inherits": "Todo el pack anterior, y además:",
+        "features": [
+          "Apareces arriba del todo en Google, antes que nadie",
+          "Preparamos tu expediente para la insignia verde «Garantizado por Google» (documentos legales, seguro según el oficio) — se muestra una vez que Google lo valida",
+          "Los clientes te llaman directamente",
+          "Solo le pagas a Google cuando un cliente real te contacta",
+          "Instalamos y gestionamos todo en tu lugar"
+        ],
+        "cta": "Quiero más clientes",
+        "featured": "Recomendado"
+      }
+    }
+  },
+  "faq": {
+    "eyebrow": "Preguntas",
+    "title": "Todo lo que te preguntas, sin rodeos.",
+    "description": "¿Otra pregunta? Escríbenos, respondemos rápido y con claridad.",
+    "items": [
+      {
+        "q": "¿En cuánto tiempo estará mi sitio en línea?",
+        "a": "48h después de recibir tu información a través del formulario. Tú validas una versión, la ajustamos si hace falta, y luego la publicamos. Sin reuniones, sin pliego de condiciones que redactar."
+      },
+      {
+        "q": "¿Estoy comprometido a largo plazo?",
+        "a": "No. Es sin compromiso: 49€ una sola vez al crearlo, luego 9,99€/mes. Cancelas cuando quieras, con un mensaje."
+      },
+      {
+        "q": "¿Y si quiero modificar mi sitio más adelante?",
+        "a": "Las modificaciones de contenido son ilimitadas y están incluidas en la suscripción. Nos escribes lo que quieres cambiar, nos encargamos — normalmente en el mismo día, y como máximo en 3 días hábiles."
+      },
+      {
+        "q": "¿A quién pertenecen el sitio y el nombre de dominio?",
+        "a": "El contenido (textos, fotos) es tuyo. El nombre de dominio .fr es gratis y lo gestiona Xklic: lo compramos y nos encargamos de él por ti durante toda la duración de tu suscripción, no tienes que hacer nada. Si lo dejas, puedes pedir recuperar tu dominio a través de nuestro formulario de contacto (condiciones detalladas en nuestras condiciones de venta)."
+      },
+      {
+        "q": "¿Cómo funciona el pago?",
+        "a": "Pagas en línea de forma totalmente segura (Stripe) al final del formulario: solo los 49€ de instalación hoy. El primer cobro mensual de 9,99€ se produce al mes siguiente, y es sin compromiso — cancelas cuando quieras."
+      },
+      {
+        "q": "Todavía no tengo SIRET, ¿es posible?",
+        "a": "Sí. Puedes empezar sin SIRET y facilitárnoslo más adelante. Mientras tanto, simplemente indicamos «en trámite de registro» en el sitio."
+      },
+      {
+        "q": "Ofrezco servicios a domicilio, ¿se destaca el crédito fiscal?",
+        "a": "Por supuesto. Si eres elegible para el crédito fiscal del 50%, lo mostramos claramente en tu sitio — es un argumento decisivo para tus clientes."
+      }
+    ]
+  },
+  "finalCta": {
+    "titleLead": "Tu sitio profesional,",
+    "titleAccent": "listo en 48h.",
+    "subtitle": "Unos minutos para rellenar el formulario. Nosotros nos ocupamos del resto. Sin compromiso, sin pago hoy.",
+    "cta": "Crear mi sitio"
+  },
+  "meta": {
+    "defaultTitle": "Xklic — La web profesional que te trae clientes, online en 48h",
+    "description": "Xklic crea la web de tu actividad, llave en mano y online en 48h. Sin complicaciones, sin compromiso. 49€ de creación y luego 9,99€/mes.",
+    "ogTitle": "Xklic — La web profesional que te trae clientes, online en 48h",
+    "ogDescription": "La web de tu actividad, llave en mano y online en 48h. 49€ de creación y luego 9,99€/mes, sin compromiso."
+  },
+  "ctaBand": {
+    "default": {
+      "title": "¿Preparado para que tus clientes te encuentren?",
+      "subtitle": "Creamos tu web profesional, llave en mano, online en 48h. Sin compromiso."
+    },
+    "tarifs": {
+      "title": "¿Alguna duda antes de empezar?",
+      "subtitle": "Llámanos o escríbenos por WhatsApp: respondemos rápido y claro."
+    },
+    "faq": {
+      "title": "¿Todo claro? Vamos allá.",
+      "subtitle": "Tu web profesional, online en 48h. Sin compromiso."
+    }
+  },
+  "proof": {
+    "online": "En línea en 48h",
+    "noCommitment": "Sin compromiso",
+    "unlimited": "Modificaciones ilimitadas"
+  },
+  "pageMeta": {
+    "tarifs": {
+      "title": "Tarifas — 49€ y luego 9,99€/mes, sin compromiso",
+      "description": "Tres planes simples y claros para tu web profesional: desde 49€ de instalación y luego 9,99€/mes, sin compromiso. Empiezas donde quieres, cambias cuando quieres."
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "description": "Plazos, compromiso, pago, modificaciones, nombre de dominio… Todas las respuestas sobre la creación de tu web profesional con Xklic, sin rodeos."
+    }
+  },
+  "merci": {
+    "home": "Inicio",
+    "title": "¡Gracias, está confirmado!",
+    "body": "Tu pago se ha realizado correctamente: recibirás un recibo de Stripe por email. Nuestro equipo tiene todo lo necesario y está preparando tu web: te contactamos muy pronto, normalmente en menos de 2h, para enseñarte una primera versión.",
+    "backHome": "Volver al inicio",
+    "question": "¿Alguna duda? {email}"
+  },
+  "contact": {
+    "meta": {
+      "title": "Contáctanos",
+      "description": "¿Una pregunta sobre tu futuro sitio? Escríbenos, te respondemos rápido. Teléfono, WhatsApp o formulario — como prefieras."
+    },
+    "eyebrow": "Contacto",
+    "title": "Hablemos de tu proyecto",
+    "subtitle": "¿Una pregunta, una idea, un presupuesto? Escríbenos abajo — te respondemos rápido. También puedes contactarnos directamente:",
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Tu nombre",
+      "email": "Correo electrónico",
+      "emailPlaceholder": "tu@ejemplo.fr",
+      "phone": "Teléfono",
+      "phonePlaceholder": "06 12 34 56 78",
+      "message": "Mensaje",
+      "messagePlaceholder": "Cuéntanos en pocas palabras lo que necesitas…",
+      "submit": "Enviar el mensaje",
+      "submitting": "Enviando…",
+      "sentTitle": "¡Mensaje enviado!",
+      "sentBody": "Gracias, te contactamos muy pronto. También puedes escribirnos directamente por teléfono o WhatsApp.",
+      "error": "El envío ha fallado. Vuelve a intentarlo o contáctanos por teléfono.",
+      "errors": {
+        "nameMin": "Indica tu nombre.",
+        "emailRequired": "Tu correo electrónico es necesario.",
+        "emailInvalid": "Este correo no parece válido.",
+        "messageShort": "Tu mensaje es un poco corto.",
+        "messageLong": "Tu mensaje es demasiado largo."
+      }
+    }
+  },
+  "demarrer": {
+    "meta": {
+      "title": "Crear mi sitio",
+      "description": "Describe tu actividad en unos minutos. Creamos tu sitio profesional para artesano, autónomo o pyme, y está en línea en 48h."
+    },
+    "back": "Volver",
+    "form": {
+      "stepProgress": "Paso {current} de {total}",
+      "error": "Vaya, el envío ha fallado. Vuelve a intentarlo en un momento, o escríbenos directamente.",
+      "prev": "Anterior",
+      "touchToContinue": "Toca una opción para continuar",
+      "uploading": "Subiendo las imágenes…",
+      "redirecting": "Redirigiendo al pago…",
+      "order": "Pedir",
+      "continue": "Continuar",
+      "securityNote": "Pago seguro con Stripe. Puedes usar un código promocional justo antes de pagar. Sin compromiso, cancelable cuando quieras.",
+      "thankYouTitle": "¡Anotado, gracias!",
+      "thankYouBody": "Hemos recibido tu información correctamente. Nuestro equipo prepara tu sitio y te contacta muy pronto — normalmente en menos de 2h — para enseñarte una primera versión.",
+      "backHome": "Volver al inicio",
+      "questionMeanwhile": "¿Una pregunta mientras tanto? {email}"
+    },
+    "steps": {
+      "offre": {
+        "title": "Tu oferta",
+        "subtitle": "Elige tu plan, y una tienda en línea si lo deseas."
+      },
+      "activite": {
+        "title": "Tu actividad",
+        "subtitle": "Tu empresa, dónde estás y cómo trabajas."
+      },
+      "coordonnees": {
+        "title": "Tus datos de contacto",
+        "subtitle": "Cómo te localizan tus clientes — y nosotros."
+      },
+      "site": {
+        "title": "Tu sitio",
+        "subtitle": "Algunos datos para que construyamos tu sitio a tu imagen. Todo es opcional — el pago viene justo después."
+      }
+    },
+    "fields": {
+      "companyLabel": "Nombre de tu empresa",
+      "companyHint": "Ej.: « Souad Limpieza », « Taller Mecalina »",
+      "companyPlaceholder": "El nombre con el que te conocen tus clientes",
+      "tradeLabel": "Tu oficio",
+      "tradeHint": "Ej.: « Empleada de limpieza a domicilio », « Fontanero calefactor »",
+      "tradePlaceholder": "Lo que haces, en pocas palabras",
+      "whereSection": "¿Dónde estás?",
+      "addressLabel": "Dirección",
+      "addressHint": "Número y calle — si recibes clientes, o para el mapa del sitio.",
+      "addressPlaceholder": "12 rue des Artisans",
+      "cityLabel": "Ciudad",
+      "cityHint": "Ej.: « Lyon »",
+      "cityPlaceholder": "Tu ciudad principal",
+      "countryLabel": "País",
+      "howSection": "¿Cómo trabajas?",
+      "hasShop": "Tengo un local o una tienda abierta al público",
+      "mobile": "Me desplazo a casa de mis clientes",
+      "serviceAreaLabel": "Zona de intervención",
+      "serviceAreaHint": "¿Hasta dónde te desplazas?",
+      "serviceAreaPlaceholder": "Ej.: Lyon y 20 km a la redonda",
+      "phoneLabel": "Teléfono",
+      "phoneHint": "El número que aparece en tu sitio.",
+      "phonePlaceholder": "06 12 34 56 78",
+      "emailLabel": "Correo electrónico",
+      "emailHint": "Aquí llegarán las solicitudes.",
+      "emailPlaceholder": "Tu correo electrónico",
+      "regFrance": "SIRET",
+      "regOther": "Número de registro mercantil",
+      "regHintFrance": "Opcional — podrás indicarlo más tarde.",
+      "regHintOther": "Opcional — el número de registro de tu empresa, si lo tienes.",
+      "regPlaceholderFrance": "Número SIRET (14 cifras)",
+      "regPlaceholderOther": "Número de registro de la empresa",
+      "formuleLabel": "Tu plan",
+      "formuleHint": "Podrás cambiarlo con nosotros.",
+      "thenMonthly": "luego {monthly}/mes · imp. incl.",
+      "addShopHint": "Mensual, sin compromiso, cero comisión. Añadirás tus productos después.",
+      "alsoServices": "También ofrezco servicios (no solo venta)",
+      "shopLine": "Tienda {tier}",
+      "totalTTC": "Total imp. incl.",
+      "perMonth": "/mes",
+      "setupToday": "+ {price} de instalación hoy",
+      "describeLabel": "Describe tu actividad",
+      "describeHint": "Tus servicios, tu forma de trabajar… a grandes rasgos, lo afinaremos.",
+      "describePlaceholder": "Lo que ofreces, a quién, cómo…",
+      "logoLabel": "Tu logo",
+      "logoHint": "Si tienes uno.",
+      "logoCta": "Sube tu logo",
+      "photosLabel": "Tus fotos",
+      "photosHint": "Obras, trabajos, local…",
+      "colorsLabel": "Tus colores",
+      "colorsHint": "Principal y secundario — o déjalo, elegiremos nosotros (y los extraemos del logo).",
+      "colorPrimary": "Principal",
+      "colorSecondary": "Secundario",
+      "ambianceLabel": "Estilo y ambiente",
+      "ambianceHint": "Cálido, moderno, serio, colorido… describe el espíritu que buscas.",
+      "ambiancePlaceholder": "El ambiente que imaginas para tu sitio…",
+      "languagesLabel": "Idiomas del sitio",
+      "languagesHint": "En texto libre, separados por comas.",
+      "languagesPlaceholder": "Francés, inglés, español",
+      "socialsLabel": "Redes sociales",
+      "socialsHint": "Enlace o usuario — lo normalizamos.",
+      "socialGoogle": "Ficha de Google",
+      "noWhatsapp": "No tengo WhatsApp (no mostrar botón de WhatsApp)",
+      "extraLabel": "¿Algo más que añadir?",
+      "extraHint": "Un detalle, un deseo, una restricción… todo lo que debamos saber.",
+      "extraPlaceholder": "Lo que quieras decirnos además…"
+    },
+    "errors": {
+      "productTitle": "Dale un nombre a este producto.",
+      "formule": "Elige un plan para continuar.",
+      "companyName": "Indica el nombre de tu empresa.",
+      "trade": "Indica tu oficio.",
+      "city": "Indica tu ciudad.",
+      "country": "Indica tu país.",
+      "phone": "Un número para localizarte es necesario.",
+      "emailRequired": "Tu correo electrónico es necesario.",
+      "emailInvalid": "Este correo no parece válido.",
+      "colorMax": "Dos colores como máximo."
+    }
+  }
+}

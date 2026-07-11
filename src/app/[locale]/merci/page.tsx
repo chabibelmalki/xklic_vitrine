@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ArrowLeft, PartyPopper } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/site/logo";
 import { FloatingActions } from "@/components/site/floating-actions";
 import { brand } from "@/lib/content";
@@ -17,7 +19,18 @@ export const metadata: Metadata = {
 // page n'est plus qu'une confirmation (plus de complétion post-paiement).
 export const runtime = "nodejs";
 
-export default function MerciPage() {
+export default async function MerciPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  return <MerciContent />;
+}
+
+function MerciContent() {
+  const t = useTranslations("merci");
   return (
     <div className="grain relative flex min-h-full flex-col">
       <div
@@ -33,7 +46,7 @@ export default function MerciPage() {
             className="inline-flex items-center gap-1.5 text-sm text-cream-muted transition-colors hover:text-cream"
           >
             <ArrowLeft size={16} />
-            Accueil
+            {t("home")}
           </Link>
         </div>
       </header>
@@ -45,23 +58,20 @@ export default function MerciPage() {
               <PartyPopper size={28} />
             </span>
             <h1 className="font-display mt-6 text-3xl font-semibold tracking-tight text-cream sm:text-4xl">
-              Merci, c&apos;est confirmé&nbsp;!
+              {t("title")}
             </h1>
             <p className="mt-4 max-w-md text-base leading-relaxed text-cream-muted">
-              Ton paiement est bien pris en compte — un reçu Stripe arrive par
-              email. Notre équipe a tout ce qu&apos;il faut et prépare ton site :
-              on revient vers toi très vite, généralement sous 2h, pour te
-              montrer une première version.
+              {t("body")}
             </p>
             <Link
               href="/"
               className="mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-full border border-line-strong px-6 text-sm text-cream transition-colors hover:bg-cream/[0.05]"
             >
               <ArrowLeft size={16} />
-              Retour à l&apos;accueil
+              {t("backHome")}
             </Link>
             <p className="mt-8 text-xs text-cream-faint">
-              Une question&nbsp;? {brand.email}
+              {t("question", { email: brand.email })}
             </p>
           </div>
         </div>

@@ -10,10 +10,9 @@ import {
   Star,
   Wrench,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
-
-const proofs = ["En ligne en 48h", "Sans engagement", "49€ + 9,99€/mois"];
 
 // Composant serveur : les entrées se font en CSS pur (.rise) pour que le
 // h1 — élément LCP — peigne dès le premier rendu HTML, sans attendre
@@ -23,6 +22,8 @@ const rise = (i: number) =>
   ({ "--rise-delay": `${0.07 * i}s` }) as React.CSSProperties;
 
 export function Hero() {
+  const t = useTranslations("hero");
+  const proofs = [t("proofs.online"), t("proofs.noCommitment"), t("proofs.price")];
   return (
     <section className="relative overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-20 lg:pt-40 lg:pb-24">
       {/* Effet signature : aurora chaude animée, adoucie */}
@@ -43,7 +44,7 @@ export function Hero() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ember opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-ember" />
                 </span>
-                Sites web professionnels, clés en main
+                {t("badge")}
               </span>
             </div>
 
@@ -51,17 +52,15 @@ export function Hero() {
               className="rise font-display mt-6 text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.02em] text-cream sm:text-5xl lg:text-[3.5rem] xl:text-[3.9rem]"
               style={rise(1)}
             >
-              Ton site pro qui te{" "}
-              <span className="text-gradient-warm">ramène des clients.</span>
+              {t("titleLead")}{" "}
+              <span className="text-gradient-warm">{t("titleAccent")}</span>
             </h1>
 
             <p
               className="rise mt-5 max-w-lg text-base leading-relaxed text-cream-muted sm:text-lg"
               style={rise(2)}
             >
-              Plombier, mécanicien, à ton compte dans le ménage&nbsp;? On crée
-              ton site clés en main, soigné et pensé pour te trouver de
-              nouveaux clients. En ligne en 48h, sans prise de tête.
+              {t("subtitle")}
             </p>
 
             <div
@@ -73,7 +72,7 @@ export function Hero() {
                 size="lg"
                 className="w-full sm:w-auto"
               >
-                Créer mon site
+                {t("ctaPrimary")}
                 <ArrowRight
                   size={18}
                   className="transition-transform duration-300 group-hover:translate-x-1"
@@ -85,7 +84,7 @@ export function Hero() {
                 size="lg"
                 className="w-full sm:w-auto"
               >
-                Voir des réalisations
+                {t("ctaSecondary")}
               </ButtonLink>
             </div>
 
@@ -118,6 +117,7 @@ export function Hero() {
    flottantes racontent le parcours client : trouvé sur Google → message
    WhatsApp → appel reçu. */
 function Showcase() {
+  const t = useTranslations("hero.mock");
   return (
     <div
       className="rise relative mx-auto w-full max-w-[560px] lg:max-w-none"
@@ -156,10 +156,8 @@ function Showcase() {
             <Search size={15} className="text-ember-deep" />
           </span>
           <div className="leading-tight">
-            <p className="text-[11px] font-semibold text-cream">
-              1<sup>er</sup> sur Google
-            </p>
-            <p className="text-[10px] text-cream-muted">« plombier Lyon »</p>
+            <p className="text-[11px] font-semibold text-cream">{t("rank")}</p>
+            <p className="text-[10px] text-cream-muted">{t("rankQuery")}</p>
           </div>
         </div>
       </div>
@@ -176,11 +174,9 @@ function Showcase() {
           </span>
           <div className="leading-tight">
             <p className="text-[11px] font-semibold text-cream">
-              Nouvelle demande
+              {t("newRequest")}
             </p>
-            <p className="text-[10px] text-cream-muted">
-              « Bonjour, vous êtes dispo&nbsp;? »
-            </p>
+            <p className="text-[10px] text-cream-muted">{t("newRequestMsg")}</p>
           </div>
         </div>
       </div>
@@ -196,7 +192,9 @@ function Showcase() {
             <Phone size={15} />
           </span>
           <div className="leading-tight">
-            <p className="text-[11px] font-semibold text-cream">Appel reçu</p>
+            <p className="text-[11px] font-semibold text-cream">
+              {t("callReceived")}
+            </p>
             <p className="text-[10px] text-cream-muted">+33 6 12 · 0:42</p>
           </div>
         </div>
@@ -207,6 +205,7 @@ function Showcase() {
 
 /* Le mini-site « Durand Plomberie » — entièrement dessiné, aucun vrai client. */
 function SiteMock() {
+  const t = useTranslations("hero.mock");
   return (
     <div aria-hidden>
       {/* Nav du mini-site */}
@@ -215,10 +214,10 @@ function SiteMock() {
           Durand <span className="text-ember">Plomberie</span>
         </span>
         <div className="hidden items-center gap-3.5 text-[10px] text-cream-muted sm:flex">
-          <span>Services</span>
-          <span>Tarifs</span>
-          <span>Avis</span>
-          <span>Contact</span>
+          <span>{t("navServices")}</span>
+          <span>{t("navPricing")}</span>
+          <span>{t("navReviews")}</span>
+          <span>{t("navContact")}</span>
         </div>
         <span className="flex items-center gap-1 rounded-full bg-ember px-2.5 py-1 text-[9px] font-semibold text-white">
           <Phone size={9} />
@@ -231,10 +230,10 @@ function SiteMock() {
         <div>
           <span className="inline-flex items-center gap-1 rounded-full bg-ember/[0.08] px-2 py-0.5 text-[8px] font-semibold uppercase tracking-[0.14em] text-ember-deep">
             <MapPin size={8} />
-            Plombier · Lyon · 7j/7
+            {t("badge")}
           </span>
           <p className="font-display mt-2 text-[17px] font-semibold leading-[1.15] tracking-tight text-cream sm:text-[21px]">
-            Votre plombier de confiance, à Lyon.
+            {t("title")}
           </p>
           {/* Lignes de texte suggérées */}
           <div className="mt-2.5 space-y-1.5">
@@ -243,19 +242,17 @@ function SiteMock() {
           </div>
           <div className="mt-3.5 flex items-center gap-2">
             <span className="rounded-full bg-ember px-3 py-1.5 text-[9px] font-semibold text-white shadow-[0_6px_14px_-6px_rgba(229,67,31,0.6)]">
-              Demander un devis
+              {t("quote")}
             </span>
             <span className="flex items-center gap-1 rounded-full border border-line-strong px-2.5 py-1.5 text-[9px] font-medium text-cream-muted">
-              <Phone size={9} /> Appeler
+              <Phone size={9} /> {t("call")}
             </span>
           </div>
           <div className="mt-3 flex items-center gap-1">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star key={i} size={9} className="fill-amber text-amber" />
             ))}
-            <span className="ml-1 text-[9px] text-cream-muted">
-              4,9 · 87 avis
-            </span>
+            <span className="ml-1 text-[9px] text-cream-muted">{t("reviews")}</span>
           </div>
         </div>
 
@@ -267,14 +264,14 @@ function SiteMock() {
           </div>
           <span className="absolute inset-x-2 bottom-2 flex items-center justify-center gap-1 rounded-full bg-white/95 py-1 text-[8px] font-semibold text-cream backdrop-blur">
             <ShieldCheck size={9} className="text-ember" />
-            Intervention en 30 min
+            {t("intervention")}
           </span>
         </div>
       </div>
 
       {/* Bandeau de garanties du mini-site */}
       <div className="grid grid-cols-3 divide-x divide-line-dark border-t border-line bg-night px-1 py-2.5 text-center">
-        {["Urgences 24h/24", "Devis gratuit", "Travail garanti"].map((g) => (
+        {[t("g1"), t("g2"), t("g3")].map((g) => (
           <span
             key={g}
             className="px-1 text-[8.5px] font-medium text-paper-muted"

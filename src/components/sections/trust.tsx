@@ -1,25 +1,36 @@
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
-import { trades, trustPillars } from "@/lib/content";
+
+// Clés des piliers ; valeur ET libellé viennent des messages (« Sans » se
+// traduit : No/Sin/Ohne/بدون…).
+const PILLAR_KEYS = ["speed", "commitment", "mobile", "madeIn"] as const;
+
+const TRADE_KEYS = [
+  "menage", "plomberie", "electricite", "mecanique", "serrurerie",
+  "jardinage", "coiffure", "maconnerie", "peinture", "chauffagiste",
+] as const;
 
 export function Trust() {
+  const t = useTranslations("trust");
+  const trades = TRADE_KEYS.map((k) => t(`trades.${k}`));
   // On duplique la liste pour un défilement continu sans couture.
   const loop = [...trades, ...trades];
 
   return (
     <section
-      aria-label="Secteurs accompagnés et garanties"
+      aria-label={t("aria")}
       className="relative border-y border-line bg-card/60 py-10"
     >
       <Container>
         {/* Piliers de confiance — filets verticaux, rythme éditorial */}
         <ul className="grid grid-cols-2 gap-y-8 sm:grid-cols-4 sm:divide-x sm:divide-line">
-          {trustPillars.map((p) => (
-            <li key={p.label} className="px-4 text-center sm:px-6">
+          {PILLAR_KEYS.map((key) => (
+            <li key={key} className="px-4 text-center sm:px-6">
               <div className="font-display text-3xl font-semibold text-cream sm:text-4xl">
-                {p.value}
+                {t(`pillarValues.${key}`)}
               </div>
               <div className="mx-auto mt-1.5 max-w-[11rem] text-xs leading-snug text-cream-muted sm:text-sm">
-                {p.label}
+                {t(`pillars.${key}`)}
               </div>
             </li>
           ))}
@@ -42,7 +53,7 @@ export function Trust() {
       </div>
 
       <p className="mt-7 text-center text-xs text-cream-faint">
-        Un métier qui n&apos;est pas dans la liste&nbsp;? On le fait aussi.
+        {t("notListed")}
       </p>
     </section>
   );

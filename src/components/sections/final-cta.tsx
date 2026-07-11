@@ -1,9 +1,12 @@
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { ButtonLink } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
 export function FinalCta() {
+  const t = useTranslations("finalCta");
+  const tc = useTranslations("common");
   return (
     <section className="relative py-20 sm:py-28">
       <Container>
@@ -26,22 +29,21 @@ export function FinalCta() {
 
             <div className="relative mx-auto flex max-w-2xl flex-col items-center">
               <h2 className="font-display text-3xl font-semibold leading-[1.05] tracking-[-0.02em] text-paper sm:text-5xl">
-                Ton site pro,{" "}
-                <span className="text-gradient-warm">prêt sous 48h.</span>
+                {t("titleLead")}{" "}
+                <span className="text-gradient-warm">{t("titleAccent")}</span>
               </h2>
               <p className="mt-5 max-w-lg text-base leading-relaxed text-paper-muted sm:text-lg">
-                Quelques minutes pour remplir le formulaire. On s&apos;occupe
-                du reste. Sans engagement, sans paiement aujourd&apos;hui.
+                {t("subtitle")}
               </p>
               <ButtonLink href="/demarrer" size="lg" className="mt-9">
-                Créer mon site
+                {t("cta")}
                 <ArrowRight
                   size={18}
                   className="transition-transform duration-300 group-hover:translate-x-1"
                 />
               </ButtonLink>
               <p className="mt-4 text-sm text-paper-faint">
-                49€ à la création · puis 9,99€/mois · résiliable à tout moment
+                {tc("priceLine")}
               </p>
             </div>
           </div>

@@ -1,0 +1,504 @@
+{
+  "contact": {
+    "meta": {
+      "title": "Contact us",
+      "description": "A question about your future site? Write to us, we'll get back to you fast. Phone, WhatsApp or the form — whatever works for you."
+    },
+    "eyebrow": "Contact",
+    "title": "Let's talk about your project",
+    "subtitle": "A question, an idea, a quote? Write to us below — we'll get back to you quickly. You can also reach us directly:",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "you@example.fr",
+      "phone": "Phone",
+      "phonePlaceholder": "06 12 34 56 78",
+      "message": "Message",
+      "messagePlaceholder": "Tell us in a few words what you need…",
+      "submit": "Send message",
+      "submitting": "Sending…",
+      "sentTitle": "Message sent!",
+      "sentBody": "Thanks, we'll get back to you very soon. You can also reach us directly by phone or WhatsApp.",
+      "error": "Sending failed. Try again, or reach us by phone.",
+      "errors": {
+        "nameMin": "Please tell us your name.",
+        "emailRequired": "Your email is required.",
+        "emailInvalid": "This email doesn't look valid.",
+        "messageShort": "Your message is a little short.",
+        "messageLong": "Your message is too long."
+      }
+    }
+  },
+  "demarrer": {
+    "meta": {
+      "title": "Create my site",
+      "description": "Describe your business in just a few minutes. We build your pro website for artisans, sole traders or small businesses, and it's live in 48h."
+    },
+    "back": "Back",
+    "form": {
+      "stepProgress": "Step {current} of {total}",
+      "error": "Oops, sending failed. Try again in a moment, or write to us directly.",
+      "prev": "Previous",
+      "touchToContinue": "Tap an option to continue",
+      "uploading": "Uploading images…",
+      "redirecting": "Redirecting to payment…",
+      "order": "Order",
+      "continue": "Continue",
+      "securityNote": "Secure payment by Stripe. You can add a promo code right before paying. No commitment, cancel whenever you want.",
+      "thankYouTitle": "All set, thanks!",
+      "thankYouBody": "We've received your information. Our team is preparing your site and will get back to you very soon — usually within 2h — to show you a first version.",
+      "backHome": "Back to home",
+      "questionMeanwhile": "A question in the meantime? {email}"
+    },
+    "steps": {
+      "offre": {
+        "title": "Your offer",
+        "subtitle": "Choose your plan, and an online shop too if you'd like."
+      },
+      "activite": {
+        "title": "Your business",
+        "subtitle": "Your company, where you are and how you work."
+      },
+      "coordonnees": {
+        "title": "Your contact details",
+        "subtitle": "How your clients — and we — get in touch with you."
+      },
+      "site": {
+        "title": "Your site",
+        "subtitle": "A few details so we can build your site to match you. Everything is optional — payment comes right after."
+      }
+    },
+    "fields": {
+      "companyLabel": "Your company name",
+      "companyHint": "E.g.: « Souad Ménage », « Garage Mécaline »",
+      "companyPlaceholder": "The name your clients know you by",
+      "tradeLabel": "Your trade",
+      "tradeHint": "E.g.: « Home cleaner », « Plumber and heating engineer »",
+      "tradePlaceholder": "What you do, in a few words",
+      "whereSection": "Where are you?",
+      "addressLabel": "Address",
+      "addressHint": "Street and number — if you receive clients, or for the site's map.",
+      "addressPlaceholder": "12 rue des Artisans",
+      "cityLabel": "City",
+      "cityHint": "E.g.: « Lyon »",
+      "cityPlaceholder": "Your main city",
+      "countryLabel": "Country",
+      "howSection": "How do you work?",
+      "hasShop": "I have premises or a shop open to the public",
+      "mobile": "I travel to my clients",
+      "serviceAreaLabel": "Service area",
+      "serviceAreaHint": "How far do you travel?",
+      "serviceAreaPlaceholder": "E.g.: Lyon and 20 km around",
+      "phoneLabel": "Phone",
+      "phoneHint": "The number shown on your site.",
+      "phonePlaceholder": "06 12 34 56 78",
+      "emailLabel": "Email",
+      "emailHint": "This is where your requests will land.",
+      "emailPlaceholder": "Your email address",
+      "regFrance": "SIRET",
+      "regOther": "Business registration number",
+      "regHintFrance": "Optional — you can add it later.",
+      "regHintOther": "Optional — your company's registration number, if you have one.",
+      "regPlaceholderFrance": "SIRET number (14 digits)",
+      "regPlaceholderOther": "Company registration number",
+      "formuleLabel": "Your plan",
+      "formuleHint": "You can change it with us.",
+      "thenMonthly": "then {monthly}/month · incl. tax",
+      "addShopHint": "Monthly, no commitment, zero commission. You'll add your products afterwards.",
+      "alsoServices": "I also offer services (not just sales)",
+      "shopLine": "{tier} shop",
+      "totalTTC": "Total incl. tax",
+      "perMonth": "/month",
+      "setupToday": "+ {price} setup today",
+      "describeLabel": "Describe your business",
+      "describeHint": "Your services, the way you work… however it comes, we'll refine it.",
+      "describePlaceholder": "What you offer, to whom, how…",
+      "logoLabel": "Your logo",
+      "logoHint": "If you have one.",
+      "logoCta": "Drop your logo here",
+      "photosLabel": "Your photos",
+      "photosHint": "Jobs, projects, premises…",
+      "colorsLabel": "Your colors",
+      "colorsHint": "Primary and secondary — or leave it, we'll choose (and pull them from your logo).",
+      "colorPrimary": "Primary",
+      "colorSecondary": "Secondary",
+      "ambianceLabel": "Style & mood",
+      "ambianceHint": "Warm, modern, serious, colorful… describe the feel you want.",
+      "ambiancePlaceholder": "The mood you picture for your site…",
+      "languagesLabel": "Site languages",
+      "languagesHint": "Free text, separated by commas.",
+      "languagesPlaceholder": "French, English, Spanish",
+      "socialsLabel": "Social media",
+      "socialsHint": "Link or handle — we'll tidy it up.",
+      "socialGoogle": "Google listing",
+      "noWhatsapp": "I don't have WhatsApp (don't show a WhatsApp button)",
+      "extraLabel": "Anything else to add?",
+      "extraHint": "A detail, a wish, a constraint… anything we should know.",
+      "extraPlaceholder": "Anything more you'd like to tell us…"
+    },
+    "errors": {
+      "productTitle": "Give this product a name.",
+      "formule": "Choose a plan to continue.",
+      "companyName": "Please enter your company name.",
+      "trade": "Please enter your trade.",
+      "city": "Please enter your city.",
+      "country": "Please enter your country.",
+      "phone": "A number to reach you is required.",
+      "emailRequired": "Your email is required.",
+      "emailInvalid": "This email doesn't look valid.",
+      "colorMax": "Two colors maximum."
+    }
+  },
+  "nav": {
+    "metiers": "Trades",
+    "realisations": "Our work",
+    "tarifs": "Pricing",
+    "faq": "Questions",
+    "contact": "Contact",
+    "cta": "Create my site"
+  },
+  "language": {
+    "label": "Language",
+    "choose": "Choose language"
+  },
+  "common": {
+    "createSite": "Create my site",
+    "priceLine": "49€ to set up · then 9,99€/month · cancel anytime",
+    "whatsappAria": "Message on WhatsApp",
+    "callAria": "Call {phone}",
+    "optional": "(optional)"
+  },
+  "footer": {
+    "tagline": "The pro website that brings you clients, live in 48h. No hassle, no commitment.",
+    "col": {
+      "services": "Services",
+      "offer": "The offer",
+      "contact": "Contact"
+    },
+    "links": {
+      "allMetiers": "All trades",
+      "realisations": "Our work",
+      "blog": "Blog",
+      "pricing": "Plans & pricing",
+      "how": "How it works",
+      "faq": "Frequently asked questions",
+      "createSite": "Create my site"
+    },
+    "rights": "All rights reserved.",
+    "legal": {
+      "mentions": "Legal notice",
+      "cgv": "Terms of sale",
+      "privacy": "Privacy"
+    },
+    "designedIn": "Made in France"
+  },
+  "hero": {
+    "badge": "Professional websites, done for you",
+    "titleLead": "Your pro website that",
+    "titleAccent": "brings you clients.",
+    "subtitle": "Plumber, mechanic, running your own cleaning business? We build your website for you — polished and designed to win you new clients. Live in 48h, no hassle.",
+    "ctaPrimary": "Create my site",
+    "ctaSecondary": "See our work",
+    "proofs": {
+      "online": "Live in 48h",
+      "noCommitment": "No commitment",
+      "price": "49€ + 9,99€/month"
+    },
+    "mock": {
+      "rank": "#1 on Google",
+      "rankQuery": "« plumber Lyon »",
+      "newRequest": "New request",
+      "newRequestMsg": "« Hi, are you available? »",
+      "callReceived": "Call received",
+      "navServices": "Services",
+      "navPricing": "Pricing",
+      "navReviews": "Reviews",
+      "navContact": "Contact",
+      "badge": "Plumber · Lyon · 7/7",
+      "title": "Your trusted plumber in Lyon.",
+      "quote": "Get a quote",
+      "call": "Call",
+      "reviews": "4,9 · 87 reviews",
+      "intervention": "On-site in 30 min",
+      "g1": "24/7 emergencies",
+      "g2": "Free quote",
+      "g3": "Guaranteed work"
+    }
+  },
+  "trust": {
+    "aria": "Sectors we work with and guarantees",
+    "pillars": {
+      "speed": "to go live",
+      "commitment": "commitment, cancel whenever you want",
+      "mobile": "built for mobile",
+      "madeIn": "built and managed in France"
+    },
+    "trades": {
+      "menage": "Home cleaning",
+      "plomberie": "Plumbing",
+      "electricite": "Electrical",
+      "mecanique": "Auto mechanics",
+      "serrurerie": "Locksmithing",
+      "jardinage": "Gardening",
+      "coiffure": "Hair & beauty",
+      "maconnerie": "Masonry",
+      "peinture": "Painting",
+      "chauffagiste": "Heating engineer"
+    },
+    "notListed": "A trade that's not on the list? We do that too.",
+    "pillarValues": {
+      "speed": "48h",
+      "commitment": "No",
+      "mobile": "100%",
+      "madeIn": "🇫🇷"
+    }
+  },
+  "problem": {
+    "eyebrow": "The reality",
+    "titleLine1": "Being great at your job isn't enough anymore.",
+    "titleLine2": "People still have to find you.",
+    "description": "These days, the first thing a client does is Google. Without a credible website, you let your competitors take the calls that should have been yours.",
+    "withoutLabel": "Without Xklic",
+    "withLabel": "With Xklic",
+    "problems": [
+      "Your clients look for you on Google… and don't find you.",
+      "A Facebook page is no longer enough to earn trust.",
+      "Web agency quotes run to 1 500€, or a lot more.",
+      "You have neither the time nor the desire to manage a site yourself."
+    ],
+    "promises": [
+      "A site that puts you in front of people when they search for your trade nearby.",
+      "A polished storefront that reassures people and makes them want to call you.",
+      "49€ to set up, 9,99€/month. All-inclusive, no surprises.",
+      "You touch nothing: we handle everything, you just approve."
+    ]
+  },
+  "process": {
+    "eyebrow": "How it works",
+    "title": "Four steps. Then your first requests start coming in.",
+    "description": "No jargon, no endless meetings. You give us the essentials, we do the rest.",
+    "steps": [
+      {
+        "title": "You fill out the form",
+        "body": "A few minutes to describe your business, your services and your contact details. Examples guide you at every step."
+      },
+      {
+        "title": "We build your site",
+        "body": "Our team designs a professional site, polished and built for your trade. Nothing to install, nothing to set up."
+      },
+      {
+        "title": "It's live in 48h",
+        "body": "Your site is published on your own .fr domain name (free — we handle it for you), optimized for mobile and to show up on Google locally."
+      },
+      {
+        "title": "You receive your client requests",
+        "body": "Contact form, call button and WhatsApp: requests land straight in your hands, ready to turn into jobs."
+      }
+    ]
+  },
+  "portfolio": {
+    "eyebrow": "Our work",
+    "title": "Simple, credible sites that work for their owners.",
+    "description": "Every site is built for one trade and one area, and for mobile first. Here are a few of the businesses we work with.",
+    "firstClient": "First client",
+    "yoursSoon": "Your business here very soon.",
+    "quote": "Get a quote",
+    "trades": {
+      "sanad": "Cleaning & home care services",
+      "atelier": "Custom pastry",
+      "meca": "Auto repair",
+      "vibe": "Fitness coaching"
+    }
+  },
+  "benefits": {
+    "eyebrow": "What it does for you",
+    "title": "A website, but above all more clients.",
+    "description": "Not just a pretty page: a tool that works for you every day, even when you're out on a job.",
+    "items": [
+      {
+        "title": "People find you on Google",
+        "body": "Optimized for local search: you show up when a client looks for your trade nearby."
+      },
+      {
+        "title": "Requests come straight to you",
+        "body": "Contact form and notifications: every request drops right into your inbox, ready to call back."
+      },
+      {
+        "title": "Call button & WhatsApp",
+        "body": "Your clients call you or message you on WhatsApp in a single tap, straight from their phone."
+      },
+      {
+        "title": "Secure and worry-free",
+        "body": "Hosting, HTTPS, backups and updates: we handle all the tech, your site stays online."
+      },
+      {
+        "title": "Perfect on mobile",
+        "body": "8 out of 10 visitors come from a phone. Your site is fast, sharp and easy to read on the smallest screen."
+      },
+      {
+        "title": "Unlimited edits",
+        "body": "New price, new photo, summer hours? You write to us, we update it — often the same day, within 3 business days at the latest."
+      }
+    ]
+  },
+  "formules": {
+    "eyebrow": "Our plans",
+    "title": "Three plans, simple and clear.",
+    "description": "You start wherever you want, you switch whenever you want. No surprises, and always without commitment.",
+    "boutiqueNote": "Optional e-commerce shop on any plan —",
+    "boutiqueNoteStrong": "0 % commission",
+    "boutiqueNoteEnd": "on your sales.",
+    "vatNote": "All our prices are shown in euros, tax included.",
+    "card": {
+      "recommended": "Recommended",
+      "perMonthSuffix": "/month · incl. tax",
+      "setupLine": "+ {price} to set up",
+      "setupOnce": "(one time only)",
+      "noEngagement": "No commitment · cancel whenever you want",
+      "addShop": "Add an online shop?",
+      "noShop": "No shop",
+      "shopOption": "{label} — +{price}/month ({products})",
+      "showDetails": "See details",
+      "hideDetails": "Hide details",
+      "seeFormuleDetail": "See the details of this plan",
+      "googleMockIntro": "What your clients will see when they search for your trade:"
+    },
+    "googleMock": {
+      "guaranteed": "Guaranteed by Google",
+      "businessName": "Dupont Plumbing",
+      "status": "Paris · Open · Available now",
+      "reviews": "(87 reviews)",
+      "call": "Call"
+    },
+    "boutiqueProducts": {
+      "starter": "up to 20 products",
+      "pro": "up to 100 products",
+      "business": "unlimited products"
+    },
+    "items": {
+      "site": {
+        "name": "Your site",
+        "phrase": "To simply exist online.",
+        "features": [
+          "A great-looking professional site in your name",
+          "Your .fr domain name free: we buy it and manage it for you, you have nothing to do",
+          "You show up on Google when people search for you",
+          "Your clients find you and call you in one click",
+          "A QR code to show your clients to collect reviews"
+        ],
+        "cta": "I want my site"
+      },
+      "google": {
+        "name": "We take care of your Google",
+        "phrase": "You work, we look after your image.",
+        "inherits": "Everything in the Site pack, plus:",
+        "features": [
+          "We reply to your client reviews for you",
+          "We post for you on Google every month",
+          "We keep your hours and photos up to date",
+          "Without paying for advertising"
+        ],
+        "cta": "I want the peace of mind"
+      },
+      "haut-google": {
+        "name": "At the top of Google",
+        "phrase": "Be the first one your clients see.",
+        "priceNote": "Your advertising budget, paid directly to Google — you choose the amount.",
+        "inherits": "Everything in the previous pack, plus:",
+        "features": [
+          "You appear right at the top of Google, ahead of everyone else",
+          "We put together your application for the green « Guaranteed by Google » badge (legal documents, insurance depending on the trade) — it appears once Google has approved it",
+          "Clients call you directly",
+          "You only pay Google when a real client contacts you",
+          "We set up and manage everything for you"
+        ],
+        "cta": "I want more clients",
+        "featured": "Recommended"
+      }
+    }
+  },
+  "faq": {
+    "eyebrow": "Questions",
+    "title": "Everything you're wondering, straight to the point.",
+    "description": "Another question? Write to us — we answer fast and clearly.",
+    "items": [
+      {
+        "q": "How long until my site is live?",
+        "a": "48h after we receive your information through the form. You approve a version, we adjust it if needed, then we publish. No meetings, no spec document to write."
+      },
+      {
+        "q": "Am I tied in for a fixed term?",
+        "a": "No. It's commitment-free: 49€ once at setup, then 9,99€/month. You stop whenever you want, with a single message."
+      },
+      {
+        "q": "What if I want to change my site later?",
+        "a": "Content edits are unlimited and included in the subscription. You write to us what you want to change, we take care of it — usually the same day, and within 3 business days at the latest."
+      },
+      {
+        "q": "Who owns the site and the domain name?",
+        "a": "The content (text, photos) is yours. The .fr domain name is free and managed by Xklic: we buy it and take care of it for you for the whole duration of your subscription — you have nothing to do. If you stop, you can ask to recover your domain through our contact form (full conditions detailed in our terms of sale)."
+      },
+      {
+        "q": "How does payment work?",
+        "a": "You pay online securely (Stripe) at the end of the form: only the 49€ setup fee today. The first monthly charge of 9,99€ comes the following month, and it's commitment-free — you stop whenever you want."
+      },
+      {
+        "q": "I don't have a SIRET yet, is that possible?",
+        "a": "Yes. You can start without a SIRET and send it to us later. We simply put « registration in progress » on the site in the meantime."
+      },
+      {
+        "q": "I offer home care services — is the tax credit highlighted?",
+        "a": "Absolutely. If you're eligible for the 50% tax credit, we show it clearly on your site — it's a decisive selling point for your clients."
+      }
+    ]
+  },
+  "finalCta": {
+    "titleLead": "Your pro website,",
+    "titleAccent": "ready within 48h.",
+    "subtitle": "A few minutes to fill out the form. We handle the rest. No commitment, no payment today.",
+    "cta": "Create my site"
+  },
+  "meta": {
+    "defaultTitle": "Xklic — The pro website that brings you clients, live in 48h",
+    "description": "Xklic builds your business website, done for you and live in 48h. No hassle, no commitment. 49€ setup then 9,99€/month.",
+    "ogTitle": "Xklic — The pro website that brings you clients, live in 48h",
+    "ogDescription": "Your business website, done for you and live in 48h. 49€ setup then 9,99€/month, no commitment."
+  },
+  "ctaBand": {
+    "default": {
+      "title": "Ready to be found by your clients?",
+      "subtitle": "We build your pro website, done for you, live in 48h. No commitment."
+    },
+    "tarifs": {
+      "title": "A question before you get started?",
+      "subtitle": "Call us or message on WhatsApp — we reply fast and clearly."
+    },
+    "faq": {
+      "title": "All clear? Let's go.",
+      "subtitle": "Your pro website, live in 48h. No commitment."
+    }
+  },
+  "proof": {
+    "online": "Live in 48h",
+    "noCommitment": "No commitment",
+    "unlimited": "Unlimited edits"
+  },
+  "pageMeta": {
+    "tarifs": {
+      "title": "Pricing — 49€ then 9,99€/month, no commitment",
+      "description": "Three simple, clear plans for your pro website: from 49€ setup then 9,99€/month, no commitment. Start where you want, change whenever you want."
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "description": "Timelines, commitment, payment, edits, domain name… All the answers about building your pro website with Xklic, straight to the point."
+    }
+  },
+  "merci": {
+    "home": "Home",
+    "title": "Thank you, it's confirmed!",
+    "body": "Your payment has gone through — a Stripe receipt is on its way by email. Our team has everything it needs and is preparing your website: we'll get back to you very soon, usually within 2h, to show you a first version.",
+    "backHome": "Back to home",
+    "question": "A question? {email}"
+  }
+}

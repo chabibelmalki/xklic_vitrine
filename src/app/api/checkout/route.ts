@@ -93,7 +93,7 @@ export async function POST(req: Request) {
 
   const metadata = {
     orderId: order.id,
-    orderUrl: order.url,
+    orderKey: order.key,
     formule: lead.formule,
     ...(lead.boutiqueTier ? { boutiqueTier: lead.boutiqueTier } : {}),
   };

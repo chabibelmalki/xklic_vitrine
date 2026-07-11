@@ -1,4 +1,5 @@
 import { ArrowRight, Phone, MessageCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
 import { brand } from "@/lib/content";
@@ -7,17 +8,24 @@ import { cn, telLink, waLink } from "@/lib/utils";
 // Bandeau CTA fort, à contraste inversé (encre foncée sur ivoire). Réutilise
 // les MÊMES conversions que le reste du site : Créer mon site (/demarrer),
 // appel direct (tel:), WhatsApp. Conversions = sacrées : ne pas dévier.
+// `variant` sélectionne le titre/sous-titre traduit (ctaBand.<variant>).
 export function CtaBand({
-  title = "Prêt à être trouvé par vos clients ?",
-  subtitle = "On crée votre site pro, clés en main, en ligne en 48h. Sans engagement.",
-  primaryLabel = "Créer mon site",
+  variant = "default",
+  title: titleOverride,
+  subtitle: subtitleOverride,
   className,
 }: {
+  variant?: "default" | "tarifs" | "faq";
+  /** Overrides bruts (pages FR-only : titres dynamiques par métier). */
   title?: string;
   subtitle?: string;
-  primaryLabel?: string;
   className?: string;
 }) {
+  const t = useTranslations("ctaBand");
+  const tc = useTranslations("common");
+  const title = titleOverride ?? t(`${variant}.title`);
+  const subtitle = subtitleOverride ?? t(`${variant}.subtitle`);
+  const primaryLabel = tc("createSite");
   return (
     <section className={cn("relative py-16 sm:py-20", className)}>
       <Container>
@@ -63,7 +71,7 @@ export function CtaBand({
                 href={waLink(brand.whatsapp, brand.whatsappMessage)}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Écrire sur WhatsApp"
+                aria-label={tc("whatsappAria")}
                 className="inline-flex h-13 w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-7 text-[0.95rem] font-semibold text-white shadow-[0_8px_24px_-8px_rgba(37,211,102,0.6)] transition-transform duration-300 hover:-translate-y-0.5 sm:h-14 sm:w-auto sm:px-8 sm:text-base"
               >
                 <MessageCircle size={18} />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   ArrowRight,
   Check,
@@ -10,12 +10,12 @@ import {
   ShieldCheck,
   Star,
 } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import { ButtonLink } from "@/components/ui/button";
 import {
   type Formule,
   BOUTIQUE_MONTHLY_CENTS,
   BOUTIQUE_LABELS,
-  BOUTIQUE_PRODUCTS,
   euros,
 } from "@/lib/content";
 import { BOUTIQUE_TIERS, type BoutiqueTier } from "@/lib/lead-schema";
@@ -35,6 +35,16 @@ export function FormuleCard({
   formule: Formule;
   variant?: "full" | "home";
 }) {
+  const t = useTranslations("formules");
+  const tc = useTranslations("formules.card");
+  // Copie propre à la formule, résolue par slug (items.site / items.google / …).
+  const name = t(`items.${f.slug}.name`);
+  const phrase = t(`items.${f.slug}.phrase`);
+  const cta = t(`items.${f.slug}.cta`);
+  const features = t.raw(`items.${f.slug}.features`) as string[];
+  const inherits = f.inherits ? t(`items.${f.slug}.inherits`) : null;
+  const priceNote = f.priceNote ? t(`items.${f.slug}.priceNote`) : null;
+
   const [tier, setTier] = useState<"" | BoutiqueTier>("");
   const [open, setOpen] = useState(false);
 
@@ -52,19 +62,19 @@ export function FormuleCard({
     >
       {f.featured ? (
         <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-br from-ember-deep via-ember to-amber px-4 py-1 text-xs font-semibold text-white shadow-[0_8px_20px_-8px_rgba(229,67,31,0.7)]">
-          Recommandé
+          {tc("recommended")}
         </span>
       ) : null}
 
       {/* Titre — min-h fixe (2 lignes) : « On s'occupe de votre Google » passe sur
           2 lignes, on réserve la même hauteur partout pour ne rien décaler. */}
       <h3 className="font-display min-h-[3.5rem] text-xl font-semibold leading-tight text-cream sm:min-h-[4rem] sm:text-2xl">
-        {f.name}
+        {name}
       </h3>
 
       {/* Phrase — min-h fixe → le prix tombe à la même hauteur sur les 3 cartes */}
       <p className="mt-2 min-h-[3.5rem] text-[0.95rem] italic leading-relaxed text-cream-muted">
-        {f.phrase}
+        {phrase}
       </p>
 
       {/* Prix : gros mensuel (recalculé live) + /mois petit ; installation en note */}
@@ -79,19 +89,19 @@ export function FormuleCard({
             {euros(monthlyCents)}
           </span>
           <span className="text-sm font-medium text-cream-muted">
-            /mois · TTC
+            {tc("perMonthSuffix")}
           </span>
         </div>
         {/* min-h fixe même si la note varie */}
         <p className="mt-2.5 min-h-[1.75rem] text-sm text-cream-faint">
-          + {euros(f.setupCents)} à l&apos;installation{" "}
-          <span className="text-cream-faint/80">(une seule fois)</span>
+          {tc("setupLine", { price: euros(f.setupCents) })}{" "}
+          <span className="text-cream-faint/80">{tc("setupOnce")}</span>
         </p>
       </div>
 
       <div className="mt-4 inline-flex items-center gap-2 self-start rounded-full bg-ember/10 px-3 py-1.5 text-xs font-medium text-ember-deep">
         <ShieldCheck size={14} />
-        Sans engagement · annulable quand vous voulez
+        {tc("noEngagement")}
       </div>
 
       {/* Select boutique — recalcule le prix mensuel ci-dessus en direct */}
@@ -100,7 +110,7 @@ export function FormuleCard({
           htmlFor={`boutique-${f.slug}`}
           className="mb-1.5 block text-xs font-medium text-cream-muted"
         >
-          Ajouter une boutique en ligne ?
+          {tc("addShop")}
         </label>
         <select
           id={`boutique-${f.slug}`}
@@ -108,11 +118,14 @@ export function FormuleCard({
           onChange={(e) => setTier(e.target.value as "" | BoutiqueTier)}
           className={selectClass}
         >
-          <option value="">Pas de boutique</option>
-          {BOUTIQUE_TIERS.map((t) => (
-            <option key={t} value={t}>
-              {BOUTIQUE_LABELS[t]} — +{euros(BOUTIQUE_MONTHLY_CENTS[t])}/mois (
-              {BOUTIQUE_PRODUCTS[t]})
+          <option value="">{tc("noShop")}</option>
+          {BOUTIQUE_TIERS.map((tierKey) => (
+            <option key={tierKey} value={tierKey}>
+              {tc("shopOption", {
+                label: BOUTIQUE_LABELS[tierKey],
+                price: euros(BOUTIQUE_MONTHLY_CENTS[tierKey]),
+                products: t(`boutiqueProducts.${tierKey}`),
+              })}
             </option>
           ))}
         </select>
@@ -126,7 +139,7 @@ export function FormuleCard({
         variant={f.featured ? "primary" : "secondary"}
         className="mt-6 w-full"
       >
-        {f.cta}
+        {cta}
         <ArrowRight
           size={18}
           className="transition-transform duration-300 group-hover:translate-x-1"
@@ -143,7 +156,7 @@ export function FormuleCard({
             aria-expanded={open}
             className="flex w-full items-center justify-between text-sm font-medium text-cream transition-colors hover:text-ember-soft"
           >
-            {open ? "Masquer les détails" : "Voir les détails"}
+            {open ? tc("hideDetails") : tc("showDetails")}
             <ChevronDown
               size={16}
               className={cn(
@@ -160,13 +173,13 @@ export function FormuleCard({
           >
             <div className="overflow-hidden">
               <div className="pt-4">
-                {f.inherits ? (
+                {inherits ? (
                   <p className="mb-3 text-sm font-semibold text-cream">
-                    {f.inherits}
+                    {inherits}
                   </p>
                 ) : null}
                 <ul className="flex flex-col gap-3">
-                  {f.features.map((feature) => (
+                  {features.map((feature) => (
                     <li
                       key={feature}
                       className="flex items-start gap-3 text-sm leading-relaxed text-cream"
@@ -178,15 +191,15 @@ export function FormuleCard({
                     </li>
                   ))}
                 </ul>
-                {f.priceNote ? (
+                {priceNote ? (
                   <p className="mt-4 rounded-xl border border-ember/20 bg-ember/[0.06] px-3.5 py-2.5 text-xs font-medium leading-relaxed text-cream">
-                    {f.priceNote}
+                    {priceNote}
                   </p>
                 ) : null}
                 {f.featured ? (
                   <div className="mt-5">
                     <p className="mb-2.5 text-xs font-medium text-cream-faint">
-                      Ce que vos clients verront en cherchant votre métier :
+                      {tc("googleMockIntro")}
                     </p>
                     <GoogleMock />
                   </div>
@@ -200,7 +213,7 @@ export function FormuleCard({
           href="/tarifs"
           className="group mt-5 inline-flex items-center gap-1.5 self-start text-sm font-medium text-ember-deep transition-colors hover:text-ember"
         >
-          Voir le détail de cette formule
+          {tc("seeFormuleDetail")}
           <ArrowRight
             size={15}
             className="transition-transform duration-300 group-hover:translate-x-1"
@@ -214,16 +227,17 @@ export function FormuleCard({
 // Mini « capture d'écran » qui imite un résultat Google en haut de page.
 // Nom et chiffres 100% FICTIFS — sert juste à montrer à l'artisan ce qu'il aura.
 function GoogleMock() {
+  const t = useTranslations("formules.googleMock");
   return (
     <div className="rounded-2xl bg-white p-4 shadow-[0_2px_8px_rgba(27,22,17,0.08),0_16px_36px_-22px_rgba(27,22,17,0.35)] ring-1 ring-black/5">
       <div className="inline-flex items-center gap-1.5 rounded-full bg-[#e6f4ea] px-2.5 py-1 text-xs font-semibold text-[#137333]">
         <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#34a853] text-white">
           <Check size={9} strokeWidth={3.5} />
         </span>
-        Garanti par Google
+        {t("guaranteed")}
       </div>
       <div className="mt-2.5 text-[15px] font-semibold text-[#202124]">
-        Plomberie Dupont
+        {t("businessName")}
       </div>
       <div className="mt-1 flex items-center gap-1.5">
         <span className="text-[13px] font-medium text-[#202124]">4,9</span>
@@ -238,11 +252,9 @@ function GoogleMock() {
             />
           ))}
         </span>
-        <span className="text-[13px] text-[#5f6368]">(87 avis)</span>
+        <span className="text-[13px] text-[#5f6368]">{t("reviews")}</span>
       </div>
-      <div className="mt-1 text-[13px] text-[#5f6368]">
-        Paris · Ouvert · Disponible maintenant
-      </div>
+      <div className="mt-1 text-[13px] text-[#5f6368]">{t("status")}</div>
       <button
         type="button"
         tabIndex={-1}
@@ -250,7 +262,7 @@ function GoogleMock() {
         className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#34a853] px-3.5 py-1.5 text-[13px] font-semibold text-white"
       >
         <Phone size={13} fill="currentColor" strokeWidth={0} />
-        Appeler
+        {t("call")}
       </button>
     </div>
   );

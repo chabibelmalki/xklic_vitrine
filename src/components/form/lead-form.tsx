@@ -3,16 +3,17 @@
 import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { upload } from "@vercel/blob/client";
+import { useTranslations } from "next-intl";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight, CreditCard, Loader2, PartyPopper } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import {
-  leadSchema,
+  makeLeadSchema,
   type LeadValues,
   type FormuleSlug,
   type BoutiqueTier,
 } from "@/lib/lead-schema";
+import { brand } from "@/lib/content";
 import { Button } from "@/components/ui/button";
 import { Turnstile, TURNSTILE_ENABLED } from "@/components/form/turnstile";
 import { buildSteps, StepNavProvider } from "./steps";
@@ -30,10 +31,12 @@ type UploadInput = {
   file?: unknown;
 };
 
-// Téléverse chaque fichier vers Vercel Blob (browser -> Blob, accès public) et
-// renvoie, pour chacun, { name, url } où `url` est l'URL publique Blob. Les
-// objets non sérialisables (File, objectURL d'aperçu) ne partent donc jamais
-// au webhook — seules les URLs publiques le font.
+// Téléverse chaque fichier DIRECTEMENT vers Scaleway (browser -> S3, public) via
+// une URL PUT présignée négociée sur /api/upload/sign, et renvoie { name, url }
+// où `url` est l'URL publique (MEDIA_BASE_URL/<clé>). Le fichier ne transite
+// jamais par nos fonctions serverless (pas de limite de body). Les objets non
+// sérialisables (File, objectURL d'aperçu) ne partent donc jamais au webhook —
+// seules les URLs publiques le font.
 async function uploadFiles(items?: UploadInput[]) {
   return Promise.all(
     (items ?? []).map(async (item) => {
@@ -41,11 +44,23 @@ async function uploadFiles(items?: UploadInput[]) {
       if (!(item.file instanceof File)) {
         return { name: item.name, url: item.url ?? "" };
       }
-      const blob = await upload(`leads/${item.file.name}`, item.file, {
-        access: "public",
-        handleUploadUrl: "/api/blob/upload",
+      const file = item.file;
+      // 1. Négocie une URL PUT présignée (type + taille validés côté serveur).
+      const signRes = await fetch("/api/upload/sign", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: file.name, type: file.type, size: file.size }),
       });
-      return { name: item.name, url: blob.url };
+      if (!signRes.ok) throw new Error("sign failed");
+      const { uploadUrl, publicUrl, headers } = (await signRes.json()) as {
+        uploadUrl: string;
+        publicUrl: string;
+        headers: Record<string, string>;
+      };
+      // 2. PUT direct vers Scaleway avec exactement les en-têtes signés.
+      const putRes = await fetch(uploadUrl, { method: "PUT", headers, body: file });
+      if (!putRes.ok) throw new Error("upload failed");
+      return { name: item.name, url: publicUrl };
     }),
   );
 }
@@ -76,14 +91,19 @@ export function LeadForm({
   // Pays pré-rempli via l'IP (en-tête géo, résolu côté serveur). Repli "France".
   initialCountry?: string;
 }) {
+  const t = useTranslations("demarrer.form");
+  const ts = useTranslations("demarrer.steps");
+  const te = useTranslations("demarrer.errors");
   const reduce = useReducedMotion();
   const [step, setStep] = useState(0);
   const [dir, setDir] = useState(1);
   const [status, setStatus] = useState<Status>("form");
   const [token, setToken] = useState("");
+  // Schéma avec messages de validation traduits.
+  const [schema] = useState(() => makeLeadSchema((k) => te(k)));
 
   const methods = useForm<LeadValues>({
-    resolver: zodResolver(leadSchema),
+    resolver: zodResolver(schema),
     mode: "onTouched",
     defaultValues: {
       formule: initialFormule,
@@ -224,6 +244,9 @@ export function LeadForm({
     return <ThankYou />;
   }
 
+  const stepTitle = ts(`${current.id}.title`);
+  const stepSubtitle = ts(`${current.id}.subtitle`);
+
   return (
     <FormProvider {...methods}>
       <div className="mx-auto w-full max-w-xl">
@@ -231,9 +254,9 @@ export function LeadForm({
         <div className="mb-8">
           <div className="mb-3 flex items-center justify-between text-xs text-cream-faint">
             <span className="font-medium text-cream-muted">
-              Étape {safeStep + 1} sur {total}
+              {t("stepProgress", { current: safeStep + 1, total })}
             </span>
-            <span>{current.title}</span>
+            <span>{stepTitle}</span>
           </div>
           <div className="h-1.5 w-full overflow-hidden rounded-full bg-cream/[0.06]">
             <motion.div
@@ -249,9 +272,9 @@ export function LeadForm({
         <div className="rounded-3xl border border-line bg-ink-soft/60 p-6 backdrop-blur-sm sm:p-9">
           <div className="mb-7">
             <h1 className="font-display text-2xl font-semibold tracking-tight text-cream sm:text-3xl">
-              {current.title}
+              {stepTitle}
             </h1>
-            <p className="mt-2 text-sm text-cream-muted">{current.subtitle}</p>
+            <p className="mt-2 text-sm text-cream-muted">{stepSubtitle}</p>
           </div>
 
           <form
@@ -291,8 +314,7 @@ export function LeadForm({
 
             {status === "error" ? (
               <p className="mt-5 rounded-lg border border-ember/30 bg-ember/10 px-4 py-3 text-sm text-ember-soft">
-                Oups, l&apos;envoi a échoué. Réessaie dans un instant, ou
-                écris-nous directement.
+                {t("error")}
               </p>
             ) : null}
 
@@ -309,13 +331,13 @@ export function LeadForm({
                   )}
                 >
                   <ArrowLeft size={16} />
-                  Précédent
+                  {t("prev")}
                 </button>
 
                 {/* Sur les étapes auto-avance, pas de bouton « Continuer ». */}
                 {current.autoAdvance ? (
                   <span className="text-xs text-cream-faint">
-                    Touche une option pour continuer
+                    {t("touchToContinue")}
                   </span>
                 ) : (
                   <Button
@@ -329,21 +351,21 @@ export function LeadForm({
                     {status === "uploading" ? (
                       <>
                         <Loader2 size={18} className="animate-spin" />
-                        Téléversement des images…
+                        {t("uploading")}
                       </>
                     ) : status === "submitting" ? (
                       <>
                         <Loader2 size={18} className="animate-spin" />
-                        Redirection vers le paiement…
+                        {t("redirecting")}
                       </>
                     ) : isLast ? (
                       <>
-                        Commander
+                        {t("order")}
                         <CreditCard size={18} />
                       </>
                     ) : (
                       <>
-                        Continuer
+                        {t("continue")}
                         <ArrowRight
                           size={18}
                           className="transition-transform duration-300 group-hover:translate-x-1"
@@ -376,8 +398,7 @@ export function LeadForm({
         </div>
 
         <p className="mt-6 text-center text-xs text-cream-faint">
-          Paiement sécurisé par Stripe. Code promo possible juste avant de
-          payer. Sans engagement, résiliable quand tu veux.
+          {t("securityNote")}
         </p>
       </div>
     </FormProvider>
@@ -385,6 +406,7 @@ export function LeadForm({
 }
 
 function ThankYou() {
+  const t = useTranslations("demarrer.form");
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -396,12 +418,10 @@ function ThankYou() {
         <PartyPopper size={28} />
       </span>
       <h1 className="font-display mt-7 text-3xl font-semibold tracking-tight text-cream sm:text-4xl">
-        C&apos;est noté, merci&nbsp;!
+        {t("thankYouTitle")}
       </h1>
       <p className="mt-4 max-w-md text-base leading-relaxed text-cream-muted">
-        Nous avons bien reçu tes informations. Notre équipe prépare ton site
-        et revient vers toi très vite — généralement sous 2h — pour te
-        montrer une première version.
+        {t("thankYouBody")}
       </p>
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
         <Link
@@ -409,11 +429,11 @@ function ThankYou() {
           className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-line-strong px-6 text-sm text-cream transition-colors hover:bg-cream/[0.05]"
         >
           <ArrowLeft size={16} />
-          Retour à l&apos;accueil
+          {t("backHome")}
         </Link>
       </div>
       <p className="mt-8 text-xs text-cream-faint">
-        Une question en attendant&nbsp;? contact@xklic.com
+        {t("questionMeanwhile", { email: brand.email })}
       </p>
     </motion.div>
   );

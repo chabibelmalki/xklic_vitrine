@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Loader2, PartyPopper, Send } from "lucide-react";
-import { contactSchema, type ContactValues } from "@/lib/contact-schema";
+import { makeContactSchema, type ContactValues } from "@/lib/contact-schema";
 import { Field, TextInput, TextArea } from "@/components/form/fields";
 import { Turnstile, TURNSTILE_ENABLED } from "@/components/form/turnstile";
 import { Button } from "@/components/ui/button";
@@ -14,14 +15,18 @@ import { EASE_OUT } from "@/lib/utils";
 type Status = "form" | "submitting" | "done" | "error";
 
 export function ContactForm() {
+  const t = useTranslations("contact.form");
+  const te = useTranslations("contact.form.errors");
   const [status, setStatus] = useState<Status>("form");
   const [token, setToken] = useState("");
+  // Schéma avec messages de validation traduits.
+  const schema = useMemo(() => makeContactSchema((k) => te(k)), [te]);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ContactValues>({
-    resolver: zodResolver(contactSchema),
+    resolver: zodResolver(schema),
     mode: "onTouched",
     defaultValues: { name: "", email: "", phone: "", message: "", company: "" },
   });
@@ -59,11 +64,10 @@ export function ContactForm() {
           <PartyPopper size={26} />
         </span>
         <h2 className="mt-5 font-display text-2xl font-light text-cream">
-          Message envoyé !
+          {t("sentTitle")}
         </h2>
         <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-cream-muted">
-          Merci, on te recontacte très vite. Tu peux aussi nous joindre directement
-          par téléphone ou WhatsApp.
+          {t("sentBody")}
         </p>
       </motion.div>
     );
@@ -87,28 +91,28 @@ export function ContactForm() {
         {...register("company")}
       />
 
-      <Field label="Nom" htmlFor="name" error={errors.name?.message}>
+      <Field label={t("name")} htmlFor="name" error={errors.name?.message}>
         <TextInput
           id="name"
-          placeholder="Ton nom"
+          placeholder={t("namePlaceholder")}
           invalid={!!errors.name}
           {...register("name")}
         />
       </Field>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="E-mail" htmlFor="email" error={errors.email?.message}>
+        <Field label={t("email")} htmlFor="email" error={errors.email?.message}>
           <TextInput
             id="email"
             type="email"
             inputMode="email"
-            placeholder="toi@exemple.fr"
+            placeholder={t("emailPlaceholder")}
             invalid={!!errors.email}
             {...register("email")}
           />
         </Field>
         <Field
-          label="Téléphone"
+          label={t("phone")}
           htmlFor="phone"
           optional
           error={errors.phone?.message}
@@ -117,17 +121,17 @@ export function ContactForm() {
             id="phone"
             type="tel"
             inputMode="tel"
-            placeholder="06 12 34 56 78"
+            placeholder={t("phonePlaceholder")}
             invalid={!!errors.phone}
             {...register("phone")}
           />
         </Field>
       </div>
 
-      <Field label="Message" htmlFor="message" error={errors.message?.message}>
+      <Field label={t("message")} htmlFor="message" error={errors.message?.message}>
         <TextArea
           id="message"
-          placeholder="Dis-nous en quelques mots ce dont tu as besoin…"
+          placeholder={t("messagePlaceholder")}
           invalid={!!errors.message}
           {...register("message")}
         />
@@ -136,21 +140,19 @@ export function ContactForm() {
       <Turnstile onVerify={setToken} onExpire={() => setToken("")} />
 
       {status === "error" ? (
-        <p className="text-sm text-ember-soft">
-          L&apos;envoi a échoué. Réessaie, ou contacte-nous par téléphone.
-        </p>
+        <p className="text-sm text-ember-soft">{t("error")}</p>
       ) : null}
 
       <Button type="submit" size="lg" disabled={submitting} className="w-full">
         {submitting ? (
           <>
             <Loader2 size={18} className="animate-spin" />
-            Envoi…
+            {t("submitting")}
           </>
         ) : (
           <>
             <Send size={18} />
-            Envoyer le message
+            {t("submit")}
           </>
         )}
       </Button>
