@@ -1,6 +1,7 @@
 "use client";
 
 import { forwardRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "framer-motion";
 import { FileText, UploadCloud, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -31,6 +32,7 @@ export function Field({
   optional?: boolean;
   children: React.ReactNode;
 }) {
+  const tc = useTranslations("common");
   return (
     <div className="flex flex-col gap-1.5">
       <label
@@ -40,7 +42,7 @@ export function Field({
         {label}
         {optional ? (
           <span className="text-xs font-normal text-cream-faint">
-            (facultatif)
+            {tc("optional")}
           </span>
         ) : null}
       </label>

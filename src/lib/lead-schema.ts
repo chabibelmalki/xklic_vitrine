@@ -2,6 +2,23 @@ import { z } from "zod";
 
 const required = (msg: string) => z.string().trim().min(1, msg);
 
+// Messages de validation localisables. `m(key)` : défauts FR côté serveur
+// (/api/checkout), traductions côté client (namespace `demarrer.errors`).
+export type LeadMessages = (key: string) => string;
+
+const FR_LEAD_MESSAGES: Record<string, string> = {
+  productTitle: "Donne un nom à ce produit.",
+  formule: "Choisis une formule pour continuer.",
+  companyName: "Indique le nom de ton entreprise.",
+  trade: "Indique ton métier.",
+  city: "Indique ta ville.",
+  country: "Indique ton pays.",
+  phone: "Un numéro pour te joindre est nécessaire.",
+  emailRequired: "Ton email est nécessaire.",
+  emailInvalid: "Cet email ne semble pas valide.",
+  colorMax: "Deux couleurs maximum.",
+};
+
 // Formules proposées (cf. `formules` dans content.ts). Le slug est la valeur
 // stockée dans le lead et passée en query `?formule=` depuis les cartes de prix.
 export const FORMULE_SLUGS = ["site", "google", "haut-google"] as const;
@@ -31,21 +48,26 @@ export type UploadItem = z.infer<typeof uploadItemSchema>;
 
 const uploads = () => z.array(uploadItemSchema).default([]);
 
-export const productSchema = z.object({
-  id: z.string(),
-  title: required("Donne un nom à ce produit."),
-  description: z.string().trim().optional(),
-  price: z.string().trim().optional(),
-  category: z.string().trim().optional(),
-  photos: uploads(),
-});
+const makeProductSchema = (m: LeadMessages) =>
+  z.object({
+    id: z.string(),
+    title: required(m("productTitle")),
+    description: z.string().trim().optional(),
+    price: z.string().trim().optional(),
+    category: z.string().trim().optional(),
+    photos: uploads(),
+  });
+
+export const productSchema = makeProductSchema((k) => FR_LEAD_MESSAGES[k]);
 export type ProductValues = z.input<typeof productSchema>;
 
-export const leadSchema = z
+// Fabrique le schéma du tunnel avec messages localisés. Défaut = FR (serveur).
+export function makeLeadSchema(m: LeadMessages = (k) => FR_LEAD_MESSAGES[k]) {
+  return z
   .object({
     // 0. Formule choisie (carte de prix ou étape dédiée du formulaire)
     formule: z.enum(FORMULE_SLUGS, {
-      message: "Choisis une formule pour continuer.",
+      message: m("formule"),
     }),
 
     // 0bis. Option boutique e-commerce (facultative). undefined = pas de
@@ -60,13 +82,13 @@ export const leadSchema = z
     wantsServices: z.boolean().default(true),
 
     // A. Activité
-    companyName: required("Indique le nom de ton entreprise."),
-    trade: required("Indique ton métier."),
-    city: required("Indique ta ville."),
+    companyName: required(m("companyName")),
+    trade: required(m("trade")),
+    city: required(m("city")),
     // Pays (multi-pays) : nom lisible (cf. src/data/countries.ts), pré-rempli
     // via l'IP côté serveur. A un défaut → toujours renseigné. Sert notamment à
     // adapter le libellé du numéro d'immatriculation (« SIRET » en France).
-    country: z.string().trim().min(1, "Indique ton pays.").default("France"),
+    country: z.string().trim().min(1, m("country")).default("France"),
     mobile: z.boolean().default(false),
     serviceArea: z.string().trim().optional(),
 
@@ -74,16 +96,16 @@ export const leadSchema = z
     services: z.string().trim().optional(),
 
     // P1. Marchandise (produits / les-deux)
-    products: z.array(productSchema).default([]),
+    products: z.array(makeProductSchema(m)).default([]),
 
     // B. Coordonnées
-    phone: required("Un numéro pour te joindre est nécessaire."),
+    phone: required(m("phone")),
     noWhatsapp: z.boolean().default(false), // coché = pas de WhatsApp sur le site
     email: z
       .string()
       .trim()
-      .min(1, "Ton email est nécessaire.")
-      .email("Cet email ne semble pas valide."),
+      .min(1, m("emailRequired"))
+      .email(m("emailInvalid")),
     hasShop: z.boolean().default(false), // a un local / une boutique
     address: z.string().trim().optional(),
     availability: z.string().trim().optional(),
@@ -115,7 +137,7 @@ export const leadSchema = z
     languages: z.string().trim().optional(),
     // Jusqu'à 2 couleurs : [0] = principale, [1] = secondaire/accent.
     // Vide = on laisse l'équipe décider. Masqué dans l'UI si un logo est fourni.
-    colorPreference: z.array(z.string()).max(2, "Deux couleurs maximum.").default([]),
+    colorPreference: z.array(z.string()).max(2, m("colorMax")).default([]),
     ambiance: z.string().trim().optional(),
 
     // G. Mot de la fin (champ libre, facultatif)
@@ -124,6 +146,10 @@ export const leadSchema = z
     // Jeton Cloudflare Turnstile (anti-robot), vérifié côté serveur.
     turnstileToken: z.string().optional(),
   });
+}
+
+// Schéma par défaut (messages FR) — utilisé côté serveur (/api/checkout).
+export const leadSchema = makeLeadSchema();
 
 export type LeadValues = z.input<typeof leadSchema>;
 export type LeadData = z.output<typeof leadSchema>;

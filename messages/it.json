@@ -15,7 +15,8 @@
     "createSite": "Crea il mio sito",
     "priceLine": "49€ alla creazione · poi 9,99€/mese · disdici quando vuoi",
     "whatsappAria": "Scrivi su WhatsApp",
-    "callAria": "Chiama il {phone}"
+    "callAria": "Chiama il {phone}",
+    "optional": "(facoltativo)"
   },
   "footer": {
     "tagline": "Il sito pro che ti porta clienti, online in 48h. Senza complicazioni, senza vincoli.",
@@ -328,5 +329,156 @@
     "body": "Il tuo pagamento è andato a buon fine — una ricevuta Stripe arriva via email. Il nostro team ha tutto il necessario e sta preparando il tuo sito: ti ricontattiamo molto presto, di solito entro 2h, per mostrarti una prima versione.",
     "backHome": "Torna alla home",
     "question": "Una domanda? {email}"
+  },
+  "contact": {
+    "meta": {
+      "title": "Contattaci",
+      "description": "Una domanda sul tuo futuro sito? Scrivici, ti rispondiamo in fretta. Telefono, WhatsApp o modulo — come preferisci."
+    },
+    "eyebrow": "Contatti",
+    "title": "Parliamo del tuo progetto",
+    "subtitle": "Una domanda, un'idea, un preventivo? Scrivici qui sotto — ti rispondiamo rapidamente. Puoi anche contattarci direttamente:",
+    "form": {
+      "name": "Nome",
+      "namePlaceholder": "Il tuo nome",
+      "email": "E-mail",
+      "emailPlaceholder": "tu@esempio.fr",
+      "phone": "Telefono",
+      "phonePlaceholder": "06 12 34 56 78",
+      "message": "Messaggio",
+      "messagePlaceholder": "Dicci in poche parole di cosa hai bisogno…",
+      "submit": "Invia il messaggio",
+      "submitting": "Invio…",
+      "sentTitle": "Messaggio inviato!",
+      "sentBody": "Grazie, ti ricontattiamo prestissimo. Puoi anche contattarci direttamente per telefono o su WhatsApp.",
+      "error": "L'invio non è andato a buon fine. Riprova, oppure contattaci per telefono.",
+      "errors": {
+        "nameMin": "Indica il tuo nome.",
+        "emailRequired": "La tua email è necessaria.",
+        "emailInvalid": "Questa email non sembra valida.",
+        "messageShort": "Il tuo messaggio è un po' corto.",
+        "messageLong": "Il tuo messaggio è troppo lungo."
+      }
+    }
+  },
+  "demarrer": {
+    "meta": {
+      "title": "Crea il mio sito",
+      "description": "Descrivi la tua attività in pochi minuti. Creiamo il tuo sito pro per artigiano, lavoratore autonomo o piccola impresa, ed è online in 48h."
+    },
+    "back": "Indietro",
+    "form": {
+      "stepProgress": "Passo {current} di {total}",
+      "error": "Ops, l'invio non è andato a buon fine. Riprova tra un istante, oppure scrivici direttamente.",
+      "prev": "Precedente",
+      "touchToContinue": "Tocca un'opzione per continuare",
+      "uploading": "Caricamento delle immagini…",
+      "redirecting": "Reindirizzamento al pagamento…",
+      "order": "Ordina",
+      "continue": "Continua",
+      "securityNote": "Pagamento sicuro con Stripe. Codice promo possibile subito prima di pagare. Senza vincoli, disdici quando vuoi.",
+      "thankYouTitle": "Ricevuto, grazie!",
+      "thankYouBody": "Abbiamo ricevuto le tue informazioni. Il nostro team sta preparando il tuo sito e ti ricontatta prestissimo — di solito entro 2h — per mostrarti una prima versione.",
+      "backHome": "Torna alla home",
+      "questionMeanwhile": "Una domanda nel frattempo? {email}"
+    },
+    "steps": {
+      "offre": {
+        "title": "La tua offerta",
+        "subtitle": "Scegli la tua formula, e un negozio online se lo desideri."
+      },
+      "activite": {
+        "title": "La tua attività",
+        "subtitle": "La tua impresa, dove sei e come lavori."
+      },
+      "coordonnees": {
+        "title": "I tuoi contatti",
+        "subtitle": "Come i tuoi clienti — e noi — ti raggiungiamo."
+      },
+      "site": {
+        "title": "Il tuo sito",
+        "subtitle": "Qualche info per costruire il tuo sito a tua immagine. Tutto è facoltativo — il pagamento viene subito dopo."
+      }
+    },
+    "fields": {
+      "companyLabel": "Nome della tua impresa",
+      "companyHint": "Es.: « Souad Pulizie », « Officina Mécaline »",
+      "companyPlaceholder": "Il nome con cui i tuoi clienti ti conoscono",
+      "tradeLabel": "Il tuo mestiere",
+      "tradeHint": "Es.: « Addetta alle pulizie a domicilio », « Idraulico termotecnico »",
+      "tradePlaceholder": "Quello che fai, in poche parole",
+      "whereSection": "Dove sei?",
+      "addressLabel": "Indirizzo",
+      "addressHint": "N° e via — se ricevi clienti, o per la mappa del sito.",
+      "addressPlaceholder": "12 via degli Artigiani",
+      "cityLabel": "Città",
+      "cityHint": "Es.: « Lione »",
+      "cityPlaceholder": "La tua città principale",
+      "countryLabel": "Paese",
+      "howSection": "Come lavori?",
+      "hasShop": "Ho un locale o un negozio aperto al pubblico",
+      "mobile": "Mi sposto dai miei clienti",
+      "serviceAreaLabel": "Zona di intervento",
+      "serviceAreaHint": "Fin dove ti sposti?",
+      "serviceAreaPlaceholder": "Es.: Lione e 20 km nei dintorni",
+      "phoneLabel": "Telefono",
+      "phoneHint": "Il numero mostrato sul tuo sito.",
+      "phonePlaceholder": "06 12 34 56 78",
+      "emailLabel": "Email",
+      "emailHint": "È qui che arriveranno le richieste.",
+      "emailPlaceholder": "Il tuo indirizzo email",
+      "regFrance": "SIRET",
+      "regOther": "Numero di registrazione dell'impresa",
+      "regHintFrance": "Facoltativo — potrai inserirlo più tardi.",
+      "regHintOther": "Facoltativo — il numero di registrazione della tua impresa, se ce l'hai.",
+      "regPlaceholderFrance": "Numero SIRET (14 cifre)",
+      "regPlaceholderOther": "Numero di registrazione dell'impresa",
+      "formuleLabel": "La tua formula",
+      "formuleHint": "Potrai cambiarla con noi.",
+      "thenMonthly": "poi {monthly}/mese · IVA incl.",
+      "addShopHint": "Mensile, senza vincoli, zero commissioni. Aggiungerai i tuoi prodotti dopo.",
+      "alsoServices": "Offro anche prestazioni (non solo vendita)",
+      "shopLine": "Negozio {tier}",
+      "totalTTC": "Totale IVA incl.",
+      "perMonth": "/mese",
+      "setupToday": "+ {price} di installazione oggi",
+      "describeLabel": "Descrivi la tua attività",
+      "describeHint": "Le tue prestazioni, il tuo modo di lavorare… alla rinfusa, poi affiniamo.",
+      "describePlaceholder": "Quello che offri, a chi, come…",
+      "logoLabel": "Il tuo logo",
+      "logoHint": "Se ne hai uno.",
+      "logoCta": "Carica il tuo logo",
+      "photosLabel": "Le tue foto",
+      "photosHint": "Cantieri, lavori, locale…",
+      "colorsLabel": "I tuoi colori",
+      "colorsHint": "Principale e secondario — o lascia stare, scegliamo noi (ed estraiamo dal logo).",
+      "colorPrimary": "Principale",
+      "colorSecondary": "Secondario",
+      "ambianceLabel": "Stile e atmosfera",
+      "ambianceHint": "Caloroso, moderno, serio, colorato… descrivi lo spirito che vuoi.",
+      "ambiancePlaceholder": "L'atmosfera che immagini per il tuo sito…",
+      "languagesLabel": "Lingue del sito",
+      "languagesHint": "In testo libero, separate da virgole.",
+      "languagesPlaceholder": "Francese, inglese, spagnolo",
+      "socialsLabel": "Social",
+      "socialsHint": "Link o nome utente — normalizziamo noi.",
+      "socialGoogle": "Scheda Google",
+      "noWhatsapp": "Non ho WhatsApp (non mostrare il pulsante WhatsApp)",
+      "extraLabel": "Altro da aggiungere?",
+      "extraHint": "Un dettaglio, un desiderio, un vincolo… tutto quello che dobbiamo sapere.",
+      "extraPlaceholder": "Quello che vuoi dirci in più…"
+    },
+    "errors": {
+      "productTitle": "Dai un nome a questo prodotto.",
+      "formule": "Scegli una formula per continuare.",
+      "companyName": "Indica il nome della tua impresa.",
+      "trade": "Indica il tuo mestiere.",
+      "city": "Indica la tua città.",
+      "country": "Indica il tuo paese.",
+      "phone": "Serve un numero per raggiungerti.",
+      "emailRequired": "La tua email è necessaria.",
+      "emailInvalid": "Questa email non sembra valida.",
+      "colorMax": "Massimo due colori."
+    }
   }
 }

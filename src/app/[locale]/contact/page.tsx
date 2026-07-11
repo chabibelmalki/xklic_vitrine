@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { useTranslations } from "next-intl";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
 import { FloatingActions } from "@/components/site/floating-actions";
@@ -8,14 +10,32 @@ import { ContactForm } from "@/components/form/contact-form";
 import { brand } from "@/lib/content";
 import { telLink, waLink } from "@/lib/utils";
 
-export const metadata: Metadata = {
-  title: "Nous contacter",
-  description:
-    "Une question sur ton futur site ? Écris-nous, on te répond vite. Téléphone, WhatsApp ou formulaire — comme tu préfères.",
-  alternates: { canonical: "/contact" },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "contact.meta" });
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: { canonical: "/contact" },
+  };
+}
 
-export default function ContactPage() {
+export default async function ContactPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  return <ContactContent />;
+}
+
+function ContactContent() {
+  const t = useTranslations("contact");
   return (
     <div className="grain relative flex min-h-full flex-col">
       <Header />
@@ -30,13 +50,12 @@ export default function ContactPage() {
         <Container className="relative z-10">
           <div className="mx-auto max-w-xl">
             <div className="flex flex-col items-center gap-4 text-center">
-              <Eyebrow>Contact</Eyebrow>
+              <Eyebrow>{t("eyebrow")}</Eyebrow>
               <h1 className="font-display text-3xl font-light leading-[1.05] tracking-tight text-cream sm:text-4xl">
-                Parlons de ton projet
+                {t("title")}
               </h1>
               <p className="text-base leading-relaxed text-cream-muted">
-                Une question, une idée, un devis ? Écris-nous ci-dessous — on te
-                répond rapidement. Tu peux aussi nous joindre directement :
+                {t("subtitle")}
               </p>
             </div>
 

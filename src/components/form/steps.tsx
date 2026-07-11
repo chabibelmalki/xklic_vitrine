@@ -2,13 +2,13 @@
 
 import { createContext } from "react";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { ShoppingBag } from "lucide-react";
 import { BOUTIQUE_TIERS, type BoutiqueTier, type LeadValues } from "@/lib/lead-schema";
 import { COUNTRIES } from "@/data/countries";
 import {
   BOUTIQUE_LABELS,
   BOUTIQUE_MONTHLY_CENTS,
-  BOUTIQUE_PRODUCTS,
   euros,
   formules,
 } from "@/lib/content";
@@ -16,8 +16,6 @@ import { CheckRow, Field, ImageUpload, TextArea, TextInput } from "./fields";
 
 export type StepDef = {
   id: string;
-  title: string;
-  subtitle: string;
   fields: (keyof LeadValues)[];
   autoAdvance?: boolean; // étape à choix unique : le clic vaut « Continuer »
   Component: () => React.ReactNode;
@@ -60,6 +58,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 /* ── Activité : identité + localisation + modèle d'intervention ────────────── */
 
 function ActiviteStep() {
+  const t = useTranslations("demarrer.fields");
   const { register, control } = useFormContext<LeadValues>();
   const err = useErr();
   // Zone d'intervention : n'a de sens que si le client se déplace.
@@ -67,55 +66,55 @@ function ActiviteStep() {
   return (
     <div className="grid gap-5">
       <Field
-        label="Nom de votre entreprise"
-        hint="Ex. : « Souad Ménage », « Garage Mécaline »"
+        label={t("companyLabel")}
+        hint={t("companyHint")}
         htmlFor="companyName"
         error={err("companyName")}
       >
         <TextInput
           id="companyName"
-          placeholder="Le nom sous lequel vos clients vous connaissent"
+          placeholder={t("companyPlaceholder")}
           invalid={!!err("companyName")}
           {...register("companyName")}
         />
       </Field>
       <Field
-        label="Votre métier"
-        hint="Ex. : « Femme de ménage à domicile », « Plombier chauffagiste »"
+        label={t("tradeLabel")}
+        hint={t("tradeHint")}
         htmlFor="trade"
         error={err("trade")}
       >
         <TextInput
           id="trade"
-          placeholder="Ce que vous faites, en quelques mots"
+          placeholder={t("tradePlaceholder")}
           invalid={!!err("trade")}
           {...register("trade")}
         />
       </Field>
 
-      <SectionLabel>Où êtes-vous&nbsp;?</SectionLabel>
+      <SectionLabel>{t("whereSection")}</SectionLabel>
       <Field
-        label="Adresse"
+        label={t("addressLabel")}
         optional
-        hint="N° et rue — si vous recevez des clients, ou pour la carte du site."
+        hint={t("addressHint")}
         htmlFor="address"
       >
         <TextInput
           id="address"
-          placeholder="12 rue des Artisans"
+          placeholder={t("addressPlaceholder")}
           {...register("address")}
         />
       </Field>
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Ville" hint="Ex. : « Lyon »" htmlFor="city" error={err("city")}>
+        <Field label={t("cityLabel")} hint={t("cityHint")} htmlFor="city" error={err("city")}>
           <TextInput
             id="city"
-            placeholder="Votre ville principale"
+            placeholder={t("cityPlaceholder")}
             invalid={!!err("city")}
             {...register("city")}
           />
         </Field>
-        <Field label="Pays" htmlFor="country" error={err("country")}>
+        <Field label={t("countryLabel")} htmlFor="country" error={err("country")}>
           <Controller
             control={control}
             name="country"
@@ -137,7 +136,7 @@ function ActiviteStep() {
         </Field>
       </div>
 
-      <SectionLabel>Comment travaillez-vous&nbsp;?</SectionLabel>
+      <SectionLabel>{t("howSection")}</SectionLabel>
       <Controller
         control={control}
         name="hasShop"
@@ -145,7 +144,7 @@ function ActiviteStep() {
           <CheckRow
             checked={!!field.value}
             onChange={field.onChange}
-            label="J'ai un local ou une boutique ouverte au public"
+            label={t("hasShop")}
           />
         )}
       />
@@ -156,20 +155,20 @@ function ActiviteStep() {
           <CheckRow
             checked={!!field.value}
             onChange={field.onChange}
-            label="Je me déplace chez mes clients"
+            label={t("mobile")}
           />
         )}
       />
       {mobile ? (
         <Field
-          label="Zone d'intervention"
+          label={t("serviceAreaLabel")}
           optional
-          hint="Jusqu'où vous déplacez-vous ?"
+          hint={t("serviceAreaHint")}
           htmlFor="serviceArea"
         >
           <TextInput
             id="serviceArea"
-            placeholder="Ex. : Lyon et 20 km alentour"
+            placeholder={t("serviceAreaPlaceholder")}
             {...register("serviceArea")}
           />
         </Field>
@@ -181,40 +180,41 @@ function ActiviteStep() {
 /* ── Coordonnées + numéro d'immatriculation (avant les détails du site) ────── */
 
 function CoordonneesStep() {
+  const t = useTranslations("demarrer.fields");
   const { register, control } = useFormContext<LeadValues>();
   const err = useErr();
   const country = useWatch<LeadValues>({ control, name: "country" });
   // Libellé du numéro d'immatriculation adapté au pays : « SIRET » n'existe
   // qu'en France, ailleurs on parle d'un numéro d'immatriculation générique.
   const isFrance = country === "France";
-  const regLabel = isFrance ? "SIRET" : "Numéro d'immatriculation";
+  const regLabel = isFrance ? t("regFrance") : t("regOther");
   return (
     <div className="grid gap-5">
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
-          label="Téléphone"
-          hint="Le numéro affiché sur votre site."
+          label={t("phoneLabel")}
+          hint={t("phoneHint")}
           htmlFor="phone"
           error={err("phone")}
         >
           <TextInput
             id="phone"
             type="tel"
-            placeholder="06 12 34 56 78"
+            placeholder={t("phonePlaceholder")}
             invalid={!!err("phone")}
             {...register("phone")}
           />
         </Field>
         <Field
-          label="Email"
-          hint="C'est là qu'arriveront les demandes."
+          label={t("emailLabel")}
+          hint={t("emailHint")}
           htmlFor="email"
           error={err("email")}
         >
           <TextInput
             id="email"
             type="email"
-            placeholder="Votre adresse email"
+            placeholder={t("emailPlaceholder")}
             invalid={!!err("email")}
             {...register("email")}
           />
@@ -226,20 +226,12 @@ function CoordonneesStep() {
       <Field
         label={regLabel}
         optional
-        hint={
-          isFrance
-            ? "Facultatif — vous pourrez le renseigner plus tard."
-            : "Facultatif — le numéro d'immatriculation de votre entreprise, si vous l'avez."
-        }
+        hint={isFrance ? t("regHintFrance") : t("regHintOther")}
         htmlFor="siret"
       >
         <TextInput
           id="siret"
-          placeholder={
-            isFrance
-              ? "Numéro SIRET (14 chiffres)"
-              : "Numéro d'immatriculation de l'entreprise"
-          }
+          placeholder={isFrance ? t("regPlaceholderFrance") : t("regPlaceholderOther")}
           {...register("siret")}
         />
       </Field>
@@ -253,6 +245,9 @@ const selectClass =
   "w-full rounded-xl border border-line bg-ink-soft px-4 py-3 text-[0.95rem] text-cream transition-colors duration-200 focus:border-line-strong focus:outline-none focus:ring-0";
 
 function OffreStep() {
+  const t = useTranslations("demarrer.fields");
+  const tf = useTranslations("formules");
+  const tcard = useTranslations("formules.card");
   const { control } = useFormContext<LeadValues>();
   const err = useErr();
   const formuleSlug = useWatch<LeadValues>({ control, name: "formule" });
@@ -268,8 +263,8 @@ function OffreStep() {
     <div className="grid gap-6">
       {/* Formule socle */}
       <Field
-        label="Votre formule"
-        hint="Vous pourrez en changer avec nous."
+        label={t("formuleLabel")}
+        hint={t("formuleHint")}
         error={err("formule")}
       >
         <Controller
@@ -301,16 +296,16 @@ function OffreStep() {
                             (active ? "text-cream" : "text-cream-muted")
                           }
                         >
-                          {f.name}
+                          {tf(`items.${f.slug}.name`)}
                         </span>
                         {f.featured ? (
                           <span className="rounded-full bg-ember/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-ember-deep">
-                            Recommandé
+                            {tcard("recommended")}
                           </span>
                         ) : null}
                       </span>
                       <span className="text-sm leading-relaxed text-cream-faint">
-                        {f.phrase}
+                        {tf(`items.${f.slug}.phrase`)}
                       </span>
                     </span>
                     <span className="shrink-0 text-right">
@@ -318,7 +313,7 @@ function OffreStep() {
                         {f.setup}
                       </span>
                       <span className="mt-1 block text-xs text-cream-faint">
-                        puis {f.monthly}/mois · TTC
+                        {t("thenMonthly", { monthly: f.monthly })}
                       </span>
                     </span>
                   </button>
@@ -331,8 +326,8 @@ function OffreStep() {
 
       {/* Option boutique e-commerce (2e item du même abonnement) */}
       <Field
-        label="Ajouter une boutique en ligne ?"
-        hint="Mensuel, sans engagement, zéro commission. Vous ajouterez vos produits après."
+        label={tcard("addShop")}
+        hint={t("addShopHint")}
       >
         <Controller
           control={control}
@@ -347,11 +342,14 @@ function OffreStep() {
                   field.onChange(e.target.value === "" ? undefined : e.target.value)
                 }
               >
-                <option value="">Pas de boutique</option>
-                {BOUTIQUE_TIERS.map((t) => (
-                  <option key={t} value={t}>
-                    {BOUTIQUE_LABELS[t]} — +{euros(BOUTIQUE_MONTHLY_CENTS[t])}/mois
-                    {" "}({BOUTIQUE_PRODUCTS[t]})
+                <option value="">{tcard("noShop")}</option>
+                {BOUTIQUE_TIERS.map((tier) => (
+                  <option key={tier} value={tier}>
+                    {tcard("shopOption", {
+                      label: BOUTIQUE_LABELS[tier],
+                      price: euros(BOUTIQUE_MONTHLY_CENTS[tier]),
+                      products: tf(`boutiqueProducts.${tier}`),
+                    })}
                   </option>
                 ))}
               </select>
@@ -369,7 +367,7 @@ function OffreStep() {
             <CheckRow
               checked={field.value !== false}
               onChange={field.onChange}
-              label="Je propose aussi des prestations (pas seulement de la vente)"
+              label={t("alsoServices")}
             />
           )}
         />
@@ -382,11 +380,11 @@ function OffreStep() {
           {boutique ? (
             <div className="mb-3 space-y-1.5 border-b border-line pb-3 text-sm text-cream-muted">
               <div className="flex justify-between gap-4">
-                <span>{selected.name}</span>
+                <span>{tf(`items.${selected.slug}.name`)}</span>
                 <span className="shrink-0">{euros(selected.monthlyCents)}/mois</span>
               </div>
               <div className="flex justify-between gap-4">
-                <span>Boutique {BOUTIQUE_LABELS[boutique]}</span>
+                <span>{t("shopLine", { tier: BOUTIQUE_LABELS[boutique] })}</span>
                 <span className="shrink-0">
                   +{euros(BOUTIQUE_MONTHLY_CENTS[boutique])}/mois
                 </span>
@@ -394,14 +392,14 @@ function OffreStep() {
             </div>
           ) : null}
           <div className="flex items-end justify-between gap-4">
-            <span className="text-sm font-medium text-cream">Total TTC</span>
+            <span className="text-sm font-medium text-cream">{t("totalTTC")}</span>
             <div className="text-right">
               <div className="font-display text-2xl font-semibold leading-none text-cream">
                 {euros(monthlyCents)}
-                <span className="text-sm font-normal text-cream-muted"> /mois</span>
+                <span className="text-sm font-normal text-cream-muted"> {t("perMonth")}</span>
               </div>
               <div className="mt-1.5 text-xs text-cream-faint">
-                + {euros(setupCents)} d&apos;installation aujourd&apos;hui
+                {t("setupToday", { price: euros(setupCents) })}
               </div>
             </div>
           </div>
@@ -414,6 +412,7 @@ function OffreStep() {
 /* ── Détails du site : identité visuelle, langues, réseaux (avant paiement) ── */
 
 function SiteDetailsStep() {
+  const t = useTranslations("demarrer.fields");
   const { register, control } = useFormContext<LeadValues>();
   const boutique = useWatch<LeadValues>({ control, name: "boutiqueTier" }) as
     | BoutiqueTier
@@ -426,20 +425,20 @@ function SiteDetailsStep() {
     <div className="grid gap-6">
       {showDescription ? (
         <Field
-          label="Décrivez votre activité"
+          label={t("describeLabel")}
           optional
-          hint="Vos prestations, votre façon de travailler… en vrac, on affinera."
+          hint={t("describeHint")}
           htmlFor="services"
         >
           <TextArea
             id="services"
-            placeholder="Ce que vous proposez, à qui, comment…"
+            placeholder={t("describePlaceholder")}
             {...register("services")}
           />
         </Field>
       ) : null}
 
-      <Field label="Votre logo" optional hint="Si vous en avez un.">
+      <Field label={t("logoLabel")} optional hint={t("logoHint")}>
         <Controller
           control={control}
           name="logo"
@@ -449,13 +448,13 @@ function SiteDetailsStep() {
               onChange={field.onChange}
               multiple={false}
               compact
-              cta="Déposez votre logo"
+              cta={t("logoCta")}
             />
           )}
         />
       </Field>
 
-      <Field label="Vos photos" optional hint="Chantiers, réalisations, local…">
+      <Field label={t("photosLabel")} optional hint={t("photosHint")}>
         <Controller
           control={control}
           name="photos"
@@ -466,9 +465,9 @@ function SiteDetailsStep() {
       </Field>
 
       <Field
-        label="Vos couleurs"
+        label={t("colorsLabel")}
         optional
-        hint="Principale et secondaire — ou laissez, on choisira (et on extrait du logo)."
+        hint={t("colorsHint")}
       >
         <Controller
           control={control}
@@ -489,7 +488,7 @@ function SiteDetailsStep() {
                     onChange={(e) => setAt(0, e.target.value)}
                     className="h-9 w-12 cursor-pointer rounded border border-line bg-transparent"
                   />
-                  Principale
+                  {t("colorPrimary")}
                 </label>
                 <label className="flex items-center gap-2 text-sm text-cream-muted">
                   <input
@@ -498,7 +497,7 @@ function SiteDetailsStep() {
                     onChange={(e) => setAt(1, e.target.value)}
                     className="h-9 w-12 cursor-pointer rounded border border-line bg-transparent"
                   />
-                  Secondaire
+                  {t("colorSecondary")}
                 </label>
               </div>
             );
@@ -507,38 +506,38 @@ function SiteDetailsStep() {
       </Field>
 
       <Field
-        label="Style & ambiance"
+        label={t("ambianceLabel")}
         optional
-        hint="Chaleureux, moderne, sérieux, coloré… décrivez l'esprit voulu."
+        hint={t("ambianceHint")}
         htmlFor="ambiance"
       >
         <TextArea
           id="ambiance"
-          placeholder="L'ambiance que vous imaginez pour votre site…"
+          placeholder={t("ambiancePlaceholder")}
           {...register("ambiance")}
         />
       </Field>
 
       <Field
-        label="Langues du site"
+        label={t("languagesLabel")}
         optional
-        hint="En texte libre, séparées par des virgules."
+        hint={t("languagesHint")}
         htmlFor="languages"
       >
         <TextInput
           id="languages"
-          placeholder="Français, anglais, espagnol"
+          placeholder={t("languagesPlaceholder")}
           {...register("languages")}
         />
       </Field>
 
-      <Field label="Réseaux sociaux" optional hint="Lien ou pseudo — on normalise.">
+      <Field label={t("socialsLabel")} optional hint={t("socialsHint")}>
         <div className="grid gap-3">
           <TextInput placeholder="Facebook" {...register("socials.facebook")} />
           <TextInput placeholder="Instagram" {...register("socials.instagram")} />
           <TextInput placeholder="TikTok" {...register("socials.tiktok")} />
           <TextInput placeholder="X (Twitter)" {...register("socials.x")} />
-          <TextInput placeholder="Fiche Google" {...register("socials.google")} />
+          <TextInput placeholder={t("socialGoogle")} {...register("socials.google")} />
         </div>
       </Field>
 
@@ -549,20 +548,20 @@ function SiteDetailsStep() {
           <CheckRow
             checked={!!field.value}
             onChange={field.onChange}
-            label="Je n'ai pas WhatsApp (ne pas afficher de bouton WhatsApp)"
+            label={t("noWhatsapp")}
           />
         )}
       />
 
       <Field
-        label="Autre chose à ajouter ?"
+        label={t("extraLabel")}
         optional
-        hint="Un détail, une envie, une contrainte… tout ce qu'on doit savoir."
+        hint={t("extraHint")}
         htmlFor="extra"
       >
         <TextArea
           id="extra"
-          placeholder="Ce que vous voulez nous dire en plus…"
+          placeholder={t("extraPlaceholder")}
           {...register("extra")}
         />
       </Field>
@@ -576,36 +575,20 @@ function SiteDetailsStep() {
 // pré-sélectionne la carte), puis l'ACTIVITÉ (entreprise, localisation, modèle
 // d'intervention), les COORDONNÉES (+ n° d'immatriculation), puis les DÉTAILS du
 // site (identité visuelle, langues, réseaux). Le PAIEMENT vient en toute fin.
+// Les titres/sous-titres sont traduits dans lead-form via `demarrer.steps.<id>`.
 const ALL_STEPS: StepDef[] = [
-  {
-    id: "offre",
-    title: "Votre offre",
-    subtitle: "Choisissez votre formule, et une boutique en ligne si vous le souhaitez.",
-    fields: ["formule"],
-    Component: OffreStep,
-  },
+  { id: "offre", fields: ["formule"], Component: OffreStep },
   {
     id: "activite",
-    title: "Votre activité",
-    subtitle: "Votre entreprise, où vous êtes et comment vous travaillez.",
     fields: ["companyName", "trade", "city", "country"],
     Component: ActiviteStep,
   },
   {
     id: "coordonnees",
-    title: "Vos coordonnées",
-    subtitle: "Comment vos clients — et nous — vous joignons.",
     fields: ["phone", "email"],
     Component: CoordonneesStep,
   },
-  {
-    id: "site",
-    title: "Votre site",
-    subtitle:
-      "Quelques infos pour qu'on construise votre site à votre image. Tout est facultatif — le paiement vient juste après.",
-    fields: [],
-    Component: SiteDetailsStep,
-  },
+  { id: "site", fields: [], Component: SiteDetailsStep },
 ];
 
 export function buildSteps(): StepDef[] {

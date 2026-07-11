@@ -15,7 +15,8 @@
     "createSite": "Meine Website erstellen",
     "priceLine": "49€ bei der Erstellung · danach 9,99€/Monat · jederzeit kündbar",
     "whatsappAria": "Auf WhatsApp schreiben",
-    "callAria": "{phone} anrufen"
+    "callAria": "{phone} anrufen",
+    "optional": "(optional)"
   },
   "footer": {
     "tagline": "Die Profi-Website, die dir Kunden bringt, in 48h online. Ohne Stress, ohne Bindung.",
@@ -328,5 +329,156 @@
     "body": "Deine Zahlung ist eingegangen – eine Stripe-Quittung kommt per E-Mail. Unser Team hat alles, was es braucht, und bereitet deine Website vor: Wir melden uns sehr bald, meist innerhalb von 2 Stunden, um dir eine erste Version zu zeigen.",
     "backHome": "Zurück zur Startseite",
     "question": "Eine Frage? {email}"
+  },
+  "contact": {
+    "meta": {
+      "title": "Kontakt aufnehmen",
+      "description": "Eine Frage zu deiner künftigen Website? Schreib uns, wir antworten schnell. Telefon, WhatsApp oder Formular — ganz wie du magst."
+    },
+    "eyebrow": "Kontakt",
+    "title": "Sprechen wir über dein Projekt",
+    "subtitle": "Eine Frage, eine Idee, ein Angebot? Schreib uns unten — wir antworten dir schnell. Du kannst uns auch direkt erreichen:",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Dein Name",
+      "email": "E-Mail",
+      "emailPlaceholder": "du@beispiel.fr",
+      "phone": "Telefon",
+      "phonePlaceholder": "06 12 34 56 78",
+      "message": "Nachricht",
+      "messagePlaceholder": "Sag uns in ein paar Worten, was du brauchst…",
+      "submit": "Nachricht senden",
+      "submitting": "Wird gesendet…",
+      "sentTitle": "Nachricht gesendet!",
+      "sentBody": "Danke, wir melden uns ganz bald bei dir. Du kannst uns auch direkt per Telefon oder WhatsApp erreichen.",
+      "error": "Das Senden ist fehlgeschlagen. Versuch es noch mal oder erreiche uns per Telefon.",
+      "errors": {
+        "nameMin": "Gib deinen Namen an.",
+        "emailRequired": "Deine E-Mail wird benötigt.",
+        "emailInvalid": "Diese E-Mail sieht nicht gültig aus.",
+        "messageShort": "Deine Nachricht ist etwas kurz.",
+        "messageLong": "Deine Nachricht ist zu lang."
+      }
+    }
+  },
+  "demarrer": {
+    "meta": {
+      "title": "Meine Website erstellen",
+      "description": "Beschreibe deine Tätigkeit in wenigen Minuten. Wir erstellen deine Profi-Website für Handwerker, Selbstständige oder Kleinbetriebe, und sie ist in 48h online."
+    },
+    "back": "Zurück",
+    "form": {
+      "stepProgress": "Schritt {current} von {total}",
+      "error": "Ups, das Senden ist fehlgeschlagen. Versuch es gleich noch mal oder schreib uns direkt.",
+      "prev": "Zurück",
+      "touchToContinue": "Tippe eine Option an, um fortzufahren",
+      "uploading": "Bilder werden hochgeladen…",
+      "redirecting": "Weiterleitung zur Zahlung…",
+      "order": "Bestellen",
+      "continue": "Weiter",
+      "securityNote": "Sichere Zahlung über Stripe. Gutscheincode direkt vor der Zahlung möglich. Ohne Bindung, kündbar wann du willst.",
+      "thankYouTitle": "Alles notiert, danke!",
+      "thankYouBody": "Wir haben deine Informationen erhalten. Unser Team bereitet deine Website vor und meldet sich ganz bald bei dir — meist innerhalb von 2 Stunden — um dir eine erste Version zu zeigen.",
+      "backHome": "Zurück zur Startseite",
+      "questionMeanwhile": "Eine Frage in der Zwischenzeit? {email}"
+    },
+    "steps": {
+      "offre": {
+        "title": "Dein Angebot",
+        "subtitle": "Wähle dein Paket und, wenn du möchtest, einen Online-Shop."
+      },
+      "activite": {
+        "title": "Deine Tätigkeit",
+        "subtitle": "Dein Unternehmen, wo du bist und wie du arbeitest."
+      },
+      "coordonnees": {
+        "title": "Deine Kontaktdaten",
+        "subtitle": "Wie deine Kunden — und wir — dich erreichen."
+      },
+      "site": {
+        "title": "Deine Website",
+        "subtitle": "Ein paar Infos, damit wir deine Website nach deinem Bild bauen. Alles ist optional — die Zahlung kommt gleich danach."
+      }
+    },
+    "fields": {
+      "companyLabel": "Name deines Unternehmens",
+      "companyHint": "Z. B.: « Souad Ménage », « Garage Mécaline »",
+      "companyPlaceholder": "Der Name, unter dem deine Kunden dich kennen",
+      "tradeLabel": "Dein Beruf",
+      "tradeHint": "Z. B.: « Haushaltshilfe », « Klempner und Heizungsbauer »",
+      "tradePlaceholder": "Was du machst, in ein paar Worten",
+      "whereSection": "Wo bist du?",
+      "addressLabel": "Adresse",
+      "addressHint": "Nr. und Straße — falls du Kunden empfängst oder für die Karte auf der Website.",
+      "addressPlaceholder": "12 rue des Artisans",
+      "cityLabel": "Stadt",
+      "cityHint": "Z. B.: « Lyon »",
+      "cityPlaceholder": "Deine Hauptstadt",
+      "countryLabel": "Land",
+      "howSection": "Wie arbeitest du?",
+      "hasShop": "Ich habe ein Ladenlokal oder ein für die Öffentlichkeit zugängliches Geschäft",
+      "mobile": "Ich fahre zu meinen Kunden",
+      "serviceAreaLabel": "Einsatzgebiet",
+      "serviceAreaHint": "Wie weit fährst du?",
+      "serviceAreaPlaceholder": "Z. B.: Lyon und 20 km im Umkreis",
+      "phoneLabel": "Telefon",
+      "phoneHint": "Die Nummer, die auf deiner Website angezeigt wird.",
+      "phonePlaceholder": "06 12 34 56 78",
+      "emailLabel": "E-Mail",
+      "emailHint": "Hier kommen die Anfragen an.",
+      "emailPlaceholder": "Deine E-Mail-Adresse",
+      "regFrance": "SIRET",
+      "regOther": "Handelsregisternummer",
+      "regHintFrance": "Optional — du kannst sie später angeben.",
+      "regHintOther": "Optional — die Registernummer deines Unternehmens, falls du sie hast.",
+      "regPlaceholderFrance": "SIRET-Nummer (14 Ziffern)",
+      "regPlaceholderOther": "Registernummer des Unternehmens",
+      "formuleLabel": "Dein Paket",
+      "formuleHint": "Du kannst es gemeinsam mit uns ändern.",
+      "thenMonthly": "dann {monthly}/Monat · inkl. MwSt.",
+      "addShopHint": "Monatlich, ohne Bindung, null Provision. Deine Produkte fügst du danach hinzu.",
+      "alsoServices": "Ich biete auch Dienstleistungen an (nicht nur Verkauf)",
+      "shopLine": "Shop {tier}",
+      "totalTTC": "Gesamt inkl. MwSt.",
+      "perMonth": "/Monat",
+      "setupToday": "+ {price} Einrichtung heute",
+      "describeLabel": "Beschreibe deine Tätigkeit",
+      "describeHint": "Deine Leistungen, deine Arbeitsweise… ganz frei, wir schleifen es nach.",
+      "describePlaceholder": "Was du anbietest, für wen, wie…",
+      "logoLabel": "Dein Logo",
+      "logoHint": "Falls du eins hast.",
+      "logoCta": "Lade dein Logo hoch",
+      "photosLabel": "Deine Fotos",
+      "photosHint": "Baustellen, Referenzen, Ladenlokal…",
+      "colorsLabel": "Deine Farben",
+      "colorsHint": "Haupt- und Nebenfarbe — oder lass es, wir wählen (und leiten sie aus dem Logo ab).",
+      "colorPrimary": "Hauptfarbe",
+      "colorSecondary": "Nebenfarbe",
+      "ambianceLabel": "Stil & Atmosphäre",
+      "ambianceHint": "Warm, modern, seriös, farbenfroh… beschreib die gewünschte Stimmung.",
+      "ambiancePlaceholder": "Die Atmosphäre, die du dir für deine Website vorstellst…",
+      "languagesLabel": "Sprachen der Website",
+      "languagesHint": "Als Freitext, durch Kommas getrennt.",
+      "languagesPlaceholder": "Französisch, Englisch, Spanisch",
+      "socialsLabel": "Soziale Netzwerke",
+      "socialsHint": "Link oder Benutzername — wir normalisieren das.",
+      "socialGoogle": "Google-Eintrag",
+      "noWhatsapp": "Ich habe kein WhatsApp (keinen WhatsApp-Button anzeigen)",
+      "extraLabel": "Noch etwas hinzuzufügen?",
+      "extraHint": "Ein Detail, ein Wunsch, eine Einschränkung… alles, was wir wissen sollten.",
+      "extraPlaceholder": "Was du uns noch sagen möchtest…"
+    },
+    "errors": {
+      "productTitle": "Gib diesem Produkt einen Namen.",
+      "formule": "Wähle ein Paket, um fortzufahren.",
+      "companyName": "Gib den Namen deines Unternehmens an.",
+      "trade": "Gib deinen Beruf an.",
+      "city": "Gib deine Stadt an.",
+      "country": "Gib dein Land an.",
+      "phone": "Eine Nummer, um dich zu erreichen, wird benötigt.",
+      "emailRequired": "Deine E-Mail wird benötigt.",
+      "emailInvalid": "Diese E-Mail sieht nicht gültig aus.",
+      "colorMax": "Höchstens zwei Farben."
+    }
   }
 }

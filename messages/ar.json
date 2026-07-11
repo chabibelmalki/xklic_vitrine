@@ -15,7 +15,8 @@
     "createSite": "أنشئ موقعي",
     "priceLine": "49€ عند الإنشاء · ثم 9,99€/شهريًا · يمكنك الإلغاء في أي وقت",
     "whatsappAria": "راسلنا على WhatsApp",
-    "callAria": "اتصل على {phone}"
+    "callAria": "اتصل على {phone}",
+    "optional": "(اختياري)"
   },
   "footer": {
     "tagline": "الموقع الاحترافي الذي يجلب لك الزبائن، على الإنترنت خلال 48 ساعة. بلا تعقيد وبلا التزام.",
@@ -328,5 +329,156 @@
     "body": "تم استلام دفعتك بنجاح — سيصلك إيصال Stripe عبر البريد الإلكتروني. فريقنا لديه كل ما يلزم ويجهّز موقعك: سنعود إليك قريبًا جدًا، عادةً خلال ساعتين، لنعرض عليك نسخة أولى.",
     "backHome": "العودة إلى الرئيسية",
     "question": "لديك سؤال؟ {email}"
+  },
+  "contact": {
+    "meta": {
+      "title": "اتصل بنا",
+      "description": "سؤال حول موقعك المستقبلي؟ راسلنا، نرد عليك بسرعة. هاتف، WhatsApp أو نموذج — كما تفضّل."
+    },
+    "eyebrow": "اتصل بنا",
+    "title": "لنتحدث عن مشروعك",
+    "subtitle": "سؤال، فكرة، أو طلب عرض سعر؟ راسلنا أدناه — نرد عليك بسرعة. يمكنك أيضًا التواصل معنا مباشرة:",
+    "form": {
+      "name": "الاسم",
+      "namePlaceholder": "اسمك",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "toi@exemple.fr",
+      "phone": "الهاتف",
+      "phonePlaceholder": "06 12 34 56 78",
+      "message": "الرسالة",
+      "messagePlaceholder": "أخبرنا بكلمات قليلة عما تحتاجه…",
+      "submit": "إرسال الرسالة",
+      "submitting": "جارٍ الإرسال…",
+      "sentTitle": "تم إرسال الرسالة!",
+      "sentBody": "شكرًا، سنعاود الاتصال بك قريبًا جدًا. يمكنك أيضًا التواصل معنا مباشرة عبر الهاتف أو WhatsApp.",
+      "error": "فشل الإرسال. أعد المحاولة، أو تواصل معنا عبر الهاتف.",
+      "errors": {
+        "nameMin": "أدخل اسمك.",
+        "emailRequired": "بريدك الإلكتروني مطلوب.",
+        "emailInvalid": "هذا البريد الإلكتروني لا يبدو صالحًا.",
+        "messageShort": "رسالتك قصيرة بعض الشيء.",
+        "messageLong": "رسالتك طويلة جدًا."
+      }
+    }
+  },
+  "demarrer": {
+    "meta": {
+      "title": "أنشئ موقعي",
+      "description": "صِف نشاطك في بضع دقائق. ننشئ لك موقعك الاحترافي لصاحب حرفة، أو عامل مستقل، أو مقاولة صغيرة، ويكون على الإنترنت خلال 48 ساعة."
+    },
+    "back": "رجوع",
+    "form": {
+      "stepProgress": "الخطوة {current} من {total}",
+      "error": "عذرًا، فشل الإرسال. أعد المحاولة بعد لحظة، أو راسلنا مباشرة.",
+      "prev": "السابق",
+      "touchToContinue": "المس أحد الخيارات للمتابعة",
+      "uploading": "جارٍ رفع الصور…",
+      "redirecting": "جارٍ التحويل إلى الدفع…",
+      "order": "اطلب الآن",
+      "continue": "متابعة",
+      "securityNote": "دفع آمن عبر Stripe. يمكنك إدخال رمز ترويجي قبل الدفع مباشرة. بلا التزام، يمكنك الإلغاء متى شئت.",
+      "thankYouTitle": "تم التسجيل، شكرًا!",
+      "thankYouBody": "لقد استلمنا معلوماتك. فريقنا يجهّز موقعك ويعود إليك قريبًا جدًا — عادةً خلال ساعتين — ليعرض عليك نسخة أولى.",
+      "backHome": "العودة إلى الرئيسية",
+      "questionMeanwhile": "لديك سؤال في هذه الأثناء؟ {email}"
+    },
+    "steps": {
+      "offre": {
+        "title": "عرضك",
+        "subtitle": "اختر صيغتك، ومتجرًا إلكترونيًا إن أردت."
+      },
+      "activite": {
+        "title": "نشاطك",
+        "subtitle": "مؤسستك، أين تتواجد وكيف تعمل."
+      },
+      "coordonnees": {
+        "title": "معلومات التواصل",
+        "subtitle": "كيف يتواصل معك زبائنك — ونحن."
+      },
+      "site": {
+        "title": "موقعك",
+        "subtitle": "بعض المعلومات لنبني موقعك على صورتك. كل شيء اختياري — الدفع يأتي بعد ذلك مباشرة."
+      }
+    },
+    "fields": {
+      "companyLabel": "اسم مؤسستك",
+      "companyHint": "مثال: « Souad Ménage »، « Garage Mécaline »",
+      "companyPlaceholder": "الاسم الذي يعرفك به زبائنك",
+      "tradeLabel": "مهنتك",
+      "tradeHint": "مثال: « عاملة تنظيف منزلي »، « سبّاك ومختص تدفئة »",
+      "tradePlaceholder": "ما تقوم به، بكلمات قليلة",
+      "whereSection": "أين تتواجد؟",
+      "addressLabel": "العنوان",
+      "addressHint": "رقم وشارع — إن كنت تستقبل زبائن، أو لخريطة الموقع.",
+      "addressPlaceholder": "12 rue des Artisans",
+      "cityLabel": "المدينة",
+      "cityHint": "مثال: « Lyon »",
+      "cityPlaceholder": "مدينتك الرئيسية",
+      "countryLabel": "البلد",
+      "howSection": "كيف تعمل؟",
+      "hasShop": "لدي محل أو متجر مفتوح للعموم",
+      "mobile": "أتنقّل إلى منازل زبائني",
+      "serviceAreaLabel": "منطقة التدخل",
+      "serviceAreaHint": "إلى أي مدى تتنقّل؟",
+      "serviceAreaPlaceholder": "مثال: Lyon و20 كم حولها",
+      "phoneLabel": "الهاتف",
+      "phoneHint": "الرقم الظاهر على موقعك.",
+      "phonePlaceholder": "06 12 34 56 78",
+      "emailLabel": "البريد الإلكتروني",
+      "emailHint": "هنا ستصلك الطلبات.",
+      "emailPlaceholder": "عنوان بريدك الإلكتروني",
+      "regFrance": "SIRET",
+      "regOther": "رقم السجل التجاري",
+      "regHintFrance": "اختياري — يمكنك إدخاله لاحقًا.",
+      "regHintOther": "اختياري — رقم السجل التجاري لمؤسستك، إن كان لديك.",
+      "regPlaceholderFrance": "رقم SIRET (14 رقمًا)",
+      "regPlaceholderOther": "رقم السجل التجاري للمؤسسة",
+      "formuleLabel": "صيغتك",
+      "formuleHint": "يمكنك تغييرها معنا.",
+      "thenMonthly": "ثم {monthly}/شهريًا · شاملة الضريبة",
+      "addShopHint": "شهري، بلا التزام، بلا عمولة. ستضيف منتجاتك لاحقًا.",
+      "alsoServices": "أقدّم أيضًا خدمات (وليس البيع فقط)",
+      "shopLine": "متجر {tier}",
+      "totalTTC": "الإجمالي شامل الضريبة",
+      "perMonth": "/شهريًا",
+      "setupToday": "+ {price} رسوم تركيب اليوم",
+      "describeLabel": "صِف نشاطك",
+      "describeHint": "خدماتك، طريقة عملك… بشكل عفوي، سنحسّنها.",
+      "describePlaceholder": "ما تقدّمه، لمن، وكيف…",
+      "logoLabel": "شعارك",
+      "logoHint": "إن كان لديك واحد.",
+      "logoCta": "أضف شعارك",
+      "photosLabel": "صورك",
+      "photosHint": "أوراش، أعمال منجزة، المحل…",
+      "colorsLabel": "ألوانك",
+      "colorsHint": "الأساسي والثانوي — أو اتركها، سنختار (ونستخرجها من الشعار).",
+      "colorPrimary": "الأساسي",
+      "colorSecondary": "الثانوي",
+      "ambianceLabel": "الأسلوب والأجواء",
+      "ambianceHint": "دافئ، عصري، جاد، ملوّن… صِف الروح التي تريدها.",
+      "ambiancePlaceholder": "الأجواء التي تتخيّلها لموقعك…",
+      "languagesLabel": "لغات الموقع",
+      "languagesHint": "نص حر، مفصولة بفواصل.",
+      "languagesPlaceholder": "الفرنسية، الإنجليزية، الإسبانية",
+      "socialsLabel": "شبكات التواصل الاجتماعي",
+      "socialsHint": "رابط أو اسم مستخدم — نحن ننسّقه.",
+      "socialGoogle": "بطاقة Google",
+      "noWhatsapp": "ليس لدي WhatsApp (لا تعرض زر WhatsApp)",
+      "extraLabel": "شيء آخر تريد إضافته؟",
+      "extraHint": "تفصيل، رغبة، قيد… كل ما يجب أن نعرفه.",
+      "extraPlaceholder": "ما تريد أن تخبرنا به إضافةً…"
+    },
+    "errors": {
+      "productTitle": "أعطِ اسمًا لهذا المنتج.",
+      "formule": "اختر صيغة للمتابعة.",
+      "companyName": "أدخل اسم مؤسستك.",
+      "trade": "أدخل مهنتك.",
+      "city": "أدخل مدينتك.",
+      "country": "أدخل بلدك.",
+      "phone": "رقم للتواصل معك مطلوب.",
+      "emailRequired": "بريدك الإلكتروني مطلوب.",
+      "emailInvalid": "هذا البريد الإلكتروني لا يبدو صالحًا.",
+      "colorMax": "لونان كحد أقصى."
+    }
   }
 }

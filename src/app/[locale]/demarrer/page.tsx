@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { ArrowLeft } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/site/logo";
 import { LeadForm } from "@/components/form/lead-form";
 import { FloatingActions } from "@/components/site/floating-actions";
@@ -13,18 +14,29 @@ import {
 } from "@/lib/lead-schema";
 import { countryNameFromCode } from "@/data/countries";
 
-export const metadata: Metadata = {
-  title: "Créer mon site",
-  description:
-    "Décris ton activité en quelques minutes. On crée ton site pro pour artisan, auto-entrepreneur ou TPE, et il est en ligne en 48h.",
-  alternates: { canonical: "/demarrer" },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "demarrer.meta" });
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: { canonical: "/demarrer" },
+  };
+}
 
 export default async function DemarrerPage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ locale: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
+  const { locale } = await params;
+  const tNav = await getTranslations({ locale, namespace: "demarrer" });
   const sp = await searchParams;
   const initialFormule = FORMULE_SLUGS.includes(sp.formule as FormuleSlug)
     ? (sp.formule as FormuleSlug)
@@ -56,7 +68,7 @@ export default async function DemarrerPage({
             className="inline-flex items-center gap-1.5 text-sm text-cream-muted transition-colors hover:text-cream"
           >
             <ArrowLeft size={16} />
-            Retour
+            {tNav("back")}
           </Link>
         </div>
       </header>

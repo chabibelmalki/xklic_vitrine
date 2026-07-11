@@ -15,7 +15,8 @@
     "createSite": "Criar o meu site",
     "priceLine": "49€ na criação · depois 9,99€/mês · cancelas quando quiseres",
     "whatsappAria": "Escrever no WhatsApp",
-    "callAria": "Ligar para o {phone}"
+    "callAria": "Ligar para o {phone}",
+    "optional": "(facultativo)"
   },
   "footer": {
     "tagline": "O site profissional que te traz clientes, online em 48h. Sem complicações, sem compromisso.",
@@ -328,5 +329,156 @@
     "body": "O teu pagamento foi processado — vais receber um recibo da Stripe por email. A nossa equipa tem tudo o que precisa e está a preparar o teu site: entramos em contacto muito em breve, normalmente em menos de 2h, para te mostrar uma primeira versão.",
     "backHome": "Voltar ao início",
     "question": "Alguma dúvida? {email}"
+  },
+  "contact": {
+    "meta": {
+      "title": "Contactar-nos",
+      "description": "Tens uma pergunta sobre o teu futuro site? Escreve-nos, respondemos rápido. Telefone, WhatsApp ou formulário — como preferires."
+    },
+    "eyebrow": "Contacto",
+    "title": "Vamos falar do teu projeto",
+    "subtitle": "Uma pergunta, uma ideia, um orçamento? Escreve-nos abaixo — respondemos rápido. Também nos podes contactar diretamente:",
+    "form": {
+      "name": "Nome",
+      "namePlaceholder": "O teu nome",
+      "email": "E-mail",
+      "emailPlaceholder": "tu@exemplo.fr",
+      "phone": "Telefone",
+      "phonePlaceholder": "06 12 34 56 78",
+      "message": "Mensagem",
+      "messagePlaceholder": "Diz-nos em poucas palavras o que precisas…",
+      "submit": "Enviar a mensagem",
+      "submitting": "A enviar…",
+      "sentTitle": "Mensagem enviada!",
+      "sentBody": "Obrigado, entramos em contacto muito em breve. Também nos podes contactar diretamente por telefone ou WhatsApp.",
+      "error": "O envio falhou. Tenta de novo, ou contacta-nos por telefone.",
+      "errors": {
+        "nameMin": "Indica o teu nome.",
+        "emailRequired": "O teu e-mail é necessário.",
+        "emailInvalid": "Este e-mail não parece válido.",
+        "messageShort": "A tua mensagem é um pouco curta.",
+        "messageLong": "A tua mensagem é demasiado longa."
+      }
+    }
+  },
+  "demarrer": {
+    "meta": {
+      "title": "Criar o meu site",
+      "description": "Descreve a tua atividade em poucos minutos. Criamos o teu site profissional para artesão, trabalhador por conta própria ou pequena empresa, e fica online em 48h."
+    },
+    "back": "Voltar",
+    "form": {
+      "stepProgress": "Passo {current} de {total}",
+      "error": "Ups, o envio falhou. Tenta de novo daqui a instantes, ou escreve-nos diretamente.",
+      "prev": "Anterior",
+      "touchToContinue": "Toca numa opção para continuar",
+      "uploading": "A carregar as imagens…",
+      "redirecting": "A redirecionar para o pagamento…",
+      "order": "Encomendar",
+      "continue": "Continuar",
+      "securityNote": "Pagamento seguro pela Stripe. Podes usar um código promocional mesmo antes de pagar. Sem compromisso, cancelas quando quiseres.",
+      "thankYouTitle": "Está registado, obrigado!",
+      "thankYouBody": "Recebemos bem as tuas informações. A nossa equipa está a preparar o teu site e entra em contacto muito em breve — normalmente em menos de 2h — para te mostrar uma primeira versão.",
+      "backHome": "Voltar ao início",
+      "questionMeanwhile": "Alguma pergunta entretanto? {email}"
+    },
+    "steps": {
+      "offre": {
+        "title": "A tua oferta",
+        "subtitle": "Escolhe o teu plano, e uma loja online se quiseres."
+      },
+      "activite": {
+        "title": "A tua atividade",
+        "subtitle": "A tua empresa, onde estás e como trabalhas."
+      },
+      "coordonnees": {
+        "title": "Os teus contactos",
+        "subtitle": "Como os teus clientes — e nós — te contactamos."
+      },
+      "site": {
+        "title": "O teu site",
+        "subtitle": "Algumas informações para construirmos o teu site à tua imagem. Tudo é facultativo — o pagamento vem logo a seguir."
+      }
+    },
+    "fields": {
+      "companyLabel": "Nome da tua empresa",
+      "companyHint": "Ex.: «Souad Ménage», «Garage Mécaline»",
+      "companyPlaceholder": "O nome pelo qual os teus clientes te conhecem",
+      "tradeLabel": "A tua profissão",
+      "tradeHint": "Ex.: «Empregada de limpeza ao domicílio», «Canalizador de aquecimento»",
+      "tradePlaceholder": "O que fazes, em poucas palavras",
+      "whereSection": "Onde estás?",
+      "addressLabel": "Morada",
+      "addressHint": "Número e rua — se recebes clientes, ou para o mapa do site.",
+      "addressPlaceholder": "12 rue des Artisans",
+      "cityLabel": "Cidade",
+      "cityHint": "Ex.: «Lyon»",
+      "cityPlaceholder": "A tua cidade principal",
+      "countryLabel": "País",
+      "howSection": "Como trabalhas?",
+      "hasShop": "Tenho um espaço ou uma loja aberta ao público",
+      "mobile": "Desloco-me a casa dos meus clientes",
+      "serviceAreaLabel": "Zona de intervenção",
+      "serviceAreaHint": "Até onde te deslocas?",
+      "serviceAreaPlaceholder": "Ex.: Lyon e 20 km em redor",
+      "phoneLabel": "Telefone",
+      "phoneHint": "O número apresentado no teu site.",
+      "phonePlaceholder": "06 12 34 56 78",
+      "emailLabel": "E-mail",
+      "emailHint": "É para aqui que chegam os pedidos.",
+      "emailPlaceholder": "O teu endereço de e-mail",
+      "regFrance": "SIRET",
+      "regOther": "Número de registo comercial",
+      "regHintFrance": "Facultativo — podes preenchê-lo mais tarde.",
+      "regHintOther": "Facultativo — o número de registo comercial da tua empresa, se o tiveres.",
+      "regPlaceholderFrance": "Número SIRET (14 dígitos)",
+      "regPlaceholderOther": "Número de registo comercial da empresa",
+      "formuleLabel": "O teu plano",
+      "formuleHint": "Podes mudar connosco.",
+      "thenMonthly": "depois {monthly}/mês · c/ impostos",
+      "addShopHint": "Mensal, sem compromisso, zero comissão. Adicionas os teus produtos depois.",
+      "alsoServices": "Também ofereço serviços (não apenas venda)",
+      "shopLine": "Loja {tier}",
+      "totalTTC": "Total c/ impostos",
+      "perMonth": "/mês",
+      "setupToday": "+ {price} de instalação hoje",
+      "describeLabel": "Descreve a tua atividade",
+      "describeHint": "Os teus serviços, a tua forma de trabalhar… sem ordem, nós afinamos.",
+      "describePlaceholder": "O que ofereces, a quem, como…",
+      "logoLabel": "O teu logótipo",
+      "logoHint": "Se tiveres um.",
+      "logoCta": "Coloca o teu logótipo",
+      "photosLabel": "As tuas fotos",
+      "photosHint": "Obras, trabalhos, espaço…",
+      "colorsLabel": "As tuas cores",
+      "colorsHint": "Principal e secundária — ou deixa, nós escolhemos (e extraímos do logótipo).",
+      "colorPrimary": "Principal",
+      "colorSecondary": "Secundária",
+      "ambianceLabel": "Estilo e ambiente",
+      "ambianceHint": "Acolhedor, moderno, sério, colorido… descreve o espírito que queres.",
+      "ambiancePlaceholder": "O ambiente que imaginas para o teu site…",
+      "languagesLabel": "Idiomas do site",
+      "languagesHint": "Em texto livre, separados por vírgulas.",
+      "languagesPlaceholder": "Francês, inglês, espanhol",
+      "socialsLabel": "Redes sociais",
+      "socialsHint": "Link ou nome de utilizador — nós normalizamos.",
+      "socialGoogle": "Ficha Google",
+      "noWhatsapp": "Não tenho WhatsApp (não mostrar o botão WhatsApp)",
+      "extraLabel": "Mais alguma coisa a acrescentar?",
+      "extraHint": "Um detalhe, um desejo, uma restrição… tudo o que devemos saber.",
+      "extraPlaceholder": "O que quiseres dizer-nos a mais…"
+    },
+    "errors": {
+      "productTitle": "Dá um nome a este produto.",
+      "formule": "Escolhe um plano para continuar.",
+      "companyName": "Indica o nome da tua empresa.",
+      "trade": "Indica a tua profissão.",
+      "city": "Indica a tua cidade.",
+      "country": "Indica o teu país.",
+      "phone": "É necessário um número para te contactar.",
+      "emailRequired": "O teu e-mail é necessário.",
+      "emailInvalid": "Este e-mail não parece válido.",
+      "colorMax": "No máximo duas cores."
+    }
   }
 }

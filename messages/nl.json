@@ -15,7 +15,159 @@
     "createSite": "Maak mijn site",
     "priceLine": "49€ bij het aanmaken · daarna 9,99€/maand · altijd opzegbaar",
     "whatsappAria": "Schrijf op WhatsApp",
-    "callAria": "Bel {phone}"
+    "callAria": "Bel {phone}",
+    "optional": "(optioneel)"
+  },
+  "contact": {
+    "meta": {
+      "title": "Contact opnemen",
+      "description": "Een vraag over je toekomstige site? Schrijf ons, we antwoorden snel. Telefoon, WhatsApp of formulier — zoals je verkiest."
+    },
+    "eyebrow": "Contact",
+    "title": "Laten we het over je project hebben",
+    "subtitle": "Een vraag, een idee, een offerte? Schrijf ons hieronder — we antwoorden snel. Je kunt ons ook rechtstreeks bereiken:",
+    "form": {
+      "name": "Naam",
+      "namePlaceholder": "Je naam",
+      "email": "E-mail",
+      "emailPlaceholder": "jij@voorbeeld.fr",
+      "phone": "Telefoon",
+      "phonePlaceholder": "06 12 34 56 78",
+      "message": "Bericht",
+      "messagePlaceholder": "Vertel ons in een paar woorden wat je nodig hebt…",
+      "submit": "Bericht versturen",
+      "submitting": "Versturen…",
+      "sentTitle": "Bericht verstuurd!",
+      "sentBody": "Bedankt, we nemen heel snel contact met je op. Je kunt ons ook rechtstreeks bereiken via telefoon of WhatsApp.",
+      "error": "Het versturen is mislukt. Probeer opnieuw, of neem telefonisch contact met ons op.",
+      "errors": {
+        "nameMin": "Vul je naam in.",
+        "emailRequired": "Je e-mail is nodig.",
+        "emailInvalid": "Deze e-mail lijkt niet geldig.",
+        "messageShort": "Je bericht is een beetje kort.",
+        "messageLong": "Je bericht is te lang."
+      }
+    }
+  },
+  "demarrer": {
+    "meta": {
+      "title": "Mijn site maken",
+      "description": "Beschrijf je activiteit in een paar minuten. Wij maken je prosite voor vakman, zelfstandige of kmo, en hij staat binnen 48u online."
+    },
+    "back": "Terug",
+    "form": {
+      "stepProgress": "Stap {current} van {total}",
+      "error": "Oeps, het versturen is mislukt. Probeer zo dadelijk opnieuw, of schrijf ons rechtstreeks.",
+      "prev": "Vorige",
+      "touchToContinue": "Tik op een optie om verder te gaan",
+      "uploading": "Afbeeldingen uploaden…",
+      "redirecting": "Doorverwijzen naar de betaling…",
+      "order": "Bestellen",
+      "continue": "Verder",
+      "securityNote": "Beveiligde betaling via Stripe. Promocode mogelijk vlak voor het betalen. Zonder verplichting, opzegbaar wanneer je wil.",
+      "thankYouTitle": "Genoteerd, bedankt!",
+      "thankYouBody": "We hebben je gegevens goed ontvangen. Ons team bereidt je site voor en komt heel snel bij je terug — meestal binnen 2u — om je een eerste versie te tonen.",
+      "backHome": "Terug naar de startpagina",
+      "questionMeanwhile": "Een vraag ondertussen? {email}"
+    },
+    "steps": {
+      "offre": {
+        "title": "Jouw aanbod",
+        "subtitle": "Kies je formule, en een webshop als je dat wil."
+      },
+      "activite": {
+        "title": "Jouw activiteit",
+        "subtitle": "Je onderneming, waar je bent en hoe je werkt."
+      },
+      "coordonnees": {
+        "title": "Jouw contactgegevens",
+        "subtitle": "Hoe je klanten — en wij — je bereiken."
+      },
+      "site": {
+        "title": "Jouw site",
+        "subtitle": "Wat info zodat we je site naar jouw beeld bouwen. Alles is optioneel — de betaling komt vlak erna."
+      }
+    },
+    "fields": {
+      "companyLabel": "Naam van je onderneming",
+      "companyHint": "Bv.: « Souad Ménage », « Garage Mécaline »",
+      "companyPlaceholder": "De naam waaronder je klanten je kennen",
+      "tradeLabel": "Jouw vak",
+      "tradeHint": "Bv.: « Schoonmaakster aan huis », « Loodgieter-verwarmingstechnicus »",
+      "tradePlaceholder": "Wat je doet, in een paar woorden",
+      "whereSection": "Waar ben je?",
+      "addressLabel": "Adres",
+      "addressHint": "Nr. en straat — als je klanten ontvangt, of voor de kaart op de site.",
+      "addressPlaceholder": "12 rue des Artisans",
+      "cityLabel": "Stad",
+      "cityHint": "Bv.: « Lyon »",
+      "cityPlaceholder": "Je voornaamste stad",
+      "countryLabel": "Land",
+      "howSection": "Hoe werk je?",
+      "hasShop": "Ik heb een pand of een winkel die voor het publiek open is",
+      "mobile": "Ik verplaats me naar mijn klanten",
+      "serviceAreaLabel": "Werkgebied",
+      "serviceAreaHint": "Tot waar verplaats je je?",
+      "serviceAreaPlaceholder": "Bv.: Lyon en 20 km in de omtrek",
+      "phoneLabel": "Telefoon",
+      "phoneHint": "Het nummer dat op je site wordt getoond.",
+      "phonePlaceholder": "06 12 34 56 78",
+      "emailLabel": "E-mail",
+      "emailHint": "Daar komen de aanvragen binnen.",
+      "emailPlaceholder": "Je e-mailadres",
+      "regFrance": "SIRET",
+      "regOther": "KvK-/ondernemingsnummer",
+      "regHintFrance": "Optioneel — je kunt het later invullen.",
+      "regHintOther": "Optioneel — het inschrijvingsnummer van je onderneming, als je het hebt.",
+      "regPlaceholderFrance": "SIRET-nummer (14 cijfers)",
+      "regPlaceholderOther": "Inschrijvingsnummer van de onderneming",
+      "formuleLabel": "Jouw formule",
+      "formuleHint": "Je kunt samen met ons van formule veranderen.",
+      "thenMonthly": "daarna {monthly}/maand · incl. btw",
+      "addShopHint": "Maandelijks, zonder verplichting, nul commissie. Je voegt je producten nadien toe.",
+      "alsoServices": "Ik bied ook diensten aan (niet alleen verkoop)",
+      "shopLine": "Webshop {tier}",
+      "totalTTC": "Totaal incl. btw",
+      "perMonth": "/maand",
+      "setupToday": "+ {price} installatie vandaag",
+      "describeLabel": "Beschrijf je activiteit",
+      "describeHint": "Je diensten, je manier van werken… gewoon los, wij verfijnen het.",
+      "describePlaceholder": "Wat je aanbiedt, aan wie, hoe…",
+      "logoLabel": "Jouw logo",
+      "logoHint": "Als je er een hebt.",
+      "logoCta": "Zet je logo hier",
+      "photosLabel": "Jouw foto's",
+      "photosHint": "Werven, realisaties, pand…",
+      "colorsLabel": "Jouw kleuren",
+      "colorsHint": "Hoofd- en bijkleur — of laat maar, wij kiezen (en halen ze uit het logo).",
+      "colorPrimary": "Hoofdkleur",
+      "colorSecondary": "Bijkleur",
+      "ambianceLabel": "Stijl & sfeer",
+      "ambianceHint": "Warm, modern, degelijk, kleurrijk… beschrijf de gewenste sfeer.",
+      "ambiancePlaceholder": "De sfeer die je voor je site voor ogen hebt…",
+      "languagesLabel": "Talen van de site",
+      "languagesHint": "In vrije tekst, gescheiden door komma's.",
+      "languagesPlaceholder": "Frans, Engels, Spaans",
+      "socialsLabel": "Sociale media",
+      "socialsHint": "Link of gebruikersnaam — wij normaliseren het.",
+      "socialGoogle": "Google-vermelding",
+      "noWhatsapp": "Ik heb geen WhatsApp (geen WhatsApp-knop tonen)",
+      "extraLabel": "Nog iets toe te voegen?",
+      "extraHint": "Een detail, een wens, een beperking… alles wat we moeten weten.",
+      "extraPlaceholder": "Wat je ons nog meer wil vertellen…"
+    },
+    "errors": {
+      "productTitle": "Geef dit product een naam.",
+      "formule": "Kies een formule om verder te gaan.",
+      "companyName": "Vul de naam van je onderneming in.",
+      "trade": "Vul je vak in.",
+      "city": "Vul je stad in.",
+      "country": "Vul je land in.",
+      "phone": "Een nummer om je te bereiken is nodig.",
+      "emailRequired": "Je e-mail is nodig.",
+      "emailInvalid": "Deze e-mail lijkt niet geldig.",
+      "colorMax": "Maximaal twee kleuren."
+    }
   },
   "footer": {
     "tagline": "De prosite die je klanten oplevert, binnen 48u online. Zonder gedoe, zonder verplichtingen.",
