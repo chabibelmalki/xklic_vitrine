@@ -53,6 +53,26 @@
       "online": "Online in 48h",
       "noCommitment": "Senza vincoli",
       "price": "49€ + 9,99€/mese"
+    },
+    "mock": {
+      "rank": "1° su Google",
+      "rankQuery": "« idraulico Lyon »",
+      "newRequest": "Nuova richiesta",
+      "newRequestMsg": "« Ciao, sei disponibile? »",
+      "callReceived": "Chiamata ricevuta",
+      "navServices": "Servizi",
+      "navPricing": "Prezzi",
+      "navReviews": "Recensioni",
+      "navContact": "Contatti",
+      "badge": "Idraulico · Lyon · 7/7",
+      "title": "Il tuo idraulico di fiducia a Lione.",
+      "quote": "Richiedi un preventivo",
+      "call": "Chiama",
+      "reviews": "4,9 · 87 recensioni",
+      "intervention": "Intervento in 30 min",
+      "g1": "Emergenze 24h",
+      "g2": "Preventivo gratuito",
+      "g3": "Lavoro garantito"
     }
   },
   "trust": {

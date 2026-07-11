@@ -53,6 +53,26 @@
       "online": "En línea en 48h",
       "noCommitment": "Sin compromiso",
       "price": "49€ + 9,99€/mes"
+    },
+    "mock": {
+      "rank": "1º en Google",
+      "rankQuery": "« fontanero Lyon »",
+      "newRequest": "Nueva solicitud",
+      "newRequestMsg": "« Hola, ¿estás disponible? »",
+      "callReceived": "Llamada recibida",
+      "navServices": "Servicios",
+      "navPricing": "Precios",
+      "navReviews": "Opiniones",
+      "navContact": "Contacto",
+      "badge": "Fontanero · Lyon · 7/7",
+      "title": "Tu fontanero de confianza en Lyon.",
+      "quote": "Pedir presupuesto",
+      "call": "Llamar",
+      "reviews": "4,9 · 87 opiniones",
+      "intervention": "Intervención en 30 min",
+      "g1": "Urgencias 24h",
+      "g2": "Presupuesto gratis",
+      "g3": "Trabajo garantizado"
     }
   },
   "trust": {

@@ -192,6 +192,26 @@
       "online": "En ligne en 48h",
       "noCommitment": "Sans engagement",
       "price": "49€ + 9,99€/mois"
+    },
+    "mock": {
+      "rank": "1er sur Google",
+      "rankQuery": "« plombier Lyon »",
+      "newRequest": "Nouvelle demande",
+      "newRequestMsg": "« Bonjour, vous êtes dispo ? »",
+      "callReceived": "Appel reçu",
+      "navServices": "Services",
+      "navPricing": "Tarifs",
+      "navReviews": "Avis",
+      "navContact": "Contact",
+      "badge": "Plombier · Lyon · 7j/7",
+      "title": "Votre plombier de confiance, à Lyon.",
+      "quote": "Demander un devis",
+      "call": "Appeler",
+      "reviews": "4,9 · 87 avis",
+      "intervention": "Intervention en 30 min",
+      "g1": "Urgences 24h/24",
+      "g2": "Devis gratuit",
+      "g3": "Travail garanti"
     }
   },
   "trust": {

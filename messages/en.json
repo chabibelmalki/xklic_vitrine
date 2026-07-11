@@ -204,6 +204,26 @@
       "online": "Live in 48h",
       "noCommitment": "No commitment",
       "price": "49€ + 9,99€/month"
+    },
+    "mock": {
+      "rank": "#1 on Google",
+      "rankQuery": "« plumber Lyon »",
+      "newRequest": "New request",
+      "newRequestMsg": "« Hi, are you available? »",
+      "callReceived": "Call received",
+      "navServices": "Services",
+      "navPricing": "Pricing",
+      "navReviews": "Reviews",
+      "navContact": "Contact",
+      "badge": "Plumber · Lyon · 7/7",
+      "title": "Your trusted plumber in Lyon.",
+      "quote": "Get a quote",
+      "call": "Call",
+      "reviews": "4,9 · 87 reviews",
+      "intervention": "On-site in 30 min",
+      "g1": "24/7 emergencies",
+      "g2": "Free quote",
+      "g3": "Guaranteed work"
     }
   },
   "trust": {

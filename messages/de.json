@@ -53,6 +53,26 @@
       "online": "In 48h online",
       "noCommitment": "Ohne Bindung",
       "price": "49€ + 9,99€/Monat"
+    },
+    "mock": {
+      "rank": "Nr. 1 bei Google",
+      "rankQuery": "« Klempner Lyon »",
+      "newRequest": "Neue Anfrage",
+      "newRequestMsg": "« Hallo, bist du verfügbar? »",
+      "callReceived": "Anruf erhalten",
+      "navServices": "Leistungen",
+      "navPricing": "Preise",
+      "navReviews": "Bewertungen",
+      "navContact": "Kontakt",
+      "badge": "Klempner · Lyon · 7/7",
+      "title": "Dein zuverlässiger Klempner in Lyon.",
+      "quote": "Angebot anfordern",
+      "call": "Anrufen",
+      "reviews": "4,9 · 87 Bewertungen",
+      "intervention": "Einsatz in 30 Min.",
+      "g1": "Notdienst rund um die Uhr",
+      "g2": "Kostenloses Angebot",
+      "g3": "Garantierte Arbeit"
     }
   },
   "trust": {

@@ -204,6 +204,26 @@
       "online": "Binnen 48u online",
       "noCommitment": "Zonder verplichtingen",
       "price": "49€ + 9,99€/maand"
+    },
+    "mock": {
+      "rank": "Nr. 1 op Google",
+      "rankQuery": "« loodgieter Lyon »",
+      "newRequest": "Nieuwe aanvraag",
+      "newRequestMsg": "« Hallo, ben je beschikbaar? »",
+      "callReceived": "Oproep ontvangen",
+      "navServices": "Diensten",
+      "navPricing": "Tarieven",
+      "navReviews": "Reviews",
+      "navContact": "Contact",
+      "badge": "Loodgieter · Lyon · 7/7",
+      "title": "Jouw vertrouwde loodgieter in Lyon.",
+      "quote": "Offerte aanvragen",
+      "call": "Bellen",
+      "reviews": "4,9 · 87 reviews",
+      "intervention": "Ter plaatse in 30 min",
+      "g1": "Spoed 24/7",
+      "g2": "Gratis offerte",
+      "g3": "Gegarandeerd werk"
     }
   },
   "trust": {

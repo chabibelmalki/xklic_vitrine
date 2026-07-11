@@ -53,6 +53,26 @@
       "online": "Online em 48h",
       "noCommitment": "Sem compromisso",
       "price": "49€ + 9,99€/mês"
+    },
+    "mock": {
+      "rank": "1º no Google",
+      "rankQuery": "« canalizador Lyon »",
+      "newRequest": "Novo pedido",
+      "newRequestMsg": "« Olá, está disponível? »",
+      "callReceived": "Chamada recebida",
+      "navServices": "Serviços",
+      "navPricing": "Preços",
+      "navReviews": "Avaliações",
+      "navContact": "Contacto",
+      "badge": "Canalizador · Lyon · 7/7",
+      "title": "O teu canalizador de confiança em Lyon.",
+      "quote": "Pedir orçamento",
+      "call": "Ligar",
+      "reviews": "4,9 · 87 avaliações",
+      "intervention": "Intervenção em 30 min",
+      "g1": "Urgências 24h",
+      "g2": "Orçamento grátis",
+      "g3": "Trabalho garantido"
     }
   },
   "trust": {
