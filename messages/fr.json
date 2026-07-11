@@ -286,5 +286,47 @@
     "titleAccent": "prêt sous 48h.",
     "subtitle": "Quelques minutes pour remplir le formulaire. On s'occupe du reste. Sans engagement, sans paiement aujourd'hui.",
     "cta": "Créer mon site"
+  },
+  "meta": {
+    "defaultTitle": "Xklic — Le site pro qui te ramène des clients, en ligne en 48h",
+    "description": "Xklic crée le site web de ton activité, clés en main et en ligne en 48h. Sans prise de tête, sans engagement. 49€ à la création puis 9,99€/mois.",
+    "ogTitle": "Xklic — Le site pro qui te ramène des clients, en ligne en 48h",
+    "ogDescription": "Le site web de ton activité, clés en main et en ligne en 48h. 49€ à la création puis 9,99€/mois, sans engagement."
+  },
+  "ctaBand": {
+    "default": {
+      "title": "Prêt à être trouvé par vos clients ?",
+      "subtitle": "On crée votre site pro, clés en main, en ligne en 48h. Sans engagement."
+    },
+    "tarifs": {
+      "title": "Une question avant de te lancer ?",
+      "subtitle": "Appelle-nous ou écris sur WhatsApp, on répond vite et clairement."
+    },
+    "faq": {
+      "title": "Tout est clair ? On y va.",
+      "subtitle": "Ton site pro, en ligne en 48h. Sans engagement."
+    }
+  },
+  "proof": {
+    "online": "En ligne en 48h",
+    "noCommitment": "Sans engagement",
+    "unlimited": "Modifications illimitées"
+  },
+  "pageMeta": {
+    "tarifs": {
+      "title": "Tarifs — 49€ puis 9,99€/mois, sans engagement",
+      "description": "Trois formules simples et claires pour ton site web pro : à partir de 49€ à l'installation puis 9,99€/mois, sans engagement. Tu commences où tu veux, tu changes quand tu veux."
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "description": "Délais, engagement, paiement, modifications, nom de domaine… Toutes les réponses sur la création de ton site web pro avec Xklic, sans détour."
+    }
+  },
+  "merci": {
+    "home": "Accueil",
+    "title": "Merci, c'est confirmé !",
+    "body": "Ton paiement est bien pris en compte — un reçu Stripe arrive par email. Notre équipe a tout ce qu'il faut et prépare ton site : on revient vers toi très vite, généralement sous 2h, pour te montrer une première version.",
+    "backHome": "Retour à l'accueil",
+    "question": "Une question ? {email}"
   }
 }

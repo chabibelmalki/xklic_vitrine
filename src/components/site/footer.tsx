@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "./logo";
 import { Container } from "@/components/ui/container";
@@ -44,6 +44,12 @@ const columns: { titleKey: string; links: { href: string; key: string }[] }[] = 
 
 export function Footer() {
   const t = useTranslations("footer");
+  const locale = useLocale();
+  // La colonne « Services » pointe vers du contenu FR-only (métiers,
+  // réalisations, blog) → uniquement en français.
+  const visibleColumns = columns.filter(
+    (c) => locale === "fr" || c.titleKey !== "services",
+  );
   return (
     <footer className="relative border-t border-line py-14">
       <Container>
@@ -77,7 +83,7 @@ export function Footer() {
             </div>
           </div>
 
-          {columns.map((col) => (
+          {visibleColumns.map((col) => (
             <nav key={col.titleKey} className="flex flex-col gap-3">
               <span className="text-xs uppercase tracking-[0.18em] text-cream-faint">
                 {t(`col.${col.titleKey}`)}
@@ -137,15 +143,17 @@ export function Footer() {
             </Link>
             <Link
               href="/mentions-legales"
+              locale="fr"
               className="transition-colors hover:text-cream"
             >
               {t("legal.mentions")}
             </Link>
-            <Link href="/cgv" className="transition-colors hover:text-cream">
+            <Link href="/cgv" locale="fr" className="transition-colors hover:text-cream">
               {t("legal.cgv")}
             </Link>
             <Link
               href="/confidentialite"
+              locale="fr"
               className="transition-colors hover:text-cream"
             >
               {t("legal.privacy")}

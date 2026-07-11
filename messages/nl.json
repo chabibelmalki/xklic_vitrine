@@ -286,5 +286,47 @@
     "titleAccent": "klaar binnen 48u.",
     "subtitle": "Een paar minuten om het formulier in te vullen. Wij regelen de rest. Zonder verplichtingen, zonder betaling vandaag.",
     "cta": "Maak mijn site"
+  },
+  "meta": {
+    "defaultTitle": "Xklic — De pro-website die jou klanten oplevert, in 48u online",
+    "description": "Xklic bouwt de website voor jouw onderneming, kant-en-klaar en in 48u online. Zonder gedoe, zonder verplichting. 49€ bij aanmaak, daarna 9,99€/maand.",
+    "ogTitle": "Xklic — De pro-website die jou klanten oplevert, in 48u online",
+    "ogDescription": "De website voor jouw onderneming, kant-en-klaar en in 48u online. 49€ bij aanmaak, daarna 9,99€/maand, zonder verplichting."
+  },
+  "ctaBand": {
+    "default": {
+      "title": "Klaar om gevonden te worden door je klanten?",
+      "subtitle": "Wij bouwen je pro-website, kant-en-klaar, in 48u online. Zonder verplichting."
+    },
+    "tarifs": {
+      "title": "Nog een vraag voordat je begint?",
+      "subtitle": "Bel ons of stuur een bericht via WhatsApp – we antwoorden snel en duidelijk."
+    },
+    "faq": {
+      "title": "Alles duidelijk? Dan gaan we ervoor.",
+      "subtitle": "Je pro-website, in 48u online. Zonder verplichting."
+    }
+  },
+  "proof": {
+    "online": "Binnen 48u online",
+    "noCommitment": "Zonder verplichtingen",
+    "unlimited": "Onbeperkte aanpassingen"
+  },
+  "pageMeta": {
+    "tarifs": {
+      "title": "Tarieven — 49€ daarna 9,99€/maand, zonder verplichting",
+      "description": "Drie eenvoudige, duidelijke pakketten voor je pro-website: vanaf 49€ installatie en daarna 9,99€/maand, zonder verplichting. Je begint waar je wilt en verandert wanneer je wilt."
+    },
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "description": "Termijnen, verplichting, betaling, wijzigingen, domeinnaam… Alle antwoorden over het bouwen van je pro-website met Xklic, recht voor z'n raap."
+    }
+  },
+  "merci": {
+    "home": "Home",
+    "title": "Bedankt, het is bevestigd!",
+    "body": "Je betaling is gelukt — een Stripe-ontvangstbewijs komt eraan via e-mail. Ons team heeft alles wat nodig is en bereidt je website voor: we nemen heel snel contact met je op, meestal binnen 2u, om je een eerste versie te laten zien.",
+    "backHome": "Terug naar home",
+    "question": "Een vraag? {email}"
   }
 }

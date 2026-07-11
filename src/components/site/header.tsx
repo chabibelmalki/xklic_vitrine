@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "./logo";
@@ -10,16 +10,20 @@ import { ButtonLink } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 // Liens de navigation : href stable, libellé traduit via la clé `nav.*`.
+// `frOnly` = pointe vers un contenu franco-français non traduit (métiers,
+// réalisations) → masqué dans les autres langues.
 const NAV_ITEMS = [
-  { href: "/metiers", key: "metiers" },
-  { href: "/realisations", key: "realisations" },
-  { href: "/tarifs", key: "tarifs" },
-  { href: "/faq", key: "faq" },
-  { href: "/contact", key: "contact" },
+  { href: "/metiers", key: "metiers", frOnly: true },
+  { href: "/realisations", key: "realisations", frOnly: true },
+  { href: "/tarifs", key: "tarifs", frOnly: false },
+  { href: "/faq", key: "faq", frOnly: false },
+  { href: "/contact", key: "contact", frOnly: false },
 ] as const;
 
 export function Header() {
   const t = useTranslations("nav");
+  const locale = useLocale();
+  const navItems = NAV_ITEMS.filter((i) => locale === "fr" || !i.frOnly);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -50,7 +54,7 @@ export function Header() {
         <Logo />
 
         <nav className="hidden items-center gap-8 md:flex">
-          {NAV_ITEMS.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -90,7 +94,7 @@ export function Header() {
         )}
       >
         <nav className="flex flex-col gap-1 px-5 py-4">
-          {NAV_ITEMS.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}

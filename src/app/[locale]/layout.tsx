@@ -3,13 +3,13 @@ import { notFound } from "next/navigation";
 import { Geist } from "next/font/google";
 import { Fraunces } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { setRequestLocale, getMessages } from "next-intl/server";
+import { setRequestLocale, getMessages, getTranslations } from "next-intl/server";
 import "../globals.css";
 import { SITE_URL, IS_INDEXABLE } from "@/lib/site";
 import { JsonLd } from "@/components/seo/json-ld";
 import { organizationLd, websiteLd } from "@/lib/seo";
 import { routing } from "@/i18n/routing";
-import { isRtl, type Locale } from "@/i18n/config";
+import { isRtl, ogLocale, type Locale } from "@/i18n/config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,27 +29,41 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  robots: {
-    index: IS_INDEXABLE,
-    follow: IS_INDEXABLE,
-    googleBot: { index: IS_INDEXABLE, follow: IS_INDEXABLE },
-  },
-  title: {
-    default: "Xklic — Le site pro qui te ramène des clients, en ligne en 48h",
-    template: "%s · Xklic",
-  },
-  description:
-    "Xklic crée le site web de ton activité, clés en main et en ligne en 48h. Sans prise de tête, sans engagement. 49€ à la création puis 9,99€/mois.",
-  openGraph: {
-    type: "website",
-    siteName: "Xklic",
-  },
-  twitter: {
-    card: "summary_large_image",
-  },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const safeLocale = hasLocale(routing.locales, locale) ? locale : routing.defaultLocale;
+  const t = await getTranslations({ locale: safeLocale, namespace: "meta" });
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    robots: {
+      index: IS_INDEXABLE,
+      follow: IS_INDEXABLE,
+      googleBot: { index: IS_INDEXABLE, follow: IS_INDEXABLE },
+    },
+    title: {
+      default: t("defaultTitle"),
+      template: "%s · Xklic",
+    },
+    description: t("description"),
+    openGraph: {
+      type: "website",
+      siteName: "Xklic",
+      locale: ogLocale[safeLocale as Locale],
+      title: t("ogTitle"),
+      description: t("ogDescription"),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("ogTitle"),
+      description: t("ogDescription"),
+    },
+  };
+}
 
 export default async function LocaleLayout({
   children,

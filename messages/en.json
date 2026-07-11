@@ -286,5 +286,47 @@
     "titleAccent": "ready within 48h.",
     "subtitle": "A few minutes to fill out the form. We handle the rest. No commitment, no payment today.",
     "cta": "Create my site"
+  },
+  "meta": {
+    "defaultTitle": "Xklic — The pro website that brings you clients, live in 48h",
+    "description": "Xklic builds your business website, done for you and live in 48h. No hassle, no commitment. 49€ setup then 9,99€/month.",
+    "ogTitle": "Xklic — The pro website that brings you clients, live in 48h",
+    "ogDescription": "Your business website, done for you and live in 48h. 49€ setup then 9,99€/month, no commitment."
+  },
+  "ctaBand": {
+    "default": {
+      "title": "Ready to be found by your clients?",
+      "subtitle": "We build your pro website, done for you, live in 48h. No commitment."
+    },
+    "tarifs": {
+      "title": "A question before you get started?",
+      "subtitle": "Call us or message on WhatsApp — we reply fast and clearly."
+    },
+    "faq": {
+      "title": "All clear? Let's go.",
+      "subtitle": "Your pro website, live in 48h. No commitment."
+    }
+  },
+  "proof": {
+    "online": "Live in 48h",
+    "noCommitment": "No commitment",
+    "unlimited": "Unlimited edits"
+  },
+  "pageMeta": {
+    "tarifs": {
+      "title": "Pricing — 49€ then 9,99€/month, no commitment",
+      "description": "Three simple, clear plans for your pro website: from 49€ setup then 9,99€/month, no commitment. Start where you want, change whenever you want."
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "description": "Timelines, commitment, payment, edits, domain name… All the answers about building your pro website with Xklic, straight to the point."
+    }
+  },
+  "merci": {
+    "home": "Home",
+    "title": "Thank you, it's confirmed!",
+    "body": "Your payment has gone through — a Stripe receipt is on its way by email. Our team has everything it needs and is preparing your website: we'll get back to you very soon, usually within 2h, to show you a first version.",
+    "backHome": "Back to home",
+    "question": "A question? {email}"
   }
 }

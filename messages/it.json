@@ -286,5 +286,47 @@
     "titleAccent": "pronto in 48h.",
     "subtitle": "Pochi minuti per compilare il modulo. Al resto pensiamo noi. Senza vincoli, senza pagare oggi.",
     "cta": "Crea il mio sito"
+  },
+  "meta": {
+    "defaultTitle": "Xklic — Il sito professionale che ti porta clienti, online in 48h",
+    "description": "Xklic crea il sito della tua attività, chiavi in mano e online in 48h. Senza complicazioni, senza vincoli. 49€ alla creazione e poi 9,99€/mese.",
+    "ogTitle": "Xklic — Il sito professionale che ti porta clienti, online in 48h",
+    "ogDescription": "Il sito della tua attività, chiavi in mano e online in 48h. 49€ alla creazione e poi 9,99€/mese, senza vincoli."
+  },
+  "ctaBand": {
+    "default": {
+      "title": "Pronto a farti trovare dai tuoi clienti?",
+      "subtitle": "Creiamo il tuo sito professionale, chiavi in mano, online in 48h. Senza vincoli."
+    },
+    "tarifs": {
+      "title": "Una domanda prima di iniziare?",
+      "subtitle": "Chiamaci o scrivici su WhatsApp: rispondiamo in fretta e con chiarezza."
+    },
+    "faq": {
+      "title": "Tutto chiaro? Si parte.",
+      "subtitle": "Il tuo sito professionale, online in 48h. Senza vincoli."
+    }
+  },
+  "proof": {
+    "online": "Online in 48h",
+    "noCommitment": "Senza vincoli",
+    "unlimited": "Modifiche illimitate"
+  },
+  "pageMeta": {
+    "tarifs": {
+      "title": "Prezzi — 49€ poi 9,99€/mese, senza vincoli",
+      "description": "Tre piani semplici e chiari per il tuo sito professionale: da 49€ di installazione e poi 9,99€/mese, senza vincoli. Inizi da dove vuoi, cambi quando vuoi."
+    },
+    "faq": {
+      "title": "Domande frequenti",
+      "description": "Tempi, vincoli, pagamento, modifiche, nome di dominio… Tutte le risposte sulla creazione del tuo sito professionale con Xklic, senza giri di parole."
+    }
+  },
+  "merci": {
+    "home": "Home",
+    "title": "Grazie, è confermato!",
+    "body": "Il tuo pagamento è andato a buon fine — una ricevuta Stripe arriva via email. Il nostro team ha tutto il necessario e sta preparando il tuo sito: ti ricontattiamo molto presto, di solito entro 2h, per mostrarti una prima versione.",
+    "backHome": "Torna alla home",
+    "question": "Una domanda? {email}"
   }
 }

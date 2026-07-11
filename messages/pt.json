@@ -286,5 +286,47 @@
     "titleAccent": "pronto em 48h.",
     "subtitle": "Alguns minutos para preencher o formulário. Tratamos do resto. Sem compromisso, sem pagamento hoje.",
     "cta": "Criar o meu site"
+  },
+  "meta": {
+    "defaultTitle": "Xklic — O site profissional que te traz clientes, online em 48h",
+    "description": "A Xklic cria o site da tua atividade, chave na mão e online em 48h. Sem complicações, sem compromisso. 49€ na criação e depois 9,99€/mês.",
+    "ogTitle": "Xklic — O site profissional que te traz clientes, online em 48h",
+    "ogDescription": "O site da tua atividade, chave na mão e online em 48h. 49€ na criação e depois 9,99€/mês, sem compromisso."
+  },
+  "ctaBand": {
+    "default": {
+      "title": "Pronto para que os teus clientes te encontrem?",
+      "subtitle": "Criamos o teu site profissional, chave na mão, online em 48h. Sem compromisso."
+    },
+    "tarifs": {
+      "title": "Alguma dúvida antes de começar?",
+      "subtitle": "Liga-nos ou escreve pelo WhatsApp: respondemos rápido e com clareza."
+    },
+    "faq": {
+      "title": "Está tudo claro? Vamos a isto.",
+      "subtitle": "O teu site profissional, online em 48h. Sem compromisso."
+    }
+  },
+  "proof": {
+    "online": "Online em 48h",
+    "noCommitment": "Sem compromisso",
+    "unlimited": "Alterações ilimitadas"
+  },
+  "pageMeta": {
+    "tarifs": {
+      "title": "Preços — 49€ e depois 9,99€/mês, sem compromisso",
+      "description": "Três planos simples e claros para o teu site profissional: a partir de 49€ na instalação e depois 9,99€/mês, sem compromisso. Começas onde quiseres, mudas quando quiseres."
+    },
+    "faq": {
+      "title": "Perguntas frequentes",
+      "description": "Prazos, compromisso, pagamento, alterações, nome de domínio… Todas as respostas sobre a criação do teu site profissional com a Xklic, sem rodeios."
+    }
+  },
+  "merci": {
+    "home": "Início",
+    "title": "Obrigado, está confirmado!",
+    "body": "O teu pagamento foi processado — vais receber um recibo da Stripe por email. A nossa equipa tem tudo o que precisa e está a preparar o teu site: entramos em contacto muito em breve, normalmente em menos de 2h, para te mostrar uma primeira versão.",
+    "backHome": "Voltar ao início",
+    "question": "Alguma dúvida? {email}"
   }
 }

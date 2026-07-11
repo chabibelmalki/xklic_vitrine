@@ -286,5 +286,47 @@
     "titleAccent": "fertig in 48h.",
     "subtitle": "Ein paar Minuten, um das Formular auszufüllen. Wir kümmern uns um den Rest. Ohne Bindung, ohne Zahlung heute.",
     "cta": "Meine Website erstellen"
+  },
+  "meta": {
+    "defaultTitle": "Xklic — Die Profi-Website, die dir Kunden bringt, in 48h online",
+    "description": "Xklic erstellt die Website für dein Geschäft, schlüsselfertig und in 48h online. Ohne Stress, ohne Vertragsbindung. 49€ Einrichtung, dann 9,99€/Monat.",
+    "ogTitle": "Xklic — Die Profi-Website, die dir Kunden bringt, in 48h online",
+    "ogDescription": "Die Website für dein Geschäft, schlüsselfertig und in 48h online. 49€ Einrichtung, dann 9,99€/Monat, ohne Vertragsbindung."
+  },
+  "ctaBand": {
+    "default": {
+      "title": "Bereit, von deinen Kunden gefunden zu werden?",
+      "subtitle": "Wir erstellen deine Profi-Website, schlüsselfertig, in 48h online. Ohne Vertragsbindung."
+    },
+    "tarifs": {
+      "title": "Noch eine Frage, bevor du loslegst?",
+      "subtitle": "Ruf uns an oder schreib per WhatsApp – wir antworten schnell und klar."
+    },
+    "faq": {
+      "title": "Alles klar? Dann los.",
+      "subtitle": "Deine Profi-Website, in 48h online. Ohne Vertragsbindung."
+    }
+  },
+  "proof": {
+    "online": "In 48h online",
+    "noCommitment": "Ohne Bindung",
+    "unlimited": "Unbegrenzte Änderungen"
+  },
+  "pageMeta": {
+    "tarifs": {
+      "title": "Preise — 49€, dann 9,99€/Monat, ohne Vertragsbindung",
+      "description": "Drei einfache, klare Pakete für deine Profi-Website: ab 49€ Einrichtung, dann 9,99€/Monat, ohne Vertragsbindung. Du startest, wo du willst, und wechselst, wann du willst."
+    },
+    "faq": {
+      "title": "Häufige Fragen",
+      "description": "Fristen, Vertragsbindung, Zahlung, Änderungen, Domainname … Alle Antworten zur Erstellung deiner Profi-Website mit Xklic, ohne Umwege."
+    }
+  },
+  "merci": {
+    "home": "Startseite",
+    "title": "Danke, es ist bestätigt!",
+    "body": "Deine Zahlung ist eingegangen – eine Stripe-Quittung kommt per E-Mail. Unser Team hat alles, was es braucht, und bereitet deine Website vor: Wir melden uns sehr bald, meist innerhalb von 2 Stunden, um dir eine erste Version zu zeigen.",
+    "backHome": "Zurück zur Startseite",
+    "question": "Eine Frage? {email}"
   }
 }

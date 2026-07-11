@@ -1,6 +1,6 @@
 import { Check } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
-import { trustPillars } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 export type ProofPoint = {
@@ -10,20 +10,35 @@ export type ProofPoint = {
   label: string;
 };
 
+const PILLAR_KEYS = ["speed", "commitment", "mobile", "madeIn"] as const;
+
 // Bloc de réassurance / preuve sociale. Présentationnel, réutilisable sur les
-// pages locales. Par défaut : les piliers de confiance globaux du site.
+// pages locales. Par défaut : les piliers de confiance globaux du site (traduits).
+// `reassuranceKeys` → clés dans le namespace `proof` (liste cochée optionnelle).
 export function ProofBloc({
-  points = trustPillars,
-  /** points secondaires affichés sous forme de liste cochée (optionnel) */
-  reassurances,
+  points,
+  reassurances: rawReassurances,
+  reassuranceKeys,
   className,
   containerClassName,
 }: {
   points?: ProofPoint[];
+  /** Chaînes brutes (pages FR-only : métiers, creer-site). */
   reassurances?: string[];
+  /** Clés dans le namespace `proof` (pages traduites). */
+  reassuranceKeys?: string[];
   className?: string;
   containerClassName?: string;
 }) {
+  const tt = useTranslations("trust");
+  const tp = useTranslations("proof");
+  const resolvedPoints: ProofPoint[] =
+    points ??
+    PILLAR_KEYS.map((k) => ({
+      value: tt(`pillarValues.${k}`),
+      label: tt(`pillars.${k}`),
+    }));
+  const reassurances = rawReassurances ?? reassuranceKeys?.map((k) => tp(k));
   return (
     <section
       className={cn("relative border-y border-line py-12 sm:py-16", className)}
@@ -31,7 +46,7 @@ export function ProofBloc({
       <div className="glow-ember pointer-events-none absolute inset-x-0 top-0 h-40" aria-hidden />
       <Container className={cn("relative", containerClassName)}>
         <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line lg:grid-cols-4">
-          {points.map((p) => (
+          {resolvedPoints.map((p) => (
             <div
               key={p.label}
               className="flex flex-col items-center gap-1 bg-card px-4 py-7 text-center"

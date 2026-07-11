@@ -286,5 +286,47 @@
     "titleAccent": "listo en 48h.",
     "subtitle": "Unos minutos para rellenar el formulario. Nosotros nos ocupamos del resto. Sin compromiso, sin pago hoy.",
     "cta": "Crear mi sitio"
+  },
+  "meta": {
+    "defaultTitle": "Xklic — La web profesional que te trae clientes, online en 48h",
+    "description": "Xklic crea la web de tu actividad, llave en mano y online en 48h. Sin complicaciones, sin compromiso. 49€ de creación y luego 9,99€/mes.",
+    "ogTitle": "Xklic — La web profesional que te trae clientes, online en 48h",
+    "ogDescription": "La web de tu actividad, llave en mano y online en 48h. 49€ de creación y luego 9,99€/mes, sin compromiso."
+  },
+  "ctaBand": {
+    "default": {
+      "title": "¿Preparado para que tus clientes te encuentren?",
+      "subtitle": "Creamos tu web profesional, llave en mano, online en 48h. Sin compromiso."
+    },
+    "tarifs": {
+      "title": "¿Alguna duda antes de empezar?",
+      "subtitle": "Llámanos o escríbenos por WhatsApp: respondemos rápido y claro."
+    },
+    "faq": {
+      "title": "¿Todo claro? Vamos allá.",
+      "subtitle": "Tu web profesional, online en 48h. Sin compromiso."
+    }
+  },
+  "proof": {
+    "online": "En línea en 48h",
+    "noCommitment": "Sin compromiso",
+    "unlimited": "Modificaciones ilimitadas"
+  },
+  "pageMeta": {
+    "tarifs": {
+      "title": "Tarifas — 49€ y luego 9,99€/mes, sin compromiso",
+      "description": "Tres planes simples y claros para tu web profesional: desde 49€ de instalación y luego 9,99€/mes, sin compromiso. Empiezas donde quieres, cambias cuando quieres."
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "description": "Plazos, compromiso, pago, modificaciones, nombre de dominio… Todas las respuestas sobre la creación de tu web profesional con Xklic, sin rodeos."
+    }
+  },
+  "merci": {
+    "home": "Inicio",
+    "title": "¡Gracias, está confirmado!",
+    "body": "Tu pago se ha realizado correctamente: recibirás un recibo de Stripe por email. Nuestro equipo tiene todo lo necesario y está preparando tu web: te contactamos muy pronto, normalmente en menos de 2h, para enseñarte una primera versión.",
+    "backHome": "Volver al inicio",
+    "question": "¿Alguna duda? {email}"
   }
 }

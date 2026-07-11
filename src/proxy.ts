@@ -14,6 +14,13 @@ import { localeFromCountry, LOCALE_COOKIE } from "./i18n/config";
 
 const handleI18n = createMiddleware(routing);
 
+// Contenus franco-français NON traduits (SEO local + pages légales sous droit
+// français) : ils n'existent qu'en `fr`. Si un visiteur arrive sur une variante
+// préfixée (/en/blog, /es/creer-site-…), on le renvoie (307) vers la version FR
+// à la racine plutôt que de servir une page mixte ou du contenu dupliqué.
+const FR_ONLY = /^\/(blog|metiers|realisations|cgv|confidentialite|mentions-legales)(\/|$)|^\/creer-site-/;
+const NON_FR_PREFIX = /^\/(en|es|pt|de|it|nl|ar)(\/.*|$)/;
+
 function gone(): NextResponse {
   return new NextResponse(
     "<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\">" +
@@ -31,6 +38,17 @@ export function proxy(request: NextRequest): NextResponse {
   // 1. Pages supprimées → 410 explicite (jamais indexé, jamais routé i18n).
   if (pathname === "/zones" || pathname.startsWith("/zones/")) {
     return gone();
+  }
+
+  // 1bis. Contenu FR-only sous une locale étrangère → redirection vers la
+  // version FR (racine, sans préfixe).
+  if (NON_FR_PREFIX.test(pathname)) {
+    const rest = pathname.replace(/^\/(en|es|pt|de|it|nl|ar)/, "") || "/";
+    if (FR_ONLY.test(rest)) {
+      const url = request.nextUrl.clone();
+      url.pathname = rest;
+      return NextResponse.redirect(url, 307);
+    }
   }
 
   // 2. Détection IP → langue. Priorité effective : cookie (choix manuel) >
