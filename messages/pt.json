@@ -1,0 +1,14 @@
+{
+  "nav": {
+    "metiers": "Métiers",
+    "realisations": "Réalisations",
+    "tarifs": "Tarifs",
+    "faq": "Questions",
+    "contact": "Contact",
+    "cta": "Créer mon site"
+  },
+  "language": {
+    "label": "Langue",
+    "choose": "Choisir la langue"
+  }
+}
