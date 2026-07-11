@@ -1,14 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
-import { faq } from "@/lib/content";
 import { cn, EASE_OUT } from "@/lib/utils";
 
+type QA = { q: string; a: string };
+
 export function Faq({ headingAs = "h2" }: { headingAs?: "h1" | "h2" } = {}) {
+  const t = useTranslations("faq");
+  const faq = t.raw("items") as QA[];
   const [open, setOpen] = useState<number | null>(0);
 
   return (
@@ -17,9 +21,9 @@ export function Faq({ headingAs = "h2" }: { headingAs?: "h1" | "h2" } = {}) {
         <Reveal>
           <SectionHeading
             as={headingAs}
-            eyebrow="Questions"
-            title="Tout ce que tu te demandes, sans détour."
-            description="Une autre question ? Écris-nous, on répond vite et clairement."
+            eyebrow={t("eyebrow")}
+            title={t("title")}
+            description={t("description")}
           />
         </Reveal>
 

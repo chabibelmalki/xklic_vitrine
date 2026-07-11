@@ -1,14 +1,284 @@
 {
   "nav": {
-    "metiers": "Métiers",
-    "realisations": "Réalisations",
-    "tarifs": "Tarifs",
-    "faq": "Questions",
+    "metiers": "Vakgebieden",
+    "realisations": "Realisaties",
+    "tarifs": "Tarieven",
+    "faq": "Vragen",
     "contact": "Contact",
-    "cta": "Créer mon site"
+    "cta": "Maak mijn site"
   },
   "language": {
-    "label": "Langue",
-    "choose": "Choisir la langue"
+    "label": "Taal",
+    "choose": "Kies de taal"
+  },
+  "common": {
+    "createSite": "Maak mijn site",
+    "priceLine": "49€ bij het aanmaken · daarna 9,99€/maand · altijd opzegbaar",
+    "whatsappAria": "Schrijf op WhatsApp",
+    "callAria": "Bel {phone}"
+  },
+  "footer": {
+    "tagline": "De prosite die je klanten oplevert, binnen 48u online. Zonder gedoe, zonder verplichtingen.",
+    "col": {
+      "services": "Diensten",
+      "offer": "Het aanbod",
+      "contact": "Contact"
+    },
+    "links": {
+      "allMetiers": "Alle vakgebieden",
+      "realisations": "Realisaties",
+      "blog": "Blog",
+      "pricing": "Formules & tarieven",
+      "how": "Hoe het werkt",
+      "faq": "Veelgestelde vragen",
+      "createSite": "Maak mijn site"
+    },
+    "rights": "Alle rechten voorbehouden.",
+    "legal": {
+      "mentions": "Wettelijke vermeldingen",
+      "cgv": "Algemene voorwaarden",
+      "privacy": "Privacy"
+    },
+    "designedIn": "Ontworpen in Frankrijk"
+  },
+  "hero": {
+    "badge": "Professionele websites, kant-en-klaar",
+    "titleLead": "Jouw prosite die je",
+    "titleAccent": "klanten oplevert.",
+    "subtitle": "Loodgieter, monteur, of zelfstandig in de schoonmaak? Wij maken je site kant-en-klaar, verzorgd en gemaakt om nieuwe klanten voor je te vinden. Binnen 48u online, zonder gedoe.",
+    "ctaPrimary": "Maak mijn site",
+    "ctaSecondary": "Bekijk realisaties",
+    "proofs": {
+      "online": "Binnen 48u online",
+      "noCommitment": "Zonder verplichtingen",
+      "price": "49€ + 9,99€/maand"
+    }
+  },
+  "trust": {
+    "aria": "Begeleide sectoren en garanties",
+    "pillars": {
+      "speed": "om online te zijn",
+      "commitment": "verplichting, opzegbaar wanneer je wil",
+      "mobile": "gemaakt voor mobiel",
+      "madeIn": "ontworpen en beheerd in Frankrijk"
+    },
+    "trades": {
+      "menage": "Schoonmaak aan huis",
+      "plomberie": "Loodgieterij",
+      "electricite": "Elektriciteit",
+      "mecanique": "Auto-mechanica",
+      "serrurerie": "Slotenmakerij",
+      "jardinage": "Tuinonderhoud",
+      "coiffure": "Kapper & beauty",
+      "maconnerie": "Metselwerk",
+      "peinture": "Schilderwerk",
+      "chauffagiste": "Verwarmingstechniek"
+    },
+    "notListed": "Staat je vak niet in de lijst? Dat doen we ook."
+  },
+  "problem": {
+    "eyebrow": "De vaststelling",
+    "titleLine1": "Goed zijn in je vak volstaat niet meer.",
+    "titleLine2": "Ze moeten je ook nog vinden.",
+    "description": "Vandaag is de eerste reflex van een klant Google. Zonder geloofwaardige site laat je je concurrenten de oproepen inpikken die eigenlijk voor jou waren.",
+    "withoutLabel": "Zonder Xklic",
+    "withLabel": "Met Xklic",
+    "problems": [
+      "Je klanten zoeken je op Google… en vinden je niet.",
+      "Een Facebook-pagina wekt niet langer genoeg vertrouwen.",
+      "Offertes van webbureaus lopen op tot 1 500€, of zelfs veel meer.",
+      "Je hebt geen tijd of zin om zelf een site te beheren."
+    ],
+    "promises": [
+      "Een site die je laat verschijnen wanneer men jouw vak bij jou in de buurt zoekt.",
+      "Een verzorgde etalage die vertrouwen wekt en zin geeft om je te bellen.",
+      "49€ bij het aanmaken, 9,99€/maand. Alles inbegrepen, zonder verrassingen.",
+      "Jij hoeft niets te doen: wij regelen alles, jij keurt goed."
+    ]
+  },
+  "process": {
+    "eyebrow": "Hoe het werkt",
+    "title": "Vier stappen. En je ontvangt je eerste aanvragen.",
+    "description": "Geen jargon, geen eindeloze vergaderingen. Jij geeft ons het essentiële, wij doen de rest.",
+    "steps": [
+      {
+        "title": "Je vult het formulier in",
+        "body": "Een paar minuten om je activiteit, je diensten en je contactgegevens te beschrijven. Voorbeelden begeleiden je bij elke stap."
+      },
+      {
+        "title": "Wij maken je site",
+        "body": "Ons team ontwerpt een verzorgde prosite, gemaakt op maat van jouw vak. Jij hoeft niets te installeren of in te stellen."
+      },
+      {
+        "title": "Binnen 48u online",
+        "body": "Je site wordt gepubliceerd op je eigen .fr-domeinnaam (gratis, wij regelen het voor je), geoptimaliseerd voor mobiel en om lokaal op Google te verschijnen."
+      },
+      {
+        "title": "Je ontvangt je klantaanvragen",
+        "body": "Contactformulier, belknop en WhatsApp: de aanvragen komen rechtstreeks bij jou binnen, klaar om om te zetten."
+      }
+    ]
+  },
+  "portfolio": {
+    "eyebrow": "Realisaties",
+    "title": "Eenvoudige, geloofwaardige sites die voor hen werken.",
+    "description": "Elke site is gemaakt op maat van een vak en een regio, en in de eerste plaats voor mobiel. Hier zijn enkele activiteiten die we begeleiden.",
+    "firstClient": "Eerste klant",
+    "yoursSoon": "Jouw activiteit hier heel binnenkort.",
+    "quote": "Offerte",
+    "trades": {
+      "sanad": "Schoonmaak & thuisdiensten",
+      "atelier": "Creatieve patisserie",
+      "meca": "Autoherstelling",
+      "vibe": "Sportcoaching"
+    }
+  },
+  "benefits": {
+    "eyebrow": "Wat het je oplevert",
+    "title": "Een site, maar vooral meer klanten.",
+    "description": "Niet zomaar een mooie pagina: een tool die elke dag voor je werkt, ook wanneer je op de werf staat.",
+    "items": [
+      {
+        "title": "Men vindt je op Google",
+        "body": "Geoptimaliseerd voor lokale vindbaarheid: je verschijnt wanneer een klant jouw vak bij hem in de buurt zoekt."
+      },
+      {
+        "title": "De aanvragen komen bij jou binnen",
+        "body": "Contactformulier en meldingen: elke aanvraag valt rechtstreeks in je mailbox, klaar om terug te bellen."
+      },
+      {
+        "title": "Belknop & WhatsApp",
+        "body": "Je klanten bellen je of schrijven je op WhatsApp met één tik, vanaf hun telefoon."
+      },
+      {
+        "title": "Veilig en zorgeloos",
+        "body": "Hosting, HTTPS, back-ups en updates: wij beheren alle techniek, je site blijft online."
+      },
+      {
+        "title": "Perfect op mobiel",
+        "body": "8 op de 10 bezoekers komen via de telefoon. Je site is snel, scherp en leesbaar op elk scherm."
+      },
+      {
+        "title": "Onbeperkte aanpassingen",
+        "body": "Nieuw tarief, nieuwe foto, zomeruren? Je schrijft ons, wij passen aan — meestal nog dezelfde dag, en uiterlijk binnen 3 werkdagen."
+      }
+    ]
+  },
+  "formules": {
+    "eyebrow": "Onze formules",
+    "title": "Drie formules, eenvoudig en helder.",
+    "description": "Je begint waar je wil, je verandert wanneer je wil. Geen verrassingen, en altijd zonder verplichtingen.",
+    "boutiqueNote": "E-commerce webshop optioneel bij elke formule —",
+    "boutiqueNoteStrong": "0 % commissie",
+    "boutiqueNoteEnd": "op je verkopen.",
+    "vatNote": "Al onze prijzen zijn in euro, inclusief btw.",
+    "card": {
+      "recommended": "Aanbevolen",
+      "perMonthSuffix": "/maand · incl. btw",
+      "setupLine": "+ {price} bij installatie",
+      "setupOnce": "(eenmalig)",
+      "noEngagement": "Zonder verplichtingen · opzegbaar wanneer je wil",
+      "addShop": "Een webshop toevoegen?",
+      "noShop": "Geen webshop",
+      "shopOption": "{label} — +{price}/maand ({products})",
+      "showDetails": "Bekijk de details",
+      "hideDetails": "Verberg de details",
+      "seeFormuleDetail": "Bekijk het detail van deze formule",
+      "googleMockIntro": "Wat je klanten zien wanneer ze jouw vak zoeken:"
+    },
+    "googleMock": {
+      "guaranteed": "Gegarandeerd door Google",
+      "businessName": "Loodgieterij Dupont",
+      "status": "Parijs · Open · Nu beschikbaar",
+      "reviews": "(87 beoordelingen)",
+      "call": "Bellen"
+    },
+    "boutiqueProducts": {
+      "starter": "tot 20 producten",
+      "pro": "tot 100 producten",
+      "business": "onbeperkt producten"
+    },
+    "items": {
+      "site": {
+        "name": "Jouw site",
+        "phrase": "Om eenvoudig op het internet te bestaan.",
+        "features": [
+          "Een mooie professionele site op jouw naam",
+          "Je .fr-domeinnaam gratis: wij kopen en beheren hem voor je, jij hoeft niets te doen",
+          "Je verschijnt op Google wanneer men je zoekt",
+          "Je klanten vinden je en bellen je met één klik",
+          "Een QR code om aan je klanten te tonen en beoordelingen te verzamelen"
+        ],
+        "cta": "Ik wil mijn site"
+      },
+      "google": {
+        "name": "Wij regelen je Google",
+        "phrase": "Jij werkt, wij zorgen voor je imago.",
+        "inherits": "Het volledige Site-pakket, en daarbovenop:",
+        "features": [
+          "Wij beantwoorden je klantbeoordelingen voor jou",
+          "Wij publiceren elke maand voor jou op Google",
+          "Wij houden je openingsuren en foto's up-to-date",
+          "Zonder te betalen voor reclame"
+        ],
+        "cta": "Ik wil de rust"
+      },
+      "haut-google": {
+        "name": "Bovenaan bij Google",
+        "phrase": "Wees de eerste die je klanten zien.",
+        "priceNote": "Je reclamebudget, rechtstreeks aan Google betaald — jij kiest het bedrag.",
+        "inherits": "Het volledige vorige pakket, en daarbovenop:",
+        "features": [
+          "Je verschijnt helemaal bovenaan bij Google, vóór iedereen",
+          "Wij stellen je dossier samen voor het groene badge « Gegarandeerd door Google » (wettelijke documenten, verzekering naargelang het vak) — het verschijnt zodra Google het goedkeurt",
+          "De klanten bellen je rechtstreeks",
+          "Je betaalt Google enkel wanneer een echte klant contact opneemt",
+          "Wij installeren en beheren alles in jouw plaats"
+        ],
+        "cta": "Ik wil meer klanten",
+        "featured": "Aanbevolen"
+      }
+    }
+  },
+  "faq": {
+    "eyebrow": "Vragen",
+    "title": "Alles wat je je afvraagt, zonder omwegen.",
+    "description": "Nog een vraag? Schrijf ons, we antwoorden snel en duidelijk.",
+    "items": [
+      {
+        "q": "In hoeveel tijd is mijn site online?",
+        "a": "48u na ontvangst van je gegevens via het formulier. Jij keurt een versie goed, wij passen ze aan indien nodig, en dan publiceren we. Geen vergaderingen, geen bestek om op te stellen."
+      },
+      {
+        "q": "Zit ik vast aan een lange termijn?",
+        "a": "Nee. Het is zonder verplichtingen: 49€ eenmalig bij het aanmaken, daarna 9,99€/maand. Je stopt wanneer je wil, met één bericht."
+      },
+      {
+        "q": "En als ik mijn site later wil aanpassen?",
+        "a": "Inhoudelijke aanpassingen zijn onbeperkt en inbegrepen in het abonnement. Je schrijft ons wat je wil veranderen, wij regelen het — meestal nog dezelfde dag, en uiterlijk binnen 3 werkdagen."
+      },
+      {
+        "q": "Van wie zijn de site en de domeinnaam?",
+        "a": "De inhoud (teksten, foto's) is van jou. De .fr-domeinnaam is gratis en wordt beheerd door Xklic: wij kopen hem en regelen alles voor je gedurende de hele looptijd van je abonnement, jij hoeft niets te doen. Als je stopt, kun je via ons contactformulier vragen om je domein over te nemen (gedetailleerde voorwaarden in onze algemene voorwaarden)."
+      },
+      {
+        "q": "Hoe verloopt de betaling?",
+        "a": "Je betaalt online in alle veiligheid (Stripe) aan het einde van het formulier: vandaag enkel de 49€ installatiekosten. De eerste maandelijkse afschrijving van 9,99€ gebeurt de volgende maand, en het is zonder verplichtingen — je stopt wanneer je wil."
+      },
+      {
+        "q": "Ik heb nog geen SIRET, kan dat?",
+        "a": "Ja. Je kunt starten zonder SIRET en het ons later bezorgen. We vermelden gewoon « inschrijving in behandeling » op de site in afwachting."
+      },
+      {
+        "q": "Ik bied thuisdiensten aan, wordt het belastingkrediet in de kijker gezet?",
+        "a": "Absoluut. Als je in aanmerking komt voor het 50% belastingkrediet, tonen we het duidelijk op je site — het is een doorslaggevend argument voor je klanten."
+      }
+    ]
+  },
+  "finalCta": {
+    "titleLead": "Jouw prosite,",
+    "titleAccent": "klaar binnen 48u.",
+    "subtitle": "Een paar minuten om het formulier in te vullen. Wij regelen de rest. Zonder verplichtingen, zonder betaling vandaag.",
+    "cta": "Maak mijn site"
   }
 }

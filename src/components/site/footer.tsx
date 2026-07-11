@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Logo } from "./logo";
 import { Container } from "@/components/ui/container";
 import { brand } from "@/lib/content";
@@ -19,29 +20,30 @@ const socialIcons: Record<string, React.ReactNode> = {
   ),
 };
 
-// Colonnes de liens du footer. Pensées pour le maillage interne multi-pages
-// (métiers, zones, réalisations, blog, tarifs, faq, contact, légal).
-const columns: { title: string; links: { href: string; label: string }[] }[] = [
+// Colonnes de liens du footer. Le libellé est traduit via la clé `key`
+// (namespace `footer.links`) ; le href reste stable et locale-aware.
+const columns: { titleKey: string; links: { href: string; key: string }[] }[] = [
   {
-    title: "Services",
+    titleKey: "services",
     links: [
-      { href: "/metiers", label: "Tous les métiers" },
-      { href: "/realisations", label: "Réalisations" },
-      { href: "/blog", label: "Blog" },
+      { href: "/metiers", key: "allMetiers" },
+      { href: "/realisations", key: "realisations" },
+      { href: "/blog", key: "blog" },
     ],
   },
   {
-    title: "L'offre",
+    titleKey: "offer",
     links: [
-      { href: "/#tarif", label: "Formules & tarifs" },
-      { href: "/#process", label: "Comment ça marche" },
-      { href: "/#faq", label: "Questions fréquentes" },
-      { href: "/demarrer", label: "Créer mon site" },
+      { href: "/#tarif", key: "pricing" },
+      { href: "/#process", key: "how" },
+      { href: "/#faq", key: "faq" },
+      { href: "/demarrer", key: "createSite" },
     ],
   },
 ];
 
 export function Footer() {
+  const t = useTranslations("footer");
   return (
     <footer className="relative border-t border-line py-14">
       <Container>
@@ -49,7 +51,7 @@ export function Footer() {
           <div className="max-w-xs lg:col-span-1">
             <Logo />
             <p className="mt-4 text-sm leading-relaxed text-cream-muted">
-              {brand.tagline} Sans prise de tête, sans engagement.
+              {t("tagline")}
             </p>
             <div className="mt-5 flex items-center gap-4">
               {brand.social.map((item) => (
@@ -76,9 +78,9 @@ export function Footer() {
           </div>
 
           {columns.map((col) => (
-            <nav key={col.title} className="flex flex-col gap-3">
+            <nav key={col.titleKey} className="flex flex-col gap-3">
               <span className="text-xs uppercase tracking-[0.18em] text-cream-faint">
-                {col.title}
+                {t(`col.${col.titleKey}`)}
               </span>
               {col.links.map((item) => (
                 <Link
@@ -86,7 +88,7 @@ export function Footer() {
                   href={item.href}
                   className="text-sm text-cream-muted transition-colors hover:text-cream"
                 >
-                  {item.label}
+                  {t(`links.${item.key}`)}
                 </Link>
               ))}
             </nav>
@@ -94,7 +96,7 @@ export function Footer() {
 
           <div className="flex flex-col gap-3">
             <span className="text-xs uppercase tracking-[0.18em] text-cream-faint">
-              Contact
+              {t("col.contact")}
             </span>
             <a
               href={`mailto:${brand.email}`}
@@ -120,33 +122,35 @@ export function Footer() {
               href="/demarrer"
               className="text-sm text-ember-deep transition-colors hover:text-ember"
             >
-              Créer mon site →
+              {t("links.createSite")} →
             </Link>
           </div>
         </div>
 
         <div className="mt-12 flex flex-col gap-4 border-t border-line pt-6 text-xs text-cream-faint sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} {brand.name}. Tous droits réservés.</p>
+          <p>
+            © {new Date().getFullYear()} {brand.name}. {t("rights")}
+          </p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <Link href="/contact" className="transition-colors hover:text-cream">
-              Contact
+              {t("col.contact")}
             </Link>
             <Link
               href="/mentions-legales"
               className="transition-colors hover:text-cream"
             >
-              Mentions légales
+              {t("legal.mentions")}
             </Link>
             <Link href="/cgv" className="transition-colors hover:text-cream">
-              CGV
+              {t("legal.cgv")}
             </Link>
             <Link
               href="/confidentialite"
               className="transition-colors hover:text-cream"
             >
-              Confidentialité
+              {t("legal.privacy")}
             </Link>
-            <span className="hidden sm:inline">Conçu en France</span>
+            <span className="hidden sm:inline">{t("designedIn")}</span>
           </div>
         </div>
       </Container>

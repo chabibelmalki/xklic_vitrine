@@ -10,5 +10,275 @@
   "language": {
     "label": "Langue",
     "choose": "Choisir la langue"
+  },
+  "common": {
+    "createSite": "Créer mon site",
+    "priceLine": "49€ à la création · puis 9,99€/mois · résiliable à tout moment",
+    "whatsappAria": "Écrire sur WhatsApp",
+    "callAria": "Appeler le {phone}"
+  },
+  "footer": {
+    "tagline": "Le site pro qui te ramène des clients, en ligne en 48h. Sans prise de tête, sans engagement.",
+    "col": {
+      "services": "Services",
+      "offer": "L'offre",
+      "contact": "Contact"
+    },
+    "links": {
+      "allMetiers": "Tous les métiers",
+      "realisations": "Réalisations",
+      "blog": "Blog",
+      "pricing": "Formules & tarifs",
+      "how": "Comment ça marche",
+      "faq": "Questions fréquentes",
+      "createSite": "Créer mon site"
+    },
+    "rights": "Tous droits réservés.",
+    "legal": {
+      "mentions": "Mentions légales",
+      "cgv": "CGV",
+      "privacy": "Confidentialité"
+    },
+    "designedIn": "Conçu en France"
+  },
+  "hero": {
+    "badge": "Sites web professionnels, clés en main",
+    "titleLead": "Ton site pro qui te",
+    "titleAccent": "ramène des clients.",
+    "subtitle": "Plombier, mécanicien, à ton compte dans le ménage ? On crée ton site clés en main, soigné et pensé pour te trouver de nouveaux clients. En ligne en 48h, sans prise de tête.",
+    "ctaPrimary": "Créer mon site",
+    "ctaSecondary": "Voir des réalisations",
+    "proofs": {
+      "online": "En ligne en 48h",
+      "noCommitment": "Sans engagement",
+      "price": "49€ + 9,99€/mois"
+    }
+  },
+  "trust": {
+    "aria": "Secteurs accompagnés et garanties",
+    "pillars": {
+      "speed": "pour être en ligne",
+      "commitment": "engagement, résiliable quand tu veux",
+      "mobile": "pensé pour le mobile",
+      "madeIn": "conçu et géré en France"
+    },
+    "trades": {
+      "menage": "Ménage à domicile",
+      "plomberie": "Plomberie",
+      "electricite": "Électricité",
+      "mecanique": "Mécanique auto",
+      "serrurerie": "Serrurerie",
+      "jardinage": "Jardinage",
+      "coiffure": "Coiffure & beauté",
+      "maconnerie": "Maçonnerie",
+      "peinture": "Peinture",
+      "chauffagiste": "Chauffagiste"
+    },
+    "notListed": "Un métier qui n'est pas dans la liste ? On le fait aussi."
+  },
+  "problem": {
+    "eyebrow": "Le constat",
+    "titleLine1": "Être bon dans son métier ne suffit plus.",
+    "titleLine2": "Encore faut-il qu'on te trouve.",
+    "description": "Aujourd'hui, le premier réflexe d'un client, c'est Google. Sans site crédible, tu laisses tes concurrents prendre les appels qui auraient dû être les tiens.",
+    "withoutLabel": "Sans Xklic",
+    "withLabel": "Avec Xklic",
+    "problems": [
+      "Tes clients te cherchent sur Google… et ne te trouvent pas.",
+      "Une page Facebook ne suffit plus à inspirer confiance.",
+      "Les devis d'agences web tournent à 1 500€, voire bien plus.",
+      "Tu n'as ni le temps ni l'envie de gérer un site toi-même."
+    ],
+    "promises": [
+      "Un site qui te fait apparaître quand on cherche ton métier près de chez toi.",
+      "Une vitrine soignée qui rassure et donne envie de t'appeler.",
+      "49€ à la création, 9,99€/mois. Tout compris, sans surprise.",
+      "Tu ne touches à rien : on s'occupe de tout, tu valides."
+    ]
+  },
+  "process": {
+    "eyebrow": "Comment ça marche",
+    "title": "Quatre étapes. Et tu reçois tes premières demandes.",
+    "description": "Pas de jargon, pas de réunions interminables. Tu nous donnes l'essentiel, on fait le reste.",
+    "steps": [
+      {
+        "title": "Tu remplis le formulaire",
+        "body": "Quelques minutes pour décrire ton activité, tes prestations et tes coordonnées. Des exemples te guident à chaque étape."
+      },
+      {
+        "title": "On crée ton site",
+        "body": "Notre équipe conçoit un site pro, soigné et pensé pour ton métier. Tu n'as rien à installer ni à configurer."
+      },
+      {
+        "title": "Il est en ligne en 48h",
+        "body": "Ton site est publié sur ton nom de domaine .fr (offert, on s'en occupe pour toi), optimisé pour mobile et pour apparaître sur Google localement."
+      },
+      {
+        "title": "Tu reçois tes demandes clients",
+        "body": "Formulaire de contact, bouton d'appel et WhatsApp : les demandes arrivent directement chez toi, prêtes à transformer."
+      }
+    ]
+  },
+  "portfolio": {
+    "eyebrow": "Réalisations",
+    "title": "Des sites simples, crédibles, qui travaillent pour eux.",
+    "description": "Chaque site est pensé pour un métier et une zone, et d'abord pour le mobile. Voici quelques activités que nous accompagnons.",
+    "firstClient": "Première cliente",
+    "yoursSoon": "Ton activité ici très bientôt.",
+    "quote": "Devis",
+    "trades": {
+      "sanad": "Nettoyage & services à la personne",
+      "atelier": "Pâtisserie de création",
+      "meca": "Réparation automobile",
+      "vibe": "Coaching sportif"
+    }
+  },
+  "benefits": {
+    "eyebrow": "Ce que ça t'apporte",
+    "title": "Un site, mais surtout des clients en plus.",
+    "description": "Pas juste une jolie page : un outil qui travaille pour toi, tous les jours, même quand tu es sur un chantier.",
+    "items": [
+      {
+        "title": "On te trouve sur Google",
+        "body": "Optimisé pour le référencement local : tu apparais quand un client cherche ton métier près de chez lui."
+      },
+      {
+        "title": "Les demandes arrivent chez toi",
+        "body": "Formulaire de contact et notifications : chaque demande tombe directement dans ta boîte, prête à rappeler."
+      },
+      {
+        "title": "Bouton d'appel & WhatsApp",
+        "body": "Tes clients t'appellent ou t'écrivent sur WhatsApp en un seul tap, depuis leur téléphone."
+      },
+      {
+        "title": "Sécurisé et sans souci",
+        "body": "Hébergement, HTTPS, sauvegardes et mises à jour : on gère toute la technique, ton site reste en ligne."
+      },
+      {
+        "title": "Parfait sur mobile",
+        "body": "8 visiteurs sur 10 viennent du téléphone. Ton site est rapide, net et lisible sur le moindre écran."
+      },
+      {
+        "title": "Modifications illimitées",
+        "body": "Nouveau tarif, nouvelle photo, horaires d'été ? Tu nous écris, on met à jour — souvent dans la journée, sous 3 jours ouvrés au plus tard."
+      }
+    ]
+  },
+  "formules": {
+    "eyebrow": "Nos formules",
+    "title": "Trois formules, simples et claires.",
+    "description": "Vous commencez où vous voulez, vous changez quand vous voulez. Pas de surprise, et toujours sans engagement.",
+    "boutiqueNote": "Boutique e-commerce en option sur n'importe quelle formule —",
+    "boutiqueNoteStrong": "0 % de commission",
+    "boutiqueNoteEnd": "sur vos ventes.",
+    "vatNote": "Tous nos prix sont indiqués en euros, TTC.",
+    "card": {
+      "recommended": "Recommandé",
+      "perMonthSuffix": "/mois · TTC",
+      "setupLine": "+ {price} à l'installation",
+      "setupOnce": "(une seule fois)",
+      "noEngagement": "Sans engagement · annulable quand vous voulez",
+      "addShop": "Ajouter une boutique en ligne ?",
+      "noShop": "Pas de boutique",
+      "shopOption": "{label} — +{price}/mois ({products})",
+      "showDetails": "Voir les détails",
+      "hideDetails": "Masquer les détails",
+      "seeFormuleDetail": "Voir le détail de cette formule",
+      "googleMockIntro": "Ce que vos clients verront en cherchant votre métier :"
+    },
+    "googleMock": {
+      "guaranteed": "Garanti par Google",
+      "businessName": "Plomberie Dupont",
+      "status": "Paris · Ouvert · Disponible maintenant",
+      "reviews": "(87 avis)",
+      "call": "Appeler"
+    },
+    "boutiqueProducts": {
+      "starter": "jusqu'à 20 produits",
+      "pro": "jusqu'à 100 produits",
+      "business": "produits illimités"
+    },
+    "items": {
+      "site": {
+        "name": "Votre site",
+        "phrase": "Pour exister sur internet, simplement.",
+        "features": [
+          "Un beau site professionnel à votre nom",
+          "Votre nom de domaine .fr offert : on l'achète et on le gère pour vous, vous n'avez rien à faire",
+          "Vous apparaissez sur Google quand on vous cherche",
+          "Vos clients vous trouvent et vous appellent en un clic",
+          "Un QR code à montrer à vos clients pour récolter des avis"
+        ],
+        "cta": "Je veux mon site"
+      },
+      "google": {
+        "name": "On s'occupe de votre Google",
+        "phrase": "Vous travaillez, on s'occupe de votre image.",
+        "inherits": "Tout le pack Site, et en plus :",
+        "features": [
+          "On répond à vos avis clients pour vous",
+          "On publie pour vous sur Google chaque mois",
+          "On garde vos horaires et vos photos à jour",
+          "Sans payer de publicité"
+        ],
+        "cta": "Je veux la tranquillité"
+      },
+      "haut-google": {
+        "name": "En haut de Google",
+        "phrase": "Soyez le premier que vos clients voient.",
+        "priceNote": "Votre budget publicité, payé directement à Google — c'est vous qui choisissez le montant.",
+        "inherits": "Tout le pack précédent, et en plus :",
+        "features": [
+          "Vous apparaissez tout en haut de Google, avant tout le monde",
+          "On monte votre dossier pour le badge vert « Garanti par Google » (pièces légales, assurance selon le métier) — il s'affiche une fois Google validé",
+          "Les clients vous appellent directement",
+          "Vous ne payez Google que quand un vrai client vous contacte",
+          "On installe et on gère tout à votre place"
+        ],
+        "cta": "Je veux plus de clients",
+        "featured": "Recommandé"
+      }
+    }
+  },
+  "faq": {
+    "eyebrow": "Questions",
+    "title": "Tout ce que tu te demandes, sans détour.",
+    "description": "Une autre question ? Écris-nous, on répond vite et clairement.",
+    "items": [
+      {
+        "q": "En combien de temps mon site est-il en ligne ?",
+        "a": "48h après réception de tes informations via le formulaire. Tu valides une version, on l'ajuste si besoin, puis on publie. Pas de réunions, pas de cahier des charges à rédiger."
+      },
+      {
+        "q": "Suis-je engagé sur la durée ?",
+        "a": "Non. C'est sans engagement : 49€ une seule fois à la création, puis 9,99€/mois. Tu arrêtes quand tu veux, en un message."
+      },
+      {
+        "q": "Et si je veux modifier mon site plus tard ?",
+        "a": "Les modifications de contenu sont illimitées et incluses dans l'abonnement. Tu nous écris ce que tu veux changer, on s'en occupe — généralement dans la journée, et au plus tard sous 3 jours ouvrés."
+      },
+      {
+        "q": "À qui appartiennent le site et le nom de domaine ?",
+        "a": "Le contenu (textes, photos) est à toi. Le nom de domaine .fr est offert et géré par Xklic : on l'achète et on s'en occupe pour toi pendant toute la durée de ton abonnement, tu n'as rien à faire. Si tu arrêtes, tu peux demander à récupérer ton domaine via notre formulaire de contact (conditions détaillées dans nos CGV)."
+      },
+      {
+        "q": "Comment se passe le paiement ?",
+        "a": "Tu paies en ligne en toute sécurité (Stripe) à la fin du formulaire : seulement les 49€ d'installation aujourd'hui. Le premier prélèvement mensuel de 9,99€ intervient le mois suivant, et c'est sans engagement — tu arrêtes quand tu veux."
+      },
+      {
+        "q": "Je n'ai pas encore de SIRET, c'est possible ?",
+        "a": "Oui. Tu peux démarrer sans SIRET et nous le transmettre plus tard. On indique simplement « en cours d'immatriculation » sur le site en attendant."
+      },
+      {
+        "q": "Je propose des services à la personne, le crédit d'impôt est-il mis en avant ?",
+        "a": "Absolument. Si tu es éligible au crédit d'impôt de 50%, on l'affiche clairement sur ton site — c'est un argument décisif pour tes clients."
+      }
+    ]
+  },
+  "finalCta": {
+    "titleLead": "Ton site pro,",
+    "titleAccent": "prêt sous 48h.",
+    "subtitle": "Quelques minutes pour remplir le formulaire. On s'occupe du reste. Sans engagement, sans paiement aujourd'hui.",
+    "cta": "Créer mon site"
   }
 }

@@ -1,14 +1,284 @@
 {
   "nav": {
-    "metiers": "Métiers",
-    "realisations": "Réalisations",
-    "tarifs": "Tarifs",
-    "faq": "Questions",
-    "contact": "Contact",
-    "cta": "Créer mon site"
+    "metiers": "Mestieri",
+    "realisations": "Realizzazioni",
+    "tarifs": "Prezzi",
+    "faq": "Domande",
+    "contact": "Contatti",
+    "cta": "Crea il mio sito"
   },
   "language": {
-    "label": "Langue",
-    "choose": "Choisir la langue"
+    "label": "Lingua",
+    "choose": "Scegli la lingua"
+  },
+  "common": {
+    "createSite": "Crea il mio sito",
+    "priceLine": "49€ alla creazione · poi 9,99€/mese · disdici quando vuoi",
+    "whatsappAria": "Scrivi su WhatsApp",
+    "callAria": "Chiama il {phone}"
+  },
+  "footer": {
+    "tagline": "Il sito pro che ti porta clienti, online in 48h. Senza complicazioni, senza vincoli.",
+    "col": {
+      "services": "Servizi",
+      "offer": "L'offerta",
+      "contact": "Contatti"
+    },
+    "links": {
+      "allMetiers": "Tutti i mestieri",
+      "realisations": "Realizzazioni",
+      "blog": "Blog",
+      "pricing": "Formule e prezzi",
+      "how": "Come funziona",
+      "faq": "Domande frequenti",
+      "createSite": "Crea il mio sito"
+    },
+    "rights": "Tutti i diritti riservati.",
+    "legal": {
+      "mentions": "Note legali",
+      "cgv": "Condizioni di vendita",
+      "privacy": "Privacy"
+    },
+    "designedIn": "Ideato in Francia"
+  },
+  "hero": {
+    "badge": "Siti web professionali, chiavi in mano",
+    "titleLead": "Il tuo sito pro che ti",
+    "titleAccent": "porta clienti.",
+    "subtitle": "Idraulico, meccanico, in proprio nelle pulizie? Creiamo il tuo sito chiavi in mano, curato e pensato per farti trovare nuovi clienti. Online in 48h, senza complicazioni.",
+    "ctaPrimary": "Crea il mio sito",
+    "ctaSecondary": "Guarda le realizzazioni",
+    "proofs": {
+      "online": "Online in 48h",
+      "noCommitment": "Senza vincoli",
+      "price": "49€ + 9,99€/mese"
+    }
+  },
+  "trust": {
+    "aria": "Settori seguiti e garanzie",
+    "pillars": {
+      "speed": "per essere online",
+      "commitment": "vincolo, disdici quando vuoi",
+      "mobile": "pensato per il mobile",
+      "madeIn": "ideato e gestito in Francia"
+    },
+    "trades": {
+      "menage": "Pulizie a domicilio",
+      "plomberie": "Idraulica",
+      "electricite": "Elettricità",
+      "mecanique": "Meccanica auto",
+      "serrurerie": "Serrature",
+      "jardinage": "Giardinaggio",
+      "coiffure": "Parrucchieri e bellezza",
+      "maconnerie": "Muratura",
+      "peinture": "Imbianchino",
+      "chauffagiste": "Termoidraulica"
+    },
+    "notListed": "Un mestiere che non è nella lista? Lo facciamo lo stesso."
+  },
+  "problem": {
+    "eyebrow": "Il quadro",
+    "titleLine1": "Essere bravi nel proprio mestiere non basta più.",
+    "titleLine2": "Bisogna anche farsi trovare.",
+    "description": "Oggi il primo istinto di un cliente è cercare su Google. Senza un sito credibile, lasci ai tuoi concorrenti le chiamate che sarebbero dovute essere tue.",
+    "withoutLabel": "Senza Xklic",
+    "withLabel": "Con Xklic",
+    "problems": [
+      "I tuoi clienti ti cercano su Google… e non ti trovano.",
+      "Una pagina Facebook non basta più a ispirare fiducia.",
+      "I preventivi delle agenzie web arrivano a 1 500€, o anche molto di più.",
+      "Non hai né il tempo né la voglia di gestire un sito da solo."
+    ],
+    "promises": [
+      "Un sito che ti fa comparire quando qualcuno cerca il tuo mestiere vicino a te.",
+      "Una vetrina curata che rassicura e invoglia a chiamarti.",
+      "49€ alla creazione, 9,99€/mese. Tutto incluso, senza sorprese.",
+      "Non tocchi niente: pensiamo a tutto noi, tu approvi."
+    ]
+  },
+  "process": {
+    "eyebrow": "Come funziona",
+    "title": "Quattro passi. E ricevi le tue prime richieste.",
+    "description": "Niente gerghi, niente riunioni infinite. Ci dai l'essenziale, al resto pensiamo noi.",
+    "steps": [
+      {
+        "title": "Compili il modulo",
+        "body": "Pochi minuti per descrivere la tua attività, i tuoi servizi e i tuoi contatti. Degli esempi ti guidano a ogni passo."
+      },
+      {
+        "title": "Creiamo il tuo sito",
+        "body": "Il nostro team realizza un sito pro, curato e pensato per il tuo mestiere. Non devi installare né configurare niente."
+      },
+      {
+        "title": "È online in 48h",
+        "body": "Il tuo sito viene pubblicato sul tuo nome di dominio .fr (offerto, ce ne occupiamo noi), ottimizzato per il mobile e per comparire su Google a livello locale."
+      },
+      {
+        "title": "Ricevi le richieste dei clienti",
+        "body": "Modulo di contatto, pulsante di chiamata e WhatsApp: le richieste arrivano direttamente da te, pronte da trasformare."
+      }
+    ]
+  },
+  "portfolio": {
+    "eyebrow": "Realizzazioni",
+    "title": "Siti semplici, credibili, che lavorano per loro.",
+    "description": "Ogni sito è pensato per un mestiere e una zona, e prima di tutto per il mobile. Ecco alcune attività che seguiamo.",
+    "firstClient": "Prima cliente",
+    "yoursSoon": "La tua attività qui prestissimo.",
+    "quote": "Preventivo",
+    "trades": {
+      "sanad": "Pulizie e servizi alla persona",
+      "atelier": "Pasticceria creativa",
+      "meca": "Riparazione auto",
+      "vibe": "Personal trainer"
+    }
+  },
+  "benefits": {
+    "eyebrow": "Cosa ti porta",
+    "title": "Un sito, ma soprattutto più clienti.",
+    "description": "Non solo una bella pagina: uno strumento che lavora per te, ogni giorno, anche quando sei in cantiere.",
+    "items": [
+      {
+        "title": "Ti trovano su Google",
+        "body": "Ottimizzato per il posizionamento locale: compari quando un cliente cerca il tuo mestiere vicino a sé."
+      },
+      {
+        "title": "Le richieste arrivano da te",
+        "body": "Modulo di contatto e notifiche: ogni richiesta finisce direttamente nella tua casella, pronta da richiamare."
+      },
+      {
+        "title": "Pulsante di chiamata e WhatsApp",
+        "body": "I tuoi clienti ti chiamano o ti scrivono su WhatsApp con un solo tap, dal loro telefono."
+      },
+      {
+        "title": "Sicuro e senza pensieri",
+        "body": "Hosting, HTTPS, backup e aggiornamenti: gestiamo tutta la tecnica noi, il tuo sito resta online."
+      },
+      {
+        "title": "Perfetto su mobile",
+        "body": "8 visitatori su 10 arrivano dal telefono. Il tuo sito è veloce, nitido e leggibile su qualsiasi schermo."
+      },
+      {
+        "title": "Modifiche illimitate",
+        "body": "Nuovo prezzo, nuova foto, orari estivi? Ci scrivi, aggiorniamo noi — spesso in giornata, entro 3 giorni lavorativi al massimo."
+      }
+    ]
+  },
+  "formules": {
+    "eyebrow": "Le nostre formule",
+    "title": "Tre formule, semplici e chiare.",
+    "description": "Cominci dove vuoi, cambi quando vuoi. Nessuna sorpresa, e sempre senza vincoli.",
+    "boutiqueNote": "Negozio e-commerce in opzione su qualsiasi formula —",
+    "boutiqueNoteStrong": "0 % di commissione",
+    "boutiqueNoteEnd": "sulle tue vendite.",
+    "vatNote": "Tutti i nostri prezzi sono indicati in euro, IVA inclusa.",
+    "card": {
+      "recommended": "Consigliato",
+      "perMonthSuffix": "/mese · IVA incl.",
+      "setupLine": "+ {price} all'installazione",
+      "setupOnce": "(una tantum)",
+      "noEngagement": "Senza vincoli · disdici quando vuoi",
+      "addShop": "Aggiungere un negozio online?",
+      "noShop": "Nessun negozio",
+      "shopOption": "{label} — +{price}/mese ({products})",
+      "showDetails": "Vedi i dettagli",
+      "hideDetails": "Nascondi i dettagli",
+      "seeFormuleDetail": "Vedi il dettaglio di questa formula",
+      "googleMockIntro": "Ecco cosa vedranno i tuoi clienti cercando il tuo mestiere:"
+    },
+    "googleMock": {
+      "guaranteed": "Garantito da Google",
+      "businessName": "Idraulica Dupont",
+      "status": "Parigi · Aperto · Disponibile ora",
+      "reviews": "(87 recensioni)",
+      "call": "Chiama"
+    },
+    "boutiqueProducts": {
+      "starter": "fino a 20 prodotti",
+      "pro": "fino a 100 prodotti",
+      "business": "prodotti illimitati"
+    },
+    "items": {
+      "site": {
+        "name": "Il tuo sito",
+        "phrase": "Per esistere su internet, semplicemente.",
+        "features": [
+          "Un bel sito professionale a tuo nome",
+          "Il tuo nome di dominio .fr offerto: lo compriamo e lo gestiamo noi per te, non devi fare niente",
+          "Compari su Google quando ti cercano",
+          "I tuoi clienti ti trovano e ti chiamano con un clic",
+          "Un QR code da mostrare ai tuoi clienti per raccogliere recensioni"
+        ],
+        "cta": "Voglio il mio sito"
+      },
+      "google": {
+        "name": "Ci occupiamo del tuo Google",
+        "phrase": "Tu lavori, noi ci occupiamo della tua immagine.",
+        "inherits": "Tutto il pacchetto Sito, e in più:",
+        "features": [
+          "Rispondiamo noi alle recensioni dei tuoi clienti",
+          "Pubblichiamo per te su Google ogni mese",
+          "Teniamo aggiornati i tuoi orari e le tue foto",
+          "Senza pagare pubblicità"
+        ],
+        "cta": "Voglio stare tranquillo"
+      },
+      "haut-google": {
+        "name": "In cima a Google",
+        "phrase": "Sii il primo che i tuoi clienti vedono.",
+        "priceNote": "Il tuo budget pubblicitario, pagato direttamente a Google — sei tu a scegliere l'importo.",
+        "inherits": "Tutto il pacchetto precedente, e in più:",
+        "features": [
+          "Compari in cima a Google, prima di tutti",
+          "Prepariamo la tua pratica per il badge verde « Garantito da Google » (documenti legali, assicurazione a seconda del mestiere) — compare una volta che Google ha convalidato",
+          "I clienti ti chiamano direttamente",
+          "Paghi Google solo quando un vero cliente ti contatta",
+          "Installiamo e gestiamo tutto al posto tuo"
+        ],
+        "cta": "Voglio più clienti",
+        "featured": "Consigliato"
+      }
+    }
+  },
+  "faq": {
+    "eyebrow": "Domande",
+    "title": "Tutto quello che ti chiedi, senza giri di parole.",
+    "description": "Un'altra domanda? Scrivici, rispondiamo in fretta e con chiarezza.",
+    "items": [
+      {
+        "q": "In quanto tempo il mio sito è online?",
+        "a": "48h dopo aver ricevuto le tue informazioni tramite il modulo. Approvi una versione, la sistemiamo se serve, poi pubblichiamo. Niente riunioni, nessun capitolato da scrivere."
+      },
+      {
+        "q": "Sono vincolato per un certo periodo?",
+        "a": "No. È senza vincoli: 49€ una tantum alla creazione, poi 9,99€/mese. Smetti quando vuoi, con un messaggio."
+      },
+      {
+        "q": "E se voglio modificare il mio sito più avanti?",
+        "a": "Le modifiche ai contenuti sono illimitate e incluse nell'abbonamento. Ci scrivi cosa vuoi cambiare, ce ne occupiamo noi — di solito in giornata, e al massimo entro 3 giorni lavorativi."
+      },
+      {
+        "q": "A chi appartengono il sito e il nome di dominio?",
+        "a": "I contenuti (testi, foto) sono tuoi. Il nome di dominio .fr è offerto e gestito da Xklic: lo compriamo e ce ne occupiamo noi per te per tutta la durata del tuo abbonamento, non devi fare niente. Se smetti, puoi chiedere di recuperare il tuo dominio tramite il nostro modulo di contatto (condizioni dettagliate nelle nostre condizioni di vendita)."
+      },
+      {
+        "q": "Come funziona il pagamento?",
+        "a": "Paghi online in tutta sicurezza (Stripe) alla fine del modulo: oggi solo i 49€ di installazione. Il primo addebito mensile di 9,99€ avviene il mese successivo, ed è senza vincoli — smetti quando vuoi."
+      },
+      {
+        "q": "Non ho ancora un SIRET, è possibile?",
+        "a": "Sì. Puoi partire senza SIRET e trasmettercelo più avanti. Nel frattempo indichiamo semplicemente « in corso di registrazione » sul sito."
+      },
+      {
+        "q": "Offro servizi alla persona, il credito d'imposta viene messo in evidenza?",
+        "a": "Assolutamente. Se hai diritto al credito d'imposta del 50%, lo mostriamo chiaramente sul tuo sito — è un argomento decisivo per i tuoi clienti."
+      }
+    ]
+  },
+  "finalCta": {
+    "titleLead": "Il tuo sito pro,",
+    "titleAccent": "pronto in 48h.",
+    "subtitle": "Pochi minuti per compilare il modulo. Al resto pensiamo noi. Senza vincoli, senza pagare oggi.",
+    "cta": "Crea il mio sito"
   }
 }

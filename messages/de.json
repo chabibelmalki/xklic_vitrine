@@ -1,14 +1,284 @@
 {
   "nav": {
-    "metiers": "Métiers",
-    "realisations": "Réalisations",
-    "tarifs": "Tarifs",
-    "faq": "Questions",
-    "contact": "Contact",
-    "cta": "Créer mon site"
+    "metiers": "Berufe",
+    "realisations": "Referenzen",
+    "tarifs": "Preise",
+    "faq": "Fragen",
+    "contact": "Kontakt",
+    "cta": "Meine Website erstellen"
   },
   "language": {
-    "label": "Langue",
-    "choose": "Choisir la langue"
+    "label": "Sprache",
+    "choose": "Sprache wählen"
+  },
+  "common": {
+    "createSite": "Meine Website erstellen",
+    "priceLine": "49€ bei der Erstellung · danach 9,99€/Monat · jederzeit kündbar",
+    "whatsappAria": "Auf WhatsApp schreiben",
+    "callAria": "{phone} anrufen"
+  },
+  "footer": {
+    "tagline": "Die Profi-Website, die dir Kunden bringt, in 48h online. Ohne Stress, ohne Bindung.",
+    "col": {
+      "services": "Leistungen",
+      "offer": "Das Angebot",
+      "contact": "Kontakt"
+    },
+    "links": {
+      "allMetiers": "Alle Berufe",
+      "realisations": "Referenzen",
+      "blog": "Blog",
+      "pricing": "Pakete & Preise",
+      "how": "So funktioniert's",
+      "faq": "Häufige Fragen",
+      "createSite": "Meine Website erstellen"
+    },
+    "rights": "Alle Rechte vorbehalten.",
+    "legal": {
+      "mentions": "Impressum",
+      "cgv": "AGB",
+      "privacy": "Datenschutz"
+    },
+    "designedIn": "Gestaltet in Frankreich"
+  },
+  "hero": {
+    "badge": "Professionelle Websites, schlüsselfertig",
+    "titleLead": "Deine Profi-Website, die dir",
+    "titleAccent": "Kunden bringt.",
+    "subtitle": "Klempner, Mechaniker, selbstständig in der Reinigung? Wir erstellen deine schlüsselfertige Website, sauber gestaltet und darauf ausgelegt, dir neue Kunden zu finden. In 48h online, ohne Stress.",
+    "ctaPrimary": "Meine Website erstellen",
+    "ctaSecondary": "Referenzen ansehen",
+    "proofs": {
+      "online": "In 48h online",
+      "noCommitment": "Ohne Bindung",
+      "price": "49€ + 9,99€/Monat"
+    }
+  },
+  "trust": {
+    "aria": "Betreute Branchen und Garantien",
+    "pillars": {
+      "speed": "um online zu sein",
+      "commitment": "Bindung, kündbar wann du willst",
+      "mobile": "fürs Handy gemacht",
+      "madeIn": "gestaltet und verwaltet in Frankreich"
+    },
+    "trades": {
+      "menage": "Reinigung zu Hause",
+      "plomberie": "Klempnerei",
+      "electricite": "Elektrik",
+      "mecanique": "Kfz-Mechanik",
+      "serrurerie": "Schlüsseldienst",
+      "jardinage": "Gartenpflege",
+      "coiffure": "Friseur & Beauty",
+      "maconnerie": "Maurerarbeiten",
+      "peinture": "Malerarbeiten",
+      "chauffagiste": "Heizungsbau"
+    },
+    "notListed": "Dein Beruf ist nicht in der Liste? Machen wir auch."
+  },
+  "problem": {
+    "eyebrow": "Die Realität",
+    "titleLine1": "Gut in seinem Beruf zu sein reicht nicht mehr.",
+    "titleLine2": "Man muss dich auch finden.",
+    "description": "Heute ist der erste Reflex eines Kunden Google. Ohne glaubwürdige Website überlässt du deinen Konkurrenten die Anrufe, die eigentlich deine hätten sein sollen.",
+    "withoutLabel": "Ohne Xklic",
+    "withLabel": "Mit Xklic",
+    "problems": [
+      "Deine Kunden suchen dich bei Google… und finden dich nicht.",
+      "Eine Facebook-Seite reicht nicht mehr, um Vertrauen zu wecken.",
+      "Angebote von Webagenturen liegen bei 1 500€, oft deutlich mehr.",
+      "Du hast weder Zeit noch Lust, eine Website selbst zu verwalten."
+    ],
+    "promises": [
+      "Eine Website, die dich sichtbar macht, wenn man deinen Beruf in deiner Nähe sucht.",
+      "Ein sauberer Auftritt, der überzeugt und Lust macht, dich anzurufen.",
+      "49€ bei der Erstellung, 9,99€/Monat. Alles inklusive, ohne Überraschungen.",
+      "Du musst nichts anfassen: Wir kümmern uns um alles, du gibst dein OK."
+    ]
+  },
+  "process": {
+    "eyebrow": "So funktioniert's",
+    "title": "Vier Schritte. Und du bekommst deine ersten Anfragen.",
+    "description": "Kein Fachjargon, keine endlosen Meetings. Du gibst uns das Wesentliche, wir machen den Rest.",
+    "steps": [
+      {
+        "title": "Du füllst das Formular aus",
+        "body": "Ein paar Minuten, um deine Tätigkeit, deine Leistungen und deine Kontaktdaten zu beschreiben. Beispiele leiten dich bei jedem Schritt."
+      },
+      {
+        "title": "Wir erstellen deine Website",
+        "body": "Unser Team gestaltet eine professionelle, saubere Website, die auf deinen Beruf zugeschnitten ist. Du musst nichts installieren oder einrichten."
+      },
+      {
+        "title": "In 48h ist sie online",
+        "body": "Deine Website wird auf deiner .fr-Domain veröffentlicht (geschenkt, wir kümmern uns darum für dich), optimiert fürs Handy und um lokal bei Google zu erscheinen."
+      },
+      {
+        "title": "Du bekommst deine Kundenanfragen",
+        "body": "Kontaktformular, Anruf-Button und WhatsApp: Die Anfragen kommen direkt zu dir, bereit zum Umwandeln."
+      }
+    ]
+  },
+  "portfolio": {
+    "eyebrow": "Referenzen",
+    "title": "Einfache, glaubwürdige Websites, die für sie arbeiten.",
+    "description": "Jede Website ist auf einen Beruf und eine Region zugeschnitten, und zuerst fürs Handy. Hier ein paar Tätigkeiten, die wir begleiten.",
+    "firstClient": "Erste Kundin",
+    "yoursSoon": "Deine Tätigkeit hier ganz bald.",
+    "quote": "Angebot",
+    "trades": {
+      "sanad": "Reinigung & haushaltsnahe Dienstleistungen",
+      "atelier": "Kreativ-Patisserie",
+      "meca": "Kfz-Reparatur",
+      "vibe": "Sport-Coaching"
+    }
+  },
+  "benefits": {
+    "eyebrow": "Was es dir bringt",
+    "title": "Eine Website, aber vor allem mehr Kunden.",
+    "description": "Nicht nur eine hübsche Seite: ein Werkzeug, das jeden Tag für dich arbeitet, auch wenn du auf einer Baustelle bist.",
+    "items": [
+      {
+        "title": "Man findet dich bei Google",
+        "body": "Optimiert für die lokale Suche: Du erscheinst, wenn ein Kunde deinen Beruf in seiner Nähe sucht."
+      },
+      {
+        "title": "Die Anfragen kommen zu dir",
+        "body": "Kontaktformular und Benachrichtigungen: Jede Anfrage landet direkt in deinem Postfach, bereit zum Zurückrufen."
+      },
+      {
+        "title": "Anruf-Button & WhatsApp",
+        "body": "Deine Kunden rufen dich an oder schreiben dir auf WhatsApp mit nur einem Tipp, direkt vom Handy."
+      },
+      {
+        "title": "Sicher und sorgenfrei",
+        "body": "Hosting, HTTPS, Backups und Updates: Wir kümmern uns um die gesamte Technik, deine Website bleibt online."
+      },
+      {
+        "title": "Perfekt auf dem Handy",
+        "body": "8 von 10 Besuchern kommen vom Handy. Deine Website ist schnell, klar und lesbar auf jedem noch so kleinen Bildschirm."
+      },
+      {
+        "title": "Unbegrenzte Änderungen",
+        "body": "Neuer Preis, neues Foto, Sommeröffnungszeiten? Du schreibst uns, wir aktualisieren es — oft noch am selben Tag, spätestens innerhalb von 3 Werktagen."
+      }
+    ]
+  },
+  "formules": {
+    "eyebrow": "Unsere Pakete",
+    "title": "Drei Pakete, einfach und klar.",
+    "description": "Du beginnst, wo du willst, du wechselst, wann du willst. Keine Überraschungen, und immer ohne Bindung.",
+    "boutiqueNote": "E-Commerce-Shop optional zu jedem Paket —",
+    "boutiqueNoteStrong": "0 % Provision",
+    "boutiqueNoteEnd": "auf deine Verkäufe.",
+    "vatNote": "Alle unsere Preise sind in Euro, inkl. MwSt.",
+    "card": {
+      "recommended": "Empfohlen",
+      "perMonthSuffix": "/Monat · inkl. MwSt.",
+      "setupLine": "+ {price} bei der Einrichtung",
+      "setupOnce": "(einmalig)",
+      "noEngagement": "Ohne Bindung · kündbar wann du willst",
+      "addShop": "Einen Online-Shop hinzufügen?",
+      "noShop": "Kein Shop",
+      "shopOption": "{label} — +{price}/Monat ({products})",
+      "showDetails": "Details anzeigen",
+      "hideDetails": "Details ausblenden",
+      "seeFormuleDetail": "Details dieses Pakets ansehen",
+      "googleMockIntro": "Das sehen deine Kunden, wenn sie deinen Beruf suchen:"
+    },
+    "googleMock": {
+      "guaranteed": "Von Google garantiert",
+      "businessName": "Klempnerei Dupont",
+      "status": "Paris · Geöffnet · Jetzt verfügbar",
+      "reviews": "(87 Bewertungen)",
+      "call": "Anrufen"
+    },
+    "boutiqueProducts": {
+      "starter": "bis zu 20 Produkte",
+      "pro": "bis zu 100 Produkte",
+      "business": "unbegrenzte Produkte"
+    },
+    "items": {
+      "site": {
+        "name": "Deine Website",
+        "phrase": "Um im Internet zu existieren, ganz einfach.",
+        "features": [
+          "Eine schöne professionelle Website auf deinen Namen",
+          "Deine .fr-Domain geschenkt: Wir kaufen und verwalten sie für dich, du musst nichts tun",
+          "Du erscheinst bei Google, wenn man dich sucht",
+          "Deine Kunden finden dich und rufen dich mit einem Klick an",
+          "Ein QR-Code zum Vorzeigen bei deinen Kunden, um Bewertungen zu sammeln"
+        ],
+        "cta": "Ich will meine Website"
+      },
+      "google": {
+        "name": "Wir kümmern uns um dein Google",
+        "phrase": "Du arbeitest, wir kümmern uns um dein Image.",
+        "inherits": "Das ganze Website-Paket, und zusätzlich:",
+        "features": [
+          "Wir antworten für dich auf deine Kundenbewertungen",
+          "Wir posten jeden Monat für dich bei Google",
+          "Wir halten deine Öffnungszeiten und Fotos aktuell",
+          "Ohne Werbung zu bezahlen"
+        ],
+        "cta": "Ich will die Ruhe"
+      },
+      "haut-google": {
+        "name": "Ganz oben bei Google",
+        "phrase": "Sei der Erste, den deine Kunden sehen.",
+        "priceNote": "Dein Werbebudget, direkt an Google gezahlt — du bestimmst den Betrag.",
+        "inherits": "Das ganze vorige Paket, und zusätzlich:",
+        "features": [
+          "Du erscheinst ganz oben bei Google, noch vor allen anderen",
+          "Wir stellen deinen Antrag für das grüne Badge « Von Google garantiert » zusammen (behördliche Unterlagen, Versicherung je nach Beruf) — es wird angezeigt, sobald Google es geprüft hat",
+          "Die Kunden rufen dich direkt an",
+          "Du zahlst Google nur, wenn ein echter Kunde dich kontaktiert",
+          "Wir richten alles für dich ein und verwalten es"
+        ],
+        "cta": "Ich will mehr Kunden",
+        "featured": "Empfohlen"
+      }
+    }
+  },
+  "faq": {
+    "eyebrow": "Fragen",
+    "title": "Alles, was du dich fragst, ohne Umschweife.",
+    "description": "Noch eine Frage? Schreib uns, wir antworten schnell und klar.",
+    "items": [
+      {
+        "q": "In wie viel Zeit ist meine Website online?",
+        "a": "48h nach Eingang deiner Informationen über das Formular. Du gibst eine Version frei, wir passen sie bei Bedarf an, dann veröffentlichen wir. Keine Meetings, kein Lastenheft zu verfassen."
+      },
+      {
+        "q": "Bin ich langfristig gebunden?",
+        "a": "Nein. Es ist ohne Bindung: 49€ einmalig bei der Erstellung, danach 9,99€/Monat. Du hörst auf, wann du willst, mit einer Nachricht."
+      },
+      {
+        "q": "Und wenn ich meine Website später ändern will?",
+        "a": "Inhaltsänderungen sind unbegrenzt und im Abo enthalten. Du schreibst uns, was du ändern willst, wir kümmern uns darum — meist noch am selben Tag, und spätestens innerhalb von 3 Werktagen."
+      },
+      {
+        "q": "Wem gehören die Website und die Domain?",
+        "a": "Der Inhalt (Texte, Fotos) gehört dir. Die .fr-Domain ist geschenkt und wird von Xklic verwaltet: Wir kaufen sie und kümmern uns für dich darum, während der gesamten Laufzeit deines Abos, du musst nichts tun. Wenn du aufhörst, kannst du über unser Kontaktformular die Übertragung deiner Domain beantragen (genaue Bedingungen in unseren AGB)."
+      },
+      {
+        "q": "Wie läuft die Bezahlung ab?",
+        "a": "Du zahlst online ganz sicher (Stripe) am Ende des Formulars: heute nur die 49€ für die Einrichtung. Die erste monatliche Abbuchung von 9,99€ erfolgt im Folgemonat, und das ohne Bindung — du hörst auf, wann du willst."
+      },
+      {
+        "q": "Ich habe noch keine SIRET-Nummer, geht das?",
+        "a": "Ja. Du kannst ohne SIRET starten und sie uns später übermitteln. Wir vermerken einfach « in Eintragung » auf der Website in der Zwischenzeit."
+      },
+      {
+        "q": "Ich biete haushaltsnahe Dienstleistungen an, wird die Steuergutschrift hervorgehoben?",
+        "a": "Auf jeden Fall. Wenn du Anspruch auf die 50% Steuergutschrift hast, zeigen wir sie klar auf deiner Website an — das ist ein entscheidendes Argument für deine Kunden."
+      }
+    ]
+  },
+  "finalCta": {
+    "titleLead": "Deine Profi-Website,",
+    "titleAccent": "fertig in 48h.",
+    "subtitle": "Ein paar Minuten, um das Formular auszufüllen. Wir kümmern uns um den Rest. Ohne Bindung, ohne Zahlung heute.",
+    "cta": "Meine Website erstellen"
   }
 }

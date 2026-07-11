@@ -1,35 +1,25 @@
+import { useTranslations } from "next-intl";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { Frown, Smile } from "lucide-react";
 
-const problems = [
-  "Tes clients te cherchent sur Google… et ne te trouvent pas.",
-  "Une page Facebook ne suffit plus à inspirer confiance.",
-  "Les devis d'agences web tournent à 1 500€, voire bien plus.",
-  "Tu n'as ni le temps ni l'envie de gérer un site toi-même.",
-];
-
-const promises = [
-  "Un site qui te fait apparaître quand on cherche ton métier près de chez toi.",
-  "Une vitrine soignée qui rassure et donne envie de t'appeler.",
-  "49€ à la création, 9,99€/mois. Tout compris, sans surprise.",
-  "Tu ne touches à rien : on s'occupe de tout, tu valides.",
-];
-
 export function Problem() {
+  const t = useTranslations("problem");
+  const problems = t.raw("problems") as string[];
+  const promises = t.raw("promises") as string[];
   return (
     <Section className="border-t border-line">
       <Reveal>
         <SectionHeading
-          eyebrow="Le constat"
+          eyebrow={t("eyebrow")}
           title={
             <>
-              Être bon dans son métier ne suffit plus.{" "}
+              {t("titleLine1")}{" "}
               <br className="hidden sm:block" />
-              Encore faut-il qu&apos;on te trouve.
+              {t("titleLine2")}
             </>
           }
-          description="Aujourd'hui, le premier réflexe d'un client, c'est Google. Sans site crédible, tu laisses tes concurrents prendre les appels qui auraient dû être les tiens."
+          description={t("description")}
         />
       </Reveal>
 
@@ -41,7 +31,7 @@ export function Problem() {
               <Frown size={18} className="text-cream-faint" />
             </span>
             <span className="text-sm font-medium uppercase tracking-wider text-cream-faint">
-              Sans Xklic
+              {t("withoutLabel")}
             </span>
           </div>
           {problems.map((p) => (
@@ -67,7 +57,7 @@ export function Problem() {
               <Smile size={18} className="text-white" />
             </span>
             <span className="text-sm font-medium uppercase tracking-wider text-white">
-              Avec Xklic
+              {t("withLabel")}
             </span>
           </div>
           {promises.map((p) => (

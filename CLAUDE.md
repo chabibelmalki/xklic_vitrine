@@ -30,12 +30,14 @@ Parcours réel : `/demarrer` → formulaire multi-étapes → paiement → enreg
 
 1. **Formulaire** — `src/components/form/lead-form.tsx` (+ `steps.tsx`, `fields.tsx`).
    Multi-étapes, validé par **Zod** (`src/lib/lead-schema.ts`), anti-robot
-   **Cloudflare Turnstile**. Les images (logo/photos) sont téléversées vers
-   **Vercel Blob** via `POST /api/blob/upload` **avant** la soumission (on envoie
-   ensuite les URLs Blob, pas les fichiers).
-2. **`POST /api/checkout`** — valide le lead, **persiste la commande** dans Vercel
-   Blob (`src/lib/orders.ts` ; pas de base de données — l'URL Blob voyage dans les
-   `metadata` Stripe pour survivre au paiement), capture le lead en statut
+   **Cloudflare Turnstile**. Les images (logo/photos) sont téléversées **directement
+   vers Scaleway** (S3, bucket `xklic-media`, préfixe `leads/`) via une **URL PUT
+   présignée** négociée sur `POST /api/upload/sign` **avant** la soumission (le
+   fichier ne transite pas par nos fonctions → pas de limite de body ; on envoie
+   ensuite les URLs publiques, pas les fichiers). Voir `src/lib/scaleway.ts`.
+2. **`POST /api/checkout`** — valide le lead, **persiste la commande** sur Scaleway
+   (`src/lib/orders.ts` ; pas de base de données — objet JSON **privé**, la CLÉ
+   voyage dans les `metadata` Stripe pour survivre au paiement), capture le lead en statut
    **`panier`** dans le back-office (fire-and-forget, cf. ci-dessous), puis crée
    une **session Stripe
    Checkout** en mode `subscription` (mensuel + frais d'installation one-time,
@@ -44,7 +46,7 @@ Parcours réel : `/demarrer` → formulaire multi-étapes → paiement → enreg
    de bord** (la redirection n'est pas fiable).
 4. **`POST /api/stripe/webhook`** — **seul point qui confirme un paiement**. Vérifie
    la signature Stripe (sur le corps **brut**), écoute `checkout.session.completed`,
-   recharge la commande via l'URL Blob en `metadata`, écrit le statut **`payé`**
+   recharge la commande via la clé Scaleway en `metadata`, écrit le statut **`payé`**
    dans le back-office (**bloquant** : échec → `500` → retry Stripe), puis envoie
    un mail (Resend). Idempotent côté données.
 
@@ -76,7 +78,7 @@ Postgres) est la **source de vérité unique**.
 - `src/app/` — routes App Router : pages marketing + SEO programmatique
   (`metiers/[metier]/[ville]`, `zones/[ville]`, `creer-site-<metier>`, `blog/…`,
   pages légales) et **routes API** `api/{checkout,stripe/webhook,lead,contact,blob/upload}`.
-- `src/lib/` — logique serveur : `lead-schema.ts` (Zod), `orders.ts` (Blob),
+- `src/lib/` — logique serveur : `lead-schema.ts` (Zod), `orders.ts` (Scaleway), `scaleway.ts` (S3),
   `backoffice.ts`, `stripe.ts`, `email.ts` (Resend), `turnstile.ts`, `seo.ts`.
 - `src/components/` — `form/` (tunnel), `sections/` (blocs de page), `site/`, `ui/`.
 - `src/data/` — contenu SEO (métiers, villes, articles…).
@@ -95,7 +97,11 @@ visiteur ne casse jamais. À reporter dans Vercel (Production + Preview).
   `BACKOFFICE_API_KEY` (= `ENGINE_API_KEY` côté back-office).
 - **Email (Resend)** : `RESEND_API_KEY`, `RESEND_FROM`, `LEAD_TO`.
 - **Turnstile** : `TURNSTILE_SECRET_KEY`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`.
-- **Uploads** : `BLOB_READ_WRITE_TOKEN` (Vercel Blob).
+- **Uploads / stockage (Scaleway, S3-compatible)** : `S3_BUCKET`, `S3_ACCESS_KEY`,
+  `S3_SECRET_KEY`, `MEDIA_BASE_URL` (mêmes valeurs que le back-office), + optionnels
+  `S3_ENDPOINT` (défaut `https://s3.fr-par.scw.cloud`), `S3_REGION` (défaut `fr-par`).
+  ⚠️ Le bucket doit autoriser le **CORS** en `PUT` depuis l'origine de la vitrine
+  (upload navigateur-direct).
 - **Divers** : `NEXT_PUBLIC_SITE_URL` (défaut `https://xklic.com`), `AGENCE_ENGINE_URL`.
 
 ## Autres docs (statut)

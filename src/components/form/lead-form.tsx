@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { upload } from "@vercel/blob/client";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight, CreditCard, Loader2, PartyPopper } from "lucide-react";
 import Link from "next/link";
@@ -30,10 +29,12 @@ type UploadInput = {
   file?: unknown;
 };
 
-// Téléverse chaque fichier vers Vercel Blob (browser -> Blob, accès public) et
-// renvoie, pour chacun, { name, url } où `url` est l'URL publique Blob. Les
-// objets non sérialisables (File, objectURL d'aperçu) ne partent donc jamais
-// au webhook — seules les URLs publiques le font.
+// Téléverse chaque fichier DIRECTEMENT vers Scaleway (browser -> S3, public) via
+// une URL PUT présignée négociée sur /api/upload/sign, et renvoie { name, url }
+// où `url` est l'URL publique (MEDIA_BASE_URL/<clé>). Le fichier ne transite
+// jamais par nos fonctions serverless (pas de limite de body). Les objets non
+// sérialisables (File, objectURL d'aperçu) ne partent donc jamais au webhook —
+// seules les URLs publiques le font.
 async function uploadFiles(items?: UploadInput[]) {
   return Promise.all(
     (items ?? []).map(async (item) => {
@@ -41,11 +42,23 @@ async function uploadFiles(items?: UploadInput[]) {
       if (!(item.file instanceof File)) {
         return { name: item.name, url: item.url ?? "" };
       }
-      const blob = await upload(`leads/${item.file.name}`, item.file, {
-        access: "public",
-        handleUploadUrl: "/api/blob/upload",
+      const file = item.file;
+      // 1. Négocie une URL PUT présignée (type + taille validés côté serveur).
+      const signRes = await fetch("/api/upload/sign", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: file.name, type: file.type, size: file.size }),
       });
-      return { name: item.name, url: blob.url };
+      if (!signRes.ok) throw new Error("sign failed");
+      const { uploadUrl, publicUrl, headers } = (await signRes.json()) as {
+        uploadUrl: string;
+        publicUrl: string;
+        headers: Record<string, string>;
+      };
+      // 2. PUT direct vers Scaleway avec exactement les en-têtes signés.
+      const putRes = await fetch(uploadUrl, { method: "PUT", headers, body: file });
+      if (!putRes.ok) throw new Error("upload failed");
+      return { name: item.name, url: publicUrl };
     }),
   );
 }

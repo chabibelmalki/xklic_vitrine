@@ -1,20 +1,17 @@
 import "server-only";
-import { put } from "@vercel/blob";
+import { putObject, getObjectText } from "./scaleway";
 import type { LeadData } from "./lead-schema";
 
 // ─────────────────────────────────────────────────────────────────────────
-// Persistance des commandes — pas de base de données : on réutilise Vercel Blob
-// (déjà câblé pour les images du formulaire, cf. /api/blob/upload).
+// Persistance des commandes — pas de base de données : on écrit un petit JSON
+// sur Scaleway (stockage objet, même bucket que les images).
 //
 // La commande est écrite AVANT la redirection vers Stripe pour qu'elle SURVIVE
-// au passage par le paiement : le webhook Stripe la recharge ensuite via l'URL
-// transportée dans les `metadata` de la session. L'id est un UUID non devinable
-// (l'URL Blob agit comme une capability-URL).
-//
-// ⚠️ Confidentialité : la commande contient des données personnelles (email,
-// téléphone, adresse). Le store Blob est « public » mais l'URL est protégée par
-// l'UUID + le suffixe aléatoire. Pour un cran de plus, basculer sur un store
-// Blob privé ou un KV (voir AGENTS / env).
+// au paiement : le webhook Stripe la recharge ensuite via la CLÉ transportée
+// dans les `metadata` de la session. Contrairement à l'ancien schéma Blob (objet
+// public à URL obscure), l'objet est ici PRIVÉ : seul le webhook (serveur, avec
+// les credentials S3) le relit par sa clé — les données personnelles (email,
+// téléphone, adresse) ne sont donc jamais exposées via une URL publique.
 // ─────────────────────────────────────────────────────────────────────────
 
 export type OrderStatus = "pending" | "paid";
@@ -29,10 +26,10 @@ export interface Order {
 
 export interface StoredOrder {
   id: string;
-  url: string; // URL Blob de la commande (mise dans les metadata Stripe)
+  key: string; // clé Scaleway de la commande (mise dans les metadata Stripe)
 }
 
-/** Crée et persiste une commande. Renvoie son id + l'URL Blob de relecture. */
+/** Crée et persiste une commande. Renvoie son id + sa clé Scaleway de relecture. */
 export async function createOrder(lead: LeadData): Promise<StoredOrder> {
   const id = crypto.randomUUID();
   const order: Order = {
@@ -42,24 +39,35 @@ export async function createOrder(lead: LeadData): Promise<StoredOrder> {
     lead,
     createdAt: new Date().toISOString(),
   };
-
-  const blob = await put(`orders/${id}.json`, JSON.stringify(order), {
-    access: "public",
-    addRandomSuffix: true,
-    contentType: "application/json",
-  });
-
-  return { id, url: blob.url };
+  const key = `orders/${id}.json`;
+  await putObject(key, JSON.stringify(order), "application/json");
+  return { id, key };
 }
 
-/** Recharge une commande depuis son URL Blob (transportée par Stripe). */
+/** Recharge une commande depuis sa clé Scaleway (transportée par Stripe). */
+export async function getOrderByKey(key: string): Promise<Order | null> {
+  const text = await getObjectText(key);
+  if (!text) return null;
+  try {
+    return JSON.parse(text) as Order;
+  } catch (err) {
+    console.error("[orders] JSON commande illisible :", err);
+    return null;
+  }
+}
+
+/**
+ * Compat transition : commandes créées par l'ANCIENNE vitrine (stockées sur
+ * Vercel Blob, URL publique en metadata). Simple `fetch` — aucune dépendance
+ * Blob. À retirer une fois Blob décommissionné et plus aucune commande en vol.
+ */
 export async function getOrderByUrl(url: string): Promise<Order | null> {
   try {
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) return null;
     return (await res.json()) as Order;
   } catch (err) {
-    console.error("[orders] Lecture commande échouée :", err);
+    console.error("[orders] Lecture commande (URL legacy) échouée :", err);
     return null;
   }
 }

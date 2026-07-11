@@ -1,25 +1,40 @@
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
-import { trades, trustPillars } from "@/lib/content";
+
+// Valeurs fixes des piliers (non traduites) ; le libellé vient des messages.
+const PILLARS = [
+  { value: "48h", key: "speed" },
+  { value: "Sans", key: "commitment" },
+  { value: "100%", key: "mobile" },
+  { value: "🇫🇷", key: "madeIn" },
+] as const;
+
+const TRADE_KEYS = [
+  "menage", "plomberie", "electricite", "mecanique", "serrurerie",
+  "jardinage", "coiffure", "maconnerie", "peinture", "chauffagiste",
+] as const;
 
 export function Trust() {
+  const t = useTranslations("trust");
+  const trades = TRADE_KEYS.map((k) => t(`trades.${k}`));
   // On duplique la liste pour un défilement continu sans couture.
   const loop = [...trades, ...trades];
 
   return (
     <section
-      aria-label="Secteurs accompagnés et garanties"
+      aria-label={t("aria")}
       className="relative border-y border-line bg-card/60 py-10"
     >
       <Container>
         {/* Piliers de confiance — filets verticaux, rythme éditorial */}
         <ul className="grid grid-cols-2 gap-y-8 sm:grid-cols-4 sm:divide-x sm:divide-line">
-          {trustPillars.map((p) => (
-            <li key={p.label} className="px-4 text-center sm:px-6">
+          {PILLARS.map((p) => (
+            <li key={p.key} className="px-4 text-center sm:px-6">
               <div className="font-display text-3xl font-semibold text-cream sm:text-4xl">
                 {p.value}
               </div>
               <div className="mx-auto mt-1.5 max-w-[11rem] text-xs leading-snug text-cream-muted sm:text-sm">
-                {p.label}
+                {t(`pillars.${p.key}`)}
               </div>
             </li>
           ))}
@@ -42,7 +57,7 @@ export function Trust() {
       </div>
 
       <p className="mt-7 text-center text-xs text-cream-faint">
-        Un métier qui n&apos;est pas dans la liste&nbsp;? On le fait aussi.
+        {t("notListed")}
       </p>
     </section>
   );

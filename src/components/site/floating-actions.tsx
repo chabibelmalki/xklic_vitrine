@@ -1,24 +1,26 @@
 import { Phone } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { brand } from "@/lib/content";
 import { telLink, waLink } from "@/lib/utils";
 
 // Boutons flottants : WhatsApp + appel direct. Toujours accessibles, pensés
 // mobile (gros taps en bas d'écran). C'est aussi une démo de ce que Xklic livre.
 export function FloatingActions() {
+  const t = useTranslations("common");
   return (
     <div className="fixed bottom-5 right-5 z-40 flex flex-col gap-3 md:hidden">
       <a
         href={waLink(brand.whatsapp, brand.whatsappMessage)}
         target="_blank"
         rel="noreferrer"
-        aria-label="Écrire sur WhatsApp"
+        aria-label={t("whatsappAria")}
         className="group flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_8px_24px_-6px_rgba(37,211,102,0.6)] transition-transform duration-300 hover:scale-105 active:scale-95"
       >
         <WhatsAppIcon className="h-7 w-7" />
       </a>
       <a
         href={telLink(brand.phone)}
-        aria-label={`Appeler le ${brand.phoneDisplay}`}
+        aria-label={t("callAria", { phone: brand.phoneDisplay })}
         className="group flex h-14 w-14 items-center justify-center rounded-full bg-ember text-white shadow-[0_8px_24px_-6px_rgba(229,67,31,0.6)] transition-transform duration-300 hover:scale-105 active:scale-95"
       >
         <Phone className="h-6 w-6" />

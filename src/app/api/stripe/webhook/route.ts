@@ -1,6 +1,6 @@
 import type Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
-import { getOrderByUrl } from "@/lib/orders";
+import { getOrderByKey, getOrderByUrl } from "@/lib/orders";
 import { upsertOrder } from "@/lib/backoffice";
 import { sendMail, buildEmail, buildClientConfirmationEmail } from "@/lib/email";
 
@@ -12,7 +12,7 @@ export const runtime = "nodejs";
 // La redirection success_url N'EST PAS fiable (falsifiable, ratable) : on ne
 // déclenche donc rien depuis /merci. Ici, on VÉRIFIE LA SIGNATURE Stripe
 // (obligatoire), on écoute checkout.session.completed, on recharge la commande
-// via l'URL en metadata, et on écrit le statut « payé » dans le back-office.
+// via la clé Scaleway en metadata, et on écrit le statut « payé » dans le back-office.
 export async function POST(req: Request) {
   const secret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
   const sig = req.headers.get("stripe-signature");
@@ -39,11 +39,17 @@ export async function POST(req: Request) {
   }
 
   const session = event.data.object;
-  const orderUrl = session.metadata?.orderUrl;
+  const orderKey = session.metadata?.orderKey;
+  const orderUrl = session.metadata?.orderUrl; // legacy (commandes Blob en vol)
   const orderId = session.metadata?.orderId;
 
-  // 2. Recharge la commande (enrichit la session avec le lead complet).
-  const order = orderUrl ? await getOrderByUrl(orderUrl) : null;
+  // 2. Recharge la commande (enrichit la session avec le lead complet). Clé
+  //    Scaleway en priorité ; repli sur l'URL Blob pour les commandes en vol.
+  const order = orderKey
+    ? await getOrderByKey(orderKey)
+    : orderUrl
+      ? await getOrderByUrl(orderUrl)
+      : null;
   if (!order) {
     console.error(`[stripe-webhook] Commande introuvable (orderId=${orderId}).`);
     // 200 : la commande n'est pas récupérable, inutile que Stripe réessaie.

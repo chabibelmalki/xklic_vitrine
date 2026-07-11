@@ -10,10 +10,9 @@ import {
   Star,
   Wrench,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
-
-const proofs = ["En ligne en 48h", "Sans engagement", "49€ + 9,99€/mois"];
 
 // Composant serveur : les entrées se font en CSS pur (.rise) pour que le
 // h1 — élément LCP — peigne dès le premier rendu HTML, sans attendre
@@ -23,6 +22,8 @@ const rise = (i: number) =>
   ({ "--rise-delay": `${0.07 * i}s` }) as React.CSSProperties;
 
 export function Hero() {
+  const t = useTranslations("hero");
+  const proofs = [t("proofs.online"), t("proofs.noCommitment"), t("proofs.price")];
   return (
     <section className="relative overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-20 lg:pt-40 lg:pb-24">
       {/* Effet signature : aurora chaude animée, adoucie */}
@@ -43,7 +44,7 @@ export function Hero() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ember opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-ember" />
                 </span>
-                Sites web professionnels, clés en main
+                {t("badge")}
               </span>
             </div>
 
@@ -51,17 +52,15 @@ export function Hero() {
               className="rise font-display mt-6 text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.02em] text-cream sm:text-5xl lg:text-[3.5rem] xl:text-[3.9rem]"
               style={rise(1)}
             >
-              Ton site pro qui te{" "}
-              <span className="text-gradient-warm">ramène des clients.</span>
+              {t("titleLead")}{" "}
+              <span className="text-gradient-warm">{t("titleAccent")}</span>
             </h1>
 
             <p
               className="rise mt-5 max-w-lg text-base leading-relaxed text-cream-muted sm:text-lg"
               style={rise(2)}
             >
-              Plombier, mécanicien, à ton compte dans le ménage&nbsp;? On crée
-              ton site clés en main, soigné et pensé pour te trouver de
-              nouveaux clients. En ligne en 48h, sans prise de tête.
+              {t("subtitle")}
             </p>
 
             <div
@@ -73,7 +72,7 @@ export function Hero() {
                 size="lg"
                 className="w-full sm:w-auto"
               >
-                Créer mon site
+                {t("ctaPrimary")}
                 <ArrowRight
                   size={18}
                   className="transition-transform duration-300 group-hover:translate-x-1"
@@ -85,7 +84,7 @@ export function Hero() {
                 size="lg"
                 className="w-full sm:w-auto"
               >
-                Voir des réalisations
+                {t("ctaSecondary")}
               </ButtonLink>
             </div>
 

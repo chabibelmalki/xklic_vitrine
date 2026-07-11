@@ -1,4 +1,5 @@
 import { ShoppingBag } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { formules } from "@/lib/content";
@@ -13,6 +14,7 @@ export function Formules({
   // remplacés par un lien vers /tarifs.
   variant?: "full" | "home";
 } = {}) {
+  const t = useTranslations("formules");
   return (
     <Section id="tarif" className="relative border-t border-line">
       {/* Lueur chaude derrière la grille */}
@@ -25,9 +27,9 @@ export function Formules({
         <SectionHeading
           as={headingAs}
           align="center"
-          eyebrow="Nos formules"
-          title="Trois formules, simples et claires."
-          description="Vous commencez où vous voulez, vous changez quand vous voulez. Pas de surprise, et toujours sans engagement."
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+          description={t("description")}
         />
       </Reveal>
 
@@ -45,15 +47,13 @@ export function Formules({
         <div className="mt-9 flex flex-col items-center gap-2 text-center">
           <p className="inline-flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-sm text-cream-muted">
             <ShoppingBag size={15} className="text-ember-deep" />
-            Boutique e-commerce en option sur n&apos;importe quelle formule —{" "}
+            {t("boutiqueNote")}{" "}
             <strong className="font-semibold text-cream">
-              0&nbsp;% de commission
+              {t("boutiqueNoteStrong")}
             </strong>{" "}
-            sur vos ventes.
+            {t("boutiqueNoteEnd")}
           </p>
-          <p className="text-xs text-cream-faint">
-            Tous nos prix sont indiqués en euros, TTC.
-          </p>
+          <p className="text-xs text-cream-faint">{t("vatNote")}</p>
         </div>
       </Reveal>
     </Section>
