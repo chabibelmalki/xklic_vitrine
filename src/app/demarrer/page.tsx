@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Logo } from "@/components/site/logo";
@@ -10,6 +11,7 @@ import {
   type FormuleSlug,
   type BoutiqueTier,
 } from "@/lib/lead-schema";
+import { countryNameFromCode } from "@/data/countries";
 
 export const metadata: Metadata = {
   title: "Créer mon site",
@@ -33,6 +35,11 @@ export default async function DemarrerPage({
     ? (sp.boutique as BoutiqueTier)
     : undefined;
 
+  // Pré-remplit le pays depuis la géo IP (en-tête posé par l'edge Vercel). Absent
+  // en local / hors liste → undefined, le formulaire retombe sur « France ».
+  const h = await headers();
+  const initialCountry = countryNameFromCode(h.get("x-vercel-ip-country"));
+
   return (
     <div className="grain relative flex min-h-full flex-col">
       {/* Warm glow */}
@@ -55,7 +62,11 @@ export default async function DemarrerPage({
       </header>
 
       <main className="relative z-10 flex-1 px-5 py-12 sm:py-16 lg:py-20">
-        <LeadForm initialFormule={initialFormule} initialBoutique={initialBoutique} />
+        <LeadForm
+          initialFormule={initialFormule}
+          initialBoutique={initialBoutique}
+          initialCountry={initialCountry}
+        />
       </main>
 
       <FloatingActions />

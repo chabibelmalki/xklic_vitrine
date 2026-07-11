@@ -40,6 +40,14 @@ const urls = (items?: { url?: string }[]): string[] =>
 
 const arr = (a?: string[]): string[] => (Array.isArray(a) ? a.filter(Boolean) : []);
 
+// Éclate une saisie texte libre (« Français, anglais, espagnol ») en tableau,
+// séparateurs virgule / point-virgule / retour ligne. Trim + retrait des vides.
+const splitList = (s?: string): string[] =>
+  (s ?? "")
+    .split(/[,;\n]/)
+    .map((x) => x.trim())
+    .filter(Boolean);
+
 /** Mappe le lead vers les colonnes `agency_orders` (snake_case, types natifs). */
 function dossierFields(lead: LeadData): Record<string, unknown> {
   const s = lead.socials ?? {};
@@ -62,11 +70,12 @@ function dossierFields(lead: LeadData): Record<string, unknown> {
     boutique_tier: lead.boutiqueTier ?? null,
     metier: lead.trade ?? "",
     ville: lead.city ?? "",
+    // Multi-pays : pré-rempli via l'IP, éditable dans le tunnel.
+    pays: lead.country ?? "",
     type_activite: typeActivite,
     se_deplace: Boolean(lead.mobile),
     zone_deplacement: lead.serviceArea ?? "",
     prestations: lead.services ?? "",
-    credit_impot: lead.taxCredit ?? "",
     telephone: lead.phone ?? "",
     whatsapp: !lead.noWhatsapp,
     email: lead.email ?? "",
@@ -74,9 +83,7 @@ function dossierFields(lead: LeadData): Record<string, unknown> {
     adresse: lead.address ?? "",
     disponibilites: lead.availability ?? "",
     siret: lead.siret ?? "",
-    siret_en_cours: Boolean(lead.noSiret),
-    langues: arr(lead.languages),
-    styles: arr(lead.styleVibes),
+    langues: splitList(lead.languages),
     couleurs: arr(lead.colorPreference),
     ambiance: lead.ambiance ?? "",
     logo_urls: urls(lead.logo),
@@ -87,7 +94,6 @@ function dossierFields(lead: LeadData): Record<string, unknown> {
     x: s.x ?? "",
     google: s.google ?? "",
     extra: lead.extra ?? "",
-    mode: lead.assisted ? "À compléter par téléphone (conseiller)" : "Formulaire complet",
   };
 }
 
@@ -154,107 +160,6 @@ export async function upsertOrder(args: {
     return true;
   } catch (err) {
     console.error("[backoffice] upsert échoué :", err);
-    return false;
-  }
-}
-
-// ─────────────────────────────────────────────────────────────────────────
-// Complétion post-paiement (page /merci → POST /api/complete)
-// ─────────────────────────────────────────────────────────────────────────
-
-/** Vue d'un dossier pour le prefill de la page de complétion + le contrôle du
- *  statut. `null` si non configuré / introuvable / erreur (ne jette jamais). */
-export interface DossierByRef {
-  ref: string;
-  statutCommande: string; // lead | panier | payé
-  typeActivite: string; // services | produits | les-deux (dérivé au checkout)
-  entreprise: string;
-  prestations: string;
-  logoUrls: string[];
-  photoUrls: string[];
-  couleurs: string[];
-  styles: string[];
-  ambiance: string;
-  socials: { facebook: string; instagram: string; tiktok: string; x: string; google: string };
-  langues: string[];
-  siret: string;
-  whatsapp: boolean;
-}
-
-const strArr = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : []);
-
-export async function fetchDossierByRef(ref: string): Promise<DossierByRef | null> {
-  const url = API_URL();
-  const key = API_KEY();
-  if (!url || !key) return null;
-  try {
-    const res = await fetch(`${url}/v1/public/agency/orders/${encodeURIComponent(ref)}`, {
-      headers: { "X-API-Key": key },
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-      cache: "no-store",
-    });
-    if (!res.ok) return null;
-    const data = (await res.json()) as { order?: Record<string, unknown> };
-    const o = data.order;
-    if (!o) return null;
-    return {
-      ref: String(o.ref ?? ""),
-      statutCommande: String(o.statut_commande ?? ""),
-      typeActivite: String(o.type_activite ?? ""),
-      entreprise: String(o.entreprise ?? ""),
-      prestations: String(o.prestations ?? ""),
-      logoUrls: strArr(o.logo_urls),
-      photoUrls: strArr(o.photo_urls),
-      couleurs: strArr(o.couleurs),
-      styles: strArr(o.styles),
-      ambiance: String(o.ambiance ?? ""),
-      socials: {
-        facebook: String(o.facebook ?? ""),
-        instagram: String(o.instagram ?? ""),
-        tiktok: String(o.tiktok ?? ""),
-        x: String(o.x ?? ""),
-        google: String(o.google ?? ""),
-      },
-      langues: strArr(o.langues),
-      siret: String(o.siret ?? ""),
-      whatsapp: Boolean(o.whatsapp),
-    };
-  } catch (err) {
-    console.error("[backoffice] fetchDossierByRef échoué :", err);
-    return null;
-  }
-}
-
-/**
- * Enrichissement PARTIEL d'un dossier par sa ref EXACTE (complétion post-paiement).
- * N'envoie que les champs fournis dans `dossier` (le back-office coalesce → les
- * colonnes non transmises restent intactes). `statut: "payé"` pour ne jamais
- * rétrograder. IMPORTANT : la ref étant exacte et le dossier déjà existant,
- * l'upsert prend la branche `refExists=true` → AUCUN rapprochement-par-contact
- * (celui-ci ne se déclenche que sur une ref inconnue), donc pas de fusion.
- */
-export async function enrichOrder(ref: string, dossier: Record<string, unknown>): Promise<boolean> {
-  const url = API_URL();
-  const key = API_KEY();
-  if (!url || !key) {
-    console.info("[backoffice] non configuré — enrichissement ignoré.");
-    return false;
-  }
-  try {
-    const res = await fetch(`${url}/v1/public/agency/orders`, {
-      method: "POST",
-      headers: { "X-API-Key": key, "Content-Type": "application/json" },
-      body: JSON.stringify({ ref, statut: "payé", dossier }),
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-      cache: "no-store",
-    });
-    if (!res.ok) {
-      console.error("[backoffice] enrich a répondu", res.status, await res.text().catch(() => ""));
-      return false;
-    }
-    return true;
-  } catch (err) {
-    console.error("[backoffice] enrich échoué :", err);
     return false;
   }
 }

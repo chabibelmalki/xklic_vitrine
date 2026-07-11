@@ -132,14 +132,13 @@ export function buildEmail(opts: {
 }
 
 /**
- * E-mail CLIENT post-paiement (anti-abandon) : confirme le paiement et invite à
- * compléter le profil via un lien RÉUTILISABLE vers /merci?session_id=… (le
- * session_id est durable → le client peut revenir plus tard, formulaire prérempli).
- * Ton rassurant, un seul CTA. À envoyer à `lead.email` (≠ e-mail équipe).
+ * E-mail CLIENT post-paiement : simple confirmation. Toutes les infos du site
+ * sont désormais recueillies AVANT le paiement (tunnel), il n'y a plus de profil
+ * à compléter après — l'e-mail rassure et annonce la première version à venir.
+ * À envoyer à `lead.email` (≠ e-mail équipe).
  */
-export function buildCompletionEmail(opts: {
+export function buildClientConfirmationEmail(opts: {
   companyName?: string | null;
-  url: string;
 }): { html: string; text: string } {
   const who = opts.companyName?.trim();
   const hello = who ? `Bonjour ${who},` : "Bonjour,";
@@ -147,13 +146,9 @@ export function buildCompletionEmail(opts: {
   const text = [
     hello,
     "",
-    "Merci ! Votre paiement est confirmé et notre équipe prépare déjà votre site.",
+    "Merci ! Votre paiement est confirmé et notre équipe a tout ce qu'il faut pour préparer votre site.",
     "",
-    "Dernière étape pour qu'on le construise à votre image : complétez votre profil (photos, logo, couleurs, description de votre activité…).",
-    "",
-    `Compléter mon profil : ${opts.url}`,
-    "",
-    "Pas le temps maintenant ? Ce lien reste valable : revenez quand vous voulez, vos informations seront déjà là.",
+    "On revient vers vous très vite — généralement sous 2h — pour vous montrer une première version.",
     "",
     "— L'équipe Xklic",
   ].join("\n");
@@ -164,16 +159,12 @@ export function buildCompletionEmail(opts: {
       <h1 style="font-size:21px;line-height:1.3;color:#1b1611;margin:10px 0 16px">Paiement confirmé — votre site est en préparation 🎉</h1>
       <p style="color:#4a433b;font-size:15px;line-height:1.6;margin:0 0 12px">${escapeHtml(hello)}</p>
       <p style="color:#4a433b;font-size:15px;line-height:1.6;margin:0 0 12px">
-        Merci&nbsp;! Votre paiement est bien confirmé et notre équipe prépare déjà votre site.
+        Merci&nbsp;! Votre paiement est bien confirmé et notre équipe a tout ce qu'il
+        faut pour préparer votre site.
       </p>
-      <p style="color:#4a433b;font-size:15px;line-height:1.6;margin:0 0 22px">
-        <strong>Dernière étape</strong> pour qu'on le construise à votre image&nbsp;:
-        complétez votre profil — photos, logo, couleurs, description de votre activité…
-      </p>
-      <a href="${escapeHtml(opts.url)}" style="display:inline-block;background:#e5431f;color:#ffffff;text-decoration:none;font-size:15px;font-weight:600;padding:13px 26px;border-radius:999px">Compléter mon profil</a>
-      <p style="color:#9c9286;font-size:13px;line-height:1.6;margin:24px 0 0">
-        Pas le temps maintenant&nbsp;? Ce lien reste valable&nbsp;: revenez quand vous
-        voulez, vos informations seront déjà préremplies.
+      <p style="color:#4a433b;font-size:15px;line-height:1.6;margin:0 0 8px">
+        On revient vers vous très vite — généralement sous 2h — pour vous montrer une
+        première version.
       </p>
       <p style="color:#9c9286;font-size:13px;margin:18px 0 0">— L'équipe Xklic</p>
     </div>

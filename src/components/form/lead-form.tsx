@@ -67,11 +67,14 @@ type Status = "form" | "uploading" | "submitting" | "done" | "error";
 export function LeadForm({
   initialFormule,
   initialBoutique,
+  initialCountry,
 }: {
   // Formule pré-choisie via `?formule=` (clic sur une carte de prix).
   initialFormule?: FormuleSlug;
   // Palier boutique pré-choisi via `?boutique=` (select des cartes tarifs).
   initialBoutique?: BoutiqueTier;
+  // Pays pré-rempli via l'IP (en-tête géo, résolu côté serveur). Repli "France".
+  initialCountry?: string;
 }) {
   const reduce = useReducedMotion();
   const [step, setStep] = useState(0);
@@ -89,10 +92,10 @@ export function LeadForm({
       companyName: "",
       trade: "",
       city: "",
+      country: initialCountry || "France",
       mobile: false,
       serviceArea: "",
       services: "",
-      taxCredit: undefined,
       products: [],
       phone: "",
       noWhatsapp: false,
@@ -101,18 +104,15 @@ export function LeadForm({
       address: "",
       availability: "",
       siret: "",
-      noSiret: false,
       logo: [],
       photos: [],
       socials: { facebook: "", instagram: "", tiktok: "", x: "", google: "" },
-      languages: ["fr"],
-      styleVibes: [],
+      languages: "",
       // Principale pré-remplie : le rond est déjà là, le client n'a qu'à
       // l'ajuster (ou ajouter un accent, ou tout effacer = équipe décide).
       colorPreference: ["#2563eb"],
       ambiance: "",
       extra: "",
-      assisted: false,
     },
   });
 

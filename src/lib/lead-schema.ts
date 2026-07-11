@@ -63,12 +63,15 @@ export const leadSchema = z
     companyName: required("Indique le nom de ton entreprise."),
     trade: required("Indique ton métier."),
     city: required("Indique ta ville."),
+    // Pays (multi-pays) : nom lisible (cf. src/data/countries.ts), pré-rempli
+    // via l'IP côté serveur. A un défaut → toujours renseigné. Sert notamment à
+    // adapter le libellé du numéro d'immatriculation (« SIRET » en France).
+    country: z.string().trim().min(1, "Indique ton pays.").default("France"),
     mobile: z.boolean().default(false),
     serviceArea: z.string().trim().optional(),
 
     // S1. Prestations & prix (services / les-deux) — requis conditionnellement
     services: z.string().trim().optional(),
-    taxCredit: z.enum(["oui", "non", "je-ne-sais-pas"]).optional(),
 
     // P1. Marchandise (produits / les-deux)
     products: z.array(productSchema).default([]),
@@ -85,9 +88,11 @@ export const leadSchema = z
     address: z.string().trim().optional(),
     availability: z.string().trim().optional(),
 
-    // C. SIRET (facultatif — on ne le réclame pas)
+    // C. Numéro d'immatriculation de l'entreprise (facultatif, multi-pays).
+    //    Le champ reste nommé `siret` (colonne back-office) mais accueille tout
+    //    identifiant national : SIRET en France, n° d'entreprise/TVA ailleurs.
+    //    Facultatif → pas d'indicateur « en cours de création », le vide suffit.
     siret: z.string().trim().optional(),
-    noSiret: z.boolean().default(false), // « SIRET en cours de création »
 
     // D. Identité visuelle (optionnel) : logo distinct + un seul bac photos
     logo: uploads(),
@@ -105,12 +110,9 @@ export const leadSchema = z
       })
       .default({}),
 
-    // F. Langues & style
-    languages: z
-      .array(z.string())
-      .min(1, "Garde au moins une langue.")
-      .default(["fr"]),
-    styleVibes: z.array(z.string()).default([]),
+    // F. Langues — texte libre (« Français, anglais, espagnol »), séparé par des
+    //    virgules. Le back-office l'éclate en tableau `langues`.
+    languages: z.string().trim().optional(),
     // Jusqu'à 2 couleurs : [0] = principale, [1] = secondaire/accent.
     // Vide = on laisse l'équipe décider. Masqué dans l'UI si un logo est fourni.
     colorPreference: z.array(z.string()).max(2, "Deux couleurs maximum.").default([]),
@@ -119,52 +121,9 @@ export const leadSchema = z
     // G. Mot de la fin (champ libre, facultatif)
     extra: z.string().trim().optional(),
 
-    // Parcours « express » : le client réserve avec ses seules coordonnées et
-    // un conseiller complète le reste (prestations, produits, identité…) par
-    // téléphone. Quand il est à true, on relâche les exigences des étapes
-    // sautées pour pouvoir passer au paiement immédiatement.
-    assisted: z.boolean().default(false),
-
     // Jeton Cloudflare Turnstile (anti-robot), vérifié côté serveur.
     turnstileToken: z.string().optional(),
   });
 
 export type LeadValues = z.input<typeof leadSchema>;
 export type LeadData = z.output<typeof leadSchema>;
-
-// ─── Complétion post-paiement (page /merci) ─────────────────────────────────
-// Le dossier « propose des prestations » — donc on lui demande une description
-// de l'activité APRÈS paiement — si `type_activite` vaut services ou les-deux
-// (valeur dérivée au checkout, cf. backoffice.ts). Remplace l'ancien
-// `wantsServices(activityType)`, désormais basé sur la valeur stockée.
-export const impliesServices = (typeActivite?: string | null) =>
-  typeActivite === "services" || typeActivite === "les-deux";
-
-// Payload accepté par POST /api/complete. Whitelist STRICTE : Zod retire toute
-// clé inconnue par défaut → `statut`, `formule`, `payment`… ne peuvent JAMAIS
-// passer. Tous les champs (sauf sessionId) sont optionnels : on n'écrit que ce
-// qui est fourni (le back-office coalesce, les autres colonnes restent intactes).
-export const completionSchema = z.object({
-  sessionId: z.string().trim().min(1),
-  description: z.string().trim().optional(),
-  logo: z.array(uploadItemSchema).optional(),
-  photos: z.array(uploadItemSchema).optional(),
-  colorPreference: z.array(z.string()).max(2, "Deux couleurs maximum.").optional(),
-  styleVibes: z.array(z.string()).optional(),
-  ambiance: z.string().trim().optional(),
-  socials: z
-    .object({
-      facebook: z.string().trim().optional(),
-      instagram: z.string().trim().optional(),
-      tiktok: z.string().trim().optional(),
-      x: z.string().trim().optional(),
-      google: z.string().trim().optional(),
-    })
-    .partial()
-    .optional(),
-  languages: z.array(z.string()).optional(),
-  noWhatsapp: z.boolean().optional(),
-  siret: z.string().trim().optional(),
-});
-export type CompletionValues = z.input<typeof completionSchema>;
-export type CompletionData = z.output<typeof completionSchema>;
