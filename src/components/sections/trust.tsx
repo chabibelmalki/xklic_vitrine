@@ -1,13 +1,9 @@
 import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
 
-// Valeurs fixes des piliers (non traduites) ; le libellé vient des messages.
-const PILLARS = [
-  { value: "48h", key: "speed" },
-  { value: "Sans", key: "commitment" },
-  { value: "100%", key: "mobile" },
-  { value: "🇫🇷", key: "madeIn" },
-] as const;
+// Clés des piliers ; valeur ET libellé viennent des messages (« Sans » se
+// traduit : No/Sin/Ohne/بدون…).
+const PILLAR_KEYS = ["speed", "commitment", "mobile", "madeIn"] as const;
 
 const TRADE_KEYS = [
   "menage", "plomberie", "electricite", "mecanique", "serrurerie",
@@ -28,13 +24,13 @@ export function Trust() {
       <Container>
         {/* Piliers de confiance — filets verticaux, rythme éditorial */}
         <ul className="grid grid-cols-2 gap-y-8 sm:grid-cols-4 sm:divide-x sm:divide-line">
-          {PILLARS.map((p) => (
-            <li key={p.key} className="px-4 text-center sm:px-6">
+          {PILLAR_KEYS.map((key) => (
+            <li key={key} className="px-4 text-center sm:px-6">
               <div className="font-display text-3xl font-semibold text-cream sm:text-4xl">
-                {p.value}
+                {t(`pillarValues.${key}`)}
               </div>
               <div className="mx-auto mt-1.5 max-w-[11rem] text-xs leading-snug text-cream-muted sm:text-sm">
-                {t(`pillars.${p.key}`)}
+                {t(`pillars.${key}`)}
               </div>
             </li>
           ))}

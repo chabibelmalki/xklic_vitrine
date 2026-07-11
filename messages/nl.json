@@ -74,7 +74,13 @@
       "peinture": "Schilderwerk",
       "chauffagiste": "Verwarmingstechniek"
     },
-    "notListed": "Staat je vak niet in de lijst? Dat doen we ook."
+    "notListed": "Staat je vak niet in de lijst? Dat doen we ook.",
+    "pillarValues": {
+      "speed": "48h",
+      "commitment": "Zonder",
+      "mobile": "100%",
+      "madeIn": "🇫🇷"
+    }
   },
   "problem": {
     "eyebrow": "De vaststelling",

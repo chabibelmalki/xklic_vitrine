@@ -74,7 +74,13 @@
       "peinture": "Pintura",
       "chauffagiste": "Aquecimento"
     },
-    "notListed": "A tua profissão não está na lista? Também a fazemos."
+    "notListed": "A tua profissão não está na lista? Também a fazemos.",
+    "pillarValues": {
+      "speed": "48h",
+      "commitment": "Sem",
+      "mobile": "100%",
+      "madeIn": "🇫🇷"
+    }
   },
   "problem": {
     "eyebrow": "A realidade",

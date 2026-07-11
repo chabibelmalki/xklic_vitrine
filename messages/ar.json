@@ -74,7 +74,13 @@
       "peinture": "الصباغة",
       "chauffagiste": "أجهزة التدفئة"
     },
-    "notListed": "مهنتك غير موجودة في القائمة؟ نحن نقوم بها أيضًا."
+    "notListed": "مهنتك غير موجودة في القائمة؟ نحن نقوم بها أيضًا.",
+    "pillarValues": {
+      "speed": "48h",
+      "commitment": "بدون",
+      "mobile": "100%",
+      "madeIn": "🇫🇷"
+    }
   },
   "problem": {
     "eyebrow": "الواقع",

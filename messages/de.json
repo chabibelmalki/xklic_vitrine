@@ -74,7 +74,13 @@
       "peinture": "Malerarbeiten",
       "chauffagiste": "Heizungsbau"
     },
-    "notListed": "Dein Beruf ist nicht in der Liste? Machen wir auch."
+    "notListed": "Dein Beruf ist nicht in der Liste? Machen wir auch.",
+    "pillarValues": {
+      "speed": "48h",
+      "commitment": "Ohne",
+      "mobile": "100%",
+      "madeIn": "🇫🇷"
+    }
   },
   "problem": {
     "eyebrow": "Die Realität",

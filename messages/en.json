@@ -74,7 +74,13 @@
       "peinture": "Painting",
       "chauffagiste": "Heating engineer"
     },
-    "notListed": "A trade that's not on the list? We do that too."
+    "notListed": "A trade that's not on the list? We do that too.",
+    "pillarValues": {
+      "speed": "48h",
+      "commitment": "No",
+      "mobile": "100%",
+      "madeIn": "🇫🇷"
+    }
   },
   "problem": {
     "eyebrow": "The reality",

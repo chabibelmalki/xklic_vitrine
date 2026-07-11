@@ -74,7 +74,13 @@
       "peinture": "Imbianchino",
       "chauffagiste": "Termoidraulica"
     },
-    "notListed": "Un mestiere che non è nella lista? Lo facciamo lo stesso."
+    "notListed": "Un mestiere che non è nella lista? Lo facciamo lo stesso.",
+    "pillarValues": {
+      "speed": "48h",
+      "commitment": "Senza",
+      "mobile": "100%",
+      "madeIn": "🇫🇷"
+    }
   },
   "problem": {
     "eyebrow": "Il quadro",
