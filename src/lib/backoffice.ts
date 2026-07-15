@@ -78,7 +78,11 @@ function dossierFields(lead: LeadData): Record<string, unknown> {
     zone_deplacement: lead.serviceArea ?? "",
     prestations: lead.services ?? "",
     telephone: lead.phone ?? "",
-    whatsapp: !lead.noWhatsapp,
+    // Numéro WhatsApp (plus de booléen) : coché → le numéro saisi, à défaut le
+    // téléphone ; décoché → "" (= pas de WhatsApp). Source de vérité du parc.
+    tel_whatsapp: lead.whatsapp
+      ? (lead.whatsappPhone?.trim() || lead.phone?.trim() || "")
+      : "",
     email: lead.email ?? "",
     local_boutique: Boolean(lead.hasShop),
     adresse: lead.address ?? "",
@@ -201,7 +205,7 @@ interface AgencyOrderJSON {
   zone_deplacement?: string;
   prestations?: string;
   telephone?: string;
-  whatsapp?: boolean | null;
+  tel_whatsapp?: string;
   email?: string;
   local_boutique?: boolean | null;
   adresse?: string;
@@ -244,8 +248,10 @@ function orderToLeadValues(o: AgencyOrderJSON): Partial<LeadValues> {
     serviceArea: o.zone_deplacement || "",
     services: o.prestations || "",
     phone: o.telephone || "",
-    // whatsapp null (inconnu) → on ne coche pas « pas de WhatsApp ». Seul false explicite coche.
-    noWhatsapp: o.whatsapp === false,
+    // WhatsApp : coché ⇔ un numéro est présent dans le dossier ; le champ reprend
+    // ce numéro (éditable). Vide → décoché (pas de WhatsApp).
+    whatsapp: Boolean(o.tel_whatsapp && o.tel_whatsapp.trim()),
+    whatsappPhone: o.tel_whatsapp || "",
     email: o.email || "",
     hasShop: Boolean(o.local_boutique),
     address: o.adresse || "",

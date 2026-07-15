@@ -132,7 +132,9 @@
       "socialsLabel": "Social media",
       "socialsHint": "Link or handle — we'll tidy it up.",
       "socialGoogle": "Google listing",
-      "noWhatsapp": "I don't have WhatsApp (don't show a WhatsApp button)",
+      "whatsappLabel": "Reachable on WhatsApp",
+      "whatsappPhoneLabel": "WhatsApp number",
+      "whatsappPhoneHint": "The number shown on your site's WhatsApp button — your phone number by default.",
       "extraLabel": "Anything else to add?",
       "extraHint": "A detail, a wish, a constraint… anything we should know.",
       "extraPlaceholder": "Anything more you'd like to tell us…"

@@ -483,7 +483,9 @@
       "socialsLabel": "Social",
       "socialsHint": "Link o nome utente — normalizziamo noi.",
       "socialGoogle": "Scheda Google",
-      "noWhatsapp": "Non ho WhatsApp (non mostrare il pulsante WhatsApp)",
+      "whatsappLabel": "Raggiungibile su WhatsApp",
+      "whatsappPhoneLabel": "Numero WhatsApp",
+      "whatsappPhoneHint": "Il numero mostrato sul pulsante WhatsApp del tuo sito, per impostazione predefinita il tuo telefono.",
       "extraLabel": "Altro da aggiungere?",
       "extraHint": "Un dettaglio, un desiderio, un vincolo… tutto quello che dobbiamo sapere.",
       "extraPlaceholder": "Quello che vuoi dirci in più…"

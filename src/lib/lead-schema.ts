@@ -100,7 +100,12 @@ export function makeLeadSchema(m: LeadMessages = (k) => FR_LEAD_MESSAGES[k]) {
 
     // B. Coordonnées
     phone: required(m("phone")),
-    noWhatsapp: z.boolean().default(false), // coché = pas de WhatsApp sur le site
+    // WhatsApp : case cochée (défaut) = joignable sur WhatsApp → `whatsappPhone`
+    // porte le numéro affiché sur le site (pré-rempli avec `phone`, éditable).
+    // Décochée → pas de WhatsApp (numéro ignoré). Le back-office ne stocke que le
+    // NUMÉRO (`tel_whatsapp`, "" = pas de WhatsApp), plus de booléen.
+    whatsapp: z.boolean().default(true),
+    whatsappPhone: z.string().trim().optional(),
     email: z
       .string()
       .trim()

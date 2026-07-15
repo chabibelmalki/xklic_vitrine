@@ -483,7 +483,9 @@
       "socialsLabel": "شبكات التواصل الاجتماعي",
       "socialsHint": "رابط أو اسم مستخدم — نحن ننسّقه.",
       "socialGoogle": "بطاقة Google",
-      "noWhatsapp": "ليس لدي WhatsApp (لا تعرض زر WhatsApp)",
+      "whatsappLabel": "متاح على WhatsApp",
+      "whatsappPhoneLabel": "رقم WhatsApp",
+      "whatsappPhoneHint": "الرقم الظاهر على زر WhatsApp في موقعك — هاتفك افتراضيًا.",
       "extraLabel": "شيء آخر تريد إضافته؟",
       "extraHint": "تفصيل، رغبة، قيد… كل ما يجب أن نعرفه.",
       "extraPlaceholder": "ما تريد أن تخبرنا به إضافةً…"

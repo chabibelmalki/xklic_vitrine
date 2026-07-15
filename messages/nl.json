@@ -151,7 +151,9 @@
       "socialsLabel": "Sociale media",
       "socialsHint": "Link of gebruikersnaam — wij normaliseren het.",
       "socialGoogle": "Google-vermelding",
-      "noWhatsapp": "Ik heb geen WhatsApp (geen WhatsApp-knop tonen)",
+      "whatsappLabel": "Bereikbaar via WhatsApp",
+      "whatsappPhoneLabel": "WhatsApp-nummer",
+      "whatsappPhoneHint": "Het nummer dat op de WhatsApp-knop van uw site staat — standaard uw telefoonnummer.",
       "extraLabel": "Nog iets toe te voegen?",
       "extraHint": "Een detail, een wens, een beperking… alles wat we moeten weten.",
       "extraPlaceholder": "Wat je ons nog meer wil vertellen…"

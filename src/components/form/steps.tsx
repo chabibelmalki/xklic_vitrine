@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext } from "react";
+import { createContext, useEffect } from "react";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { ShoppingBag } from "lucide-react";
@@ -413,11 +413,23 @@ function OffreStep() {
 
 function SiteDetailsStep() {
   const t = useTranslations("demarrer.fields");
-  const { register, control } = useFormContext<LeadValues>();
+  const { register, control, setValue, getValues } = useFormContext<LeadValues>();
   const boutique = useWatch<LeadValues>({ control, name: "boutiqueTier" }) as
     | BoutiqueTier
     | undefined;
   const wantsServices = useWatch<LeadValues>({ control, name: "wantsServices" });
+  // WhatsApp : coché (défaut) = joignable sur WhatsApp. Le numéro affiché sur le
+  // site est pré-rempli avec le téléphone saisi à l'étape précédente (éditable).
+  const whatsapp = useWatch<LeadValues>({ control, name: "whatsapp" });
+  const phone = useWatch<LeadValues>({ control, name: "phone" });
+  // À l'affichage de l'étape : si le champ WhatsApp est vide (pas de reprise de
+  // dossier), on le pré-remplit avec le téléphone déjà saisi.
+  useEffect(() => {
+    if (!getValues("whatsappPhone")?.trim()) {
+      setValue("whatsappPhone", getValues("phone") ?? "");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   // On demande de décrire l'activité si le dossier propose des prestations —
   // c.-à-d. pas de boutique, ou boutique + prestations cochées.
   const showDescription = !boutique || wantsServices !== false;
@@ -543,15 +555,36 @@ function SiteDetailsStep() {
 
       <Controller
         control={control}
-        name="noWhatsapp"
+        name="whatsapp"
         render={({ field }) => (
           <CheckRow
-            checked={!!field.value}
-            onChange={field.onChange}
-            label={t("noWhatsapp")}
+            checked={field.value !== false}
+            onChange={(v) => {
+              field.onChange(v);
+              // Recoché après décochage : re-pré-remplir le numéro si resté vide.
+              if (v && !getValues("whatsappPhone")?.trim()) {
+                setValue("whatsappPhone", getValues("phone") ?? "");
+              }
+            }}
+            label={t("whatsappLabel")}
           />
         )}
       />
+
+      {whatsapp !== false && (
+        <Field
+          label={t("whatsappPhoneLabel")}
+          hint={t("whatsappPhoneHint")}
+          htmlFor="whatsappPhone"
+        >
+          <TextInput
+            id="whatsappPhone"
+            type="tel"
+            placeholder={phone || t("phonePlaceholder")}
+            {...register("whatsappPhone")}
+          />
+        </Field>
+      )}
 
       <Field
         label={t("extraLabel")}
