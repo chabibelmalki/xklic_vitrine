@@ -83,6 +83,8 @@ export function LeadForm({
   initialFormule,
   initialBoutique,
   initialCountry,
+  initialValues,
+  resumeRef,
 }: {
   // Formule pré-choisie via `?formule=` (clic sur une carte de prix).
   initialFormule?: FormuleSlug;
@@ -90,12 +92,22 @@ export function LeadForm({
   initialBoutique?: BoutiqueTier;
   // Pays pré-rempli via l'IP (en-tête géo, résolu côté serveur). Repli "France".
   initialCountry?: string;
+  // Reprise d'un dossier non payé (lien `?resume=<ref>` de la fiche back-office) :
+  // valeurs rechargées côté serveur pour pré-remplir tout le tunnel, et `resumeRef`
+  // (= la ref du dossier) renvoyée au checkout pour cibler le même dossier.
+  initialValues?: Partial<LeadValues>;
+  resumeRef?: string;
 }) {
   const t = useTranslations("demarrer.form");
   const ts = useTranslations("demarrer.steps");
   const te = useTranslations("demarrer.errors");
   const reduce = useReducedMotion();
-  const [step, setStep] = useState(0);
+  // En reprise, on démarre directement à la dernière étape (paiement) : le dossier
+  // est déjà rempli, le client n'a qu'à confirmer et payer (il peut revenir en
+  // arrière pour relire). Sinon, début du tunnel.
+  const [step, setStep] = useState(() =>
+    resumeRef ? buildSteps().length - 1 : 0,
+  );
   const [dir, setDir] = useState(1);
   const [status, setStatus] = useState<Status>("form");
   const [token, setToken] = useState("");
@@ -133,12 +145,30 @@ export function LeadForm({
       colorPreference: ["#2563eb"],
       ambiance: "",
       extra: "",
+      // Reprise : les valeurs rechargées du dossier écrasent les défauts. Placé
+      // en dernier pour primer ; `socials` fusionné à part (objet imbriqué) afin
+      // de ne pas perdre les clés absentes du dossier.
+      ...initialValues,
+      ...(initialValues?.socials
+        ? {
+            socials: {
+              facebook: "",
+              instagram: "",
+              tiktok: "",
+              x: "",
+              google: "",
+              ...initialValues.socials,
+            },
+          }
+        : {}),
     },
   });
 
   // Persistance du brouillon (sessionStorage) : un rechargement ou un retour
-  // navigateur restaure les champs saisis et l'étape en cours.
-  useLeadDraft(methods, step, setStep);
+  // navigateur restaure les champs saisis et l'étape en cours. Désactivée en
+  // reprise : les valeurs serveur font autorité (pas d'écrasement par un vieux
+  // brouillon d'onglet).
+  useLeadDraft(methods, step, setStep, Boolean(resumeRef));
 
   // Tunnel minimal : 3 étapes fixes (identité → offre → SIRET). La formule est
   // pré-sélectionnée par `initialFormule` mais toujours modifiable dans l'offre.
@@ -206,6 +236,8 @@ export function LeadForm({
         photos,
         products,
         turnstileToken: token || undefined,
+        // Reprise : cible le dossier existant (upsert par ref, pas de doublon).
+        ...(resumeRef ? { resumeRef } : {}),
       };
 
       // 3. Création de la commande + session de paiement (via /api/checkout) :

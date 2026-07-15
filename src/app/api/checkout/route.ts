@@ -27,6 +27,15 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "invalid_json" }, { status: 400 });
   }
 
+  // Reprise depuis le back-office : le tunnel renvoie la ref du dossier existant
+  // (lien `?resume=<ref>`) pour qu'on réutilise cet id de commande — l'upsert
+  // cible alors le même dossier au lieu d'en créer un doublon. Clé hors schéma
+  // (Zod la retire), on la lit donc sur le corps brut.
+  const resumeRef =
+    typeof (body as { resumeRef?: unknown })?.resumeRef === "string"
+      ? (body as { resumeRef: string }).resumeRef
+      : undefined;
+
   const parsed = leadSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
@@ -42,8 +51,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "turnstile" }, { status: 403 });
   }
 
-  // 1+2. Persiste la commande (survit à Stripe).
-  const order = await createOrder(lead);
+  // 1+2. Persiste la commande (survit à Stripe). En reprise, réutilise la ref du
+  //       dossier existant comme id de commande (voir createOrder).
+  const order = await createOrder(lead, resumeRef);
 
   // 3. Capture immédiate du lead = dossier « panier » dans le back-office
   //    (panier abandonné si le client ne paie pas). FIRE-AND-FORGET strict :

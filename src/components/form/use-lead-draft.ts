@@ -53,6 +53,10 @@ export function useLeadDraft(
   methods: UseFormReturn<LeadValues>,
   step: number,
   setStep: (n: number) => void,
+  // `disabled` = tunnel en mode reprise (lien `?resume=`) : les valeurs viennent
+  // du serveur, elles font autorité. On n'écrase pas avec un vieux brouillon
+  // d'onglet — et on purge celui qui traîne pour ne pas polluer une visite future.
+  disabled = false,
 ) {
   const restored = useRef(false);
 
@@ -60,6 +64,10 @@ export function useLeadDraft(
   useEffect(() => {
     if (restored.current) return;
     restored.current = true;
+    if (disabled) {
+      clearLeadDraft();
+      return;
+    }
     try {
       const raw = sessionStorage.getItem(KEY);
       if (!raw) return;
@@ -76,16 +84,17 @@ export function useLeadDraft(
     } catch {
       // JSON corrompu / storage indisponible : on repart d'un formulaire vierge.
     }
-  }, [methods, setStep]);
+  }, [methods, setStep, disabled]);
 
   // 2. Sauvegarde — à chaque changement de champ (watch) et à chaque changement
   //    d'étape (dépendance `step` de l'effet → sauvegarde immédiate au montage
   //    et à chaque transition d'étape).
   useEffect(() => {
+    if (disabled) return;
     // La restauration (effet 1) tourne avant cet effet au premier rendu, donc
     // `getValues()` renvoie déjà le brouillon restauré : pas d'écrasement.
     save(step, methods.getValues());
     const sub = methods.watch((values) => save(step, values as LeadValues));
     return () => sub.unsubscribe();
-  }, [methods, step]);
+  }, [methods, step, disabled]);
 }

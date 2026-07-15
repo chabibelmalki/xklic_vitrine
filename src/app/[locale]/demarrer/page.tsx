@@ -13,6 +13,7 @@ import {
   type BoutiqueTier,
 } from "@/lib/lead-schema";
 import { countryNameFromCode } from "@/data/countries";
+import { fetchDossierForResume } from "@/lib/backoffice";
 
 export async function generateMetadata({
   params,
@@ -52,6 +53,13 @@ export default async function DemarrerPage({
   const h = await headers();
   const initialCountry = countryNameFromCode(h.get("x-vercel-ip-country"));
 
+  // Reprise d'un dossier non payé depuis le back-office (lien `?resume=<ref>` de
+  // la fiche) : on recharge côté serveur toutes ses infos et on saute le tunnel
+  // directement à l'étape de paiement, pré-rempli. Introuvable / déjà payé → null,
+  // le tunnel repart normalement.
+  const resumeRef = typeof sp.resume === "string" ? sp.resume : undefined;
+  const resume = resumeRef ? await fetchDossierForResume(resumeRef) : null;
+
   return (
     <div className="grain relative flex min-h-full flex-col">
       {/* Warm glow */}
@@ -78,6 +86,8 @@ export default async function DemarrerPage({
           initialFormule={initialFormule}
           initialBoutique={initialBoutique}
           initialCountry={initialCountry}
+          initialValues={resume?.values}
+          resumeRef={resume?.ref}
         />
       </main>
 

@@ -29,9 +29,21 @@ export interface StoredOrder {
   key: string; // clé Scaleway de la commande (mise dans les metadata Stripe)
 }
 
-/** Crée et persiste une commande. Renvoie son id + sa clé Scaleway de relecture. */
-export async function createOrder(lead: LeadData): Promise<StoredOrder> {
-  const id = crypto.randomUUID();
+// UUID v4 (ou toute forme UUID) — les refs de dossier en sont. Sert à valider un
+// `resumeRef` reçu du client avant de le réutiliser comme clé de commande.
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/**
+ * Crée et persiste une commande. Renvoie son id + sa clé Scaleway de relecture.
+ *
+ * `resumeRef` (reprise depuis le back-office) : quand un prospect non payé revient
+ * finir son paiement via un lien `?resume=<ref>`, on RÉUTILISE sa ref existante
+ * comme id de commande. L'upsert back-office cible alors le MÊME dossier (par ref),
+ * sans dépendre du seul rapprochement email/téléphone → pas de doublon même si le
+ * client corrige son email dans le tunnel. Ignoré si ce n'est pas un UUID valide.
+ */
+export async function createOrder(lead: LeadData, resumeRef?: string): Promise<StoredOrder> {
+  const id = resumeRef && UUID_RE.test(resumeRef) ? resumeRef : crypto.randomUUID();
   const order: Order = {
     id,
     status: "pending",
