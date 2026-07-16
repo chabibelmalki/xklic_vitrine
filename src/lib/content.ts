@@ -277,34 +277,38 @@ export type Work = {
   accent: string; // teinte du placeholder / fond
 };
 
+// REPLI UNIQUEMENT : la source de vérité est le back-office
+// (getRealisations → GET /v1/public/realisations). Cette liste ne s'affiche que
+// si le back-office est injoignable — donc de vrais sites clients live, avec
+// leur domaine réel, pour que la page reste crédible même en panne.
 export const portfolio: Work[] = [
   {
-    client: "SANAD CLEAN",
+    client: "Sanad Clean",
     trade: "Nettoyage & services à la personne",
     city: "Nîmes",
-    url: "https://sanadclean.xklic.com",
+    url: "https://sanadclean.fr",
     accent: "from-rose-500/20 to-amber-500/10",
   },
   {
-    client: "Atelier Douceur",
-    trade: "Pâtisserie de création",
-    city: "Saint-Germain-en-Laye",
-    url: "https://atelier-douceur.xklic.com",
-    accent: "from-pink-500/20 to-amber-500/10",
-  },
-  {
-    client: "Garage Méca Atlas",
-    trade: "Réparation automobile",
-    city: "Argenteuil",
-    url: "https://meca-atlas.xklic.com",
+    client: "MB Nettoyage",
+    trade: "Nettoyage professionnel",
+    city: "Marseille",
+    url: "https://mbnettoyage-marseille.fr",
     accent: "from-sky-500/20 to-slate-500/10",
   },
   {
-    client: "Vibe Coaching",
-    trade: "Coaching sportif",
-    city: "Lyon",
-    url: "https://vibe-coaching.xklic.com",
+    client: "Casa Clean Provence",
+    trade: "Ménage & entretien",
+    city: "Aix-en-Provence",
+    url: "https://casacleanprovence.fr",
     accent: "from-emerald-500/20 to-lime-500/10",
+  },
+  {
+    client: "Parfait Ménage 26",
+    trade: "Ménage & repassage",
+    city: "Valence",
+    url: "https://parfaitmenage26.fr",
+    accent: "from-violet-500/20 to-sky-500/10",
   },
 ];
 

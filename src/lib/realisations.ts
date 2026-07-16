@@ -2,21 +2,26 @@ import "server-only";
 import { portfolio } from "./content";
 
 // ─────────────────────────────────────────────────────────────────────────
-// Réalisations — liste des sites clients EN LIGNE.
+// Réalisations — liste des sites clients EN PROD (accueil + page Réalisations).
 //
-// SOURCE DE VÉRITÉ : le moteur agence_website, qui expose /api/realisations
-// (un client = un dossier de config). On le consomme en fetch ISR : ajouter un
-// client côté moteur le fait apparaître ici tout seul, sans redéployer la
-// vitrine. AGENCE_ENGINE_URL pilote l'origine (défaut : le sous-domaine dédié).
+// SOURCE DE VÉRITÉ : le BACK-OFFICE (API Go), endpoint
+// GET /v1/public/realisations (header X-API-Key). Il ne remonte que les vrais
+// sites live — dossier avec un `domaine` renseigné + statut « En ligne »/« SAV »,
+// non archivé — et dans un ORDRE ALÉATOIRE (order by random() côté SQL). Un
+// dossier sans domaine (= sans URL) est ignoré. On le consomme en fetch ISR :
+// mettre un dossier « En ligne » le fait apparaître ici tout seul, sans
+// redéployer la vitrine. NB : la liste est mise en cache ISR (revalidate), donc
+// l'ordre se rebat à chaque revalidation, pas à chaque visite.
 //
-// REPLI GRACIEUX : si le moteur est injoignable (build hors ligne, panne…), on
-// retombe sur la liste codée en dur de `content.ts` (toujours de vraies URLs) :
-// la page ne casse jamais et reste utile.
+// REPLI GRACIEUX : si le back-office est injoignable (build hors ligne, panne…),
+// on retombe sur la liste codée en dur de `content.ts` (toujours de vraies
+// URLs) : la page ne casse jamais et reste utile.
 // ─────────────────────────────────────────────────────────────────────────
 
-const ENGINE_URL = (
-  process.env.AGENCE_ENGINE_URL ?? "https://api.xklic.com"
+const BACKOFFICE_URL = (
+  process.env.BACKOFFICE_API_URL ?? "https://api.xklic.com"
 ).replace(/\/+$/, "");
+const BACKOFFICE_KEY = process.env.BACKOFFICE_API_KEY ?? "";
 
 // Teintes de carte (cohérentes avec content.portfolio), attribuées en rotation.
 const ACCENTS = [
@@ -93,7 +98,8 @@ function fromSeed(): Realisation[] {
 
 export async function getRealisations(): Promise<Realisation[]> {
   try {
-    const res = await fetch(`${ENGINE_URL}/api/realisations`, {
+    const res = await fetch(`${BACKOFFICE_URL}/v1/public/realisations`, {
+      headers: BACKOFFICE_KEY ? { "X-API-Key": BACKOFFICE_KEY } : undefined,
       next: { revalidate: 3600 },
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -111,7 +117,7 @@ export async function getRealisations(): Promise<Realisation[]> {
     );
   } catch (err) {
     console.warn(
-      `[realisations] moteur injoignable (${ENGINE_URL}/api/realisations), repli sur la liste locale :`,
+      `[realisations] back-office injoignable (${BACKOFFICE_URL}/v1/public/realisations), repli sur la liste locale :`,
       err instanceof Error ? err.message : err,
     );
     return fromSeed();
