@@ -173,6 +173,19 @@ function ActiviteStep() {
           />
         </Field>
       ) : null}
+
+      <Field
+        label={t("availabilityLabel")}
+        optional
+        hint={t("availabilityHint")}
+        htmlFor="availability"
+      >
+        <TextArea
+          id="availability"
+          placeholder={t("availabilityPlaceholder")}
+          {...register("availability")}
+        />
+      </Field>
     </div>
   );
 }
