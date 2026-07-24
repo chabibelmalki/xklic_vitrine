@@ -400,7 +400,13 @@
       "thankYouTitle": "Alles notiert, danke!",
       "thankYouBody": "Wir haben deine Informationen erhalten. Unser Team bereitet deine Website vor und meldet sich ganz bald bei dir — meist innerhalb von 2 Stunden — um dir eine erste Version zu zeigen.",
       "backHome": "Zurück zur Startseite",
-      "questionMeanwhile": "Eine Frage in der Zwischenzeit? {email}"
+      "questionMeanwhile": "Eine Frage in der Zwischenzeit? {email}",
+      "advisorFloat": "Unsicher? Von einem Berater zurückrufen lassen",
+      "advisorSending": "Wird gesendet…",
+      "advisorSentTitle": "Notiert — ein Berater ruft dich zurück",
+      "advisorSentBody": "Wir haben deine Anfrage erhalten. Ein Xklic-Berater ruft dich ganz bald zurück, um deine Website gemeinsam zu erstellen — in deinem Tempo und unverbindlich.",
+      "advisorSentBodyPhone": "Wir haben deine Anfrage erhalten. Ein Xklic-Berater ruft dich ganz bald unter {phone} zurück, um deine Website gemeinsam zu erstellen — in deinem Tempo und unverbindlich.",
+      "advisorError": "Die Prüfung ist nicht abgeschlossen oder das Senden ist fehlgeschlagen. Warte einen Moment und versuche es erneut, oder schreib uns: {email}"
     },
     "steps": {
       "offre": {

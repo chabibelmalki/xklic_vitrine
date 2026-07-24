@@ -5,7 +5,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowLeft, ArrowRight, CreditCard, Loader2, PartyPopper } from "lucide-react";
+import { ArrowLeft, ArrowRight, CreditCard, Headset, Loader2, PartyPopper } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import {
   makeLeadSchema,
@@ -130,6 +130,13 @@ export function LeadForm({
   const [dir, setDir] = useState(1);
   const [status, setStatus] = useState<Status>("form");
   const [token, setToken] = useState("");
+  // Parcours « conseiller » : depuis la dernière étape, un client hésitant peut
+  // demander à être rappelé plutôt que de payer tout de suite. On capture alors
+  // ses coordonnées comme un simple LEAD (statut `lead`, aucun paiement) et un
+  // conseiller finalise avec lui par téléphone.
+  const [advisor, setAdvisor] = useState<
+    "idle" | "sending" | "sent" | "error"
+  >("idle");
   // Schéma avec messages de validation traduits.
   const [schema] = useState(() => makeLeadSchema((k) => te(k)));
 
@@ -292,6 +299,60 @@ export function LeadForm({
     }
   });
 
+  // Demande de rappel par un conseiller : capture d'un lead, sans paiement.
+  const requestAdvisor = async () => {
+    // Un conseiller a besoin des infos de contact pour rappeler : on valide les
+    // champs requis du lead. S'il en manque un (cas de bord : reprise/brouillon),
+    // on renvoie le client à la 1re étape saisissable plutôt que d'envoyer un
+    // lead inexploitable.
+    const ok = await methods.trigger(
+      ["companyName", "trade", "city", "country", "phone", "email"],
+      { shouldFocus: true },
+    );
+    if (!ok) {
+      setDir(-1);
+      setStep(1);
+      return;
+    }
+    // Anti-robot : le widget Turnstile est déjà rendu sur cette étape et se
+    // résout tout seul (mode managed). S'il n'a pas encore livré son jeton, on
+    // le signale au lieu de partir sur un 403.
+    if (TURNSTILE_ENABLED && !token) {
+      setAdvisor("error");
+      return;
+    }
+    setAdvisor("sending");
+    try {
+      const v = methods.getValues();
+      // Lead « conseiller » : pas de paiement ni d'upload d'images (un conseiller
+      // recueille le reste par téléphone). On ne transmet donc que des champs
+      // sérialisables — les File/objectURL des visuels sont retirés.
+      const payload = {
+        ...v,
+        logo: [],
+        photos: [],
+        products: (v.products ?? []).map((p) => ({ ...p, photos: [] })),
+        turnstileToken: token || undefined,
+      };
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("bad status");
+      // Lead enregistré côté serveur : le brouillon local n'a plus lieu d'être.
+      clearLeadDraft();
+      setAdvisor("sent");
+    } catch {
+      setAdvisor("error");
+      setToken("");
+    }
+  };
+
+  if (advisor === "sent") {
+    return <AdvisorThankYou phone={methods.getValues("phone")} />;
+  }
+
   if (status === "done") {
     return <ThankYou />;
   }
@@ -453,6 +514,42 @@ export function LeadForm({
           {t("securityNote")}
         </p>
       </div>
+
+      {/* Bouton flottant « conseiller » : escape hatch pour un client hésitant à
+          la dernière étape. Un clic capture ses coordonnées comme lead et un
+          conseiller le rappelle — pas de paiement. Placé en `fixed` pour flotter
+          au-dessus du parcours sans en perturber la mise en page. */}
+      {isLast ? (
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: EASE_OUT, delay: 0.25 }}
+          className="fixed inset-x-0 bottom-5 z-40 flex flex-col items-center gap-2 px-4"
+        >
+          {advisor === "error" ? (
+            <p className="max-w-xs rounded-lg border border-ember/30 bg-ink-soft/95 px-3 py-2 text-center text-xs text-ember-soft shadow-lg backdrop-blur">
+              {t("advisorError", { email: brand.email })}
+            </p>
+          ) : null}
+          <button
+            type="button"
+            onClick={() => void requestAdvisor()}
+            disabled={advisor === "sending"}
+            className="group inline-flex max-w-[calc(100vw-2rem)] items-center gap-2.5 rounded-full border border-line-strong bg-ink-soft/95 py-2.5 pl-2.5 pr-5 text-sm font-medium text-cream shadow-xl shadow-black/40 backdrop-blur transition-colors hover:border-ember/50 hover:bg-ink-soft disabled:cursor-not-allowed disabled:opacity-70"
+          >
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ember/15 text-ember-soft">
+              {advisor === "sending" ? (
+                <Loader2 size={16} className="animate-spin" />
+              ) : (
+                <Headset size={16} />
+              )}
+            </span>
+            <span className="truncate">
+              {advisor === "sending" ? t("advisorSending") : t("advisorFloat")}
+            </span>
+          </button>
+        </motion.div>
+      ) : null}
     </FormProvider>
   );
 }
@@ -474,6 +571,44 @@ function ThankYou() {
       </h1>
       <p className="mt-4 max-w-md text-base leading-relaxed text-cream-muted">
         {t("thankYouBody")}
+      </p>
+      <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+        <Link
+          href="/"
+          className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-line-strong px-6 text-sm text-cream transition-colors hover:bg-cream/[0.05]"
+        >
+          <ArrowLeft size={16} />
+          {t("backHome")}
+        </Link>
+      </div>
+      <p className="mt-8 text-xs text-cream-faint">
+        {t("questionMeanwhile", { email: brand.email })}
+      </p>
+    </motion.div>
+  );
+}
+
+// Confirmation du parcours « conseiller » : le lead est capturé, un conseiller
+// rappellera. Miroir de <ThankYou> mais sans promesse de site en préparation.
+function AdvisorThankYou({ phone }: { phone?: string }) {
+  const t = useTranslations("demarrer.form");
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: EASE_OUT }}
+      className="mx-auto flex max-w-xl flex-col items-center text-center"
+    >
+      <span className="flex h-16 w-16 items-center justify-center rounded-full border border-ember/30 bg-ember/10 text-ember-soft">
+        <Headset size={28} />
+      </span>
+      <h1 className="font-display mt-7 text-3xl font-semibold tracking-tight text-cream sm:text-4xl">
+        {t("advisorSentTitle")}
+      </h1>
+      <p className="mt-4 max-w-md text-base leading-relaxed text-cream-muted">
+        {phone
+          ? t("advisorSentBodyPhone", { phone })
+          : t("advisorSentBody")}
       </p>
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
         <Link

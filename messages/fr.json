@@ -68,7 +68,13 @@
       "thankYouTitle": "C'est noté, merci !",
       "thankYouBody": "Nous avons bien reçu tes informations. Notre équipe prépare ton site et revient vers toi très vite — généralement sous 2h — pour te montrer une première version.",
       "backHome": "Retour à l'accueil",
-      "questionMeanwhile": "Une question en attendant ? {email}"
+      "questionMeanwhile": "Une question en attendant ? {email}",
+      "advisorFloat": "Un doute ? Être rappelé par un conseiller",
+      "advisorSending": "Envoi…",
+      "advisorSentTitle": "C'est noté, un conseiller te rappelle",
+      "advisorSentBody": "Nous avons bien reçu ta demande. Un conseiller Xklic te rappelle très vite pour construire ton site ensemble, tranquillement et sans engagement.",
+      "advisorSentBodyPhone": "Nous avons bien reçu ta demande. Un conseiller Xklic te rappelle très vite au {phone} pour construire ton site ensemble, tranquillement et sans engagement.",
+      "advisorError": "La vérification n'est pas terminée ou l'envoi a échoué. Patiente une seconde et réessaie, ou écris-nous : {email}"
     },
     "steps": {
       "offre": { "title": "Votre offre", "subtitle": "Choisissez votre formule, et une boutique en ligne si vous le souhaitez." },

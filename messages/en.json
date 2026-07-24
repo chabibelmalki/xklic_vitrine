@@ -49,7 +49,13 @@
       "thankYouTitle": "All set, thanks!",
       "thankYouBody": "We've received your information. Our team is preparing your site and will get back to you very soon — usually within 2h — to show you a first version.",
       "backHome": "Back to home",
-      "questionMeanwhile": "A question in the meantime? {email}"
+      "questionMeanwhile": "A question in the meantime? {email}",
+      "advisorFloat": "Not sure? Get a call back from an advisor",
+      "advisorSending": "Sending…",
+      "advisorSentTitle": "Got it — an advisor will call you back",
+      "advisorSentBody": "We've received your request. An Xklic advisor will call you back very soon to build your site together, at your pace and with no commitment.",
+      "advisorSentBodyPhone": "We've received your request. An Xklic advisor will call you back very soon at {phone} to build your site together, at your pace and with no commitment.",
+      "advisorError": "The check isn't complete or sending failed. Wait a second and try again, or email us: {email}"
     },
     "steps": {
       "offre": {

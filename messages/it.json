@@ -400,7 +400,13 @@
       "thankYouTitle": "Ricevuto, grazie!",
       "thankYouBody": "Abbiamo ricevuto le tue informazioni. Il nostro team sta preparando il tuo sito e ti ricontatta prestissimo — di solito entro 2h — per mostrarti una prima versione.",
       "backHome": "Torna alla home",
-      "questionMeanwhile": "Una domanda nel frattempo? {email}"
+      "questionMeanwhile": "Una domanda nel frattempo? {email}",
+      "advisorFloat": "Hai un dubbio? Fatti richiamare da un consulente",
+      "advisorSending": "Invio…",
+      "advisorSentTitle": "Fatto: un consulente ti richiama",
+      "advisorSentBody": "Abbiamo ricevuto la tua richiesta. Un consulente Xklic ti richiama prestissimo per creare il tuo sito insieme, con calma e senza impegno.",
+      "advisorSentBodyPhone": "Abbiamo ricevuto la tua richiesta. Un consulente Xklic ti richiama prestissimo al {phone} per creare il tuo sito insieme, con calma e senza impegno.",
+      "advisorError": "La verifica non è completa o l'invio non è riuscito. Attendi un secondo e riprova, oppure scrivici: {email}"
     },
     "steps": {
       "offre": {

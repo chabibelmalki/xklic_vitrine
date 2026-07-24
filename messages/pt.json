@@ -400,7 +400,13 @@
       "thankYouTitle": "Está registado, obrigado!",
       "thankYouBody": "Recebemos bem as tuas informações. A nossa equipa está a preparar o teu site e entra em contacto muito em breve — normalmente em menos de 2h — para te mostrar uma primeira versão.",
       "backHome": "Voltar ao início",
-      "questionMeanwhile": "Alguma pergunta entretanto? {email}"
+      "questionMeanwhile": "Alguma pergunta entretanto? {email}",
+      "advisorFloat": "Em dúvida? Pede para um consultor te ligar",
+      "advisorSending": "A enviar…",
+      "advisorSentTitle": "Registado — um consultor liga-te de volta",
+      "advisorSentBody": "Recebemos o teu pedido. Um consultor Xklic liga-te de volta muito em breve para criarmos o teu site juntos, com calma e sem compromisso.",
+      "advisorSentBodyPhone": "Recebemos o teu pedido. Um consultor Xklic liga-te de volta muito em breve para o {phone} para criarmos o teu site juntos, com calma e sem compromisso.",
+      "advisorError": "A verificação não terminou ou o envio falhou. Espera um segundo e tenta novamente, ou escreve-nos: {email}"
     },
     "steps": {
       "offre": {

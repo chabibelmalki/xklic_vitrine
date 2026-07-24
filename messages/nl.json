@@ -68,7 +68,13 @@
       "thankYouTitle": "Genoteerd, bedankt!",
       "thankYouBody": "We hebben je gegevens goed ontvangen. Ons team bereidt je site voor en komt heel snel bij je terug — meestal binnen 2u — om je een eerste versie te tonen.",
       "backHome": "Terug naar de startpagina",
-      "questionMeanwhile": "Een vraag ondertussen? {email}"
+      "questionMeanwhile": "Een vraag ondertussen? {email}",
+      "advisorFloat": "Twijfel je? Laat je terugbellen door een adviseur",
+      "advisorSending": "Verzenden…",
+      "advisorSentTitle": "Genoteerd — een adviseur belt je terug",
+      "advisorSentBody": "We hebben je aanvraag ontvangen. Een Xklic-adviseur belt je heel snel terug om samen je website te bouwen, op jouw tempo en vrijblijvend.",
+      "advisorSentBodyPhone": "We hebben je aanvraag ontvangen. Een Xklic-adviseur belt je heel snel terug op {phone} om samen je website te bouwen, op jouw tempo en vrijblijvend.",
+      "advisorError": "De verificatie is niet voltooid of het verzenden is mislukt. Wacht even en probeer opnieuw, of mail ons: {email}"
     },
     "steps": {
       "offre": {
