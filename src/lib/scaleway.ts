@@ -4,7 +4,7 @@ import {
   PutObjectCommand,
   GetObjectCommand,
 } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Stockage objet Scaleway (S3-compatible) — aligné sur le back-office
@@ -58,40 +58,57 @@ export function publicUrl(key: string): string {
   return `${BASE_URL}/${clean(key)}`;
 }
 
-export type PresignedPut = {
-  uploadUrl: string; // URL PUT signée (valable 10 min)
+export type PresignedPost = {
+  uploadUrl: string; // URL du POST multipart (valable 10 min)
   publicUrl: string; // URL de lecture publique une fois l'objet posé
-  // En-têtes que le navigateur DOIT renvoyer sur le PUT (signés dans l'URL).
-  headers: Record<string, string>;
+  // Champs de policy que le navigateur DOIT joindre au FormData, AVANT `file`.
+  fields: Record<string, string>;
 };
 
 /**
- * URL PUT présignée pour un upload navigateur-direct, objet public-read.
- * On signe `Content-Type` + `x-amz-acl` : le navigateur doit renvoyer EXACTEMENT
- * ces en-têtes (fournis dans `headers`). Miroir du PutObject public-read côté
- * back-office/engine, mais côté client (on évite la limite de body serverless).
+ * POST présigné (policy) pour un upload navigateur-direct, objet public-read.
+ * Contrairement à un PUT présigné, la policy borne la TAILLE côté S3
+ * (content-length-range) en plus du Content-Type et de la clé — un client
+ * malveillant ne peut pas pousser plus gros que `maxBytes` (vérifié contre le
+ * bucket réel : 204 conforme / 400 au-delà de la borne).
  */
-export async function presignPut(key: string, contentType: string): Promise<PresignedPut> {
+export async function presignPost(
+  key: string,
+  contentType: string,
+  maxBytes: number,
+): Promise<PresignedPost> {
   const k = clean(key);
-  const cmd = new PutObjectCommand({
+  const { url, fields } = await createPresignedPost(client(), {
     Bucket: BUCKET,
     Key: k,
-    ContentType: contentType,
-    ACL: "public-read",
+    Conditions: [
+      ["content-length-range", 1, maxBytes],
+      { "Content-Type": contentType },
+      { acl: "public-read" },
+    ],
+    Fields: { "Content-Type": contentType, acl: "public-read" },
+    Expires: 600,
   });
-  const uploadUrl = await getSignedUrl(client(), cmd, { expiresIn: 600 });
-  return {
-    uploadUrl,
-    publicUrl: publicUrl(k),
-    headers: { "Content-Type": contentType, "x-amz-acl": "public-read" },
-  };
+  return { uploadUrl: url, publicUrl: publicUrl(k), fields };
 }
 
-/** Écrit un objet côté serveur (JSON de commande) — privé (pas d'ACL public). */
-export async function putObject(key: string, body: string, contentType: string): Promise<string> {
+/** Écrit un objet côté serveur. Privé par défaut (JSON de commande) ; passer
+ *  `acl: "public-read"` pour un média servi publiquement (SVG assaini). */
+export async function putObject(
+  key: string,
+  body: string,
+  contentType: string,
+  opts?: { acl?: "public-read" },
+): Promise<string> {
   const k = clean(key);
   await client().send(
-    new PutObjectCommand({ Bucket: BUCKET, Key: k, Body: body, ContentType: contentType }),
+    new PutObjectCommand({
+      Bucket: BUCKET,
+      Key: k,
+      Body: body,
+      ContentType: contentType,
+      ...(opts?.acl ? { ACL: opts.acl } : {}),
+    }),
   );
   return k;
 }

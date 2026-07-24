@@ -31,12 +31,15 @@ type UploadInput = {
   file?: unknown;
 };
 
-// Téléverse chaque fichier DIRECTEMENT vers Scaleway (browser -> S3, public) via
-// une URL PUT présignée négociée sur /api/upload/sign, et renvoie { name, url }
-// où `url` est l'URL publique (MEDIA_BASE_URL/<clé>). Le fichier ne transite
-// jamais par nos fonctions serverless (pas de limite de body). Les objets non
-// sérialisables (File, objectURL d'aperçu) ne partent donc jamais au webhook —
-// seules les URLs publiques le font.
+// Téléverse chaque fichier vers Scaleway et renvoie { name, url } où `url` est
+// l'URL publique (MEDIA_BASE_URL/<clé>). Deux chemins :
+//   - images bitmap : POST présigné DIRECT navigateur -> S3 (le fichier ne
+//     transite pas par nos fonctions serverless ; la policy S3 borne type,
+//     taille et clé) ;
+//   - SVG : via /api/upload/svg, qui inspecte le contenu (un SVG est du XML
+//     exécutable) et refuse les SVG « actifs » avant de les héberger.
+// Les objets non sérialisables (File, objectURL d'aperçu) ne partent jamais au
+// webhook — seules les URLs publiques le font.
 async function uploadFiles(items?: UploadInput[]) {
   return Promise.all(
     (items ?? []).map(async (item) => {
@@ -45,21 +48,37 @@ async function uploadFiles(items?: UploadInput[]) {
         return { name: item.name, url: item.url ?? "" };
       }
       const file = item.file;
-      // 1. Négocie une URL PUT présignée (type + taille validés côté serveur).
+
+      // SVG : passe par le serveur (inspection du contenu), pas par le presign.
+      if ((file.type || "").toLowerCase() === "image/svg+xml") {
+        const res = await fetch("/api/upload/svg", {
+          method: "POST",
+          headers: { "Content-Type": "image/svg+xml" },
+          body: file,
+        });
+        if (!res.ok) throw new Error("upload failed");
+        const { url } = (await res.json()) as { url: string };
+        return { name: item.name, url };
+      }
+
+      // 1. Négocie un POST présigné (type + taille bornés par la policy S3).
       const signRes = await fetch("/api/upload/sign", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: file.name, type: file.type, size: file.size }),
       });
       if (!signRes.ok) throw new Error("sign failed");
-      const { uploadUrl, publicUrl, headers } = (await signRes.json()) as {
+      const { uploadUrl, publicUrl, fields } = (await signRes.json()) as {
         uploadUrl: string;
         publicUrl: string;
-        headers: Record<string, string>;
+        fields: Record<string, string>;
       };
-      // 2. PUT direct vers Scaleway avec exactement les en-têtes signés.
-      const putRes = await fetch(uploadUrl, { method: "PUT", headers, body: file });
-      if (!putRes.ok) throw new Error("upload failed");
+      // 2. POST multipart direct vers Scaleway : champs de policy PUIS le fichier.
+      const form = new FormData();
+      for (const [k, v] of Object.entries(fields)) form.append(k, v);
+      form.append("file", file);
+      const postRes = await fetch(uploadUrl, { method: "POST", body: form });
+      if (!postRes.ok) throw new Error("upload failed");
       return { name: item.name, url: publicUrl };
     }),
   );

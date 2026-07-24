@@ -1,13 +1,18 @@
 import { NextResponse } from "next/server";
-import { presignPut, scalewayConfigured } from "@/lib/scaleway";
+import { presignPost, scalewayConfigured } from "@/lib/scaleway";
+import { clientIP, rateAllow } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
 
-// Délivre une URL PUT présignée pour un upload navigateur-direct vers Scaleway
-// (remplace l'ancien token Vercel Blob). Le navigateur envoie { name, type,
-// size } ; on valide type + taille, on génère une clé `leads/<uuid>.<ext>` et on
-// renvoie l'URL signée + l'URL publique + les en-têtes à renvoyer. Le fichier ne
-// transite JAMAIS par cette fonction (on contourne la limite de body serverless).
+// Délivre un POST présigné (policy S3) pour un upload navigateur-direct vers
+// Scaleway. Le navigateur envoie { name, type, size } ; on valide le type, on
+// génère une clé `leads/<uuid>.<ext>` et on renvoie l'URL + les champs de
+// policy. Le fichier ne transite JAMAIS par cette fonction (limite de body
+// serverless contournée) — mais la policy borne la taille CÔTÉ S3
+// (content-length-range) : la borne n'est plus déclarative.
+//
+// Les SVG ne passent pas ici : ils transitent par /api/upload/svg, qui lit le
+// contenu et refuse les SVG « actifs » (scripts…) avant de les héberger.
 
 const ALLOWED: Record<string, string> = {
   "image/jpeg": ".jpg",
@@ -15,13 +20,16 @@ const ALLOWED: Record<string, string> = {
   "image/webp": ".webp",
   "image/gif": ".gif",
   "image/avif": ".avif",
-  "image/svg+xml": ".svg",
 };
-const MAX_BYTES = 15 * 1024 * 1024; // 15 Mo / image
+const MAX_BYTES = 15 * 1024 * 1024; // 15 Mo / image, garanti par la policy
 
 export async function POST(req: Request): Promise<NextResponse> {
   if (!scalewayConfigured()) {
     return NextResponse.json({ error: "storage_unconfigured" }, { status: 503 });
+  }
+  // Un humain qui remplit le tunnel signe quelques dizaines d'images au plus.
+  if (!rateAllow(`sign:${clientIP(req)}`, 60, 60_000)) {
+    return NextResponse.json({ error: "rate_limited" }, { status: 429 });
   }
 
   let body: { name?: string; type?: string; size?: number };
@@ -44,7 +52,7 @@ export async function POST(req: Request): Promise<NextResponse> {
   const key = `leads/${crypto.randomUUID()}${ext}`;
 
   try {
-    const signed = await presignPut(key, type);
+    const signed = await presignPost(key, type, MAX_BYTES);
     return NextResponse.json(signed);
   } catch (err) {
     console.error("[upload/sign] présignature échouée :", err);
