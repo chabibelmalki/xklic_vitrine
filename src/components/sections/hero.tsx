@@ -79,7 +79,7 @@ export function Hero() {
                 />
               </ButtonLink>
               <ButtonLink
-                href="/#realisations"
+                href="/realisations"
                 variant="secondary"
                 size="lg"
                 className="w-full sm:w-auto"
