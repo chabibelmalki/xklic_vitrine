@@ -26,7 +26,7 @@ export function RealisationCard({
   const Inner = (
     <>
       {/* Aperçu — maquette mobile sur fond chaud */}
-      <div className="relative h-72 overflow-hidden sm:h-80">
+      <div className="relative h-64 overflow-hidden sm:h-80">
         <div className={cn("absolute inset-0 bg-gradient-to-br", item.accent)} />
         <div className="absolute inset-0 [background-image:radial-gradient(circle_at_1px_1px,rgba(27,22,17,0.06)_1px,transparent_0)] [background-size:22px_22px]" />
 

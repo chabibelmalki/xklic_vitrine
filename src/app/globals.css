@@ -65,6 +65,10 @@
 
 html {
   scroll-behavior: smooth;
+  /* Garde-fou : aucun débordement décoratif (aurora, marquee, ombres) ne doit
+     provoquer de scroll horizontal sur mobile. `clip` (et non `hidden`) ne crée
+     pas de conteneur de scroll et préserve position: sticky/fixed. */
+  overflow-x: clip;
 }
 
 body {
